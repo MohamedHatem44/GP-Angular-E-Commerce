@@ -7,11 +7,13 @@ import { MainHomeComponent } from './components/home/main-home/main-home.compone
 import { UserCartComponent } from './components/user/user-cart/user-cart.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { UserWishlistComponent } from './components/user/user-wishlist/user-wishlist.component';
+import { MainShopComponent } from './components/shop/main-shop/main-shop.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: MainHomeComponent },
   { path: 'adminPanel', component: AdminPanelComponent },
+  { path: 'shop', component: MainShopComponent },
   { path: 'cart', component: UserCartComponent },
   { path: 'wishlist', component: UserWishlistComponent },
   { path: 'profile', component: UserProfileComponent },

@@ -18,6 +18,7 @@ import { AuthFooterComponent } from './components/auth/auth-footer/auth-footer.c
 import { UserCartComponent } from './components/user/user-cart/user-cart.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { UserWishlistComponent } from './components/user/user-wishlist/user-wishlist.component';
+import { MainShopComponent } from './components/shop/main-shop/main-shop.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { UserWishlistComponent } from './components/user/user-wishlist/user-wish
     UserCartComponent,
     UserProfileComponent,
     UserWishlistComponent,
+    MainShopComponent,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
