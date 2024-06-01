@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
+import { Observable, of } from 'rxjs';
 /*--------------------------------------------------------------------*/
 @Injectable({
   providedIn: 'root',
@@ -7,7 +8,6 @@ import { jwtDecode } from 'jwt-decode';
 /*--------------------------------------------------------------------*/
 export class JwtService {
   constructor() {}
-
   /*--------------------------------------------------------------------*/
   getRoleFromToken(token: string): string | null {
     try {

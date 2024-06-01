@@ -10,20 +10,25 @@ import { tap } from 'rxjs/operators';
 /*--------------------------------------------------------------------*/
 export class AuthService {
   private baseUrl = 'http://localhost:5185/api/Auth';
-  userData = new BehaviorSubject<any>(null);
+  userToken = new BehaviorSubject<any>(null);
   /*--------------------------------------------------------------------*/
   // Ctor
-  constructor(private _HttpClient: HttpClient, private _Router: Router) {}
+  constructor(private _HttpClient: HttpClient, private _Router: Router) {
+    const token = localStorage.getItem('token');
+    if (token !== null) {
+      this.userToken.next(token);
+    }
+  }
   /*--------------------------------------------------------------------*/
   // Getter for user data
   get currentUser(): Observable<any> {
-    return this.userData.asObservable();
+    return this.userToken.asObservable();
   }
   /*--------------------------------------------------------------------*/
   // Method to logout
   logout(): void {
     localStorage.removeItem('token');
-    this.userData.next(null);
+    this.userToken.next(null);
     this._Router.navigate(['users/login']);
   }
   /*--------------------------------------------------------------------*/
@@ -42,7 +47,7 @@ export class AuthService {
     return this._HttpClient.post(`${this.baseUrl}/Login`, credentials).pipe(
       tap((response: any) => {
         localStorage.setItem('token', response.token);
-        this.userData.next(response.user);
+        this.userToken.next(response.token);
       })
     );
   }
@@ -53,11 +58,11 @@ export class AuthService {
   }
   /*--------------------------------------------------------------------*/
   // Method to get current user data
-  // getUserData(): void {
+  // getuserToken(): void {
   //   if (this.isAuthenticated()) {
   //     this._HttpClient.get(`${this.baseUrl}/user`).subscribe(
   //       (user: any) => {
-  //         this.userData.next(user);
+  //         this.userToken.next(user);
   //       },
   //       (error) => {
   //         this.logout();
