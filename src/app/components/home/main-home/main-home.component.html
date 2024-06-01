@@ -1,1 +1,33 @@
+<!---------------------------------------------------------------------------------------->
+<!-- Slider -->
 <app-main-slider></app-main-slider>
+<!---------------------------------------------------------------------------------------->
+<!-- We Have What You Need -->
+<!-- <section *ngIf="!isLoggedIn" class="introduction"> -->
+<section class="introduction">
+  <div class="container">
+    <section class="row">
+      <div class="row">
+        <h2 class="fs-2 pb-4">We Have What You Need</h2>
+      </div>
+      <div class="row pb-3"><hr /></div>
+      <div class="row pt-3 pb-3">
+        <p class="col-6 fs-5">To Have Access to All of our Products You need to Login</p>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-dark" routerLink="/users/login" routerLinkActive="fw-bold text-primary" [routerLinkActiveOptions]="{ exact: true }">Login</button>
+        </div>
+      </div>
+      <div class="row pt-3 pb-3">
+        <p class="col-6 fs-5">If You don't have Account You can register here</p>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-dark" routerLink="/users/register" routerLinkActive="fw-bold text-primary" [routerLinkActiveOptions]="{ exact: true }">Register</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+<!---------------------------------------------------------------------------------------->
