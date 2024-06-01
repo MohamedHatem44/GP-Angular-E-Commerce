@@ -57,18 +57,4 @@ export class AuthService {
     return this._HttpClient.post(`${this.baseUrl}/Register`, user);
   }
   /*--------------------------------------------------------------------*/
-  // Method to get current user data
-  // getuserToken(): void {
-  //   if (this.isAuthenticated()) {
-  //     this._HttpClient.get(`${this.baseUrl}/user`).subscribe(
-  //       (user: any) => {
-  //         this.userToken.next(user);
-  //       },
-  //       (error) => {
-  //         this.logout();
-  //       }
-  //     );
-  //   }
-  // }
-  /*--------------------------------------------------------------------*/
 }
