@@ -1,12 +1,19 @@
+<div class="d-flex justify-content-center mt-5">
+  <img src="../../../../assets/images/icons/logo-01.png" alt="IMG-LOGO" />
+</div>
+<!-------------------------------------------------------------------------------------------->
 <div class="container">
   <div class="w-75 mx-auto py-4">
     <h4 class="m-4 d-flex justify-content-center">Login Now</h4>
 
     <form (ngSubmit)="loginUser(loginForm)" [formGroup]="loginForm">
+      <!-------------------------------------------------------------------------------------------->
+      <!-- API Error -->
       <div *ngIf="apiError" class="alert alert-danger">
         {{ apiError }}
       </div>
-
+      <!-------------------------------------------------------------------------------------------->
+      <!-- Email -->
       <label for="email">Email</label>
       <input formControlName="email" type="email" class="form-control mb-2" id="email" />
 
@@ -14,16 +21,26 @@
         <p *ngIf="loginForm.get('email')?.getError('email')" class="m-0">Email Invalid forexample aligmail.com</p>
         <p *ngIf="loginForm.get('email')?.getError('required')" class="m-0">Email is Required</p>
       </div>
-
+      <!-------------------------------------------------------------------------------------------->
+      <!-- Password -->
       <label for="password">Password</label>
-      <input formControlName="password" type="password" class="form-control mb-2" id="password" />
+      <div style="position: relative; width: 100%">
+        <input formControlName="password" [type]="showPassword ? 'text' : 'password'" class="form-control" id="password" />
+        <i
+          [class]="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"
+          (click)="togglePasswordVisibility()"
+          style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer"
+        ></i>
+      </div>
 
       <div *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched" class="alert alert-danger">
         <p *ngIf="loginForm.get('password')?.getError('pattern')" class="m-0">
-          Password must be start with upperCase letter then from 5 to 10 smallCase letters or numbers
+          Password must be start with uppercase letter then from 5 to 10 smallcase letters or numbers
         </p>
         <p *ngIf="loginForm.get('password')?.getError('required')" class="m-0">Password is Required</p>
       </div>
+      <!-------------------------------------------------------------------------------------------->
+      <!-- Login Btn -->
       <div class="d-flex justify-content-center flex-column">
         <button [disabled]="loginForm.invalid" type="submit" class="btn btn-success my-5 w-25 d-flex mx-auto justify-content-center">
           <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i>
@@ -37,3 +54,8 @@
     </form>
   </div>
 </div>
+<!---------------------------------------------------------------------------------------->
+<!-- Auth Footer -->
+<br /><br /><br /><br /><br />
+<app-auth-footer></app-auth-footer>
+<!---------------------------------------------------------------------------------------->

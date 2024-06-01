@@ -14,6 +14,7 @@ export class LoginComponent {
   user: any;
   isLoading: boolean = false;
   apiError: string = '';
+  showPassword: boolean = false;
   /*--------------------------------------------------------------------*/
   constructor(private _AuthService: AuthService, private _JwtService: JwtService, private _Router: Router) {}
   /*--------------------------------------------------------------------*/
@@ -59,6 +60,10 @@ export class LoginComponent {
       this.apiError = 'Please fill in all the required fields correctly.';
       this.isLoading = false;
     }
+  }
+  /*--------------------------------------------------------------------*/
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
   /*--------------------------------------------------------------------*/
 }

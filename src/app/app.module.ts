@@ -14,6 +14,10 @@ import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.
 import { MainHomeComponent } from './components/home/main-home/main-home.component';
 import { MainSliderComponent } from './components/home/main-slider/main-slider.component';
 import { MainBannerComponent } from './components/home/main-banner/main-banner.component';
+import { AuthFooterComponent } from './components/auth/auth-footer/auth-footer.component';
+import { UserCartComponent } from './components/user/user-cart/user-cart.component';
+import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { UserWishlistComponent } from './components/user/user-wishlist/user-wishlist.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -26,6 +30,10 @@ import { MainBannerComponent } from './components/home/main-banner/main-banner.c
     MainHomeComponent,
     MainSliderComponent,
     MainBannerComponent,
+    AuthFooterComponent,
+    UserCartComponent,
+    UserProfileComponent,
+    UserWishlistComponent,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
