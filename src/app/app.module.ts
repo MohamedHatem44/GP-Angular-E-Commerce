@@ -13,9 +13,20 @@ import { NavBarComponent } from './components/shared/nav-bar/nav-bar.component';
 import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.component';
 import { MainHomeComponent } from './components/home/main-home/main-home.component';
 import { MainSliderComponent } from './components/home/main-slider/main-slider.component';
+import { MainBannerComponent } from './components/home/main-banner/main-banner.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, FooterComponent, NavBarComponent, AdminPanelComponent, MainHomeComponent, MainSliderComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    RegisterComponent,
+    FooterComponent,
+    NavBarComponent,
+    AdminPanelComponent,
+    MainHomeComponent,
+    MainSliderComponent,
+    MainBannerComponent,
+  ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],

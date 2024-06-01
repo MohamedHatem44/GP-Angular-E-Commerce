@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
-import { Observable, of } from 'rxjs';
 /*--------------------------------------------------------------------*/
 @Injectable({
   providedIn: 'root',
@@ -24,8 +23,6 @@ export class JwtService {
   getUserIdFromToken(token: string): string | null {
     try {
       const decodedToken: any = jwtDecode(token);
-      console.log(decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
-
       return decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] || null;
     } catch (error) {
       console.error('Error decoding token', error);
