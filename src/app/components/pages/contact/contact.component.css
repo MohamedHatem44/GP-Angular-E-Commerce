@@ -15,3 +15,30 @@
   font-weight: bold;
   text-align: center;
 }
+/*--------------------------------------------*/
+.contact-form {
+  padding: 50px;
+  background: #fff;
+}
+.form-control {
+  border-radius: 10px;
+  border-color: #e6e6e6;
+}
+.form-control:focus {
+  border-color: #4193bf;
+}
+.btn-submit {
+  border-radius: 30px;
+  padding: 10px 20px;
+}
+/*--------------------------------------------*/
+.info-block {
+  padding: 50px;
+}
+.info-block p {
+  margin: 0;
+}
+.info-block a {
+  color: #5cb85c;
+}
+/*--------------------------------------------*/

@@ -74,3 +74,10 @@
   margin-top: 25px;
   padding-bottom: 9px;
 }
+
+/* reviews */
+.reviews {
+  padding-top: 100px;
+  padding-bottom: 30px;
+  color: rgb(82, 82, 82);
+}

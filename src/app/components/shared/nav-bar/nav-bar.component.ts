@@ -71,6 +71,12 @@ export class NavBarComponent implements OnInit {
   toggleCollapse(event: Event) {
     event.preventDefault();
     this.isCollapsed = !this.isCollapsed;
+    const togglerIcon = (event.currentTarget as HTMLElement).querySelector('.navbar-toggler-icon');
+    if (this.isCollapsed) {
+      this._renderer.removeClass(togglerIcon, 'open');
+    } else {
+      this._renderer.addClass(togglerIcon, 'open');
+    }
   }
   /*--------------------------------------------------------------------*/
   toggleDropdown(event: Event) {

@@ -1,0 +1,15 @@
+.navbar-toggler-icon {
+  transition: transform 0.6s ease;
+}
+
+.navbar-toggler-icon.open {
+  transform: rotate(90deg);
+}
+
+.collapse {
+  transition: height 0.6s ease;
+}
+
+.collapsing {
+  transition: height 0.6s ease;
+}
