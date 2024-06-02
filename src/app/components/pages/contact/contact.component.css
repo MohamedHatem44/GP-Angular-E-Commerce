@@ -1,0 +1,17 @@
+.about-section {
+  background-image: url('../../../../assets/images/bg-02.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-heading {
+  color: white;
+  font-size: 3.5rem;
+  font-weight: bold;
+  text-align: center;
+}

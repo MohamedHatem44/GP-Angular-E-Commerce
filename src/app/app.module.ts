@@ -24,6 +24,7 @@ import { BrandsComponent } from './components/shop/brands/brands.component';
 import { NotFoundComponent } from './components/pages/not-found/not-found.component';
 import { CategoriesComponent } from './components/shop/categories/categories.component';
 import { AboutComponent } from './components/pages/about/about.component';
+import { ContactComponent } from './components/pages/contact/contact.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { AboutComponent } from './components/pages/about/about.component';
     NotFoundComponent,
     CategoriesComponent,
     AboutComponent,
+    ContactComponent,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

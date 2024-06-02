@@ -12,6 +12,7 @@ import { NotFoundComponent } from './components/pages/not-found/not-found.compon
 import { BrandsComponent } from './components/shop/brands/brands.component';
 import { CategoriesComponent } from './components/shop/categories/categories.component';
 import { AboutComponent } from './components/pages/about/about.component';
+import { ContactComponent } from './components/pages/contact/contact.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'brands', component: BrandsComponent },
   { path: 'categories', component: CategoriesComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'contact', component: ContactComponent },
   { path: 'shop', component: MainShopComponent },
   { path: 'cart', component: UserCartComponent },
   { path: 'wishlist', component: UserWishlistComponent },
