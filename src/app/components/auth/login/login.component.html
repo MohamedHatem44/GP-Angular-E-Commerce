@@ -1,61 +1,66 @@
-<div class="d-flex justify-content-center mt-5">
-  <img src="../../../../assets/images/icons/logo-01.png" alt="IMG-LOGO" />
-</div>
-<!-------------------------------------------------------------------------------------------->
-<div class="container">
-  <div class="w-75 mx-auto py-4">
-    <h4 class="m-4 d-flex justify-content-center">Login Now</h4>
+<!---------------------------------------------------------------------------------------->
+<!-- Main content -->
+<div class="d-lg-flex half">
+  <div class="bg order-1 order-md-2" style="background-image: url('assets/images/login/login.jpg')"></div>
+  <div class="contents order-2 order-md-1">
+    <div class="d-flex justify-content-center pt-5">
+      <img src="../../../../assets/images/icons/logo-01.png" alt="IMG-LOGO" />
+    </div>
+    <!-------------------------------------------------------------------------------------------->
+    <div class="w-75 mx-auto py-5">
+      <h4 class="my-4 d-flex justify-content-center">Login Now</h4>
+      <p class="my-4 d-flex justify-content-center">To Have Access to All of our Products You need to Login</p>
 
-    <form (ngSubmit)="loginUser(loginForm)" [formGroup]="loginForm">
-      <!-------------------------------------------------------------------------------------------->
-      <!-- API Error -->
-      <div *ngIf="apiError" class="alert alert-danger">
-        {{ apiError }}
-      </div>
-      <!-------------------------------------------------------------------------------------------->
-      <!-- Email -->
-      <label for="email">Email</label>
-      <input formControlName="email" type="email" class="form-control mb-2" id="email" />
-
-      <div *ngIf="loginForm.get('email')?.errors && loginForm.get('email')?.touched" class="alert alert-danger">
-        <p *ngIf="loginForm.get('email')?.getError('email')" class="m-0">Email Invalid forexample aligmail.com</p>
-        <p *ngIf="loginForm.get('email')?.getError('required')" class="m-0">Email is Required</p>
-      </div>
-      <!-------------------------------------------------------------------------------------------->
-      <!-- Password -->
-      <label for="password">Password</label>
-      <div style="position: relative; width: 100%">
-        <input formControlName="password" [type]="showPassword ? 'text' : 'password'" class="form-control" id="password" />
-        <i
-          [class]="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"
-          (click)="togglePasswordVisibility()"
-          style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer"
-        ></i>
-      </div>
-
-      <div *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched" class="alert alert-danger">
-        <p *ngIf="loginForm.get('password')?.getError('pattern')" class="m-0">
-          Password must be start with uppercase letter then from 5 to 10 smallcase letters or numbers
-        </p>
-        <p *ngIf="loginForm.get('password')?.getError('required')" class="m-0">Password is Required</p>
-      </div>
-      <!-------------------------------------------------------------------------------------------->
-      <!-- Login Btn -->
-      <div class="d-flex justify-content-center flex-column">
-        <button [disabled]="loginForm.invalid" type="submit" class="btn btn-success my-5 w-25 d-flex mx-auto justify-content-center">
-          <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i>
-          <span *ngIf="!isLoading">Login</span>
-        </button>
-        <div class="d-flex justify-content-center">
-          Don't Have Account?
-          <a routerLink="/users/register"> Register Now </a>
+      <form (ngSubmit)="loginUser(loginForm)" [formGroup]="loginForm">
+        <!-------------------------------------------------------------------------------------------->
+        <!-- API Error -->
+        <div *ngIf="apiError" class="alert alert-danger">
+          {{ apiError }}
         </div>
-      </div>
-    </form>
+        <!-------------------------------------------------------------------------------------------->
+        <!-- Email -->
+        <label for="email">Email</label>
+        <input formControlName="email" type="email" class="form-control mb-2" id="email" placeholder="example@gmail.com" />
+
+        <div *ngIf="loginForm.get('email')?.errors && loginForm.get('email')?.touched" class="alert alert-danger">
+          <p *ngIf="loginForm.get('email')?.getError('email')" class="m-0">Invalid Email format</p>
+          <p *ngIf="loginForm.get('email')?.getError('required')" class="m-0">Email is Required</p>
+        </div>
+        <!-------------------------------------------------------------------------------------------->
+        <!-- Password -->
+        <label for="password">Password</label>
+        <div style="position: relative; width: 100%">
+          <input formControlName="password" [type]="showPassword ? 'text' : 'password'" class="form-control mb-2" id="password" placeholder="Password" />
+          <i
+            [class]="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"
+            (click)="togglePasswordVisibility()"
+            style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer"
+          ></i>
+        </div>
+
+        <div *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched" class="alert alert-danger">
+          <p *ngIf="loginForm.get('password')?.getError('pattern')" class="m-0">
+            Password must be start with uppercase letter then from 5 to 10 smallcase letters or numbers
+          </p>
+          <p *ngIf="loginForm.get('password')?.getError('required')" class="m-0">Password is Required</p>
+        </div>
+        <!-------------------------------------------------------------------------------------------->
+        <!-- Login Btn -->
+        <div class="d-flex justify-content-center flex-column">
+          <button [disabled]="loginForm.invalid" type="submit" class="btn btn-success my-5 w-25 d-flex mx-auto justify-content-center">
+            <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i>
+            <span *ngIf="!isLoading">Login</span>
+          </button>
+          <div class="d-flex justify-content-center pb-5">
+            Don't Have Account?
+            <a routerLink="/users/register"> Register Now </a>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 <!---------------------------------------------------------------------------------------->
 <!-- Auth Footer -->
-<br /><br /><br /><br /><br />
 <app-auth-footer></app-auth-footer>
 <!---------------------------------------------------------------------------------------->
