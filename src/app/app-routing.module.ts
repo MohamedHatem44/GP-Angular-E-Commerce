@@ -8,17 +8,23 @@ import { UserCartComponent } from './components/user/user-cart/user-cart.compone
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { UserWishlistComponent } from './components/user/user-wishlist/user-wishlist.component';
 import { MainShopComponent } from './components/shop/main-shop/main-shop.component';
+import { NotFoundComponent } from './components/pages/not-found/not-found.component';
+import { BrandsComponent } from './components/shop/brands/brands.component';
+import { CategoriesComponent } from './components/shop/categories/categories.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: MainHomeComponent },
-  { path: 'adminPanel', component: AdminPanelComponent },
+  { path: 'adminpanel', component: AdminPanelComponent },
+  { path: 'brands', component: BrandsComponent },
+  { path: 'categories', component: CategoriesComponent },
   { path: 'shop', component: MainShopComponent },
   { path: 'cart', component: UserCartComponent },
   { path: 'wishlist', component: UserWishlistComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'users/login', component: LoginComponent },
   { path: 'users/register', component: RegisterComponent },
+  { path: '**', component: NotFoundComponent },
 ];
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({

@@ -3,7 +3,7 @@
   <div>
     <router-outlet></router-outlet>
   </div>
-  <div [style.height]="!hideFooter() ? '' : '40vh'">
+  <div [style.height]="!hideFooter() ? '50vh' : ''">
     <app-footer *ngIf="!hideFooter()"></app-footer>
   </div>
 </div>

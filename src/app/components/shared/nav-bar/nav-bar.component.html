@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark px-4">
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand me-5" href="#">
+    <i class="fa-solid fa-store me-2"></i>
     <img src="../../../../assets/images/icons/logo-02.png" alt="IMG-LOGO" />
   </a>
 
@@ -28,9 +29,9 @@
       <li class="nav-item dropdown" (click)="toggleDropdown($event)">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"> More </a>
         <div class="dropdown-menu" [class.show]="!isDropdownCollapsed" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Categories</a>
+          <a class="dropdown-item" routerLink="categories" routerLinkActive="fw-bold" [routerLinkActiveOptions]="{ exact: true }">Categories</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Brands</a>
+          <a class="dropdown-item" routerLink="brands" routerLinkActive="fw-bold" [routerLinkActiveOptions]="{ exact: true }">Brands</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>
         </div>

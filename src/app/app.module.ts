@@ -19,6 +19,10 @@ import { UserCartComponent } from './components/user/user-cart/user-cart.compone
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { UserWishlistComponent } from './components/user/user-wishlist/user-wishlist.component';
 import { MainShopComponent } from './components/shop/main-shop/main-shop.component';
+import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
+import { BrandsComponent } from './components/shop/brands/brands.component';
+import { NotFoundComponent } from './components/pages/not-found/not-found.component';
+import { CategoriesComponent } from './components/shop/categories/categories.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -36,6 +40,10 @@ import { MainShopComponent } from './components/shop/main-shop/main-shop.compone
     UserProfileComponent,
     UserWishlistComponent,
     MainShopComponent,
+    AdminSidebarComponent,
+    BrandsComponent,
+    NotFoundComponent,
+    CategoriesComponent,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

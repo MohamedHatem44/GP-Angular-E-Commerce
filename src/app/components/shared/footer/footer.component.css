@@ -39,6 +39,7 @@ a {
 
 .footer-02 a {
   color: #4240bf;
+  transition: color 0.2s ease;
 }
 
 .footer-02 p {
