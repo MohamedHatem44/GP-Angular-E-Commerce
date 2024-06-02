@@ -33,7 +33,7 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" routerLink="brands" routerLinkActive="fw-bold" [routerLinkActiveOptions]="{ exact: true }">Brands</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+          <a class="dropdown-item" routerLink="about" routerLinkActive="fw-bold" [routerLinkActiveOptions]="{ exact: true }">About</a>
         </div>
       </li>
     </ul>
@@ -45,7 +45,9 @@
       </li>
       <!-- Register -->
       <li *ngIf="!isLogin" class="nav-item">
-        <a class="nav-link" aria-current="page" routerLink="users/register" routerLinkActive="text-white" [routerLinkActiveOptions]="{ exact: true }"> Register </a>
+        <a class="nav-link" aria-current="page" routerLink="users/register" routerLinkActive="text-white" [routerLinkActiveOptions]="{ exact: true }">
+          Register
+        </a>
       </li>
       <!-- Profile -->
       <li class="nav-item" *ngIf="isLogin && isUser">

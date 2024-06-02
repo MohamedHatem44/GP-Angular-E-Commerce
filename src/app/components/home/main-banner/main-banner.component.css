@@ -14,6 +14,11 @@
 .block1 img {
   width: 100%;
   height: auto;
+  transition: transform 0.6s ease-in-out;
+}
+
+.block1:hover img {
+  transform: scale(1.1);
 }
 
 .block1 .block1-txt {
@@ -29,6 +34,7 @@
   padding: 15px;
   color: #fff;
   flex-direction: column;
+  transition: background 0.6s ease-in-out;
 }
 
 .block1 .block1-txt .block1-txt-child1 {
@@ -52,7 +58,7 @@
   padding: 10px 15px;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
   color: white;
 }
 

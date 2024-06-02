@@ -23,6 +23,7 @@ import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-si
 import { BrandsComponent } from './components/shop/brands/brands.component';
 import { NotFoundComponent } from './components/pages/not-found/not-found.component';
 import { CategoriesComponent } from './components/shop/categories/categories.component';
+import { AboutComponent } from './components/pages/about/about.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { CategoriesComponent } from './components/shop/categories/categories.com
     BrandsComponent,
     NotFoundComponent,
     CategoriesComponent,
+    AboutComponent,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

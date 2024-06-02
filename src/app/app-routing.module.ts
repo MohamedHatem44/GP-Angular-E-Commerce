@@ -11,6 +11,7 @@ import { MainShopComponent } from './components/shop/main-shop/main-shop.compone
 import { NotFoundComponent } from './components/pages/not-found/not-found.component';
 import { BrandsComponent } from './components/shop/brands/brands.component';
 import { CategoriesComponent } from './components/shop/categories/categories.component';
+import { AboutComponent } from './components/pages/about/about.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'adminpanel', component: AdminPanelComponent },
   { path: 'brands', component: BrandsComponent },
   { path: 'categories', component: CategoriesComponent },
+  { path: 'about', component: AboutComponent },
   { path: 'shop', component: MainShopComponent },
   { path: 'cart', component: UserCartComponent },
   { path: 'wishlist', component: UserWishlistComponent },
