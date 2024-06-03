@@ -25,6 +25,8 @@ import { NotFoundComponent } from './components/pages/not-found/not-found.compon
 import { CategoriesComponent } from './components/shop/categories/categories.component';
 import { AboutComponent } from './components/pages/about/about.component';
 import { ContactComponent } from './components/pages/contact/contact.component';
+import { BlogComponent } from './components/pages/blog/blog.component';
+import { MainCardsComponent } from './components/home/main-cards/main-cards.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { ContactComponent } from './components/pages/contact/contact.component';
     CategoriesComponent,
     AboutComponent,
     ContactComponent,
+    BlogComponent,
+    MainCardsComponent,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

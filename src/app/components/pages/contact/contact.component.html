@@ -13,16 +13,33 @@
         <div class="col-md-6 border">
           <div class="contact-form">
             <h4 class="text-center">Send Us A Message</h4>
-            <form>
-              <div class="form-group my-4">
+            <form (ngSubmit)="sendMessage(messageForm)" [formGroup]="messageForm">
+              <div *ngIf="apiError" class="alert alert-danger">
+                {{ apiError }}
+              </div>
+              <!-- Email -->
+              <div class="form-group mt-5">
                 <label for="email" class="sr-only">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Your Email Address" />
+                <input formControlName="email" type="email" class="form-control" id="email" placeholder="Your Email Address" />
               </div>
-              <div class="form-group my-4">
+              <div *ngIf="messageForm.get('email')?.errors && messageForm.get('email')?.touched" class="alert alert-danger mt-2">
+                <p *ngIf="messageForm.get('email')?.getError('email')" class="m-0">Email Invalid for example example&commat;mail.com</p>
+                <p *ngIf="messageForm.get('email')?.getError('required')" class="m-0">Email is Required</p>
+              </div>
+              <!-- Message -->
+              <div class="form-group mt-5">
                 <label for="message" class="sr-only">Message</label>
-                <textarea class="form-control" id="message" rows="5" placeholder="How Can We Help?"></textarea>
+                <textarea formControlName="messageDetails" class="form-control" id="message" rows="5" placeholder="How Can We Help?"></textarea>
               </div>
-              <button type="submit" class="btn btn-dark btn-block btn-submit w-100 my-4">Submit</button>
+              <div *ngIf="messageForm.get('messageDetails')?.errors && messageForm.get('messageDetails')?.touched" class="alert alert-danger mt-2">
+                <p *ngIf="messageForm.get('messageDetails')?.getError('required')" class="m-0">Message Details is Required</p>
+                <p *ngIf="messageForm.get('messageDetails')?.getError('minlength')" class="m-0">Message must be between 50 and 1000 characters</p>
+                <p *ngIf="messageForm.get('messageDetails')?.getError('maxlength')" class="m-0">Message must be between 50 and 1000 characters</p>
+              </div>
+              <!-- Submit -->
+              <button [disabled]="messageForm.invalid" type="submit" class="btn btn-dark btn-block btn-submit w-100 my-4">
+                <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i> <span *ngIf="!isLoading">Submit</span>
+              </button>
             </form>
           </div>
         </div>

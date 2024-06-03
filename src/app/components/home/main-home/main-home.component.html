@@ -15,7 +15,9 @@
       </div>
       <div class="row">
         <div class="col">
-          <button class="btn btn-dark" routerLink="/users/login" routerLinkActive="fw-bold text-primary" [routerLinkActiveOptions]="{ exact: true }">Login</button>
+          <button class="btn btn-dark" routerLink="/users/login" routerLinkActive="fw-bold text-primary" [routerLinkActiveOptions]="{ exact: true }">
+            Login
+          </button>
         </div>
       </div>
       <div class="row pt-3 pb-3">
@@ -23,7 +25,9 @@
       </div>
       <div class="row">
         <div class="col">
-          <button class="btn btn-dark" routerLink="/users/register" routerLinkActive="fw-bold text-primary" [routerLinkActiveOptions]="{ exact: true }">Register</button>
+          <button class="btn btn-dark" routerLink="/users/register" routerLinkActive="fw-bold text-primary" [routerLinkActiveOptions]="{ exact: true }">
+            Register
+          </button>
         </div>
       </div>
     </section>
@@ -32,4 +36,28 @@
 <!---------------------------------------------------------------------------------------->
 <!-- Banner -->
 <app-main-banner></app-main-banner>
+<!---------------------------------------------------------------------------------------->
+<!-- Cards -->
+<app-main-cards></app-main-cards>
+<!---------------------------------------------------------------------------------------->
+<!-- <section> begin ============================-->
+<section>
+  <div class="container my-5 bg-light">
+    <div class="row h-100">
+      <div class="col-md-6">
+        <div class="p-4 h-100 d-flex flex-column justify-content-center">
+          <h1 class="fw-semi-bold fs-4 mb-3">Gentle Formal Looks</h1>
+          <p class="mb-5 fs-5">We provide the top formal apparel package to make your job look confident and comfortable.</p>
+          <div class="d-grid gap-2 d-md-block"><a class="btn btn-lg btn-dark" routerLink="/shop" role="button">Explore Collection</a></div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="h-100 text-white hov-img0">
+          <img class="card-img h-100" src="assets/images/majestic/sharp-dress.png" alt="..." />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- <section> close ============================-->
 <!---------------------------------------------------------------------------------------->

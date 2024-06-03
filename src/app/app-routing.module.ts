@@ -13,6 +13,7 @@ import { BrandsComponent } from './components/shop/brands/brands.component';
 import { CategoriesComponent } from './components/shop/categories/categories.component';
 import { AboutComponent } from './components/pages/about/about.component';
 import { ContactComponent } from './components/pages/contact/contact.component';
+import { BlogComponent } from './components/pages/blog/blog.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'adminpanel', component: AdminPanelComponent },
   { path: 'brands', component: BrandsComponent },
   { path: 'categories', component: CategoriesComponent },
+  { path: 'blog', component: BlogComponent },
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'shop', component: MainShopComponent },

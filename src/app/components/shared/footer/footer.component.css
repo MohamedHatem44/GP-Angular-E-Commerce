@@ -39,7 +39,13 @@ a {
 
 .footer-02 a {
   color: #4240bf;
-  transition: color 0.2s ease;
+  /* transition: color 0.4s ease; */
+  transition: color 0.5s ease, text-decoration 0.6s ease;
+}
+
+.footer-02 a:hover {
+  color: #fff;
+  /* text-decoration: underline; */
 }
 
 .footer-02 p {
