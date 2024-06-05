@@ -14,20 +14,29 @@ import { CategoriesComponent } from './components/shop/categories/categories.com
 import { AboutComponent } from './components/pages/about/about.component';
 import { ContactComponent } from './components/pages/contact/contact.component';
 import { BlogComponent } from './components/pages/blog/blog.component';
+import { AdminLandingComponent } from './components/admin/admin-landing/admin-landing.component';
+import { ProductDetailsComponent } from './components/shop/product-details/product-details.component';
+import { UserOrdersComponent } from './components/user/user-orders/user-orders.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: MainHomeComponent },
-  { path: 'adminpanel', component: AdminPanelComponent },
+  {
+    path: 'adminpanel',
+    component: AdminPanelComponent,
+    children: [{ path: '', component: AdminLandingComponent, pathMatch: 'full' }],
+  },
   { path: 'brands', component: BrandsComponent },
   { path: 'categories', component: CategoriesComponent },
   { path: 'blog', component: BlogComponent },
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'shop', component: MainShopComponent },
+  { path: 'productDetails/:id', component: ProductDetailsComponent },
   { path: 'cart', component: UserCartComponent },
   { path: 'wishlist', component: UserWishlistComponent },
   { path: 'profile', component: UserProfileComponent },
+  { path: 'orders', component: UserOrdersComponent },
   { path: 'users/login', component: LoginComponent },
   { path: 'users/register', component: RegisterComponent },
   { path: '**', component: NotFoundComponent },

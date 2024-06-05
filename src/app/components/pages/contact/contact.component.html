@@ -4,6 +4,10 @@
   <h2 class="about-heading">Contact</h2>
 </section>
 <!-------------------------------------------------------------------------------------------->
+<section class="d-flex justify-content-center pt-5">
+  <h2 class="">Contact For Any Queries</h2>
+</section>
+<!-------------------------------------------------------------------------------------------->
 <div class="container">
   <div class="row justify-content-center my-5">
     <div class="col-md-12">
@@ -38,7 +42,7 @@
               </div>
               <!-- Submit -->
               <button [disabled]="messageForm.invalid" type="submit" class="btn btn-dark btn-block btn-submit w-100 my-4">
-                <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i> <span *ngIf="!isLoading">Submit</span>
+                <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i> <span *ngIf="!isLoading">Send Message</span>
               </button>
             </form>
           </div>
@@ -69,6 +73,22 @@
               <strong>Sale Support</strong>
             </p>
             <p class="ms-4"><a href="mailto:contact@example.com">contact&commat;example.com</a></p>
+          </div>
+
+          <!-- Follow Us -->
+          <div class="d-flex justify-content-center mb-4">
+            <h2>Follow Us</h2>
+          </div>
+          <!-- Social -->
+          <div class="d-flex justify-content-center mb-4">
+            <li class="nav-item d-flex align-items-center socialMedia">
+              <a href="#"> <i class="fab mx-3 fa-xl fa-instagram"></i></a>
+              <a href="#"> <i class="fab mx-3 fa-xl fa-facebook cursor-pointer"></i> </a>
+              <a href="#"> <i class="fab mx-3 fa-xl fa-tiktok cursor-pointer"></i> </a>
+              <a href="#"> <i class="fab mx-3 fa-xl fa-twitter cursor-pointer"></i> </a>
+              <a href="#"> <i class="fab mx-3 fa-xl fa-linkedin cursor-pointer"></i> </a>
+              <a href="#"> <i class="fab mx-3 fa-xl fa-youtube cursor-pointer"></i></a>
+            </li>
           </div>
         </div>
       </div>

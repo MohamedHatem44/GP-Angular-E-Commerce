@@ -14,6 +14,9 @@ export class BrandsComponent implements OnInit {
   /*--------------------------------------------------------------------*/
   // Ctor
   constructor(private _BrandsService: BrandService) {}
+  // launchModal() {
+  //   $('#exampleModal').modal('show'); // You might need to import jQuery
+  // }
   /*--------------------------------------------------------------------*/
   ngOnInit(): void {
     this.loading = true;

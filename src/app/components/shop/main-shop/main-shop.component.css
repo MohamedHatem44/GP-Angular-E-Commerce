@@ -1,5 +1,6 @@
 .about-section {
   background-image: url('../../../../assets/images/majestic/header-bg.png');
+  /* filter: brightness(50%); */
   background-size: cover;
   background-position: center;
   position: relative;
@@ -8,9 +9,8 @@
   align-items: center;
   justify-content: center;
 }
-
 .about-heading {
-  color: white;
+  color: rgb(39, 39, 39);
   font-size: 3.5rem;
   font-weight: bold;
   text-align: center;

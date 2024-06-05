@@ -27,6 +27,10 @@ import { AboutComponent } from './components/pages/about/about.component';
 import { ContactComponent } from './components/pages/contact/contact.component';
 import { BlogComponent } from './components/pages/blog/blog.component';
 import { MainCardsComponent } from './components/home/main-cards/main-cards.component';
+import { AdminLandingComponent } from './components/admin/admin-landing/admin-landing.component';
+import { ProductsComponent } from './components/shop/products/products.component';
+import { ProductDetailsComponent } from './components/shop/product-details/product-details.component';
+import { UserOrdersComponent } from './components/user/user-orders/user-orders.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -52,6 +56,10 @@ import { MainCardsComponent } from './components/home/main-cards/main-cards.comp
     ContactComponent,
     BlogComponent,
     MainCardsComponent,
+    AdminLandingComponent,
+    ProductsComponent,
+    ProductDetailsComponent,
+    UserOrdersComponent,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

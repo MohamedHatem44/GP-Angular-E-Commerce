@@ -14,8 +14,13 @@ export class CategoryService {
   constructor(private _HttpClient: HttpClient) {}
   /*-----------------------------------------------------------------*/
   // Get list of Categories
-  getAllcategories(): Observable<Category[]> {
+  getAllCategories(): Observable<Category[]> {
     return this._HttpClient.get<Category[]>(this.baseUrl);
+  }
+  /*-----------------------------------------------------------------*/
+  // Get list of Categories with Products
+  getAllCategoriesWithProducts(): Observable<Category[]> {
+    return this._HttpClient.get<Category[]>(this.baseUrl + '/CategoriesWithProducts');
   }
   /*-----------------------------------------------------------------*/
   // Get specific Category by id

@@ -17,7 +17,7 @@ export class CategoriesComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   ngOnInit(): void {
     this.loading = true;
-    this._CategoryService.getAllcategories().subscribe({
+    this._CategoryService.getAllCategories().subscribe({
       next: (response: any) => {
         this.categoriesItem = response.categories;
         this.loading = false;
