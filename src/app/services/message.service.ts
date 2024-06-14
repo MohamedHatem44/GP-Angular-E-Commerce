@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, delay } from 'rxjs';
 import { Message } from '../models/message';
 /*--------------------------------------------------------------------*/
 @Injectable({
@@ -18,6 +18,12 @@ export class MessageService {
     return this._HttpClient.get<Message[]>(this.baseUrl);
   }
   /*------------------------------------------------------------------*/
+  // Get All Messages with Pagination
+  getAllMessagesWithPagination(pageNumber: number): Observable<Message[]> {
+    const params = new HttpParams().set('pageNumber', pageNumber);
+    return this._HttpClient.get<Message[]>(`${this.baseUrl}/AllMessages`, { params }).pipe(delay(3000));
+  }
+  /*------------------------------------------------------------------*/
   // Get a Specific Message By Id
   getMessageById(messageId: number): Observable<Message> {
     return this._HttpClient.get<Message>(`${this.baseUrl}/${messageId}`);
@@ -30,7 +36,7 @@ export class MessageService {
   /*------------------------------------------------------------------*/
   // Delete a Specific Message By Id
   deleteMessage(messageId: number): Observable<Object> {
-    return this._HttpClient.delete<Object>(`${this.baseUrl}/${messageId}`);
+    return this._HttpClient.delete<Object>(`${this.baseUrl}/${messageId}`).pipe(delay(6000));
   }
   /*------------------------------------------------------------------*/
 }

@@ -35,7 +35,7 @@ export class LoginComponent {
             const role = this._JwtService.getRoleFromToken(token);
             if (role == 'Admin') {
               this.isLoading = false;
-              this._Router.navigate(['/adminPanel']);
+              this._Router.navigate(['/adminpanel']);
             } else {
               this.isLoading = false;
               this._Router.navigate(['/home']);

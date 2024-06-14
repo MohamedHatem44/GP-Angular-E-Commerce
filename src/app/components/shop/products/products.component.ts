@@ -15,12 +15,12 @@ export class ProductsComponent implements OnInit {
   products: any[] = [];
   categories: Category[] = [];
   brands: Brand[] = [];
-  isSpin: boolean = false;
+  productsIsSpin: boolean = false;
   /*--------------------------------------------------------------------*/
   constructor(private _ProductService: ProductService, private _CategoryService: CategoryService, private _BrandService: BrandService) {}
   /*--------------------------------------------------------------------*/
   ngOnInit(): void {
-    this.isSpin = true;
+    this.productsIsSpin = true;
     this.fetchProducts();
     this.fetchCategories();
     this.fetchBrands();
@@ -32,7 +32,7 @@ export class ProductsComponent implements OnInit {
       next: (response: any) => {
         console.log(response);
         this.products = response.products;
-        this.isSpin = false;
+        this.productsIsSpin = false;
       },
       error: (err) => {
         console.log(err);

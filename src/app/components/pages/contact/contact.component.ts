@@ -27,11 +27,14 @@ export class ContactComponent {
       this._MessageService.createMessage(messageForm.value).subscribe({
         next: (response) => {
           if (response) {
+            console.log(response);
             this.isLoading = false;
             this.messageForm.reset();
           }
         },
         error: (err) => {
+          console.log(err);
+
           this.isLoading = false;
           this.apiError = 'An error occurred while sending the message. Please try again later';
         },

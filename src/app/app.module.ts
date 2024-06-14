@@ -4,13 +4,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 /*-----------------------------------------------------------------------------------------------------------------*/
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { NavBarComponent } from './components/shared/nav-bar/nav-bar.component';
-import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.component';
 import { MainHomeComponent } from './components/home/main-home/main-home.component';
 import { MainSliderComponent } from './components/home/main-slider/main-slider.component';
 import { MainBannerComponent } from './components/home/main-banner/main-banner.component';
@@ -27,10 +27,17 @@ import { AboutComponent } from './components/pages/about/about.component';
 import { ContactComponent } from './components/pages/contact/contact.component';
 import { BlogComponent } from './components/pages/blog/blog.component';
 import { MainCardsComponent } from './components/home/main-cards/main-cards.component';
-import { AdminLandingComponent } from './components/admin/admin-landing/admin-landing.component';
 import { ProductsComponent } from './components/shop/products/products.component';
 import { ProductDetailsComponent } from './components/shop/product-details/product-details.component';
 import { UserOrdersComponent } from './components/user/user-orders/user-orders.component';
+import { AdminMessagesComponent } from './components/admin/admin-messages/admin-messages.component';
+import { AdminBrandsComponent } from './components/admin/admin-brands/admin-brands.component';
+import { LoadingSpinnerV1Component } from './components/shared/loading-spinner-v1/loading-spinner-v1.component';
+import { DeleteConfirmationModalComponent } from './components/shared/delete-confirmation-modal/delete-confirmation-modal.component';
+import { ToastrModule } from 'ngx-toastr';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { AdminMainComponent } from './components/admin/admin-main/admin-main.component';
+import { AdminMessageDetailsModelComponent } from './components/admin/admin-message-details-model/admin-message-details-model.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -39,7 +46,6 @@ import { UserOrdersComponent } from './components/user/user-orders/user-orders.c
     RegisterComponent,
     FooterComponent,
     NavBarComponent,
-    AdminPanelComponent,
     MainHomeComponent,
     MainSliderComponent,
     MainBannerComponent,
@@ -56,12 +62,32 @@ import { UserOrdersComponent } from './components/user/user-orders/user-orders.c
     ContactComponent,
     BlogComponent,
     MainCardsComponent,
-    AdminLandingComponent,
     ProductsComponent,
     ProductDetailsComponent,
     UserOrdersComponent,
+    AdminMessagesComponent,
+    AdminBrandsComponent,
+    LoadingSpinnerV1Component,
+    DeleteConfirmationModalComponent,
+    AdminDashboardComponent,
+    AdminMainComponent,
+    AdminMessageDetailsModelComponent,
   ],
-  imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgbModule,
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      progressBar: true,
+      progressAnimation: 'increasing',
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),
+  ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })

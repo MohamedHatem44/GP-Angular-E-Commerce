@@ -1,1 +1,39 @@
-<p>admin side bar</p>
+<div class="sidebar">
+  <!-- Start of Logo -->
+  <div class="container" id="logo">
+    <div class="d-flex justify-content-center py-4">
+      <img src="../../../../assets/images/icons/logo-02.png" alt="IMG-LOGO" />
+    </div>
+  </div>
+  <!-- End of Logo -->
+  <!-- End of Dashboard -->
+  <a routerLink="/admindashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="active">
+    <i class="fas fa-qrcode me-3"></i>
+    <span class="d-none d-sm-inline">Dashboard</span>
+  </a>
+  <!-- End of Dashboard -->
+  <a href="#">
+    <i class="fas fa-link me-3"></i>
+    <span class="d-none d-sm-inline">Shortcuts</span>
+  </a>
+  <a href="#">
+    <i class="fas fa-stream me-3"></i>
+    <span class="d-none d-sm-inline">Overview</span>
+  </a>
+  <a href="#">
+    <i class="fas fa-calendar me-3"></i>
+    <span class="d-none d-sm-inline">Events</span>
+  </a>
+  <a href="#">
+    <i class="far fa-question-circle me-3"></i>
+    <span class="d-none d-sm-inline">About</span>
+  </a>
+  <a href="#">
+    <i class="fas fa-sliders-h me-3"></i>
+    <span class="d-none d-sm-inline">Services</span>
+  </a>
+  <a routerLink="messages" routerLinkActive="bg-dark" [routerLinkActiveOptions]="{ exact: true }">
+    <i class="far fa-envelope me-3"></i>
+    <span class="d-none d-sm-inline">Message</span>
+  </a>
+</div>

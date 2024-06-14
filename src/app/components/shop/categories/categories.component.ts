@@ -9,23 +9,35 @@ import { CategoryService } from '../../../services/category.service';
 })
 /*--------------------------------------------------------------------*/
 export class CategoriesComponent implements OnInit {
-  categoriesItem: Category[] = [];
   loading: boolean = false;
+  categories: Category[] = [];
+  groupedCategories: Category[][] = [];
   /*-----------------------------------------------------------------*/
   // Ctor
   constructor(private _CategoryService: CategoryService) {}
   /*-----------------------------------------------------------------*/
   ngOnInit(): void {
-    this.loading = true;
-    this._CategoryService.getAllCategories().subscribe({
+    // this.loading = true;
+    this.fetchCategories();
+  }
+  /*-----------------------------------------------------------------*/
+  // Fetch Categories
+  private fetchCategories(): void {
+    this._CategoryService.getAllCategoriesWithProducts().subscribe({
       next: (response: any) => {
-        this.categoriesItem = response.categories;
-        this.loading = false;
+        console.log(response);
+        this.categories = response.categories;
+        this.groupCategories();
       },
       error: (err) => {
-        this.loading = false;
+        console.log(err);
       },
     });
   }
-  /*--------------------------------------------------------------------*/
+  /*-----------------------------------------------------------------*/
+  private groupCategories(): void {
+    for (let i = 0; i < this.categories.length; i += 4) {
+      this.groupedCategories.push(this.categories.slice(i, i + 4));
+    }
+  }
 }
