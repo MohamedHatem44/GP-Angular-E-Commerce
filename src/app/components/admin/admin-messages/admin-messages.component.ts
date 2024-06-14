@@ -34,7 +34,7 @@ export class AdminMessagesComponent implements OnInit {
     this.fetchMessages(this.currentPage);
   }
   /*-----------------------------------------------------------------*/
-  // Fetch Categories
+  // Fetch Messages
   fetchMessages(page: number): void {
     this.messageLoading = true;
     this.apiError = null;
@@ -94,6 +94,11 @@ export class AdminMessagesComponent implements OnInit {
     });
   }
   /*-----------------------------------------------------------------*/
+  openMessageDetailsModal(message: Message): void {
+    const modalRef = this.modalService.open(AdminMessageDetailsModelComponent);
+    modalRef.componentInstance.message = message;
+  }
+  /*-----------------------------------------------------------------*/
   deleteMessage(messageId: number): void {
     const message = this.messages.find((msg) => msg.id === messageId);
     if (message) {
@@ -119,9 +124,4 @@ export class AdminMessagesComponent implements OnInit {
     }
   }
   /*-----------------------------------------------------------------*/
-
-  openMessageDetailsModal(message: Message): void {
-    const modalRef = this.modalService.open(AdminMessageDetailsModelComponent);
-    modalRef.componentInstance.message = message;
-  }
 }

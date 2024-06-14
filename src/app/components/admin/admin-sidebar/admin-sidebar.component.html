@@ -1,4 +1,6 @@
+<!----------------------------------------------------------------------------------------------->
 <div class="sidebar">
+  <!--------------------------------------------------------------------------------------------->
   <!-- Start of Logo -->
   <div class="container" id="logo">
     <div class="d-flex justify-content-center py-4">
@@ -6,7 +8,8 @@
     </div>
   </div>
   <!-- End of Logo -->
-  <!-- End of Dashboard -->
+  <!--------------------------------------------------------------------------------------------->
+  <!-- Start of Dashboard -->
   <a routerLink="/admindashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="active">
     <i class="fas fa-qrcode me-3"></i>
     <span class="d-none d-sm-inline">Dashboard</span>
@@ -16,24 +19,59 @@
     <i class="fas fa-link me-3"></i>
     <span class="d-none d-sm-inline">Shortcuts</span>
   </a>
+  <!--------------------------------------------------------------------------------------------->
   <a href="#">
     <i class="fas fa-stream me-3"></i>
     <span class="d-none d-sm-inline">Overview</span>
   </a>
+  <!--------------------------------------------------------------------------------------------->
   <a href="#">
     <i class="fas fa-calendar me-3"></i>
     <span class="d-none d-sm-inline">Events</span>
   </a>
+  <!--------------------------------------------------------------------------------------------->
   <a href="#">
     <i class="far fa-question-circle me-3"></i>
     <span class="d-none d-sm-inline">About</span>
   </a>
+  <!--------------------------------------------------------------------------------------------->
   <a href="#">
     <i class="fas fa-sliders-h me-3"></i>
     <span class="d-none d-sm-inline">Services</span>
   </a>
-  <a routerLink="messages" routerLinkActive="bg-dark" [routerLinkActiveOptions]="{ exact: true }">
-    <i class="far fa-envelope me-3"></i>
-    <span class="d-none d-sm-inline">Message</span>
+  <!--------------------------------------------------------------------------------------------->
+  <!-- Start of Users -->
+  <a routerLink="users" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+    <i class="fa fa-users me-3"></i>
+    <span class="d-none d-sm-inline">Users</span>
   </a>
+  <!-- End of Users -->
+  <!--------------------------------------------------------------------------------------------->
+  <!-- Start of Messages -->
+  <a routerLink="messages" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+    <i class="far fa-envelope me-3"></i>
+    <span class="d-none d-sm-inline">Messages</span>
+  </a>
+  <!-- End of Messages -->
+  <!--------------------------------------------------------------------------------------------->
+  <!-- <div class="dropdown py-sm-4 mt-sm-auto ms-auto ms-sm-0 flex-shrink-1">
+    <a
+      href="#"
+      class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+      id="dropdownUser1"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      <img src="https://github.com/mdo.png" alt="hugenerd" width="28" height="28" class="rounded-circle" />
+      <span class="d-none d-sm-inline mx-1">Admin</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+      <li><a class="dropdown-item" href="#">New project...</a></li>
+      <li><a class="dropdown-item" href="#">Settings</a></li>
+      <li><a class="dropdown-item" href="#">Profile</a></li>
+      <li><a class="dropdown-item" href="#">Sign out</a></li>
+    </ul>
+  </div> -->
+  <!--------------------------------------------------------------------------------------------->
 </div>
+<!----------------------------------------------------------------------------------------------->

@@ -38,6 +38,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { AdminMainComponent } from './components/admin/admin-main/admin-main.component';
 import { AdminMessageDetailsModelComponent } from './components/admin/admin-message-details-model/admin-message-details-model.component';
+import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { AdminMessageDetailsModelComponent } from './components/admin/admin-mess
     AdminDashboardComponent,
     AdminMainComponent,
     AdminMessageDetailsModelComponent,
+    AdminUsersComponent,
   ],
   imports: [
     BrowserModule,

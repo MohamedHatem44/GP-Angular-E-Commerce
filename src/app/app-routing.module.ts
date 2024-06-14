@@ -18,6 +18,7 @@ import { UserOrdersComponent } from './components/user/user-orders/user-orders.c
 import { AdminMessagesComponent } from './components/admin/admin-messages/admin-messages.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { AdminMainComponent } from './components/admin/admin-main/admin-main.component';
+import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -27,6 +28,7 @@ const routes: Routes = [
     component: AdminDashboardComponent,
     children: [
       { path: '', component: AdminMainComponent, pathMatch: 'full' },
+      { path: 'users', component: AdminUsersComponent },
       { path: 'messages', component: AdminMessagesComponent },
     ],
   },
