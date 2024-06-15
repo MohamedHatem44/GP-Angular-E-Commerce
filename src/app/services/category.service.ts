@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, delay } from 'rxjs';
 import { Category } from '../models/category';
 /*--------------------------------------------------------------------*/
 @Injectable({
@@ -20,7 +20,7 @@ export class CategoryService {
   /*-----------------------------------------------------------------*/
   // Get list of Categories with Products
   getAllCategoriesWithProducts(): Observable<Category[]> {
-    return this._HttpClient.get<Category[]>(this.baseUrl + '/CategoriesWithProducts');
+    return this._HttpClient.get<Category[]>(this.baseUrl + '/CategoriesWithProducts').pipe(delay(3000));
   }
   /*-----------------------------------------------------------------*/
   // Get specific Category by id

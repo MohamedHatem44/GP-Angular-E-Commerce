@@ -81,3 +81,9 @@
   padding-bottom: 30px;
   color: rgb(82, 82, 82);
 }
+/*--------------------------------------------*/
+.breadcrumb-item + .breadcrumb-item::before {
+  content: '/';
+  color: white;
+}
+/*--------------------------------------------*/

@@ -1,22 +1,70 @@
-<!-- <p>brands works!</p> -->
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<!-------------------------------------------------------------------------------------------->
+<!-- Page Title -->
+<section class="about-section d-flex flex-column">
+  <h2 class="about-heading">Brands</h2>
+  <!-- Start of Breadcrumb -->
+  <nav aria-label="breadcrumb" class="pt-3">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a class="text-decoration-none text-white fs-5" routerLink="/home"><i class="fa-solid fa-house fa-lg me-2"></i>Shop</a>
+      </li>
+      <li class="breadcrumb-item active text-white fs-5" aria-current="page">Brands</li>
+    </ol>
+  </nav>
+  <!-- End of Breadcrumb -->
+</section>
+<!-------------------------------------------------------------------------------------------->
+<!-- Page Title -->
+<section class="d-flex justify-content-center">
+  <h2 class="py-5">Our Brands</h2>
+</section>
+<!-------------------------------------------------------------------------------------------->
+<div class="container-fluid d-flex justify-content-center bg-light pb-6">
+  <div class="col-10">
+    <div class="row">
+      <!-------------------------------------------------------------------------------------------->
+      <!-- Start of Search -->
+      <div class="col-12 d-flex justify-content-center py-6">
+        <div class="w-75">
+          <form action="">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search" />
+              <i class="fa fa-search" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer"></i>
+            </div>
+          </form>
+        </div>
       </div>
-      <div class="modal-body">...</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      <!-- End of Search -->
+      <!-------------------------------------------------------------------------------------------->
+      <!-- Brands Loading -->
+      <div class="container d-flex justify-content-center p-5" *ngIf="brandsLoading">
+        <div class="spinner-border text-dark" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
       </div>
+      <!-------------------------------------------------------------------------------------------->
+      <!-- Start of Brands -->
+      <ng-container *ngIf="!brandsLoading">
+        <div *ngFor="let brand of brands" class="col-lg-3 col-md-6 col-sm-10">
+          <div class="card product-item border-0 mb-4 bg-light">
+            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+              <img class="img-fluid w-100 product-image" [src]="brand.imageUrl" alt="" />
+              <div class="overlay">
+                <!-- <a [routerLink]="['/productDetails', category.id]" class="btn btn-light text-dark overlay-btn fs-6 fw-bold">View</a> -->
+              </div>
+            </div>
+            <div class="card-body text-center py-2">
+              <h6 class="text-truncate py-1 mb-1">{{ brand.name }}</h6>
+              <div class="d-flex justify-content-between">
+                <h6>No of Products</h6>
+                <h6 class="text-muted">{{ brand.products.length }}</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <!-- End of Brands -->
+      <!-------------------------------------------------------------------------------------------->
     </div>
   </div>
 </div>

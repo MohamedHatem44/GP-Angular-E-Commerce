@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BrandService } from '../../../services/brand.service';
 import { Brand } from '../../../models/brand';
+import { BrandService } from '../../../services/brand.service';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-brands',
@@ -9,26 +9,29 @@ import { Brand } from '../../../models/brand';
 })
 /*--------------------------------------------------------------------*/
 export class BrandsComponent implements OnInit {
-  brandsItems: Brand[] = [];
-  loading: boolean = false;
-  /*--------------------------------------------------------------------*/
+  brands: Brand[] = [];
+  brandsLoading: boolean = false;
+  /*-----------------------------------------------------------------*/
   // Ctor
   constructor(private _BrandsService: BrandService) {}
-  // launchModal() {
-  //   $('#exampleModal').modal('show'); // You might need to import jQuery
-  // }
-  /*--------------------------------------------------------------------*/
   ngOnInit(): void {
-    this.loading = true;
-    this._BrandsService.getAllBrands().subscribe({
+    this.brandsLoading = true;
+    this.fetchBrands();
+  }
+  /*-----------------------------------------------------------------*/
+  // Fetch Brands
+  private fetchBrands(): void {
+    this.brandsLoading = true;
+    this._BrandsService.getAllBrandsWithProducts().subscribe({
       next: (response: any) => {
-        this.brandsItems = response.brands;
-        this.loading = false;
+        this.brands = response.brands;
+        this.brandsLoading = false;
       },
       error: (err) => {
-        this.loading = false;
+        console.log(err);
+        this.brandsLoading = false;
       },
     });
   }
-  /*--------------------------------------------------------------------*/
+  /*-----------------------------------------------------------------*/
 }
