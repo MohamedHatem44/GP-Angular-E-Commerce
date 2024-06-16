@@ -32,13 +32,14 @@ import { ProductDetailsComponent } from './components/shop/product-details/produ
 import { UserOrdersComponent } from './components/user/user-orders/user-orders.component';
 import { AdminMessagesComponent } from './components/admin/admin-messages/admin-messages.component';
 import { AdminBrandsComponent } from './components/admin/admin-brands/admin-brands.component';
-import { LoadingSpinnerV1Component } from './components/shared/loading-spinner-v1/loading-spinner-v1.component';
 import { DeleteConfirmationModalComponent } from './components/shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { ToastrModule } from 'ngx-toastr';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { AdminMainComponent } from './components/admin/admin-main/admin-main.component';
 import { AdminMessageDetailsModelComponent } from './components/admin/admin-message-details-model/admin-message-details-model.component';
 import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
+import { SkeletonLoaderComponent } from './components/shared/skeleton-loader/skeleton-loader.component';
+import { LoaderSpinnerComponent } from './components/shared/loader-spinner/loader-spinner.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -68,12 +69,13 @@ import { AdminUsersComponent } from './components/admin/admin-users/admin-users.
     UserOrdersComponent,
     AdminMessagesComponent,
     AdminBrandsComponent,
-    LoadingSpinnerV1Component,
     DeleteConfirmationModalComponent,
     AdminDashboardComponent,
     AdminMainComponent,
     AdminMessageDetailsModelComponent,
     AdminUsersComponent,
+    SkeletonLoaderComponent,
+    LoaderSpinnerComponent,
   ],
   imports: [
     BrowserModule,

@@ -19,6 +19,7 @@ import { AdminMessagesComponent } from './components/admin/admin-messages/admin-
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { AdminMainComponent } from './components/admin/admin-main/admin-main.component';
 import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
+import { AdminBrandsComponent } from './components/admin/admin-brands/admin-brands.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -28,6 +29,7 @@ const routes: Routes = [
     component: AdminDashboardComponent,
     children: [
       { path: '', component: AdminMainComponent, pathMatch: 'full' },
+      { path: 'brands', component: AdminBrandsComponent },
       { path: 'users', component: AdminUsersComponent },
       { path: 'messages', component: AdminMessagesComponent },
     ],

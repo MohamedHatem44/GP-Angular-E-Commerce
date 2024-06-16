@@ -1,0 +1,45 @@
+/*--------------------------------------------*/
+.skeleton-loader {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+/*--------------------------------------------*/
+.skeleton {
+  background: #e0e0e0;
+  border-radius: 4px;
+  min-height: 30px;
+  position: relative;
+  overflow: hidden;
+}
+/*--------------------------------------------*/
+.skeleton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150px;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+  animation: wavy 2.5s infinite;
+}
+/*--------------------------------------------*/
+.skeleton-text {
+  width: 100%;
+  /* height: 30px; */
+  height: auto;
+}
+/*--------------------------------------------*/
+/* Wavy animation */
+@keyframes wavy {
+  0% {
+    left: -150px;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+/*--------------------------------------------*/

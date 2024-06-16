@@ -1,4 +1,5 @@
 <!----------------------------------------------------------------------------------------------->
+<!-- Start of Main Card -->
 <div class="container pt-6">
   <div class="card mt-3 mb-5 bg-light shadow p-2 bg-body rounded">
     <div class="card-body">
@@ -16,6 +17,7 @@
     </div>
   </div>
 </div>
+<!-- End of Main Card -->
 <hr />
 <!----------------------------------------------------------------------------------------------->
 <!-- Start of Messages Table -->
@@ -64,7 +66,7 @@
             </table>
           </div>
           <!-- Start of Messages Loading -->
-          <app-loading-spinner-v1 *ngIf="messageLoading"></app-loading-spinner-v1>
+          <app-skeleton-loader *ngIf="messageLoading"></app-skeleton-loader>
           <!-- End of Messages Loading -->
           <!-- Start of Error Message -->
           <div *ngIf="apiError" class="alert alert-danger my-8" role="alert">
