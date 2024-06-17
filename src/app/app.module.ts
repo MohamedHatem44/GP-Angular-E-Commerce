@@ -32,7 +32,7 @@ import { ProductDetailsComponent } from './components/shop/product-details/produ
 import { UserOrdersComponent } from './components/user/user-orders/user-orders.component';
 import { AdminMessagesComponent } from './components/admin/admin-messages/admin-messages.component';
 import { AdminBrandsComponent } from './components/admin/admin-brands/admin-brands.component';
-import { DeleteConfirmationModalComponent } from './components/shared/delete-confirmation-modal/delete-confirmation-modal.component';
+import { DeleteConfirmationModalComponent } from './components/modals/delete-confirmation-modal/delete-confirmation-modal.component';
 import { ToastrModule } from 'ngx-toastr';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { AdminMainComponent } from './components/admin/admin-main/admin-main.component';
@@ -42,7 +42,10 @@ import { LoaderSpinnerComponent } from './components/shared/loader-spinner/loade
 import { AdminBrandDetailsModelComponent } from './components/admin/admin-brand-details-model/admin-brand-details-model.component';
 import { LoaderSkeletonV1Component } from './components/shared/loader-skeleton-v1/loader-skeleton-v1.component';
 import { LoaderSkeletonV2Component } from './components/shared/loader-skeleton-v2/loader-skeleton-v2.component';
-import { ImgModalComponent } from './components/shared/img-modal/img-modal.component';
+import { ImgModalComponent } from './components/modals/img-modal/img-modal.component';
+import { AdminBrandFormComponent } from './components/admin/admin-brand-form/admin-brand-form.component';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { SaveConfirmationModalComponent } from './components/modals/save-confirmation-modal/save-confirmation-modal.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -82,9 +85,13 @@ import { ImgModalComponent } from './components/shared/img-modal/img-modal.compo
     LoaderSkeletonV1Component,
     LoaderSkeletonV2Component,
     ImgModalComponent,
+    AdminBrandFormComponent,
+    SaveConfirmationModalComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule,
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,

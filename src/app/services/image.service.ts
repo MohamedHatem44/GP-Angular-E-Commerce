@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { uploadImage } from '../models/uploadImage';
 /*--------------------------------------------------------------------*/
 @Injectable({
   providedIn: 'root',
@@ -13,8 +14,11 @@ export class ImageService {
   constructor(private _HttpClient: HttpClient) {}
   /*------------------------------------------------------------------*/
   // Upload Image
-  uploadImage(image: FormData): Observable<FormData> {
-    return this._HttpClient.post<FormData>(this.baseUrl, image);
+  uploadImage(formFile: File, controllerName: string): Observable<uploadImage> {
+    var form = new FormData();
+    form.append('formFile', formFile);
+    form.append('controllerName', controllerName);
+    return this._HttpClient.post<uploadImage>(this.baseUrl, form);
   }
   /*------------------------------------------------------------------*/
 }

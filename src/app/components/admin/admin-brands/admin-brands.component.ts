@@ -3,9 +3,11 @@ import { BrandService } from '../../../services/brand.service';
 import { Brand } from '../../../models/brand';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { DeleteConfirmationModalComponent } from '../../shared/delete-confirmation-modal/delete-confirmation-modal.component';
+import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
 import { AdminBrandDetailsModelComponent } from '../admin-brand-details-model/admin-brand-details-model.component';
-import { ImgModalComponent } from '../../shared/img-modal/img-modal.component';
+import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
+import { Router } from '@angular/router';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-brands',
@@ -28,10 +30,16 @@ export class AdminBrandsComponent {
   apiError: string | null = null;
   noBrands: boolean = false;
   searchInput: string = '';
+  searchInputChanged: Subject<string> = new Subject<string>();
   /*-----------------------------------------------------------------*/
   // Ctor
-  constructor(private _BrandService: BrandService, private _ModalService: NgbModal, private _ToastrService: ToastrService) {}
+  constructor(private _BrandService: BrandService, private _Router: Router, private _ModalService: NgbModal, private _ToastrService: ToastrService) {
+    this.searchInputChanged.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
+      this.searchBrands(searchTerm);
+    });
+  }
   /*-----------------------------------------------------------------*/
+  // Ng OnInit
   ngOnInit(): void {
     this.brandsLoading = true;
     this.fetchBrands(this.currentPage);
@@ -43,7 +51,6 @@ export class AdminBrandsComponent {
     this.apiError = null;
     this._BrandService.getAllBrandsWithPagination(page, this.pageSize, brandName).subscribe({
       next: (response: any) => {
-        console.log(response);
         this.brands = response.items.map((brand: Brand) => ({ ...brand, deleting: false }));
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;
@@ -60,6 +67,7 @@ export class AdminBrandsComponent {
     });
   }
   /*-----------------------------------------------------------------*/
+  // Change Page
   changePage(page: number): void {
     this.brandsLoading = true;
     if (page >= 1 && page <= this.totalPages) {
@@ -67,6 +75,7 @@ export class AdminBrandsComponent {
     }
   }
   /*-----------------------------------------------------------------*/
+  // Update Entry Range
   updateEntryRange(): void {
     this.startEntry = (this.currentPage - 1) * this.pageSize + 1;
     this.endEntry = Math.min(this.startEntry + this.pageSize - 1, this.totalCount);
@@ -81,7 +90,6 @@ export class AdminBrandsComponent {
       end = this.totalPages;
       start = Math.max(end - this.maxPagesToShow + 1, 1);
     }
-    /*-----------------------------------------------------------------*/
     const pages = [];
     for (let i = start; i <= end; i++) {
       pages.push(i);
@@ -89,6 +97,7 @@ export class AdminBrandsComponent {
     return pages;
   }
   /*-----------------------------------------------------------------*/
+  // Open Delete Confirmation Modal
   openDeleteConfirmationModal(brandId: number): void {
     const modalRef = this._ModalService.open(DeleteConfirmationModalComponent);
     this.brandIdToDelete = brandId;
@@ -98,16 +107,19 @@ export class AdminBrandsComponent {
     });
   }
   /*-----------------------------------------------------------------*/
+  // Open Brand Details Modal
   openBrandDetailsModal(brand: Brand): void {
     const modalRef = this._ModalService.open(AdminBrandDetailsModelComponent, { size: 'lg' });
     modalRef.componentInstance.brand = brand;
   }
   /*-----------------------------------------------------------------*/
+  // Open Img Modal
   openImgModal(brand: Brand): void {
     const modalRef = this._ModalService.open(ImgModalComponent);
     modalRef.componentInstance.model = brand;
   }
   /*-----------------------------------------------------------------*/
+  // Delete Brand
   deleteBrand(brandId: number): void {
     const message = this.brands.find((msg) => msg.id === brandId);
     if (message) {
@@ -132,8 +144,19 @@ export class AdminBrandsComponent {
     }
   }
   /*-----------------------------------------------------------------*/
-  searchBrands(): void {
-    this.fetchBrands(this.currentPage, this.searchInput.trim());
+  // Search Brands
+  onSearchInputChanged(searchTerm: string): void {
+    this.searchInputChanged.next(searchTerm);
+  }
+  /*-----------------------------------------------------------------*/
+  // Search
+  searchBrands(searchTerm: string = this.searchInput.trim()): void {
+    this.fetchBrands(this.currentPage, searchTerm);
+  }
+  /*-----------------------------------------------------------------*/
+  // Edit Brand
+  editBrand(brandId: number) {
+    this._Router.navigate([`/admindashboard/editbrand/${brandId}`]);
   }
   /*-----------------------------------------------------------------*/
 }

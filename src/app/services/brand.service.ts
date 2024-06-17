@@ -14,42 +14,55 @@ export class BrandService {
   constructor(private _HttpClient: HttpClient) {}
   /*------------------------------------------------------------------*/
   // Get All Brands With Related Products With Pagination
+  // Get: api/Brands/AllBrands
   getAllBrandsWithPagination(pageNumber: number, pageSize: number = 5, brandName?: string): Observable<Brand[]> {
     let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
     if (brandName) {
       params = params.set('brandName', brandName);
     }
-    return this._HttpClient.get<Brand[]>(`${this.baseUrl}/AllBrands`, { params }).pipe(delay(0));
+    return this._HttpClient.get<Brand[]>(`${this.baseUrl}/AllBrands`, { params }).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
-  // Get list of Brands
+  // Get All Brands Without Products
+  // Get: api/Brands
   getAllBrands(): Observable<Brand[]> {
-    return this._HttpClient.get<Brand[]>(this.baseUrl);
+    return this._HttpClient.get<Brand[]>(this.baseUrl).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
-  // Get list of Brands with Products
+  // Get All Brands With Products
+  // Get: api/Brands/BrandsWithProducts
   getAllBrandsWithProducts(): Observable<Brand[]> {
-    return this._HttpClient.get<Brand[]>(this.baseUrl + '/BrandsWithProducts');
+    return this._HttpClient.get<Brand[]>(this.baseUrl + '/BrandsWithProducts').pipe(delay(3000));
   }
   /*-----------------------------------------------------------------*/
-  // Get specific Brand by id
+  // Get a Specific Brand By Id Without Products
+  // Get: api/Brands/{id}
   getBrandById(brandId: number): Observable<Brand> {
     return this._HttpClient.get<Brand>(`${this.baseUrl}/${brandId}`);
   }
   /*------------------------------------------------------------------*/
-  // Create Brand
-  createBrand(brand: FormData): Observable<Brand> {
-    return this._HttpClient.post<Brand>(this.baseUrl, brand);
+  // Get a Specific Brand By Id With Products
+  // Get: api/Brands/{id}/BrandsWithProducts
+  getBrandByIdWithProducts(brandId: number): Observable<Brand> {
+    return this._HttpClient.get<Brand>(`${this.baseUrl}/${brandId}` + '/BrandsWithProducts');
   }
   /*------------------------------------------------------------------*/
-  // Update specific Brand
-  updateBrand(brandId: number, brand: FormData): Observable<Brand> {
-    return this._HttpClient.patch<Brand>(`${this.baseUrl}/${brandId}`, brand);
+  // Create a New Brand
+  // Post: api/Brands
+  createBrand(brand: Brand): Observable<Brand> {
+    return this._HttpClient.post<Brand>(this.baseUrl, brand).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
-  // Delete specific Brand
+  // Update a Specific Brand With Id
+  // Put: api/Brands/{id}
+  updateBrand(brandId: number, brand: Brand): Observable<Brand> {
+    return this._HttpClient.put<Brand>(`${this.baseUrl}/${brandId}`, brand).pipe(delay(3000));
+  }
+  /*------------------------------------------------------------------*/
+  // Delete a Specific Brand By Id
+  // Delete: api/Brands/{id}
   deleteBrand(brandId: number): Observable<Object> {
-    return this._HttpClient.delete<Object>(`${this.baseUrl}/${brandId}`);
+    return this._HttpClient.delete<Object>(`${this.baseUrl}/${brandId}`).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
 }

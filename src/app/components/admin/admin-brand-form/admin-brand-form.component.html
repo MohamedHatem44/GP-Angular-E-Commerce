@@ -1,0 +1,95 @@
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Main Card -->
+<div class="container pt-6">
+  <div class="card mt-3 mb-5 bg-light shadow p-2 bg-body rounded">
+    <div class="card-body">
+      <h5 class="card-title fs-4">Brands Form</h5>
+      <h5 class="fs-6 mb-4">You can add or edit Brands here</h5>
+      <!-- Start of Breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb fs-6">
+          <li class="breadcrumb-item">
+            <a class="text-decoration-none text-dark" routerLink="/admindashboard"><i class="fas fa-tachometer-alt fa-lg me-2"></i>Admin Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active text-dark fs-6" aria-current="page">{{ editMode ? 'Edit Brand' : 'Add Brand' }}</li>
+        </ol>
+      </nav>
+      <!-- End of Breadcrumb -->
+    </div>
+  </div>
+</div>
+<!-- End of Main Card -->
+<hr />
+<!----------------------------------------------------------------------------------------------->
+<div class="container mt-5 pb-8">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title fs-4 mb-3">{{ editMode ? 'Edit Brand' : 'Add Brand' }}</h5>
+      <!----------------------------------------------------------------------------------------->
+      <!-- Add Brand Form -->
+      <form [formGroup]="brandForm">
+        <!-- Start of Brand Name -->
+        <div class="mb-3">
+          <label for="brandName" class="form-label">Brand Name</label>
+          <input type="text" class="form-control" id="brandName" formControlName="name" name="brandName" required />
+          <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="brandForm.get('name')?.errors && brandForm.get('name')?.touched">
+            <span *ngIf="brandForm.get('name')?.errors?.['required']" class="text-danger">Brand Name is required</span>
+            <span *ngIf="brandForm.get('name')?.errors?.['pattern']" class="text-danger">Invalid Brand Name. only alphabets allowed</span>
+            <span *ngIf="brandForm.get('name')?.errors?.['minlength']" class="text-danger">Invalid Brand Name, Min length is 3</span>
+            <span *ngIf="brandForm.get('name')?.errors?.['maxlength']" class="text-danger">Invalid Brand Name, Max length is 15</span>
+          </div>
+        </div>
+        <!-- End of Brand Name -->
+        <!--------------------------------------------------------------------------------------->
+        <!-- Start of Brand Description -->
+        <div class="mb-3">
+          <label for="brandDescription" class="form-label">Brand Description</label>
+          <textarea type="text" class="form-control" id="brandDescription" formControlName="description" name="brandDescription" required></textarea>
+          <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="brandForm.get('description')?.errors && brandForm.get('description')?.touched">
+            <span *ngIf="brandForm.get('description')?.errors?.['required']" class="text-danger">Brand Description is required</span>
+            <span *ngIf="brandForm.get('description')?.errors?.['minlength']" class="text-danger">Invalid Brand Description, Min length is 20</span>
+            <span *ngIf="brandForm.get('description')?.errors?.['maxlength']" class="text-danger">Invalid Brand Description, Max length is 250</span>
+          </div>
+        </div>
+        <!-- End of Brand Description -->
+        <!-- Start of Brand Image -->
+        <div class="mb-2">
+          <!--------------------------------------------------------------------------------------->
+          <label for="brandImage" class="form-label">Brand Image</label>
+          <br />
+          <input type="file" class="form-control-file" id="brandImage" name="brandImage" accept="image/*" (change)="onImageUpload($event)" required />
+          <div>
+            <img [src]="responseImageUrl" alt="" class="w-25 mt-4" />
+          </div>
+          <br />
+          <div class="mb-5 col-sm-12 errors" *ngIf="brandForm.get('image')?.errors && brandForm.get('image')?.dirty">
+            <span *ngIf="brandForm.get('image')?.errors?.['required']" class="text-danger">Please select an image</span>
+          </div>
+          <div class="mb-2 col-sm-12 errors" *ngIf="imageError">
+            <span class="text-danger">{{ imageError }}</span>
+          </div>
+          <hr />
+        </div>
+        <!-- End of Brand Image -->
+        <!--------------------------------------------------------------------------------------->
+        <!-- Start of API Error -->
+        <div *ngIf="apiError" class="alert alert-danger my-3" role="alert">
+          {{ apiError }}
+        </div>
+        <!-- End of API Error -->
+        <!--------------------------------------------------------------------------------------->
+        <!-- Start of Save Button with Spinner and Disabled State -->
+        <div class="d-flex justify-content-center mt-3">
+          <button type="submit" class="btn btn-success" (click)="openSaveConfirmationModal($event)" [disabled]="brandForm.invalid">
+            <i *ngIf="isLoading" class="fas fa-spinner fa-spin mx-4"></i>
+            <span *ngIf="!isLoading"> {{ editMode ? 'Update' : ' + Create' }}</span>
+          </button>
+          <button type="reset" class="btn btn-secondary ms-4" routerLink="/admindashboard/brands" (click)="resetAll()">Cancel</button>
+        </div>
+        <!-- End of Save Button with Spinner and Disabled State -->
+      </form>
+      <!----------------------------------------------------------------------------------------------->
+    </div>
+  </div>
+  <!----------------------------------------------------------------------------------------------->
+</div>

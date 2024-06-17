@@ -30,6 +30,10 @@
   padding-top: 5rem !important;
   padding-bottom: 5rem !important;
 }
+.py-8 {
+  padding-top: 6rem !important;
+  padding-bottom: 6rem !important;
+}
 /*--------------------------------------------*/
 /* Padding X */
 .px-6 {
@@ -39,6 +43,21 @@
 .px-7 {
   padding-left: 5rem !important;
   padding-right: 5rem !important;
+}
+.px-8 {
+  padding-left: 6rem !important;
+  padding-right: 6rem !important;
+}
+/*--------------------------------------------*/
+/* Margin Bottom */
+.mb-6 {
+  margin-bottom: 4rem !important;
+}
+.mb-7 {
+  margin-bottom: 5rem !important;
+}
+.mb-8 {
+  margin-bottom: 6rem !important;
 }
 /*--------------------------------------------*/
 /* Margin Y */
