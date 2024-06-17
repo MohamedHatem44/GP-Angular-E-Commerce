@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, delay } from 'rxjs';
 import { Category } from '../models/category';
@@ -8,39 +8,61 @@ import { Category } from '../models/category';
 })
 /*--------------------------------------------------------------------*/
 export class CategoryService {
-  baseUrl = 'http://localhost:5185/api/categories';
-  /*--------------------------------------------------------------------*/
+  baseUrl = 'http://localhost:5185/api/Categories';
+  /*------------------------------------------------------------------*/
   // Ctor
   constructor(private _HttpClient: HttpClient) {}
-  /*-----------------------------------------------------------------*/
-  // Get list of Categories
-  getAllCategories(): Observable<Category[]> {
-    return this._HttpClient.get<Category[]>(this.baseUrl);
+  /*------------------------------------------------------------------*/
+  // Get All Categories With Related Products With Pagination
+  // Get: api/Categories/AllCategories
+  getAllBrandsWithPagination(pageNumber: number, pageSize: number = 5, categoryName?: string): Observable<Category[]> {
+    let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
+    if (categoryName) {
+      params = params.set('categoryName', categoryName);
+    }
+    return this._HttpClient.get<Category[]>(`${this.baseUrl}/AllCategories`, { params }).pipe(delay(3000));
   }
-  /*-----------------------------------------------------------------*/
-  // Get list of Categories with Products
+  /*------------------------------------------------------------------*/
+  // Get All Categories Without Products
+  // Get: api/Categories
+  getAllCategories(): Observable<Category[]> {
+    return this._HttpClient.get<Category[]>(this.baseUrl).pipe(delay(3000));
+  }
+  /*------------------------------------------------------------------*/
+  // Get All Categories With Products
+  // Get: api/Categories/CategoriesWithProducts
   getAllCategoriesWithProducts(): Observable<Category[]> {
     return this._HttpClient.get<Category[]>(this.baseUrl + '/CategoriesWithProducts').pipe(delay(3000));
   }
-  /*-----------------------------------------------------------------*/
-  // Get specific Category by id
+  /*------------------------------------------------------------------*/
+  // Get a Specific Category By Id Without Products
+  // Get: api/Categories/{id}
   getCategoryById(categoryId: number): Observable<Category> {
     return this._HttpClient.get<Category>(`${this.baseUrl}/${categoryId}`);
   }
-  /*-----------------------------------------------------------------*/
-  // Create Category
-  createCategory(category: FormData): Observable<Category> {
-    return this._HttpClient.post<Category>(this.baseUrl, category);
+  /*------------------------------------------------------------------*/
+  // Get a Specific Category By Id With Products
+  // Get: api/Categories/{id}/CategoriesWithProducts
+  getCategoryByIdWithProducts(categoryId: number): Observable<Category> {
+    return this._HttpClient.get<Category>(`${this.baseUrl}/${categoryId}` + '/CategoriesWithProducts');
   }
-  /*-----------------------------------------------------------------*/
-  // Update specific Category
-  updateCategory(categoryId: number, category: FormData): Observable<Category> {
-    return this._HttpClient.patch<Category>(`${this.baseUrl}/${categoryId}`, category);
+  /*------------------------------------------------------------------*/
+  // Create a New Category
+  // Post: api/Categories
+  createCategory(category: Category): Observable<Category> {
+    return this._HttpClient.post<Category>(this.baseUrl, category).pipe(delay(3000));
   }
-  /*-----------------------------------------------------------------*/
-  // Delete specific Category
+  /*------------------------------------------------------------------*/
+  // Update a Specific Category With Id
+  // Put: api/Categories/{id}
+  updateCategory(categoryId: number, category: Category): Observable<Category> {
+    return this._HttpClient.patch<Category>(`${this.baseUrl}/${categoryId}`, category).pipe(delay(3000));
+  }
+  /*------------------------------------------------------------------*/
+  // Delete a Specific Category With Id
+  // Delete: api/Categories/{id}
   deleteCategory(categoryId: number): Observable<Object> {
-    return this._HttpClient.delete<Object>(`${this.baseUrl}/${categoryId}`);
+    return this._HttpClient.delete<Object>(`${this.baseUrl}/${categoryId}`).pipe(delay(3000));
   }
-  /*-----------------------------------------------------------------*/
+  /*------------------------------------------------------------------*/
 }
