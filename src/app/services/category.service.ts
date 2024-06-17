@@ -15,7 +15,7 @@ export class CategoryService {
   /*------------------------------------------------------------------*/
   // Get All Categories With Related Products With Pagination
   // Get: api/Categories/AllCategories
-  getAllBrandsWithPagination(pageNumber: number, pageSize: number = 5, categoryName?: string): Observable<Category[]> {
+  getAllCategoriesWithPagination(pageNumber: number, pageSize: number = 5, categoryName?: string): Observable<Category[]> {
     let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
     if (categoryName) {
       params = params.set('categoryName', categoryName);

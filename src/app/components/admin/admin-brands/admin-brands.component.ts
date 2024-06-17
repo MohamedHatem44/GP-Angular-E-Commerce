@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BrandService } from '../../../services/brand.service';
 import { Brand } from '../../../models/brand';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -15,7 +15,7 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
   styleUrl: './admin-brands.component.css',
 })
 /*--------------------------------------------------------------------*/
-export class AdminBrandsComponent {
+export class AdminBrandsComponent implements OnInit {
   // Component properties
   brandsLoading: boolean = false;
   brandIdToDelete: number;
@@ -61,7 +61,7 @@ export class AdminBrandsComponent {
         this.noBrands = this.brands.length === 0;
       },
       error: (err) => {
-        this.apiError = 'Failed to load Brands. Please try again.';
+        this.apiError = 'Failed to load Brands, Please try again.';
         this.brandsLoading = false;
       },
     });
@@ -121,7 +121,7 @@ export class AdminBrandsComponent {
   /*-----------------------------------------------------------------*/
   // Delete Brand
   deleteBrand(brandId: number): void {
-    const message = this.brands.find((msg) => msg.id === brandId);
+    const message = this.brands.find((brand) => brand.id === brandId);
     if (message) {
       message.deleting = true;
       this._BrandService.deleteBrand(brandId).subscribe({
@@ -137,7 +137,7 @@ export class AdminBrandsComponent {
           this._ToastrService.success('Brand deleted successfully');
         },
         error: (err) => {
-          this._ToastrService.error('Failed to delete Brand. Please try again');
+          this._ToastrService.error('Failed to delete Brand, Please try again.');
           message.deleting = false;
         },
       });
