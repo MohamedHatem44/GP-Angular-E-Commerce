@@ -21,6 +21,7 @@ import { AdminMainComponent } from './components/admin/admin-main/admin-main.com
 import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
 import { AdminBrandsComponent } from './components/admin/admin-brands/admin-brands.component';
 import { AdminBrandFormComponent } from './components/admin/admin-brand-form/admin-brand-form.component';
+import { AdminCategoriesComponent } from './components/admin/admin-categories/admin-categories.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -30,6 +31,7 @@ const routes: Routes = [
     component: AdminDashboardComponent,
     children: [
       { path: '', component: AdminMainComponent, pathMatch: 'full' },
+      { path: 'categories', component: AdminCategoriesComponent },
       { path: 'brands', component: AdminBrandsComponent },
       { path: 'addbrand', component: AdminBrandFormComponent },
       { path: 'editbrand/:id', component: AdminBrandFormComponent },

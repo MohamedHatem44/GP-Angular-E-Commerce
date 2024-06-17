@@ -29,9 +29,9 @@
       <!-- Add Brand Form -->
       <form [formGroup]="brandForm">
         <!-- Start of Brand Name -->
-        <div class="mb-3">
+        <div class="mb-5">
           <label for="brandName" class="form-label">Brand Name</label>
-          <input type="text" class="form-control" id="brandName" formControlName="name" name="brandName" required />
+          <input type="text" class="form-control" id="brandName" formControlName="name" name="brandName" placeholder="Brand Name" required />
           <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="brandForm.get('name')?.errors && brandForm.get('name')?.touched">
             <span *ngIf="brandForm.get('name')?.errors?.['required']" class="text-danger">Brand Name is required</span>
             <span *ngIf="brandForm.get('name')?.errors?.['pattern']" class="text-danger">Invalid Brand Name. only alphabets allowed</span>
@@ -42,9 +42,17 @@
         <!-- End of Brand Name -->
         <!--------------------------------------------------------------------------------------->
         <!-- Start of Brand Description -->
-        <div class="mb-3">
+        <div class="mb-5">
           <label for="brandDescription" class="form-label">Brand Description</label>
-          <textarea type="text" class="form-control" id="brandDescription" formControlName="description" name="brandDescription" required></textarea>
+          <textarea
+            type="text"
+            class="form-control min-height-textarea"
+            id="brandDescription"
+            formControlName="description"
+            name="brandDescription"
+            placeholder="Brand Description"
+            required
+          ></textarea>
           <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="brandForm.get('description')?.errors && brandForm.get('description')?.touched">
             <span *ngIf="brandForm.get('description')?.errors?.['required']" class="text-danger">Brand Description is required</span>
             <span *ngIf="brandForm.get('description')?.errors?.['minlength']" class="text-danger">Invalid Brand Description, Min length is 20</span>
@@ -52,16 +60,16 @@
           </div>
         </div>
         <!-- End of Brand Description -->
+        <!--------------------------------------------------------------------------------------->
         <!-- Start of Brand Image -->
         <div class="mb-2">
-          <!--------------------------------------------------------------------------------------->
           <label for="brandImage" class="form-label">Brand Image</label>
-          <br />
-          <input type="file" class="form-control-file" id="brandImage" name="brandImage" accept="image/*" (change)="onImageUpload($event)" required />
-          <div>
+          <div class="input-group">
+            <input type="file" class="form-control" name="brandImage" accept="image/*" (change)="onImageUpload($event)" required />
+          </div>
+          <div class="d-flex justify-content-center">
             <img [src]="responseImageUrl" alt="" class="w-25 mt-4" />
           </div>
-          <br />
           <div class="mb-5 col-sm-12 errors" *ngIf="brandForm.get('image')?.errors && brandForm.get('image')?.dirty">
             <span *ngIf="brandForm.get('image')?.errors?.['required']" class="text-danger">Please select an image</span>
           </div>
