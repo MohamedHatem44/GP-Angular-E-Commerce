@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteConfirmationModalComponent } from '../../shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { AdminBrandDetailsModelComponent } from '../admin-brand-details-model/admin-brand-details-model.component';
+import { ImgModalComponent } from '../../shared/img-modal/img-modal.component';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-brands',
@@ -98,8 +99,13 @@ export class AdminBrandsComponent {
   }
   /*-----------------------------------------------------------------*/
   openBrandDetailsModal(brand: Brand): void {
-    const modalRef = this._ModalService.open(AdminBrandDetailsModelComponent);
-    modalRef.componentInstance.message = brand;
+    const modalRef = this._ModalService.open(AdminBrandDetailsModelComponent, { size: 'lg' });
+    modalRef.componentInstance.brand = brand;
+  }
+  /*-----------------------------------------------------------------*/
+  openImgModal(brand: Brand): void {
+    const modalRef = this._ModalService.open(ImgModalComponent);
+    modalRef.componentInstance.model = brand;
   }
   /*-----------------------------------------------------------------*/
   deleteBrand(brandId: number): void {

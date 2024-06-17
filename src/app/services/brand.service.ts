@@ -19,7 +19,7 @@ export class BrandService {
     if (brandName) {
       params = params.set('brandName', brandName);
     }
-    return this._HttpClient.get<Brand[]>(`${this.baseUrl}/AllBrands`, { params }).pipe(delay(3000));
+    return this._HttpClient.get<Brand[]>(`${this.baseUrl}/AllBrands`, { params }).pipe(delay(0));
   }
   /*------------------------------------------------------------------*/
   // Get list of Brands

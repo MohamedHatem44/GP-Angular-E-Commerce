@@ -21,7 +21,7 @@
 <hr />
 <!----------------------------------------------------------------------------------------------->
 <!-- Start of Search -->
-<div class="d-flex align-items-center justify-content-center mb-4">
+<div class="d-flex align-items-center justify-content-center mt-5">
   <div class="w-75">
     <form (submit)="searchBrands()">
       <div class="input-group">
@@ -33,13 +33,14 @@
 </div>
 <!-- End of Search -->
 <!----------------------------------------------------------------------------------------------->
-<!-- Start of Messages Table -->
+<!-- Start of Brands Table -->
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header">
+        <div class="card-header d-flex justify-content-between align-items-center">
           <h4 class="card-title">All Brands</h4>
+          <a type="button" class="btn btn-success" routerLink="/adminPanel/addBrand"><i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>Add</a>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -54,6 +55,7 @@
                   <th>Image</th>
                   <th></th>
                   <th></th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -64,13 +66,14 @@
                     <td>{{ brand.description | slice : 0 : 15 }}{{ brand.description.length > 15 ? '...' : '' }}</td>
                     <td>{{ brand.productsCount }}</td>
                     <td>{{ brand.createdAt | date : 'short' }}</td>
-                    <td><img [src]="brand.imageUrl" alt="Brand Image" width="100" height="100" /></td>
+                    <td><img [src]="brand.imageUrl" alt="Brand Image" width="100" height="100" (click)="openImgModal(brand)" style="cursor: pointer" /></td>
+                    <td><i class="fas fa-edit fa-lg" style="cursor: pointer" (click)="openBrandDetailsModal(brand)"></i></td>
                     <td><i class="fa-solid fa-info fa-lg" style="cursor: pointer" (click)="openBrandDetailsModal(brand)"></i></td>
                     <td>
-                      <i *ngIf="brand.deleting" class="fas fa-spinner fa-spin"></i>
+                      <i *ngIf="brand.deleting" class="fas fa-spinner fa-spin fa-lg"></i>
                       <i
                         *ngIf="!brand.deleting"
-                        class="fa-solid fa-trash text-danger"
+                        class="fa-solid fa-trash text-danger fa-lg"
                         style="cursor: pointer"
                         (click)="openDeleteConfirmationModal(brand.id)"
                       ></i>
@@ -80,17 +83,17 @@
               </tbody>
             </table>
           </div>
-          <!-- Start of Messages Loading -->
+          <!-- Start of Brands Loading -->
           <app-loader-skeleton-v2 *ngIf="brandsLoading"></app-loader-skeleton-v2>
-          <!-- End of Messages Loading -->
-          <!-- Start of Error Message -->
+          <!-- End of Brands Loading -->
+          <!-- Start of Error Brand -->
           <div *ngIf="apiError" class="alert alert-danger my-8" role="alert">
             {{ apiError }}
           </div>
-          <!-- End of Error Message -->
-          <!-- Start of No Messages Available -->
+          <!-- End of Error Brand -->
+          <!-- Start of No Brands Available -->
           <div *ngIf="!brandsLoading && !apiError && noBrands" class="alert alert-info my-8" role="alert">No Brands available</div>
-          <!-- End of No Messages Available -->
+          <!-- End of No Brands Available -->
         </div>
         <div class="card-footer d-flex justify-content-between" style="min-height: 50px">
           <p class="my-auto" *ngIf="!brandsLoading && !apiError && !noBrands">Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} entries</p>
@@ -99,7 +102,7 @@
     </div>
   </div>
 </div>
-<!-- End of Messages Table -->
+<!-- End of Brands Table -->
 <!----------------------------------------------------------------------------------------------->
 <!-- Start of Pagination -->
 <div *ngIf="!apiError && !noBrands" class="container d-flex justify-content-center mt-5">

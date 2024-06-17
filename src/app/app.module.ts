@@ -42,6 +42,7 @@ import { LoaderSpinnerComponent } from './components/shared/loader-spinner/loade
 import { AdminBrandDetailsModelComponent } from './components/admin/admin-brand-details-model/admin-brand-details-model.component';
 import { LoaderSkeletonV1Component } from './components/shared/loader-skeleton-v1/loader-skeleton-v1.component';
 import { LoaderSkeletonV2Component } from './components/shared/loader-skeleton-v2/loader-skeleton-v2.component';
+import { ImgModalComponent } from './components/shared/img-modal/img-modal.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { LoaderSkeletonV2Component } from './components/shared/loader-skeleton-v
     AdminBrandDetailsModelComponent,
     LoaderSkeletonV1Component,
     LoaderSkeletonV2Component,
+    ImgModalComponent,
   ],
   imports: [
     BrowserModule,
