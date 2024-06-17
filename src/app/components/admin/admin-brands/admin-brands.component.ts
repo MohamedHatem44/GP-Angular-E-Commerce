@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { BrandService } from '../../../services/brand.service';
 import { Brand } from '../../../models/brand';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
 import { AdminBrandDetailsModelComponent } from '../admin-brand-details-model/admin-brand-details-model.component';
 import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
-import { Router } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 /*--------------------------------------------------------------------*/
 @Component({

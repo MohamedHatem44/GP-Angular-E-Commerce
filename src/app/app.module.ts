@@ -47,6 +47,7 @@ import { AdminBrandFormComponent } from './components/admin/admin-brand-form/adm
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SaveConfirmationModalComponent } from './components/modals/save-confirmation-modal/save-confirmation-modal.component';
 import { AdminCategoriesComponent } from './components/admin/admin-categories/admin-categories.component';
+import { AdminCategoryDetailsModelComponent } from './components/admin/admin-category-details-model/admin-category-details-model.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { AdminCategoriesComponent } from './components/admin/admin-categories/ad
     AdminBrandFormComponent,
     SaveConfirmationModalComponent,
     AdminCategoriesComponent,
+    AdminCategoryDetailsModelComponent,
   ],
   imports: [
     BrowserModule,

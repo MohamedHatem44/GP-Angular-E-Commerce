@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from '../../../models/category';
-import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { CategoryService } from '../../../services/category.service';
+import { Category } from '../../../models/category';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
+import { AdminCategoryDetailsModelComponent } from '../admin-category-details-model/admin-category-details-model.component';
 import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-categories',
@@ -108,8 +109,8 @@ export class AdminCategoriesComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Open Category Details Modal
   openCategoryDetailsModal(category: Category): void {
-    // const modalRef = this._ModalService.open(AdminBrandDetailsModelComponent, { size: 'lg' });
-    // modalRef.componentInstance.brand = brand;
+    const modalRef = this._ModalService.open(AdminCategoryDetailsModelComponent, { size: 'lg' });
+    modalRef.componentInstance.category = category;
   }
   /*-----------------------------------------------------------------*/
   // Open Img Modal
