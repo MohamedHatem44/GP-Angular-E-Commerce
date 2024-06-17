@@ -38,8 +38,10 @@ import { AdminDashboardComponent } from './components/admin/admin-dashboard/admi
 import { AdminMainComponent } from './components/admin/admin-main/admin-main.component';
 import { AdminMessageDetailsModelComponent } from './components/admin/admin-message-details-model/admin-message-details-model.component';
 import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
-import { SkeletonLoaderComponent } from './components/shared/skeleton-loader/skeleton-loader.component';
 import { LoaderSpinnerComponent } from './components/shared/loader-spinner/loader-spinner.component';
+import { AdminBrandDetailsModelComponent } from './components/admin/admin-brand-details-model/admin-brand-details-model.component';
+import { LoaderSkeletonV1Component } from './components/shared/loader-skeleton-v1/loader-skeleton-v1.component';
+import { LoaderSkeletonV2Component } from './components/shared/loader-skeleton-v2/loader-skeleton-v2.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -74,8 +76,10 @@ import { LoaderSpinnerComponent } from './components/shared/loader-spinner/loade
     AdminMainComponent,
     AdminMessageDetailsModelComponent,
     AdminUsersComponent,
-    SkeletonLoaderComponent,
     LoaderSpinnerComponent,
+    AdminBrandDetailsModelComponent,
+    LoaderSkeletonV1Component,
+    LoaderSkeletonV2Component,
   ],
   imports: [
     BrowserModule,

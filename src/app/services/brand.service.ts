@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, delay } from 'rxjs';
 import { Brand } from '../models/brand';
 /*--------------------------------------------------------------------*/
 @Injectable({
@@ -8,10 +8,19 @@ import { Brand } from '../models/brand';
 })
 /*--------------------------------------------------------------------*/
 export class BrandService {
-  baseUrl = 'http://localhost:5185/api/brands';
+  baseUrl = 'http://localhost:5185/api/Brands';
   /*------------------------------------------------------------------*/
   // Ctor
   constructor(private _HttpClient: HttpClient) {}
+  /*------------------------------------------------------------------*/
+  // Get All Brands With Related Products With Pagination
+  getAllBrandsWithPagination(pageNumber: number, pageSize: number = 5, brandName?: string): Observable<Brand[]> {
+    let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
+    if (brandName) {
+      params = params.set('brandName', brandName);
+    }
+    return this._HttpClient.get<Brand[]>(`${this.baseUrl}/AllBrands`, { params }).pipe(delay(3000));
+  }
   /*------------------------------------------------------------------*/
   // Get list of Brands
   getAllBrands(): Observable<Brand[]> {

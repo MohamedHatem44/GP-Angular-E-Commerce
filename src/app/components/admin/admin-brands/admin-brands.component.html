@@ -1,0 +1,125 @@
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Main Card -->
+<div class="container pt-6">
+  <div class="card mt-3 mb-5 bg-light shadow p-2 bg-body rounded">
+    <div class="card-body">
+      <h5 class="card-title fs-4 mb-4">Brands Dashboard</h5>
+      <!-- Start of Breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb fs-6">
+          <li class="breadcrumb-item">
+            <a class="text-decoration-none text-dark" routerLink="/admindashboard"><i class="fas fa-tachometer-alt fa-lg me-2"></i>Admin Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active text-dark fs-6" aria-current="page">Brands</li>
+        </ol>
+      </nav>
+      <!-- End of Breadcrumb -->
+    </div>
+  </div>
+</div>
+<!-- End of Main Card -->
+<hr />
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Search -->
+<div class="d-flex align-items-center justify-content-center mb-4">
+  <div class="w-75">
+    <form (submit)="searchBrands()">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search By Brand Name" [(ngModel)]="searchInput" name="brandName" />
+        <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i> Search</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- End of Search -->
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Messages Table -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">All Brands</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table id="basic-datatables" class="display table table-striped table-hover border">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Products Count</th>
+                  <th>Time</th>
+                  <th>Image</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="!brandsLoading && !apiError && !noBrands">
+                  <tr *ngFor="let brand of brands; let i = index">
+                    <td>{{ brand.id }}</td>
+                    <td>{{ brand.name }}</td>
+                    <td>{{ brand.description | slice : 0 : 15 }}{{ brand.description.length > 15 ? '...' : '' }}</td>
+                    <td>{{ brand.productsCount }}</td>
+                    <td>{{ brand.createdAt | date : 'short' }}</td>
+                    <td><img [src]="brand.imageUrl" alt="Brand Image" width="100" height="100" /></td>
+                    <td><i class="fa-solid fa-info fa-lg" style="cursor: pointer" (click)="openBrandDetailsModal(brand)"></i></td>
+                    <td>
+                      <i *ngIf="brand.deleting" class="fas fa-spinner fa-spin"></i>
+                      <i
+                        *ngIf="!brand.deleting"
+                        class="fa-solid fa-trash text-danger"
+                        style="cursor: pointer"
+                        (click)="openDeleteConfirmationModal(brand.id)"
+                      ></i>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <!-- Start of Messages Loading -->
+          <app-loader-skeleton-v2 *ngIf="brandsLoading"></app-loader-skeleton-v2>
+          <!-- End of Messages Loading -->
+          <!-- Start of Error Message -->
+          <div *ngIf="apiError" class="alert alert-danger my-8" role="alert">
+            {{ apiError }}
+          </div>
+          <!-- End of Error Message -->
+          <!-- Start of No Messages Available -->
+          <div *ngIf="!brandsLoading && !apiError && noBrands" class="alert alert-info my-8" role="alert">No Brands available</div>
+          <!-- End of No Messages Available -->
+        </div>
+        <div class="card-footer d-flex justify-content-between" style="min-height: 50px">
+          <p class="my-auto" *ngIf="!brandsLoading && !apiError && !noBrands">Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} entries</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Messages Table -->
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Pagination -->
+<div *ngIf="!apiError && !noBrands" class="container d-flex justify-content-center mt-5">
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" aria-label="Previous" (click)="changePage(currentPage - 1)">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item" *ngFor="let page of pages" [class.active]="currentPage === page">
+        <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" aria-label="Next" (click)="changePage(currentPage + 1)">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<!-- End of Pagination -->
+<!----------------------------------------------------------------------------------------------->
