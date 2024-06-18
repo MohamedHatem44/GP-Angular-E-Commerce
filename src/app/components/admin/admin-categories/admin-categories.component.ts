@@ -35,7 +35,7 @@ export class AdminCategoriesComponent implements OnInit {
   // Ctor
   constructor(private _CategoryService: CategoryService, private _Router: Router, private _ModalService: NgbModal, private _ToastrService: ToastrService) {
     this.searchInputChanged.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
-      this.searchBrands(searchTerm);
+      this.searchCategories(searchTerm);
     });
   }
   /*-----------------------------------------------------------------*/
@@ -144,13 +144,13 @@ export class AdminCategoriesComponent implements OnInit {
     }
   }
   /*-----------------------------------------------------------------*/
-  // Search Brands
+  // Search Categories
   onSearchInputChanged(searchTerm: string): void {
     this.searchInputChanged.next(searchTerm);
   }
   /*-----------------------------------------------------------------*/
   // Search
-  searchBrands(searchTerm: string = this.searchInput.trim()): void {
+  searchCategories(searchTerm: string = this.searchInput.trim()): void {
     this.fetchCategories(this.currentPage, searchTerm);
   }
   /*-----------------------------------------------------------------*/

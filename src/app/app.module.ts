@@ -49,6 +49,7 @@ import { SaveConfirmationModalComponent } from './components/modals/save-confirm
 import { AdminCategoriesComponent } from './components/admin/admin-categories/admin-categories.component';
 import { AdminCategoryDetailsModelComponent } from './components/admin/admin-category-details-model/admin-category-details-model.component';
 import { AdminCategoryFormComponent } from './components/admin/admin-category-form/admin-category-form.component';
+import { LoaderSkeletonV3Component } from './components/shared/loader-skeleton-v3/loader-skeleton-v3.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -93,6 +94,7 @@ import { AdminCategoryFormComponent } from './components/admin/admin-category-fo
     AdminCategoriesComponent,
     AdminCategoryDetailsModelComponent,
     AdminCategoryFormComponent,
+    LoaderSkeletonV3Component,
   ],
   imports: [
     BrowserModule,
