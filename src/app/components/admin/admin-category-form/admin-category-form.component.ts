@@ -1,33 +1,33 @@
 import { Component, OnInit } from '@angular/core';
+import { Category } from '../../../models/category';
+import { CategoryService } from '../../../services/category.service';
 import { ImageService } from '../../../services/image.service';
-import { uploadImage } from '../../../models/uploadImage';
-import { BrandService } from '../../../services/brand.service';
-import { Brand } from '../../../models/brand';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { uploadImage } from '../../../models/uploadImage';
 import { SaveConfirmationModalComponent } from '../../modals/save-confirmation-modal/save-confirmation-modal.component';
 /*--------------------------------------------------------------------*/
 @Component({
-  selector: 'app-admin-brand-form',
-  templateUrl: './admin-brand-form.component.html',
-  styleUrl: './admin-brand-form.component.css',
+  selector: 'app-admin-category-form',
+  templateUrl: './admin-category-form.component.html',
+  styleUrl: './admin-category-form.component.css',
 })
 /*--------------------------------------------------------------------*/
-export class AdminBrandFormComponent implements OnInit {
+export class AdminCategoryFormComponent implements OnInit {
   // Component properties
   isLoading: boolean = false;
   imageError: string | null = null;
   editMode: boolean = false;
-  currentBrandId: number;
+  currentCategoryId: number;
   responseImageUrl: string | null = null;
-  controllerName: string = 'Brands';
+  controllerName: string = 'Categories';
   apiError: string | null = null;
   /*------------------------------------------------------------------*/
   // Ctor
   constructor(
-    private _BrandService: BrandService,
+    private _CategoryService: CategoryService,
     private _ImageService: ImageService,
     private _Router: Router,
     private _Route: ActivatedRoute,
@@ -39,8 +39,8 @@ export class AdminBrandFormComponent implements OnInit {
     this.checkEditMode();
   }
   /*------------------------------------------------------------------*/
-  // Brand Form
-  brandForm = new FormGroup({
+  // Category Form
+  categoryForm = new FormGroup({
     name: new FormControl<string>('', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('^[a-zA-Z ]*$')]),
     description: new FormControl<string>('', [Validators.required, Validators.minLength(20), Validators.maxLength(250)]),
     imageUrl: new FormControl<string | null>('', [Validators.required]),
@@ -55,7 +55,7 @@ export class AdminBrandFormComponent implements OnInit {
     this._ImageService.uploadImage(file, this.controllerName).subscribe({
       next: (response: uploadImage) => {
         this.responseImageUrl = response.url;
-        this.brandForm.patchValue({ imageUrl: this.responseImageUrl });
+        this.categoryForm.patchValue({ imageUrl: this.responseImageUrl });
         this.imageError = null;
       },
       error: (error) => {
@@ -65,114 +65,114 @@ export class AdminBrandFormComponent implements OnInit {
     });
   }
   /*------------------------------------------------------------------*/
-  // Create Brand Button (Edit or Add Brand)
+  // Create Category Button (Edit or Add Brand)
   openSaveConfirmationModal(event: Event) {
     event.preventDefault();
-    if (this.brandForm.invalid) {
+    if (this.categoryForm.invalid) {
       return;
     }
     const modalRef = this._ModalService.open(SaveConfirmationModalComponent);
     modalRef.componentInstance.message = 'Are you sure you want to save changes?';
 
     modalRef.componentInstance.confirmSave.subscribe(() => {
-      this.saveBrand();
+      this.saveCategory();
     });
   }
   /*------------------------------------------------------------------*/
-  saveBrand() {
-    if (this.brandForm.invalid) {
+  saveCategory() {
+    if (this.categoryForm.invalid) {
       return;
     }
-    const brandData: any = {
-      name: this.brandForm.controls['name'].value,
-      description: this.brandForm.controls['description'].value,
-      imageUrl: this.brandForm.controls['imageUrl'].value,
+    const categoryData: any = {
+      name: this.categoryForm.controls['name'].value,
+      description: this.categoryForm.controls['description'].value,
+      imageUrl: this.categoryForm.controls['imageUrl'].value,
     };
     if (this.editMode) {
-      this.updateBrand(this.currentBrandId, brandData);
+      this.updateCategory(this.currentCategoryId, categoryData);
     } else {
-      this.createBrand(brandData);
+      this.createCategory(categoryData);
     }
   }
   /*------------------------------------------------------------------*/
-  // Get specific Brand by id
-  private createBrand(brand: Brand) {
+  // Get specific Category by id
+  private createCategory(category: Category) {
     this.isLoading = true;
-    this._BrandService.createBrand(brand).subscribe({
+    this._CategoryService.createCategory(category).subscribe({
       next: (response: any) => {
-        this._ToastrService.success('Brand created successfully');
-        this.brandForm.reset();
+        this._ToastrService.success('Category created successfully');
+        this.categoryForm.reset();
         this.responseImageUrl = null;
         this.isLoading = false;
         this.navigateToBrandsDashboard();
       },
       error: (error: any) => {
-        this._ToastrService.error('An error occurred while creating Brand, Please try again.');
-        this.apiError = 'An error occurred while creating Brand, Please try again.';
+        this._ToastrService.error('An error occurred while creating Category, Please try again.');
+        this.apiError = 'An error occurred while creating Category, Please try again.';
         this.isLoading = false;
       },
     });
   }
   /*------------------------------------------------------------------*/
   // Update specific Brand
-  private updateBrand(brandId: number, brand: Brand) {
+  private updateCategory(categoryId: number, category: Category) {
     this.isLoading = true;
-    this._BrandService.updateBrand(brandId, brand).subscribe({
+    this._CategoryService.updateCategory(categoryId, category).subscribe({
       next: (response: any) => {
-        this._ToastrService.success('Brand updated successfully');
-        this.brandForm.reset();
+        this._ToastrService.success('Category updated successfully');
+        this.categoryForm.reset();
         this.responseImageUrl = null;
         this.isLoading = false;
         this.navigateToBrandsDashboard();
       },
       error: (error) => {
-        this._ToastrService.error('An error occurred while updating Brand, Please try again.');
-        this.apiError = 'An error occurred while updating Brand, Please try again.';
+        this._ToastrService.error('An error occurred while updating Category, Please try again.');
+        this.apiError = 'An error occurred while updating Category, Please try again.';
         this.isLoading = false;
       },
     });
   }
   /*------------------------------------------------------------------*/
-  // Navigate To Brands Dashboard After Add or Edit
+  // Navigate To Categories Dashboard After Add or Edit
   navigateToBrandsDashboard() {
-    this._Router.navigate(['/admindashboard/brands']);
+    this._Router.navigate(['/admindashboard/categories']);
   }
   /*------------------------------------------------------------------*/
-  // Check Edit Mode for Brands Dashboard (Edit or Add Brand)
+  // Check Edit Mode for Categories Dashboard (Edit or Add Category)
   private checkEditMode() {
     this._Route.params.subscribe((params) => {
       if (params['id']) {
         this.editMode = true;
-        this.currentBrandId = +params['id'];
-        this.getBrandById(params['id']);
+        this.currentCategoryId = +params['id'];
+        this.getCategoryById(params['id']);
       }
     });
   }
   /*------------------------------------------------------------------*/
-  // Get a Specific Brand By Id Without Products
-  private getBrandById(id: number) {
-    this._BrandService.getBrandById(id).subscribe({
-      next: (response: Brand) => {
-        this.loadBrandData(response);
+  // Get a Specific Category By Id Without Products
+  private getCategoryById(id: number) {
+    this._CategoryService.getCategoryById(id).subscribe({
+      next: (response: Category) => {
+        this.loadCategoryData(response);
       },
       error: (error) => {
-        this._ToastrService.error('Error fetching Brand by Id, Please try again.');
+        this._ToastrService.error('Error fetching Category by Id, Please try again.');
       },
     });
   }
   /*------------------------------------------------------------------*/
   // Load Data Into Form When Loading Edit Form
-  private loadBrandData(brand: Brand) {
-    this.brandForm.controls['name'].setValue(brand.name);
-    this.brandForm.controls['description'].setValue(brand.description);
-    this.brandForm.controls['imageUrl'].setValue(brand.imageUrl);
+  private loadCategoryData(category: Category) {
+    this.categoryForm.controls['name'].setValue(category.name);
+    this.categoryForm.controls['description'].setValue(category.description);
+    this.categoryForm.controls['imageUrl'].setValue(category.imageUrl);
     // Display the image
-    this.responseImageUrl = brand.imageUrl;
+    this.responseImageUrl = category.imageUrl;
   }
   /*------------------------------------------------------------------*/
   // Reset All Form
   resetAll() {
-    this.brandForm.reset();
+    this.categoryForm.reset();
     this.responseImageUrl = null;
     this.apiError = null;
     this.imageError = null;

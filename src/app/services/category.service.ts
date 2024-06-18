@@ -56,7 +56,7 @@ export class CategoryService {
   // Update a Specific Category With Id
   // Put: api/Categories/{id}
   updateCategory(categoryId: number, category: Category): Observable<Category> {
-    return this._HttpClient.patch<Category>(`${this.baseUrl}/${categoryId}`, category).pipe(delay(3000));
+    return this._HttpClient.put<Category>(`${this.baseUrl}/${categoryId}`, category).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Delete a Specific Category With Id

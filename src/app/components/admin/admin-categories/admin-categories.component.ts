@@ -155,8 +155,8 @@ export class AdminCategoriesComponent implements OnInit {
   }
   /*-----------------------------------------------------------------*/
   // Edit Category
-  editCategory(brandId: number) {
-    this._Router.navigate([`/admindashboard/editbrand/${brandId}`]);
+  editCategory(categoryId: number) {
+    this._Router.navigate([`/admindashboard/editcategory/${categoryId}`]);
   }
   /*-----------------------------------------------------------------*/
 }
