@@ -50,7 +50,8 @@ export class AdminMessagesComponent implements OnInit {
         this.noMessages = this.messages.length === 0;
       },
       error: (err) => {
-        this.apiError = 'Failed to load messages. Please try again.';
+        this.apiError = 'Failed to load Messages, Please try again.';
+        this._ToastrService.error('Failed to load Messages, Please try again.');
         this.messageLoading = false;
       },
     });
@@ -95,7 +96,7 @@ export class AdminMessagesComponent implements OnInit {
   }
   /*-----------------------------------------------------------------*/
   openMessageDetailsModal(message: Message): void {
-    const modalRef = this.modalService.open(AdminMessageDetailsModelComponent);
+    const modalRef = this.modalService.open(AdminMessageDetailsModelComponent, { size: 'lg' });
     modalRef.componentInstance.message = message;
   }
   /*-----------------------------------------------------------------*/

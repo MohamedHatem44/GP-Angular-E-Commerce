@@ -62,6 +62,7 @@ export class AdminBrandsComponent implements OnInit {
       },
       error: (err) => {
         this.apiError = 'Failed to load Brands, Please try again.';
+        this._ToastrService.error('Failed to load Brands, Please try again.');
         this.brandsLoading = false;
       },
     });

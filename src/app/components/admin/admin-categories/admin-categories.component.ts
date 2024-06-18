@@ -62,6 +62,7 @@ export class AdminCategoriesComponent implements OnInit {
       },
       error: (err) => {
         this.apiError = 'Failed to load Categories, Please try again.';
+        this._ToastrService.error('Failed to load Categories, Please try again.');
         this.categoriesLoading = false;
       },
     });

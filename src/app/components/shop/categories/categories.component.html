@@ -43,6 +43,16 @@
       </div>
       <!-- End of Search -->
       <!-------------------------------------------------------------------------------------->
+      <!-- Start of Results -->
+      <div class="d-flex align-items-center justify-content-center">
+        <div class="card-footer d-flex justify-content-between" style="min-height: 50px">
+          <p class="my-auto" *ngIf="!categoriesLoading && !apiError && !noCategories">
+            Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} results
+          </p>
+        </div>
+      </div>
+      <!-- End of Results -->
+      <!-------------------------------------------------------------------------------------->
       <!-- Start of Categories Loading -->
       <div class="container d-flex justify-content-center" *ngIf="categoriesLoading">
         <!-- <div class="spinner-border text-dark" role="status">
