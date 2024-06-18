@@ -55,9 +55,6 @@
       <!-------------------------------------------------------------------------------------->
       <!-- Start of Categories Loading -->
       <div class="container d-flex justify-content-center" *ngIf="categoriesLoading">
-        <!-- <div class="spinner-border text-dark" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div> -->
         <app-loader-skeleton-v3></app-loader-skeleton-v3>
       </div>
       <!-- End of Categories Loading -->
@@ -92,6 +89,7 @@
       <!-- Start of No Categories Available -->
       <div *ngIf="!categoriesLoading && !apiError && noCategories" class="alert alert-info my-8" role="alert">No Categories available</div>
       <!-- End of No Categories Available -->
+      <!-------------------------------------------------------------------------------------->
     </div>
   </div>
 </div>

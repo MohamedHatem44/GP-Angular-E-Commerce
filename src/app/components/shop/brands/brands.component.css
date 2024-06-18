@@ -1,3 +1,4 @@
+/*--------------------------------------------*/
 .about-section {
   background-image: url('../../../../assets/images/pexels-pixabay-157888.jpg');
   background-size: cover;
@@ -24,15 +25,15 @@
 .product-img {
   position: relative;
 }
-
+/*--------------------------------------------*/
 .product-image {
   transition: transform 0.6s ease;
 }
-
+/*--------------------------------------------*/
 .product-img:hover .product-image {
   transform: scale(1.1);
 }
-
+/*--------------------------------------------*/
 .overlay {
   position: absolute;
   top: 0;
@@ -46,11 +47,11 @@
   opacity: 0;
   transition: opacity 0.4s ease;
 }
-
+/*--------------------------------------------*/
 .product-img:hover .overlay {
   opacity: 1;
 }
-
+/*--------------------------------------------*/
 .overlay-btn {
   color: white;
   margin: 0 5px;
@@ -60,3 +61,8 @@
   font-size: 14px;
   transform: scale(1);
 }
+/*--------------------------------------------*/
+.pagination .page-link {
+  cursor: pointer;
+}
+/*--------------------------------------------*/
