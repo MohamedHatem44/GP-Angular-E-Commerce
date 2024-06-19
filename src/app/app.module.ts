@@ -50,6 +50,7 @@ import { AdminCategoriesComponent } from './components/admin/admin-categories/ad
 import { AdminCategoryDetailsModelComponent } from './components/admin/admin-category-details-model/admin-category-details-model.component';
 import { AdminCategoryFormComponent } from './components/admin/admin-category-form/admin-category-form.component';
 import { LoaderSkeletonV3Component } from './components/shared/loader-skeleton-v3/loader-skeleton-v3.component';
+import { AdminUserDetailsModalComponent } from './components/admin/admin-user-details-modal/admin-user-details-modal.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -95,6 +96,7 @@ import { LoaderSkeletonV3Component } from './components/shared/loader-skeleton-v
     AdminCategoryDetailsModelComponent,
     AdminCategoryFormComponent,
     LoaderSkeletonV3Component,
+    AdminUserDetailsModalComponent,
   ],
   imports: [
     BrowserModule,

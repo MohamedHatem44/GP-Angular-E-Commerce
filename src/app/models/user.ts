@@ -1,8 +1,8 @@
-interface User {
+export interface User {
   id: string;
-  email: string;
   firstName: string;
   lastName: string;
+  email: string;
   address: string;
   phoneNumber: string;
   active: boolean;
