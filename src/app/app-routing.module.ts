@@ -26,6 +26,7 @@ import { AdminCategoryFormComponent } from './components/admin/admin-category-fo
 import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
 import { AdminProductFormComponent } from './components/admin/admin-product-form/admin-product-form.component';
 import { UserProfileEditComponent } from './components/user/user-profile-edit/user-profile-edit.component';
+import { AdminColorsComponent } from './components/admin/admin-colors/admin-colors.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -38,6 +39,7 @@ const routes: Routes = [
       { path: 'products', component: AdminProductsComponent },
       { path: 'addproduct', component: AdminProductFormComponent },
       { path: 'editproduct/:id', component: AdminProductFormComponent },
+      { path: 'colors', component: AdminColorsComponent },
       { path: 'categories', component: AdminCategoriesComponent },
       { path: 'addcategory', component: AdminCategoryFormComponent },
       { path: 'editcategory/:id', component: AdminCategoryFormComponent },
