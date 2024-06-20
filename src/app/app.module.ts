@@ -56,6 +56,7 @@ import { AdminCategoryDetailsModalComponent } from './components/admin/admin-cat
 import { AdminProductFormComponent } from './components/admin/admin-product-form/admin-product-form.component';
 import { UserProfileEditComponent } from './components/user/user-profile-edit/user-profile-edit.component';
 import { AdminColorsComponent } from './components/admin/admin-colors/admin-colors.component';
+import { AdminColorFormComponent } from './components/admin/admin-color-form/admin-color-form.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import { AdminColorsComponent } from './components/admin/admin-colors/admin-colo
     AdminProductFormComponent,
     UserProfileEditComponent,
     AdminColorsComponent,
+    AdminColorFormComponent,
   ],
   imports: [
     BrowserModule,

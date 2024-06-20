@@ -35,6 +35,18 @@ export class ColorService {
     return this._HttpClient.get<Color>(`${this.baseUrl}/${colorId}`).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
+  // Create a New Color
+  // Post: api/Colors
+  createColor(color: Color): Observable<Color> {
+    return this._HttpClient.post<Color>(this.baseUrl, color).pipe(delay(3000));
+  }
+  /*------------------------------------------------------------------*/
+  // Update Color
+  // Put: api/Colors/{id}
+  updateColor(colorId: number, color: Color): Observable<Color> {
+    return this._HttpClient.put<Color>(`${this.baseUrl}/${colorId}`, color).pipe(delay(3000));
+  }
+  /*------------------------------------------------------------------*/
   // Delete a Specific Color By Id
   // Delete: api/Colors/{id}
   deleteColor(colorId: number): Observable<Object> {

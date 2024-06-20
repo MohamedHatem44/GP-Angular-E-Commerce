@@ -141,8 +141,8 @@ export class AdminColorsComponent implements OnInit {
     this.fetchColors(1, searchTerm);
   }
   /*-----------------------------------------------------------------*/
-  // Edit Brand
-  editBrand(colorId: number) {
+  // Edit Color
+  editColor(colorId: number) {
     this._Router.navigate([`/admindashboard/editcolor/${colorId}`]);
   }
   /*-----------------------------------------------------------------*/
