@@ -1,1 +1,75 @@
-<p>user-profile works!</p>
+<!-------------------------------------------------------------------------------------->
+<div class="container-xl px-4 my-8">
+  <div class="row">
+    <div class="col-xl-4">
+      <!-- Start of Profile Picture -->
+      <div class="card mb-4 mb-xl-0">
+        <div class="card-header d-flex justify-content-center">Profile Picture</div>
+        <div class="card-body text-center">
+          <div><img [src]="currentUser?.imageUrl" alt="Profile Picture" class="rounded-circle img-fluid my-3" style="width: 150px" /></div>
+        </div>
+      </div>
+      <!-- End of Profile Picture -->
+    </div>
+    <!---------------------------------------------------------------------------------->
+    <div class="col-lg-8">
+      <div class="card mb-4">
+        <div class="card-body">
+          <!-- First Name -->
+          <div class="row">
+            <div class="col-sm-3">
+              <p class="my-2 fs-6">First Name :</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="my-2 fs-6">{{ currentUser?.firstName }}</p>
+            </div>
+          </div>
+          <hr />
+          <!-- Last Name -->
+          <div class="row">
+            <div class="col-sm-3">
+              <p class="my-2 fs-6">Last Name :</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="my-2 fs-6">{{ currentUser?.lastName }}</p>
+            </div>
+          </div>
+          <hr />
+          <!-- Email -->
+          <div class="row">
+            <div class="col-sm-3">
+              <p class="my-2 fs-6">Email :</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="my-2 fs-6">{{ currentUser?.email }}</p>
+            </div>
+          </div>
+          <hr />
+          <!-- Phone -->
+          <div class="row">
+            <div class="col-sm-3 fs-6">
+              <p class="my-2">Phone Number :</p>
+            </div>
+            <div class="col-sm-9 fs-6">
+              <p class="my-2">{{ currentUser?.phoneNumber }}</p>
+            </div>
+          </div>
+          <hr />
+          <!-- Address -->
+          <div class="row">
+            <div class="col-sm-3 fs-6">
+              <p class="my-2">Address :</p>
+            </div>
+            <div class="col-sm-9 fs-6">
+              <p class="my-2">{{ currentUser?.address }}</p>
+            </div>
+          </div>
+          <br />
+          <button type="button" class="btn btn-primary w-25" routerLink="edituserprofile">Edit Profile</button>
+        </div>
+      </div>
+    </div>
+    <!---------------------------------------------------------------------------------->
+  </div>
+</div>
+<!-------------------------------------------------------------------------------------->

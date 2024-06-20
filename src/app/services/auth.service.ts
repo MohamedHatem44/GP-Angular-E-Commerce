@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { delay, tap } from 'rxjs/operators';
+import { User } from '../models/user';
 /*--------------------------------------------------------------------*/
 @Injectable({
   providedIn: 'root',
@@ -25,13 +26,6 @@ export class AuthService {
     return this.userToken.asObservable();
   }
   /*------------------------------------------------------------------*/
-  // Method to logout
-  logout(): void {
-    localStorage.removeItem('token');
-    this.userToken.next(null);
-    this._Router.navigate(['users/login']);
-  }
-  /*------------------------------------------------------------------*/
   // Method to check authentication status
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
@@ -42,7 +36,8 @@ export class AuthService {
     return localStorage.getItem('token');
   }
   /*------------------------------------------------------------------*/
-  // Method to login
+  // Login
+  // Post: api/Auth/Login
   login(credentials: { email: string; password: string }): Observable<any> {
     return this._HttpClient.post(`${this.baseUrl}/Login`, credentials).pipe(
       tap((response: any) => {
@@ -52,9 +47,23 @@ export class AuthService {
     );
   }
   /*------------------------------------------------------------------*/
-  // Method to register a new user
-  register(user: { fullName: string; email: string; password: string }): Observable<any> {
+  // Register
+  // Post: api/Auth/Register
+  register(user: { firstName: string; lastName: string; email: string; password: string }): Observable<any> {
     return this._HttpClient.post(`${this.baseUrl}/Register`, user);
+  }
+  /*------------------------------------------------------------------*/
+  // logout
+  logout(): void {
+    localStorage.removeItem('token');
+    this.userToken.next(null);
+    this._Router.navigate(['users/login']);
+  }
+  /*------------------------------------------------------------------*/
+  // Get User Info
+  // Post: api/Auth/Manage/Info
+  getCurrentUserInfo(): Observable<User> {
+    return this._HttpClient.get<User>(`${this.baseUrl}/Manage/Info`);
   }
   /*------------------------------------------------------------------*/
 }
