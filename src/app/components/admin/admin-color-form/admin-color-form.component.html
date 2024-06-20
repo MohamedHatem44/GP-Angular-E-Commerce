@@ -31,7 +31,11 @@
         <!-- Start of Color Name -->
         <div class="mb-5">
           <label for="colorName" class="form-label">Color Name</label>
-          <input type="text" class="form-control" id="colorName" formControlName="name" name="colorName" placeholder="Color Name" required />
+
+          <!-- Skeleton Loader -->
+          <div *ngIf="isLoading" class="skeleton-loader"></div>
+
+          <input *ngIf="!isLoading" type="text" class="form-control" id="colorName" formControlName="name" name="colorName" placeholder="Color Name" required />
           <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="colorForm.get('name')?.errors && colorForm.get('name')?.touched">
             <span *ngIf="colorForm.get('name')?.errors?.['required']" class="text-danger">Color Name is required</span>
             <span *ngIf="colorForm.get('name')?.errors?.['pattern']" class="text-danger">Invalid Color Name. only alphabets allowed</span>
@@ -53,7 +57,7 @@
             <i *ngIf="isLoading" class="fas fa-spinner fa-spin mx-4"></i>
             <span *ngIf="!isLoading"> {{ editMode ? 'Update' : ' + Create' }}</span>
           </button>
-          <button type="reset" class="btn btn-secondary ms-4" routerLink="/admindashboard/Colors" (click)="resetAll()">Cancel</button>
+          <button type="reset" class="btn btn-secondary ms-4" routerLink="/admindashboard/colors" (click)="resetAll()">Cancel</button>
         </div>
         <!-- End of Save Button with Spinner and Disabled State -->
       </form>

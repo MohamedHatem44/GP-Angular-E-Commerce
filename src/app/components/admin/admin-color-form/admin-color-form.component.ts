@@ -131,12 +131,16 @@ export class AdminColorFormComponent implements OnInit {
   /*------------------------------------------------------------------*/
   // Get a Specific Color By Id
   private getColorById(id: number) {
+    this.isLoading = true;
     this._ColorService.getColorById(id).subscribe({
       next: (response: Color) => {
         this.loadColorData(response);
+        this.isLoading = false;
       },
       error: (error) => {
         this._ToastrService.error('Error fetching Color by Id, Please try again.');
+        this.apiError = 'Error fetching Color by Id, Please try again.';
+        this.isLoading = false;
       },
     });
   }
