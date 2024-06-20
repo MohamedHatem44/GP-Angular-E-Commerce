@@ -7,6 +7,10 @@ import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmati
 import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
 import { ToastrService } from 'ngx-toastr';
 import { AdminProductDetailsModalComponent } from '../admin-product-details-modal/admin-product-details-modal.component';
+import { Category } from '../../../models/category';
+import { Brand } from '../../../models/brand';
+import { CategoryService } from '../../../services/category.service';
+import { BrandService } from '../../../services/brand.service';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-products',
@@ -30,9 +34,20 @@ export class AdminProductsComponent implements OnInit {
   noProducts: boolean = false;
   searchInput: string = '';
   searchInputChanged: Subject<string> = new Subject<string>();
+  categories: Category[] = [];
+  brands: Brand[] = [];
+  selectedCategory: number | null = null;
+  selectedBrand: number | null = null;
   /*-----------------------------------------------------------------*/
   // Ctor
-  constructor(private _ProductService: ProductService, private _Router: Router, private _ModalService: NgbModal, private _ToastrService: ToastrService) {
+  constructor(
+    private _ProductService: ProductService,
+    private _CategoryService: CategoryService,
+    private _BrandService: BrandService,
+    private _Router: Router,
+    private _ModalService: NgbModal,
+    private _ToastrService: ToastrService
+  ) {
     this.searchInputChanged.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
       this.searchProducts(searchTerm);
     });
@@ -42,6 +57,10 @@ export class AdminProductsComponent implements OnInit {
   ngOnInit(): void {
     this.productsLoading = true;
     this.fetchProducts(this.currentPage);
+    this.loadCategories();
+    this.loadBrands();
+    this.selectedCategory = null;
+    this.selectedBrand = null;
   }
   /*-----------------------------------------------------------------*/
   // Fetch Products
@@ -50,8 +69,6 @@ export class AdminProductsComponent implements OnInit {
     this.apiError = null;
     this._ProductService.getAllProductsWithPaginationForAdmin(page, this.pageSize, searchParam, categoryId, brandId).subscribe({
       next: (response: any) => {
-        console.log(response.items);
-
         this.products = response.items.map((product: any) => ({ ...product, deleting: false }));
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;
@@ -67,6 +84,34 @@ export class AdminProductsComponent implements OnInit {
         this.productsLoading = false;
       },
     });
+  }
+  /*-----------------------------------------------------------------*/
+  loadCategories(): void {
+    this._CategoryService.getAllCategories().subscribe({
+      next: (response: any) => {
+        this.categories = response.categories;
+      },
+      error: (err) => {
+        console.error('Failed to load categories', err);
+        this._ToastrService.error('Failed to load categories, please try again.');
+      },
+    });
+  }
+  /*-----------------------------------------------------------------*/
+  loadBrands(): void {
+    this._BrandService.getAllBrands().subscribe({
+      next: (response: any) => {
+        this.brands = response.brands;
+      },
+      error: (err) => {
+        console.error('Failed to load brands', err);
+        this._ToastrService.error('Failed to load brands, please try again.');
+      },
+    });
+  }
+  /*-----------------------------------------------------------------*/
+  onFilterChange(): void {
+    this.fetchProducts(1, this.searchInput, this.selectedCategory, this.selectedBrand);
   }
   /*-----------------------------------------------------------------*/
   // Change Page
@@ -153,7 +198,7 @@ export class AdminProductsComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Search
   searchProducts(searchTerm: string = this.searchInput.trim()): void {
-    this.fetchProducts(this.currentPage, searchTerm);
+    this.fetchProducts(1, searchTerm);
   }
   /*-----------------------------------------------------------------*/
   // Edit Product

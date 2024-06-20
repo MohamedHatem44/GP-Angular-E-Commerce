@@ -10,6 +10,6 @@ export interface Category {
   description: string;
   imageUrl?: string;
   createdAt: Date;
-  productsCount: number;
-  products: ProductBelongToCategory[];
+  productsCount?: number;
+  products?: ProductBelongToCategory[];
 }

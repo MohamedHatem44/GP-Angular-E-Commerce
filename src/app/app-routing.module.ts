@@ -24,6 +24,7 @@ import { AdminBrandFormComponent } from './components/admin/admin-brand-form/adm
 import { AdminCategoriesComponent } from './components/admin/admin-categories/admin-categories.component';
 import { AdminCategoryFormComponent } from './components/admin/admin-category-form/admin-category-form.component';
 import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
+import { AdminProductFormComponent } from './components/admin/admin-product-form/admin-product-form.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -34,6 +35,8 @@ const routes: Routes = [
     children: [
       { path: '', component: AdminMainComponent, pathMatch: 'full' },
       { path: 'products', component: AdminProductsComponent },
+      { path: 'addproduct', component: AdminProductFormComponent },
+      { path: 'editproduct/:id', component: AdminProductFormComponent },
       { path: 'categories', component: AdminCategoriesComponent },
       { path: 'addcategory', component: AdminCategoryFormComponent },
       { path: 'editcategory/:id', component: AdminCategoryFormComponent },

@@ -53,6 +53,7 @@ import { AdminProductDetailsModalComponent } from './components/admin/admin-prod
 import { AdminMessageDetailsModalComponent } from './components/admin/admin-message-details-modal/admin-message-details-modal.component';
 import { AdminBrandDetailsModalComponent } from './components/admin/admin-brand-details-modal/admin-brand-details-modal.component';
 import { AdminCategoryDetailsModalComponent } from './components/admin/admin-category-details-modal/admin-category-details-modal.component';
+import { AdminProductFormComponent } from './components/admin/admin-product-form/admin-product-form.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { AdminCategoryDetailsModalComponent } from './components/admin/admin-cat
     AdminMessageDetailsModalComponent,
     AdminBrandDetailsModalComponent,
     AdminCategoryDetailsModalComponent,
+    AdminProductFormComponent,
   ],
   imports: [
     BrowserModule,
