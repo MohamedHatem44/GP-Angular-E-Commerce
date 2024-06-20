@@ -1,15 +1,15 @@
 import { Component, Input } from '@angular/core';
-import { Category } from '../../../models/category';
+import { Brand } from '../../../models/brand';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 /*--------------------------------------------------------------------*/
 @Component({
-  selector: 'app-admin-category-details-model',
-  templateUrl: './admin-category-details-model.component.html',
-  styleUrl: './admin-category-details-model.component.css',
+  selector: 'app-admin-brand-details-modal',
+  templateUrl: './admin-brand-details-modal.component.html',
+  styleUrl: './admin-brand-details-modal.component.css',
 })
 /*--------------------------------------------------------------------*/
-export class AdminCategoryDetailsModelComponent {
-  @Input() category: Category;
+export class AdminBrandDetailsModalComponent {
+  @Input() brand: Brand;
   /*------------------------------------------------------------------*/
   // Ctor
   constructor(public _ActiveModal: NgbActiveModal) {}

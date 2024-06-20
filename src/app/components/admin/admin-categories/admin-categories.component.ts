@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
-import { AdminCategoryDetailsModelComponent } from '../admin-category-details-model/admin-category-details-model.component';
 import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { AdminCategoryDetailsModalComponent } from '../admin-category-details-modal/admin-category-details-modal.component';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-categories',
@@ -110,7 +110,7 @@ export class AdminCategoriesComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Open Category Details Modal
   openCategoryDetailsModal(category: Category): void {
-    const modalRef = this._ModalService.open(AdminCategoryDetailsModelComponent, { size: 'lg' });
+    const modalRef = this._ModalService.open(AdminCategoryDetailsModalComponent, { size: 'lg' });
     modalRef.componentInstance.category = category;
   }
   /*-----------------------------------------------------------------*/

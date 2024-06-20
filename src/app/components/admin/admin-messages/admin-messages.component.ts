@@ -4,7 +4,7 @@ import { Message } from '../../../models/message';
 import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { AdminMessageDetailsModelComponent } from '../admin-message-details-model/admin-message-details-model.component';
+import { AdminMessageDetailsModalComponent } from '../admin-message-details-modal/admin-message-details-modal.component';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-messages',
@@ -96,7 +96,7 @@ export class AdminMessagesComponent implements OnInit {
   }
   /*-----------------------------------------------------------------*/
   openMessageDetailsModal(message: Message): void {
-    const modalRef = this.modalService.open(AdminMessageDetailsModelComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(AdminMessageDetailsModalComponent, { size: 'lg' });
     modalRef.componentInstance.message = message;
   }
   /*-----------------------------------------------------------------*/

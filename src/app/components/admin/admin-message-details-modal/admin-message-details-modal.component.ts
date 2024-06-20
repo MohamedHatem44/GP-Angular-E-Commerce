@@ -3,12 +3,12 @@ import { Message } from '../../../models/message';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 /*--------------------------------------------------------------------*/
 @Component({
-  selector: 'app-admin-message-details-model',
-  templateUrl: './admin-message-details-model.component.html',
-  styleUrl: './admin-message-details-model.component.css',
+  selector: 'app-admin-message-details-modal',
+  templateUrl: './admin-message-details-modal.component.html',
+  styleUrl: './admin-message-details-modal.component.css',
 })
 /*--------------------------------------------------------------------*/
-export class AdminMessageDetailsModelComponent {
+export class AdminMessageDetailsModalComponent {
   @Input() message: Message;
   /*------------------------------------------------------------------*/
   // Ctor

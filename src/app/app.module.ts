@@ -36,10 +36,8 @@ import { DeleteConfirmationModalComponent } from './components/modals/delete-con
 import { ToastrModule } from 'ngx-toastr';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { AdminMainComponent } from './components/admin/admin-main/admin-main.component';
-import { AdminMessageDetailsModelComponent } from './components/admin/admin-message-details-model/admin-message-details-model.component';
 import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
 import { LoaderSpinnerComponent } from './components/shared/loader-spinner/loader-spinner.component';
-import { AdminBrandDetailsModelComponent } from './components/admin/admin-brand-details-model/admin-brand-details-model.component';
 import { LoaderSkeletonV1Component } from './components/shared/loader-skeleton-v1/loader-skeleton-v1.component';
 import { LoaderSkeletonV2Component } from './components/shared/loader-skeleton-v2/loader-skeleton-v2.component';
 import { ImgModalComponent } from './components/modals/img-modal/img-modal.component';
@@ -47,12 +45,14 @@ import { AdminBrandFormComponent } from './components/admin/admin-brand-form/adm
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SaveConfirmationModalComponent } from './components/modals/save-confirmation-modal/save-confirmation-modal.component';
 import { AdminCategoriesComponent } from './components/admin/admin-categories/admin-categories.component';
-import { AdminCategoryDetailsModelComponent } from './components/admin/admin-category-details-model/admin-category-details-model.component';
 import { AdminCategoryFormComponent } from './components/admin/admin-category-form/admin-category-form.component';
 import { LoaderSkeletonV3Component } from './components/shared/loader-skeleton-v3/loader-skeleton-v3.component';
 import { AdminUserDetailsModalComponent } from './components/admin/admin-user-details-modal/admin-user-details-modal.component';
 import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
 import { AdminProductDetailsModalComponent } from './components/admin/admin-product-details-modal/admin-product-details-modal.component';
+import { AdminMessageDetailsModalComponent } from './components/admin/admin-message-details-modal/admin-message-details-modal.component';
+import { AdminBrandDetailsModalComponent } from './components/admin/admin-brand-details-modal/admin-brand-details-modal.component';
+import { AdminCategoryDetailsModalComponent } from './components/admin/admin-category-details-modal/admin-category-details-modal.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -85,22 +85,22 @@ import { AdminProductDetailsModalComponent } from './components/admin/admin-prod
     DeleteConfirmationModalComponent,
     AdminDashboardComponent,
     AdminMainComponent,
-    AdminMessageDetailsModelComponent,
     AdminUsersComponent,
     LoaderSpinnerComponent,
-    AdminBrandDetailsModelComponent,
     LoaderSkeletonV1Component,
     LoaderSkeletonV2Component,
     ImgModalComponent,
     AdminBrandFormComponent,
     SaveConfirmationModalComponent,
     AdminCategoriesComponent,
-    AdminCategoryDetailsModelComponent,
     AdminCategoryFormComponent,
     LoaderSkeletonV3Component,
     AdminUserDetailsModalComponent,
     AdminProductsComponent,
     AdminProductDetailsModalComponent,
+    AdminMessageDetailsModalComponent,
+    AdminBrandDetailsModalComponent,
+    AdminCategoryDetailsModalComponent,
   ],
   imports: [
     BrowserModule,

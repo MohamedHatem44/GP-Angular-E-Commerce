@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
-import { AdminBrandDetailsModelComponent } from '../admin-brand-details-model/admin-brand-details-model.component';
 import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { AdminBrandDetailsModalComponent } from '../admin-brand-details-modal/admin-brand-details-modal.component';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-brands',
@@ -110,7 +110,7 @@ export class AdminBrandsComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Open Brand Details Modal
   openBrandDetailsModal(brand: Brand): void {
-    const modalRef = this._ModalService.open(AdminBrandDetailsModelComponent, { size: 'lg' });
+    const modalRef = this._ModalService.open(AdminBrandDetailsModalComponent, { size: 'lg' });
     modalRef.componentInstance.brand = brand;
   }
   /*-----------------------------------------------------------------*/
