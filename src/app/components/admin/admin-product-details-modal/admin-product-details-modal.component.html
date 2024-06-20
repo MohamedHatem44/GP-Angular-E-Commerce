@@ -1,0 +1,90 @@
+<!-------------------------------------------------------------------------------------->
+<!-- Start of modal header -->
+<div class="modal-header">
+  <h5 class="modal-title" id="deleteConfirmationModalLabel">Product Details</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+</div>
+<!-- End of modal header -->
+<!-------------------------------------------------------------------------------------->
+<!-- Start of modal body -->
+<div class="container py-4 px-5">
+  <!------------------------------------------------------------------------------------>
+  <div class="row wrapper">
+    <!-- Start of Image -->
+    <div class="col-md-12 col-lg-6 px-0">
+      <img [src]="product.imageUrl" class="img-responsive" alt="product Image" />
+    </div>
+    <!-- End of Image -->
+    <!------------------------------------------------------------------------------------>
+    <!-- Start of Details -->
+    <div class="col-md-12 col-lg-6">
+      <div class="container">
+        <!-- Id -->
+        <div class="row mt-3">
+          <div class="col-4 text-start"><strong>Id</strong></div>
+          <div class="col-8">{{ product.id }}</div>
+        </div>
+        <!-- Title -->
+        <div class="row mt-3">
+          <div class="col-4 text-start"><strong>Title</strong></div>
+          <div class="col-8">{{ product.title }}</div>
+        </div>
+        <!-- Category -->
+        <div class="row mt-3">
+          <div class="col-4 text-start"><strong>Category</strong></div>
+          <div class="col-8">{{ product.category.name }}</div>
+        </div>
+        <!-- Brand -->
+        <div class="row mt-3">
+          <div class="col-4 text-start"><strong>Brand</strong></div>
+          <div class="col-8">{{ product.brand.name }}</div>
+        </div>
+        <!-- Description -->
+        <div class="row mt-3">
+          <div class="col-4 text-start"><strong>Description</strong></div>
+          <div class="col-8">{{ product.description }}</div>
+        </div>
+        <!-- Price -->
+        <div class="row mt-3">
+          <div class="col-4 text-start"><strong>Price</strong></div>
+          <div class="col-8">{{ product.price | currency }}</div>
+        </div>
+        <!-- Price After Discount -->
+        <div class="row mt-3">
+          <div class="col-4 text-start"><strong>Price After Discount</strong></div>
+          <div class="col-8">{{ product.priceAfterDiscount | currency }}</div>
+        </div>
+        <!-- Quantity -->
+        <div class="row mt-3">
+          <div class="col-4 text-start"><strong>Quantity</strong></div>
+          <div class="col-8">{{ product.quantity }}</div>
+        </div>
+        <!-- Sold -->
+        <div class="row mt-3">
+          <div class="col-4 text-start"><strong>Sold</strong></div>
+          <div class="col-8">{{ product.sold }}</div>
+        </div>
+        <!-- Average Rating -->
+        <div class="row mt-3">
+          <div class="col-4 text-start"><strong>Average Rating</strong></div>
+          <div class="col-8">{{ product.ratingsAverage }}</div>
+        </div>
+        <!-- Ratings Quantity -->
+        <div class="row mt-3">
+          <div class="col-4 text-start"><strong>Ratings Quantity</strong></div>
+          <div class="col-8">{{ product.ratingsQuantity }}</div>
+        </div>
+        <!-- Created At -->
+        <div class="row mt-3">
+          <div class="col-4 text-start"><strong>Created At</strong></div>
+          <div class="col-8">{{ product.createdAt | date : 'short' }}</div>
+        </div>
+        <br />
+      </div>
+    </div>
+    <!-- End of Details -->
+    <!-------------------------------------------------------------------------------------->
+  </div>
+</div>
+<!-- End of modal body -->
+<!-------------------------------------------------------------------------------------->

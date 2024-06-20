@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
 import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
 import { ToastrService } from 'ngx-toastr';
+import { AdminProductDetailsModalComponent } from '../admin-product-details-modal/admin-product-details-modal.component';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-products',
@@ -49,7 +50,7 @@ export class AdminProductsComponent implements OnInit {
     this.apiError = null;
     this._ProductService.getAllProductsWithPaginationForAdmin(page, this.pageSize, searchParam, categoryId, brandId).subscribe({
       next: (response: any) => {
-        console.log(response);
+        console.log(response.items);
 
         this.products = response.items.map((product: any) => ({ ...product, deleting: false }));
         this.currentPage = response.currentPage;
@@ -110,8 +111,8 @@ export class AdminProductsComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Open Product Details Modal
   openProductDetailsModal(product: any): void {
-    // const modalRef = this._ModalService.open(AdminBrandDetailsModelComponent, { size: 'lg' });
-    // modalRef.componentInstance.brand = brand;
+    const modalRef = this._ModalService.open(AdminProductDetailsModalComponent, { size: 'lg' });
+    modalRef.componentInstance.product = product;
   }
   /*-----------------------------------------------------------------*/
   // Open Img Modal
