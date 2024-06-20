@@ -79,6 +79,22 @@
           <div class="col-4 text-start"><strong>Created At</strong></div>
           <div class="col-8">{{ product.createdAt | date : 'short' }}</div>
         </div>
+        <!-- Colors -->
+        <div class="row mt-3">
+          <div class="col-4 text-start"><strong>Colors</strong></div>
+          <div class="col-8">
+            <div class="color-bullets">
+              <span *ngFor="let color of product.colors" class="color-bullet" [ngStyle]="{ 'background-color': color.name.toLowerCase() }"></span>
+            </div>
+          </div>
+        </div>
+        <!-- Sizes -->
+        <div class="row mt-3">
+          <div class="col-4 text-start"><strong>Sizes</strong></div>
+          <div class="col-8">
+            <span *ngFor="let size of product.sizes" class="size-badge">{{ size.name }}</span>
+          </div>
+        </div>
         <br />
       </div>
     </div>
