@@ -18,7 +18,7 @@ export class AdminUsersComponent implements OnInit {
   // Component properties
   usersLoading: boolean = false;
   userIdToDelete: string;
-  users: (User & { deleting?: boolean })[] = [];
+  users: (User & { deleting?: boolean; toggleLoading?: boolean })[] = [];
   currentPage: number = 1;
   totalPages: number;
   pageSize: number;
@@ -121,9 +121,9 @@ export class AdminUsersComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Delete User
   deleteUser(userId: string): void {
-    const message = this.users.find((user) => user.id === userId);
-    if (message) {
-      message.deleting = true;
+    const user = this.users.find((user) => user.id === userId);
+    if (user) {
+      user.deleting = true;
       this._UserService.deleteUser(userId).subscribe({
         next: () => {
           this.users = this.users.filter((user) => user.id !== userId);
@@ -137,7 +137,7 @@ export class AdminUsersComponent implements OnInit {
         },
         error: (err) => {
           this._ToastrService.error('Failed to delete User, Please try again.');
-          message.deleting = false;
+          user.deleting = false;
         },
       });
     }
@@ -151,6 +151,25 @@ export class AdminUsersComponent implements OnInit {
   // Search
   searchUsers(searchTerm: string = this.searchInput.trim()): void {
     this.fetchUsers(this.currentPage, searchTerm);
+  }
+  /*-----------------------------------------------------------------*/
+  // Toggle Active Status
+  toggleActiveStatus(userId: string): void {
+    const user = this.users.find((user) => user.id === userId);
+    if (user) {
+      user.toggleLoading = true;
+      this._UserService.toggleActiveStatus(userId).subscribe({
+        next: () => {
+          user.toggleLoading = false;
+          this._ToastrService.success(`User active status toggled successfully for user with ID ${userId}`);
+          user.active = !user.active;
+        },
+        error: (error) => {
+          user.toggleLoading = false;
+          this._ToastrService.error('Failed to toggle status, Please try again.');
+        },
+      });
+    }
   }
   /*-----------------------------------------------------------------*/
 }

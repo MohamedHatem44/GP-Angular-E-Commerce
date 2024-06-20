@@ -20,7 +20,6 @@ export class LoginComponent {
   /*--------------------------------------------------------------------*/
   loginForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
-    // password: new FormControl(null, [Validators.required, Validators.pattern(/^[A-Z][a-z0-9]{5,10}$/)]),
     password: new FormControl(null, [Validators.required]),
   });
   /*--------------------------------------------------------------------*/
@@ -35,7 +34,7 @@ export class LoginComponent {
             const role = this._JwtService.getRoleFromToken(token);
             if (role == 'Admin') {
               this.isLoading = false;
-              this._Router.navigate(['/adminpanel']);
+              this._Router.navigate(['/admindashboard']);
             } else {
               this.isLoading = false;
               this._Router.navigate(['/home']);

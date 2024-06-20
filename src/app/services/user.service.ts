@@ -23,6 +23,12 @@ export class UserService {
     return this._HttpClient.get<User[]>(`${this.baseUrl}/AllUsers`, { params }).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
+  // Toggle Active Status
+  // Put: api/Users/ToggleActiveStatus/{id}
+  toggleActiveStatus(userId: string): Observable<any> {
+    return this._HttpClient.put<any>(`${this.baseUrl}/ToggleActiveStatus/${userId}`, {}).pipe(delay(3000));
+  }
+  /*------------------------------------------------------------------*/
   // Delete a Specific User By Id
   // Delete: api/Users/{id}
   deleteUser(userId: string): Observable<Object> {
