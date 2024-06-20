@@ -23,6 +23,7 @@ import { AdminBrandsComponent } from './components/admin/admin-brands/admin-bran
 import { AdminBrandFormComponent } from './components/admin/admin-brand-form/admin-brand-form.component';
 import { AdminCategoriesComponent } from './components/admin/admin-categories/admin-categories.component';
 import { AdminCategoryFormComponent } from './components/admin/admin-category-form/admin-category-form.component';
+import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -32,6 +33,7 @@ const routes: Routes = [
     component: AdminDashboardComponent,
     children: [
       { path: '', component: AdminMainComponent, pathMatch: 'full' },
+      { path: 'products', component: AdminProductsComponent },
       { path: 'categories', component: AdminCategoriesComponent },
       { path: 'addcategory', component: AdminCategoryFormComponent },
       { path: 'editcategory/:id', component: AdminCategoryFormComponent },

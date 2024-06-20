@@ -40,6 +40,7 @@
 
 /* Media Query for small and medium screens */
 /* @media (max-width: 860px) { */
+/* @media (max-width: 1024px) { */
 @media (max-width: 1250px) {
   span {
     display: none !important;
