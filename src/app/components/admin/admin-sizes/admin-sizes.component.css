@@ -1,0 +1,18 @@
+/*--------------------------------------------*/
+.pagination .page-link {
+  cursor: pointer;
+}
+/*--------------------------------------------*/
+.color-bullets {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+/*--------------------------------------------*/
+.color-bullet {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: inline-block;
+}
+/*--------------------------------------------*/
