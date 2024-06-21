@@ -84,6 +84,7 @@
                   <th></th>
                   <th></th>
                   <th></th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -97,8 +98,9 @@
                     <td>{{ product.category.name }}</td>
                     <td>{{ product.brand.name }}</td>
                     <td><img [src]="product.imageUrl" alt="Brand Image" width="100" height="100" (click)="openImgModal(product)" style="cursor: pointer" /></td>
-                    <td><i class="fas fa-edit fa-lg" style="cursor: pointer" (click)="editProduct(product.id)"></i></td>
+                    <td><i class="fa-solid fa-eye fa-lg" style="cursor: pointer" [routerLink]="['/admindashboard/productdetails/', product.id]"></i></td>
                     <td><i class="fa-solid fa-info fa-lg" style="cursor: pointer" (click)="openProductDetailsModal(product)"></i></td>
+                    <td><i class="fas fa-edit fa-lg" style="cursor: pointer" (click)="editProduct(product.id)"></i></td>
                     <td>
                       <i *ngIf="product.deleting" class="fas fa-spinner fa-spin fa-lg"></i>
                       <i

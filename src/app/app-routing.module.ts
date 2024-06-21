@@ -30,6 +30,7 @@ import { AdminColorsComponent } from './components/admin/admin-colors/admin-colo
 import { AdminColorFormComponent } from './components/admin/admin-color-form/admin-color-form.component';
 import { AdminSizesComponent } from './components/admin/admin-sizes/admin-sizes.component';
 import { AdminSizeFormComponent } from './components/admin/admin-size-form/admin-size-form.component';
+import { AdminProductDetailsComponent } from './components/admin/admin-product-details/admin-product-details.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -42,6 +43,7 @@ const routes: Routes = [
       { path: 'products', component: AdminProductsComponent },
       { path: 'addproduct', component: AdminProductFormComponent },
       { path: 'editproduct/:id', component: AdminProductFormComponent },
+      { path: 'productdetails/:id', component: AdminProductDetailsComponent },
       { path: 'colors', component: AdminColorsComponent },
       { path: 'addcolor', component: AdminColorFormComponent },
       { path: 'editcolor/:id', component: AdminColorFormComponent },

@@ -13,7 +13,7 @@ import { Brand } from '../../../models/brand';
 import { Category } from '../../../models/category';
 import { Color } from '../../../models/color';
 import { Size } from '../../../models/size';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SaveConfirmationModalComponent } from '../../modals/save-confirmation-modal/save-confirmation-modal.component';
 import { Product } from '../../../models/product';
 /*--------------------------------------------------------------------*/
@@ -30,6 +30,7 @@ export class AdminProductFormComponent implements OnInit {
   colors: Color[] = [];
   sizes: Size[] = [];
   isLoading: boolean = false;
+  singleProductLoading: boolean = false;
   imageError: string | null = null;
   editMode: boolean = false;
   currentProductId: number;
@@ -210,8 +211,6 @@ export class AdminProductFormComponent implements OnInit {
         this.navigateToBrandsDashboard();
       },
       error: (error) => {
-        console.log(error);
-
         this._ToastrService.error('An error occurred while updating Product, Please try again.');
         this.apiError = 'An error occurred while updating Product, Please try again.';
         this.isLoading = false;
@@ -235,16 +234,17 @@ export class AdminProductFormComponent implements OnInit {
     });
   }
   /*------------------------------------------------------------------*/
-  // Get a Specific Product By Id Without Products
+  // Get a Specific Product By Id
   private getProductById(id: number) {
+    this.singleProductLoading = true;
     this._ProductService.getSpecificProductWithDetails(id).subscribe({
       next: (response: Product) => {
-        console.log(response);
-
         this.loadBrandData(response);
+        this.singleProductLoading = false;
       },
       error: (error) => {
         this._ToastrService.error('Error fetching Product by Id, Please try again.');
+        this.singleProductLoading = false;
       },
     });
   }
@@ -293,12 +293,12 @@ export class AdminProductFormComponent implements OnInit {
     }
     this.productForm.controls['colorIds'].setValue(selectedColors);
   }
-
+  /*------------------------------------------------------------------*/
   // Check if a color is selected
   colorSelected(colorId: number): boolean {
     return this.productForm.controls['colorIds'].value.includes(colorId);
   }
-
+  /*------------------------------------------------------------------*/
   onSizeChange(event: Event) {
     const input = event.target as HTMLInputElement;
     const value = +input.value;
@@ -315,8 +315,9 @@ export class AdminProductFormComponent implements OnInit {
     }
     this.productForm.controls['sizeIds'].setValue(selectedSizes);
   }
-
+  /*------------------------------------------------------------------*/
   sizeSelected(sizeId: number): boolean {
     return this.productForm.controls['sizeIds'].value.includes(sizeId);
   }
+  /*------------------------------------------------------------------*/
 }
