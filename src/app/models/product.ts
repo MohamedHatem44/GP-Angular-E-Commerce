@@ -1,6 +1,7 @@
 import { Brand } from './brand';
 import { Category } from './category';
 import { Color } from './color';
+import { Review } from './review';
 import { Size } from './size';
 /*--------------------------------------------------------------------*/
 export interface Product {
@@ -23,15 +24,5 @@ export interface Product {
   brandId: number;
   brand?: Brand;
   reviews?: Review[];
-}
-/*--------------------------------------------------------------------*/
-export interface Review {
-  rate: number;
-  description: string;
-  createdAt: string;
-  userId: string;
-  firstName: string;
-  lastName: string;
-  email: string;
 }
 /*--------------------------------------------------------------------*/

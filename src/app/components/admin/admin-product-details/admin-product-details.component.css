@@ -49,14 +49,42 @@
 .nav-tabs .nav-item .nav-link {
   cursor: pointer;
 }
-
+/*--------------------------------------------*/
 .tab-content > .tab-pane {
   display: none;
 }
-
+/*--------------------------------------------*/
 .tab-content > .active {
   display: block;
 }
-.tab-content {
-  text-align: center;
+/*--------------------------------------------*/
+.rating-stars {
+  display: flex;
+  align-items: center;
+}
+
+.rating {
+  color: #ffffff;
+}
+
+.rating .fa-star {
+  font-size: 15px;
+}
+
+.rating .fa-star.checked {
+  color: #f0c419;
+}
+
+.rating-value {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.card-title {
+  margin-bottom: 0;
+  font-size: 1.25rem;
+}
+
+.card-text {
+  margin-top: 10px;
 }
