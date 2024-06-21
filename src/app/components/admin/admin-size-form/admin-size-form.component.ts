@@ -1,29 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { ColorService } from '../../../services/color.service';
+import { Component } from '@angular/core';
+import { SizeService } from '../../../services/size.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SaveConfirmationModalComponent } from '../../modals/save-confirmation-modal/save-confirmation-modal.component';
-import { Color } from '../../../models/color';
+import { Size } from '../../../models/size';
 /*--------------------------------------------------------------------*/
 @Component({
-  selector: 'app-admin-color-form',
-  templateUrl: './admin-color-form.component.html',
-  styleUrl: './admin-color-form.component.css',
+  selector: 'app-admin-size-form',
+  templateUrl: './admin-size-form.component.html',
+  styleUrl: './admin-size-form.component.css',
 })
 /*--------------------------------------------------------------------*/
-export class AdminColorFormComponent implements OnInit {
+export class AdminSizeFormComponent {
   // Component properties
   isLoading: boolean = false;
-  colorLoading: boolean = false;
+  sizeLoading: boolean = false;
   editMode: boolean = false;
-  currentColorId: number;
+  currentSizeId: number;
   apiError: string | null = null;
   /*------------------------------------------------------------------*/
   // Ctor
   constructor(
-    private _ColorService: ColorService,
+    private _SizeService: SizeService,
     private _Router: Router,
     private _Route: ActivatedRoute,
     private _ModalService: NgbModal,
@@ -34,126 +34,126 @@ export class AdminColorFormComponent implements OnInit {
     this.checkEditMode();
   }
   /*------------------------------------------------------------------*/
-  // Color Form
-  colorForm = new FormGroup({
-    name: new FormControl<string>('', [Validators.required, Validators.minLength(3), Validators.maxLength(12), Validators.pattern('^[a-zA-Z ]*$')]),
+  // Size Form
+  sizeForm = new FormGroup({
+    name: new FormControl<string>('', [Validators.required, Validators.minLength(1), Validators.maxLength(12)]),
   });
   /*------------------------------------------------------------------*/
-  // Create Color Button (Edit or Add Brand)
+  // Create Size Button (Edit or Add Brand)
   openSaveConfirmationModal(event: Event) {
     event.preventDefault();
-    if (this.colorForm.invalid) {
+    if (this.sizeForm.invalid) {
       return;
     }
     const modalRef = this._ModalService.open(SaveConfirmationModalComponent);
     modalRef.componentInstance.message = 'Are you sure you want to save changes?';
     modalRef.componentInstance.confirmSave.subscribe(() => {
-      this.saveColor();
+      this.saveSize();
     });
   }
   /*------------------------------------------------------------------*/
-  saveColor() {
-    if (this.colorForm.invalid) {
+  saveSize() {
+    if (this.sizeForm.invalid) {
       return;
     }
-    const colorData: any = {
-      name: this.colorForm.controls['name'].value,
+    const sizeData: any = {
+      name: this.sizeForm.controls['name'].value,
     };
     if (this.editMode) {
-      this.updateColor(this.currentColorId, colorData);
+      this.updateSize(this.currentSizeId, sizeData);
     } else {
-      this.createColor(colorData);
+      this.createSize(sizeData);
     }
   }
   /*------------------------------------------------------------------*/
-  // Create Color
-  private createColor(color: Color) {
+  // Create Size
+  private createSize(size: Size) {
     this.isLoading = true;
-    this._ColorService.createColor(color).subscribe({
+    this._SizeService.createSize(size).subscribe({
       next: (response: any) => {
-        this._ToastrService.success('Color created successfully');
-        this.colorForm.reset();
+        this._ToastrService.success('Size created successfully');
+        this.sizeForm.reset();
         this.isLoading = false;
         this.navigateToColorsDashboard();
       },
       error: (error: any) => {
         if (error.status === 400) {
-          this._ToastrService.error('Color with the same name already exists, Color name must be unique.');
-          this.apiError = 'Color with the same name already exists, Color name must be unique.';
+          this._ToastrService.error('Size with the same name already exists, Size name must be unique.');
+          this.apiError = 'Size with the same name already exists, Size name must be unique.';
           this.isLoading = false;
         } else {
-          this._ToastrService.error('An error occurred while creating Color, Please try again.');
-          this.apiError = 'An error occurred while creating Color, Please try again.';
+          this._ToastrService.error('An error occurred while creating Size, Please try again.');
+          this.apiError = 'An error occurred while creating Size, Please try again.';
           this.isLoading = false;
         }
       },
     });
   }
   /*------------------------------------------------------------------*/
-  // Update specific Color
-  private updateColor(colorId: number, color: Color) {
+  // Update specific Size
+  private updateSize(sizeId: number, size: Size) {
     this.isLoading = true;
-    this._ColorService.updateColor(colorId, color).subscribe({
+    this._SizeService.updateSize(sizeId, size).subscribe({
       next: (response: any) => {
-        this._ToastrService.success('Color updated successfully');
-        this.colorForm.reset();
+        this._ToastrService.success('Size updated successfully');
+        this.sizeForm.reset();
         this.isLoading = false;
         this.navigateToColorsDashboard();
       },
       error: (error) => {
         if (error.status === 400) {
-          this._ToastrService.error('Color with the same name already exists, Color name must be unique.');
-          this.apiError = 'Color with the same name already exists, Color name must be unique.';
+          this._ToastrService.error('Size with the same name already exists, Size name must be unique.');
+          this.apiError = 'Size with the same name already exists, Size name must be unique.';
           this.isLoading = false;
         } else {
-          this._ToastrService.error('An error occurred while updating Color, Please try again.');
-          this.apiError = 'An error occurred while updating Color, Please try again.';
+          this._ToastrService.error('An error occurred while updating Size, Please try again.');
+          this.apiError = 'An error occurred while updating Size, Please try again.';
           this.isLoading = false;
         }
       },
     });
   }
   /*------------------------------------------------------------------*/
-  // Navigate To Colors Dashboard After Add or Edit
+  // Navigate To Sizes Dashboard After Add or Edit
   navigateToColorsDashboard() {
-    this._Router.navigate(['/admindashboard/colors']);
+    this._Router.navigate(['/admindashboard/sizes']);
   }
   /*------------------------------------------------------------------*/
-  // Check Edit Mode for Colors Dashboard (Edit or Add Brand)
+  // Check Edit Mode for Sizes Dashboard (Edit or Add Brand)
   private checkEditMode() {
     this._Route.params.subscribe((params) => {
       if (params['id']) {
         this.editMode = true;
-        this.currentColorId = +params['id'];
-        this.getColorById(params['id']);
+        this.currentSizeId = +params['id'];
+        this.getSizeById(params['id']);
       }
     });
   }
   /*------------------------------------------------------------------*/
-  // Get a Specific Color By Id
-  private getColorById(id: number) {
-    this.colorLoading = true;
-    this._ColorService.getColorById(id).subscribe({
-      next: (response: Color) => {
-        this.loadColorData(response);
-        this.colorLoading = false;
+  // Get a Specific Size By Id
+  private getSizeById(id: number) {
+    this.sizeLoading = true;
+    this._SizeService.getSizeById(id).subscribe({
+      next: (response: Size) => {
+        this.loadSizeData(response);
+        this.sizeLoading = false;
       },
       error: (error) => {
-        this._ToastrService.error('Error fetching Color by Id, Please try again.');
-        this.apiError = 'Error fetching Color by Id, Please try again.';
-        this.colorLoading = false;
+        this._ToastrService.error('Error fetching Size by Id, Please try again.');
+        this.apiError = 'Error fetching Size by Id, Please try again.';
+        this.sizeLoading = false;
       },
     });
   }
   /*------------------------------------------------------------------*/
   // Load Data Into Form When Loading Edit Form
-  private loadColorData(color: Color) {
-    this.colorForm.controls['name'].setValue(color.name);
+  private loadSizeData(size: Size) {
+    this.sizeForm.controls['name'].setValue(size.name);
   }
   /*------------------------------------------------------------------*/
   // Reset All Form
   resetAll() {
-    this.colorForm.reset();
+    this.sizeForm.reset();
     this.apiError = null;
     this.isLoading = false;
     this.editMode = false;

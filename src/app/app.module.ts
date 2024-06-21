@@ -58,6 +58,7 @@ import { UserProfileEditComponent } from './components/user/user-profile-edit/us
 import { AdminColorsComponent } from './components/admin/admin-colors/admin-colors.component';
 import { AdminColorFormComponent } from './components/admin/admin-color-form/admin-color-form.component';
 import { AdminSizesComponent } from './components/admin/admin-sizes/admin-sizes.component';
+import { AdminSizeFormComponent } from './components/admin/admin-size-form/admin-size-form.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { AdminSizesComponent } from './components/admin/admin-sizes/admin-sizes.
     AdminColorsComponent,
     AdminColorFormComponent,
     AdminSizesComponent,
+    AdminSizeFormComponent,
   ],
   imports: [
     BrowserModule,

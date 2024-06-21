@@ -29,6 +29,7 @@ import { UserProfileEditComponent } from './components/user/user-profile-edit/us
 import { AdminColorsComponent } from './components/admin/admin-colors/admin-colors.component';
 import { AdminColorFormComponent } from './components/admin/admin-color-form/admin-color-form.component';
 import { AdminSizesComponent } from './components/admin/admin-sizes/admin-sizes.component';
+import { AdminSizeFormComponent } from './components/admin/admin-size-form/admin-size-form.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -45,8 +46,8 @@ const routes: Routes = [
       { path: 'addcolor', component: AdminColorFormComponent },
       { path: 'editcolor/:id', component: AdminColorFormComponent },
       { path: 'sizes', component: AdminSizesComponent },
-      // { path: 'addcolor', component: AdminColorFormComponent },
-      // { path: 'editcolor/:id', component: AdminColorFormComponent },
+      { path: 'addsize', component: AdminSizeFormComponent },
+      { path: 'editsize/:id', component: AdminSizeFormComponent },
       { path: 'categories', component: AdminCategoriesComponent },
       { path: 'addcategory', component: AdminCategoryFormComponent },
       { path: 'editcategory/:id', component: AdminCategoryFormComponent },

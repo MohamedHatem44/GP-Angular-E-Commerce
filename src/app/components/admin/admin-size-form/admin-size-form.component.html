@@ -3,15 +3,15 @@
 <div class="container pt-6">
   <div class="card mt-3 mb-5 bg-light shadow p-2 bg-body rounded">
     <div class="card-body">
-      <h5 class="card-title fs-4">Colors Form</h5>
-      <h5 class="fs-6 mb-4">You can add or edit Colors here</h5>
+      <h5 class="card-title fs-4">Sizes Form</h5>
+      <h5 class="fs-6 mb-4">You can add or edit Sizes here</h5>
       <!-- Start of Breadcrumb -->
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb fs-6">
           <li class="breadcrumb-item">
             <a class="text-decoration-none text-dark" routerLink="/admindashboard"><i class="fas fa-tachometer-alt fa-lg me-2"></i>Admin Dashboard</a>
           </li>
-          <li class="breadcrumb-item active text-dark fs-6" aria-current="page">{{ editMode ? 'Edit Color' : 'Add Color' }}</li>
+          <li class="breadcrumb-item active text-dark fs-6" aria-current="page">{{ editMode ? 'Edit Size' : 'Add Size' }}</li>
         </ol>
       </nav>
       <!-- End of Breadcrumb -->
@@ -24,19 +24,19 @@
 <div class="container mt-5 pb-8">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title fs-4 mb-3">{{ editMode ? 'Edit Color' : 'Add Color' }}</h5>
+      <h5 class="card-title fs-4 mb-3">{{ editMode ? 'Edit Size' : 'Add Size' }}</h5>
       <!----------------------------------------------------------------------------------------->
-      <!-- Start of Color Form -->
-      <form [formGroup]="colorForm" class="py-5">
-        <!-- Start of Color Name -->
+      <!-- Start of Size Form -->
+      <form [formGroup]="sizeForm" class="py-5">
+        <!-- Start of Size Name -->
         <div class="mb-5">
-          <label for="colorName" class="form-label">Color Name</label>
+          <label for="sizeName" class="form-label">Size Name</label>
 
           <!-- Skeleton Loader -->
-          <div *ngIf="colorLoading" class="skeleton-loader"></div>
+          <div *ngIf="sizeLoading" class="skeleton-loader"></div>
 
           <input
-            *ngIf="!colorLoading"
+            *ngIf="!sizeLoading"
             type="text"
             class="form-control"
             id="colorName"
@@ -45,14 +45,13 @@
             placeholder="Color Name"
             required
           />
-          <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="colorForm.get('name')?.errors && colorForm.get('name')?.touched">
-            <span *ngIf="colorForm.get('name')?.errors?.['required']" class="text-danger">Color Name is required</span>
-            <span *ngIf="colorForm.get('name')?.errors?.['pattern']" class="text-danger">Invalid Color Name. only alphabets allowed</span>
-            <span *ngIf="colorForm.get('name')?.errors?.['minlength']" class="text-danger">Invalid Color Name, Min length is 1</span>
-            <span *ngIf="colorForm.get('name')?.errors?.['maxlength']" class="text-danger">Invalid Color Name, Max length is 12</span>
+          <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="sizeForm.get('name')?.errors && sizeForm.get('name')?.touched">
+            <span *ngIf="sizeForm.get('name')?.errors?.['required']" class="text-danger">Size Name is required</span>
+            <span *ngIf="sizeForm.get('name')?.errors?.['minlength']" class="text-danger">Invalid Size Name, Min length is 3</span>
+            <span *ngIf="sizeForm.get('name')?.errors?.['maxlength']" class="text-danger">Invalid Size Name, Max length is 12</span>
           </div>
         </div>
-        <!-- End of Color Name -->
+        <!-- End of Size Name -->
         <!--------------------------------------------------------------------------------------->
         <!-- Start of API Error -->
         <div *ngIf="apiError" class="alert alert-danger my-3" role="alert">
@@ -62,7 +61,7 @@
         <!--------------------------------------------------------------------------------------->
         <!-- Start of Save Button with Spinner and Disabled State -->
         <div class="d-flex justify-content-center mt-3">
-          <button type="submit" class="btn btn-success" (click)="openSaveConfirmationModal($event)" [disabled]="colorForm.invalid">
+          <button type="submit" class="btn btn-success" (click)="openSaveConfirmationModal($event)" [disabled]="sizeForm.invalid">
             <i *ngIf="isLoading" class="fas fa-spinner fa-spin mx-4"></i>
             <span *ngIf="!isLoading"> {{ editMode ? 'Update' : ' + Create' }}</span>
           </button>
@@ -70,7 +69,7 @@
         </div>
         <!-- End of Save Button with Spinner and Disabled State -->
       </form>
-      <!-- End of Color Form -->
+      <!-- End of Size Form -->
       <!----------------------------------------------------------------------------------------------->
     </div>
   </div>

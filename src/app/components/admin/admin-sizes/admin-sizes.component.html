@@ -40,7 +40,7 @@
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
           <h4 class="card-title">All Sizes</h4>
-          <a type="button" class="btn btn-success" routerLink="/admindashboard/addcolor"><i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>Add</a>
+          <a type="button" class="btn btn-success" routerLink="/admindashboard/addsize"><i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>Add</a>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -49,6 +49,7 @@
                 <tr class="text-center">
                   <th>Id</th>
                   <th>Name</th>
+                  <th>Size</th>
                   <th>Created At</th>
                   <th></th>
                   <th></th>
@@ -59,6 +60,9 @@
                   <tr *ngFor="let size of sizes; let i = index" class="text-center">
                     <td>{{ size.id }}</td>
                     <td>{{ size.name }}</td>
+                    <td>
+                      <span class="size-badge">{{ size.name }}</span>
+                    </td>
                     <td>{{ size.createdAt | date : 'short' }}</td>
                     <td><i class="fas fa-edit fa-lg" style="cursor: pointer" (click)="editSize(size.id)"></i></td>
                     <td>
