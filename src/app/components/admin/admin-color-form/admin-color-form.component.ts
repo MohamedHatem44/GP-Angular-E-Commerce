@@ -16,6 +16,7 @@ import { Color } from '../../../models/color';
 export class AdminColorFormComponent implements OnInit {
   // Component properties
   isLoading: boolean = false;
+  colorLoading: boolean = false;
   editMode: boolean = false;
   currentColorId: number;
   apiError: string | null = null;
@@ -94,7 +95,7 @@ export class AdminColorFormComponent implements OnInit {
     this.isLoading = true;
     this._ColorService.updateColor(colorId, color).subscribe({
       next: (response: any) => {
-        this._ToastrService.success('Brand updated successfully');
+        this._ToastrService.success('Color updated successfully');
         this.colorForm.reset();
         this.isLoading = false;
         this.navigateToColorsDashboard();
@@ -131,16 +132,16 @@ export class AdminColorFormComponent implements OnInit {
   /*------------------------------------------------------------------*/
   // Get a Specific Color By Id
   private getColorById(id: number) {
-    this.isLoading = true;
+    this.colorLoading = true;
     this._ColorService.getColorById(id).subscribe({
       next: (response: Color) => {
         this.loadColorData(response);
-        this.isLoading = false;
+        this.colorLoading = false;
       },
       error: (error) => {
         this._ToastrService.error('Error fetching Color by Id, Please try again.');
         this.apiError = 'Error fetching Color by Id, Please try again.';
-        this.isLoading = false;
+        this.colorLoading = false;
       },
     });
   }

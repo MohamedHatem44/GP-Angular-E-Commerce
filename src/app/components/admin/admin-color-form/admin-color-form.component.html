@@ -33,9 +33,18 @@
           <label for="colorName" class="form-label">Color Name</label>
 
           <!-- Skeleton Loader -->
-          <div *ngIf="isLoading" class="skeleton-loader"></div>
+          <div *ngIf="colorLoading" class="skeleton-loader"></div>
 
-          <input *ngIf="!isLoading" type="text" class="form-control" id="colorName" formControlName="name" name="colorName" placeholder="Color Name" required />
+          <input
+            *ngIf="!colorLoading"
+            type="text"
+            class="form-control"
+            id="colorName"
+            formControlName="name"
+            name="colorName"
+            placeholder="Color Name"
+            required
+          />
           <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="colorForm.get('name')?.errors && colorForm.get('name')?.touched">
             <span *ngIf="colorForm.get('name')?.errors?.['required']" class="text-danger">Color Name is required</span>
             <span *ngIf="colorForm.get('name')?.errors?.['pattern']" class="text-danger">Invalid Color Name. only alphabets allowed</span>
