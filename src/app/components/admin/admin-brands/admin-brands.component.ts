@@ -152,6 +152,7 @@ export class AdminBrandsComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Search
   searchBrands(searchTerm: string = this.searchInput.trim()): void {
+    this.currentPage = 1;
     this.fetchBrands(this.currentPage, searchTerm);
   }
   /*-----------------------------------------------------------------*/

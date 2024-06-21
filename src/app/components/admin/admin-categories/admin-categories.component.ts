@@ -152,6 +152,7 @@ export class AdminCategoriesComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Search
   searchCategories(searchTerm: string = this.searchInput.trim()): void {
+    this.currentPage = 1;
     this.fetchCategories(this.currentPage, searchTerm);
   }
   /*-----------------------------------------------------------------*/

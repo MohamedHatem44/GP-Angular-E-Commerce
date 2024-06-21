@@ -138,7 +138,8 @@ export class AdminColorsComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Search
   searchColors(searchTerm: string = this.searchInput.trim()): void {
-    this.fetchColors(1, searchTerm);
+    this.currentPage = 1;
+    this.fetchColors(this.currentPage, searchTerm);
   }
   /*-----------------------------------------------------------------*/
   // Edit Color

@@ -150,6 +150,7 @@ export class AdminUsersComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Search
   searchUsers(searchTerm: string = this.searchInput.trim()): void {
+    this.currentPage = 1;
     this.fetchUsers(this.currentPage, searchTerm);
   }
   /*-----------------------------------------------------------------*/

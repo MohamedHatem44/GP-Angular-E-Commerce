@@ -200,7 +200,8 @@ export class AdminProductsComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Search
   searchProducts(searchTerm: string = this.searchInput.trim()): void {
-    this.fetchProducts(1, searchTerm);
+    this.currentPage = 1;
+    this.fetchProducts(this.currentPage, searchTerm);
   }
   /*-----------------------------------------------------------------*/
   // Edit Product
