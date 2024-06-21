@@ -64,13 +64,11 @@ export class AdminProductsComponent implements OnInit {
   }
   /*-----------------------------------------------------------------*/
   // Fetch Products
-  fetchProducts(page: number, searchParam?: string, categoryId?: number, brandId?: number): void {
+  async fetchProducts(page: number, searchParam?: string, categoryId?: number, brandId?: number): Promise<void> {
     this.productsLoading = true;
     this.apiError = null;
-    this._ProductService.getAllProductsWithPaginationForAdmin(page, this.pageSize, searchParam, categoryId, brandId).subscribe({
+    (await this._ProductService.getAllProductsWithPaginationForAdmin(page, this.pageSize, searchParam, categoryId, brandId)).subscribe({
       next: (response: any) => {
-        console.log(response.items);
-
         this.products = response.items.map((product: any) => ({ ...product, deleting: false }));
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;

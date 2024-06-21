@@ -1,3 +1,4 @@
+/*--------------------------------------------*/
 .sidebar {
   position: static;
   width: 240px;
@@ -5,7 +6,7 @@
   background-color: #2e353d;
   z-index: 1000;
 }
-
+/*--------------------------------------------*/
 .sidebar a {
   display: block;
   height: 60px;
@@ -20,15 +21,15 @@
   text-decoration: none;
   border-bottom: 1px solid #23282e;
 }
-
+/*--------------------------------------------*/
 .sidebar a i {
   font-size: 20px;
 }
-
+/*--------------------------------------------*/
 .sidebar a span {
   letter-spacing: 1px;
 }
-
+/*--------------------------------------------*/
 .sidebar a:hover {
   background-color: #4f5b69;
   -webkit-transition: all 1s ease;
@@ -37,7 +38,7 @@
   -ms-transition: all 1s ease;
   transition: all 1s ease;
 }
-
+/*--------------------------------------------*/
 /* Media Query for small and medium screens */
 /* @media (max-width: 860px) { */
 /* @media (max-width: 1024px) { */
@@ -76,3 +77,4 @@
 .active-link {
   background-color: #4f5b69;
 }
+/*--------------------------------------------*/
