@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Brand } from '../../../models/brand';
 import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
 import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
+import { AdminBlogDetailsModalComponent } from '../admin-blog-details-modal/admin-blog-details-modal.component';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-blogs',
@@ -109,9 +110,9 @@ export class AdminBlogsComponent {
   }
   /*-----------------------------------------------------------------*/
   // Open Blog Details Modal
-  openBrandDetailsModal(brand: Brand): void {
-    // const modalRef = this._ModalService.open(AdminBrandDetailsModalComponent, { size: 'lg' });
-    // modalRef.componentInstance.brand = brand;
+  openBlogDetailsModal(blog: Blog): void {
+    const modalRef = this._ModalService.open(AdminBlogDetailsModalComponent, { size: 'lg' });
+    modalRef.componentInstance.blog = blog;
   }
   /*-----------------------------------------------------------------*/
   // Open Img Modal

@@ -62,6 +62,7 @@ import { AdminSizeFormComponent } from './components/admin/admin-size-form/admin
 import { AdminProductDetailsComponent } from './components/admin/admin-product-details/admin-product-details.component';
 import { AdminBlogsComponent } from './components/admin/admin-blogs/admin-blogs.component';
 import { AdminBlogFormComponent } from './components/admin/admin-blog-form/admin-blog-form.component';
+import { AdminBlogDetailsModalComponent } from './components/admin/admin-blog-details-modal/admin-blog-details-modal.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -119,6 +120,7 @@ import { AdminBlogFormComponent } from './components/admin/admin-blog-form/admin
     AdminProductDetailsComponent,
     AdminBlogsComponent,
     AdminBlogFormComponent,
+    AdminBlogDetailsModalComponent,
   ],
   imports: [
     BrowserModule,
