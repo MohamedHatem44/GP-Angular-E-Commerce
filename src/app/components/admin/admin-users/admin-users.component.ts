@@ -59,7 +59,7 @@ export class AdminUsersComponent implements OnInit {
         this.usersLoading = false;
         this.noUsers = this.users.length === 0;
       },
-      error: (err) => {
+      error: (error) => {
         this.apiError = 'Failed to load Users, Please try again.';
         this._ToastrService.error('Failed to load Users, Please try again.');
         this.usersLoading = false;

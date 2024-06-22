@@ -25,7 +25,7 @@
   <div class="w-75">
     <form>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Blog Title ..." [(ngModel)]="searchInput" name="brandName" (keyup)="searchBlogs()" />
+        <input type="text" class="form-control" placeholder="Blog Title ..." [(ngModel)]="searchInput" name="blogName" (keyup)="searchBlogs()" />
         <div class="btn btn-outline-secondary"><i class="fa fa-search"></i> Search</div>
       </div>
     </form>
@@ -59,21 +59,21 @@
               </thead>
               <tbody>
                 <ng-container *ngIf="!blogsLoading && !apiError && !noBlogs">
-                  <tr *ngFor="let brand of blogs; let i = index" class="text-center">
-                    <td>{{ brand.id }}</td>
-                    <td>{{ brand.title }}</td>
-                    <td>{{ brand.description | slice : 0 : 15 }}{{ brand.description.length > 15 ? '...' : '' }}</td>
-                    <td>{{ brand.createdAt | date : 'short' }}</td>
-                    <td><img [src]="brand.imageUrl" alt="Brand Image" width="200" height="100" (click)="openImgModal(brand)" style="cursor: pointer" /></td>
-                    <td><i class="fas fa-edit fa-lg" style="cursor: pointer" (click)="editBlog(brand.id)"></i></td>
-                    <td><i class="fa-solid fa-info fa-lg" style="cursor: pointer" (click)="openBrandDetailsModal(brand)"></i></td>
+                  <tr *ngFor="let blog of blogs; let i = index" class="text-center">
+                    <td>{{ blog.id }}</td>
+                    <td>{{ blog.title | slice : 0 : 20 }}{{ blog.title.length > 20 ? '...' : '' }}</td>
+                    <td>{{ blog.description | slice : 0 : 20 }}{{ blog.description.length > 20 ? '...' : '' }}</td>
+                    <td>{{ blog.createdAt | date : 'short' }}</td>
+                    <td><img [src]="blog.imageUrl" alt="blog Image" width="200" height="100" (click)="openImgModal(blog)" style="cursor: pointer" /></td>
+                    <td><i class="fas fa-edit fa-lg" style="cursor: pointer" (click)="editBlog(blog.id)"></i></td>
+                    <td><i class="fa-solid fa-info fa-lg" style="cursor: pointer" (click)="openBlogDetailsModal(blog)"></i></td>
                     <td>
-                      <i *ngIf="brand.deleting" class="fas fa-spinner fa-spin fa-lg"></i>
+                      <i *ngIf="blog.deleting" class="fas fa-spinner fa-spin fa-lg"></i>
                       <i
-                        *ngIf="!brand.deleting"
+                        *ngIf="!blog.deleting"
                         class="fa-solid fa-trash text-danger fa-lg"
                         style="cursor: pointer"
-                        (click)="openDeleteConfirmationModal(brand.id)"
+                        (click)="openDeleteConfirmationModal(blog.id)"
                       ></i>
                     </td>
                   </tr>
@@ -84,17 +84,17 @@
           <!-- Start of Blogs Loading -->
           <app-loader-skeleton-v2 *ngIf="blogsLoading"></app-loader-skeleton-v2>
           <!-- End of Blogs Loading -->
-          <!-- Start of Error Brand -->
+          <!-- Start of Error Blog -->
           <div *ngIf="apiError" class="alert alert-danger my-8" role="alert">
             {{ apiError }}
           </div>
-          <!-- End of Error Brand -->
+          <!-- End of Error Blog -->
           <!-- Start of No Blogs Available -->
           <div *ngIf="!blogsLoading && !apiError && noBlogs" class="alert alert-info my-8" role="alert">No Blogs available</div>
           <!-- End of No Blogs Available -->
         </div>
         <div class="card-footer d-flex justify-content-between" style="min-height: 50px">
-          <p class="my-auto" *ngIf="!blogsLoading && !apiError && !noBlogs">Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} entries</p>
+          <p class="my-auto" *ngIf="!blogsLoading && !apiError && !noBlogs">Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} Blogs</p>
         </div>
       </div>
     </div>
