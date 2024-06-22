@@ -31,6 +31,7 @@ import { AdminColorFormComponent } from './components/admin/admin-color-form/adm
 import { AdminSizesComponent } from './components/admin/admin-sizes/admin-sizes.component';
 import { AdminSizeFormComponent } from './components/admin/admin-size-form/admin-size-form.component';
 import { AdminProductDetailsComponent } from './components/admin/admin-product-details/admin-product-details.component';
+import { AdminBlogsComponent } from './components/admin/admin-blogs/admin-blogs.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -50,6 +51,7 @@ const routes: Routes = [
       { path: 'sizes', component: AdminSizesComponent },
       { path: 'addsize', component: AdminSizeFormComponent },
       { path: 'editsize/:id', component: AdminSizeFormComponent },
+      { path: 'blogs', component: AdminBlogsComponent },
       { path: 'categories', component: AdminCategoriesComponent },
       { path: 'addcategory', component: AdminCategoryFormComponent },
       { path: 'editcategory/:id', component: AdminCategoryFormComponent },
