@@ -79,7 +79,9 @@
           <!-- End of No Messages Available -->
         </div>
         <div class="card-footer d-flex justify-content-between" style="min-height: 50px">
-          <p class="my-auto" *ngIf="!messageLoading && !apiError && !noMessages">Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} entries</p>
+          <p class="my-auto" *ngIf="!messageLoading && !apiError && !noMessages">
+            Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} Messages
+          </p>
         </div>
       </div>
     </div>
