@@ -19,7 +19,7 @@ export class UserCartComponent implements OnInit {
   cartItems: (any & { deleting?: boolean })[] = [];
   apiError: string | null = null;
   noItems: boolean = false;
-  searchInput: string = '';
+  deleteAllLoading: boolean = false;
   /*-----------------------------------------------------------------*/
   // Ctor
   constructor(private _CartService: CartService, private _ModalService: NgbModal, private _ToastrService: ToastrService) {}
@@ -57,13 +57,39 @@ export class UserCartComponent implements OnInit {
     modalRef.componentInstance.model = item;
   }
   /*-----------------------------------------------------------------*/
-  // Open Delete Confirmation Modal
-  openDeleteConfirmationModal(itemId: number): void {
+  // Open Delete Item Confirmation Modal
+  openDeleteItemConfirmationModal(itemId: number): void {
     const modalRef = this._ModalService.open(DeleteConfirmationModalComponent);
     this.itemIdToDelete = itemId;
     modalRef.componentInstance.message = `Are you sure you want to remove this item from cart?`;
     modalRef.componentInstance.confirmDelete.subscribe(() => {
       this.deleteItem(itemId);
+    });
+  }
+  /*-----------------------------------------------------------------*/
+  // Open Delete All Item Confirmation Modal
+  openDeleteAllItemConfirmationModal(): void {
+    const modalRef = this._ModalService.open(DeleteConfirmationModalComponent);
+    modalRef.componentInstance.message = `Are you sure you want to remove all items from cart?`;
+    modalRef.componentInstance.confirmDelete.subscribe(() => {
+      this.deleteAllItems();
+    });
+  }
+  /*-----------------------------------------------------------------*/
+  deleteAllItems() {
+    this.deleteAllLoading = true;
+    this._CartService.deleteAllItem().subscribe({
+      next: () => {
+        this.cartItems = [];
+        this.shoppingCart.itemsCount = 0;
+        this.shoppingCart.cartItems.length = 0;
+        this._ToastrService.success('All Items removed successfully');
+        this.deleteAllLoading = false;
+      },
+      error: (err) => {
+        this.deleteAllLoading = false;
+        this._ToastrService.error('Failed to remove items, Please try again.');
+      },
     });
   }
   /*-----------------------------------------------------------------*/

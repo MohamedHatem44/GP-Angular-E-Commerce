@@ -43,7 +43,12 @@
             <!-- Remove Item -->
             <div class="col-1 col-md-1">
               <i *ngIf="item.deleting" class="fas fa-spinner fa-spin fa-lg"></i>
-              <i *ngIf="!item.deleting" class="fa-solid fa-trash text-danger fa-lg" style="cursor: pointer" (click)="openDeleteConfirmationModal(item.id)"></i>
+              <i
+                *ngIf="!item.deleting"
+                class="fa-solid fa-trash text-danger fa-lg"
+                style="cursor: pointer"
+                (click)="openDeleteItemConfirmationModal(item.id)"
+              ></i>
             </div>
           </div>
         </div>
@@ -57,8 +62,9 @@
           <span class="text-muted ms-2">Back to shop</span>
         </a>
         <!-- Clear All -->
-        <button class="btn btn-outline-secondary">
-          <i class="fa-solid fa-trash text-danger me-2"></i>
+        <button (click)="openDeleteAllItemConfirmationModal()" class="btn btn-outline-secondary" *ngIf="cartItems.length !== 0">
+          <i *ngIf="deleteAllLoading" class="fas fa-spinner fa-spin me-2"></i>
+          <i *ngIf="!deleteAllLoading" class="fa-solid fa-trash text-danger me-2"></i>
           Clear All Items
         </button>
       </div>
@@ -102,7 +108,7 @@
         <div class="col text-right">&euro; {{ shoppingCart?.totalCartPrice + 5 | number : '1.2-2' }}</div>
       </div>
       <!-- Check out Btn -->
-      <button class="btnCustom mt-6 fw-semibold py-2" routerLink="/orders">Check out</button>
+      <button class="btnCustom mt-6 fw-semibold py-2" routerLink="/orders" [disabled]="cartItems.length === 0">Check out</button>
     </div>
     <!-- End of Summary -->
     <!-------------------------------------------------------------------------------------------->

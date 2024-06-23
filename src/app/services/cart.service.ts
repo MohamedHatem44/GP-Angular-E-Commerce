@@ -31,6 +31,12 @@ export class CartService {
     return this._HttpClient.delete<Object>(`${this.baseUrl}/RemoveItemFromCart/${itemId}`).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
+  // Remove a All Items From Shopping Cart By User Claims
+  // Delete: api/ShoppingCarts/RemoveAllItemsFromCart
+  deleteAllItem(): Observable<Object> {
+    return this._HttpClient.delete<Object>(`${this.baseUrl}/RemoveAllItemsFromCart`).pipe(delay(3000));
+  }
+  /*------------------------------------------------------------------*/
   // Edit Item Quantity in Shopping Cart
   // Patch: api/ShoppingCarts
   updateItemQuantity(dto: any): Observable<any> {
