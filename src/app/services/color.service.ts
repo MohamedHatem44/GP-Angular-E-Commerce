@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, delay } from 'rxjs';
 import { Color } from '../models/color';
+import { PagedResponse } from '../models/pagedResponse';
 /*--------------------------------------------------------------------*/
 @Injectable({
   providedIn: 'root',
@@ -15,18 +16,18 @@ export class ColorService {
   /*------------------------------------------------------------------*/
   // Get All Colors With Pagination
   // Get: api/Colors/AllColors
-  getAllColorsWithPagination(pageNumber: number, pageSize: number = 5, colorName?: string): Observable<Color[]> {
+  getAllColorsWithPagination(pageNumber: number, pageSize: number = 5, colorName?: string): Observable<PagedResponse<Color>> {
     let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
     if (colorName) {
       params = params.set('colorName', colorName);
     }
-    return this._HttpClient.get<Color[]>(`${this.baseUrl}/AllColors`, { params }).pipe(delay(3000));
+    return this._HttpClient.get<PagedResponse<Color>>(`${this.baseUrl}/AllColors`, { params }).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Get All Colors
   // Get: api/Colors
-  getAllColors(): Observable<Color[]> {
-    return this._HttpClient.get<Color[]>(this.baseUrl).pipe(delay(3000));
+  getAllColors(): Observable<{ colorsCount: number; colors: Color[] }> {
+    return this._HttpClient.get<{ colorsCount: number; colors: Color[] }>(this.baseUrl).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Get a Specific Color By Id

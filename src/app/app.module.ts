@@ -63,6 +63,7 @@ import { AdminProductDetailsComponent } from './components/admin/admin-product-d
 import { AdminBlogsComponent } from './components/admin/admin-blogs/admin-blogs.component';
 import { AdminBlogFormComponent } from './components/admin/admin-blog-form/admin-blog-form.component';
 import { AdminBlogDetailsModalComponent } from './components/admin/admin-blog-details-modal/admin-blog-details-modal.component';
+import { LoaderSkeletonV4Component } from './components/shared/loader-skeleton-v4/loader-skeleton-v4.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -121,6 +122,7 @@ import { AdminBlogDetailsModalComponent } from './components/admin/admin-blog-de
     AdminBlogsComponent,
     AdminBlogFormComponent,
     AdminBlogDetailsModalComponent,
+    LoaderSkeletonV4Component,
   ],
   imports: [
     BrowserModule,
