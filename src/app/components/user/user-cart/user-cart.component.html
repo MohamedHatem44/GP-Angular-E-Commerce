@@ -19,7 +19,7 @@
         <div class="row border-top border-bottom">
           <div class="row main align-items-center">
             <!-- Image Column -->
-            <div class="col-6 col-md-3"><img class="img-fluid" [src]="item.imageUrl" (click)="openImgModal(item)" style="cursor: pointer" /></div>
+            <div class="col-5 col-md-2"><img class="img-fluid" [src]="item.imageUrl" (click)="openImgModal(item)" style="cursor: pointer" /></div>
             <!-- Product Details Column -->
             <div class="col-6 col-md-3">
               <div class="row">{{ item.productTitle }}</div>
@@ -27,7 +27,7 @@
               <div class="row text-muted">Size : {{ item.sizeName }}</div>
             </div>
             <!-- Quantity Control Column -->
-            <div class="col-6 col-md-3 mt-xs-3">
+            <div class="col-5 col-md-3 mt-xs-3">
               <div class="d-flex">
                 <div class="col">
                   <i class="fa-solid fa-minus" (click)="decreaseQuantity(item)" style="cursor: pointer"></i>
@@ -40,47 +40,63 @@
             <div class="col-6 col-md-3 mt-xs-3">
               <div class="row">&euro; {{ item.totalItemPrice | number : '1.2-2' }}</div>
             </div>
+            <!-- Remove Item -->
+            <div class="col-1 col-md-1">
+              <i *ngIf="item.deleting" class="fas fa-spinner fa-spin fa-lg"></i>
+              <i *ngIf="!item.deleting" class="fa-solid fa-trash text-danger fa-lg" style="cursor: pointer" (click)="openDeleteConfirmationModal(item.id)"></i>
+            </div>
           </div>
         </div>
       </ng-container>
       <!-- End of Items -->
-      <!-- Back to Shop Link -->
-      <div class="mt-5">
-        <a routerLink="/shop" class="text-decoration-none"><i class="fa-solid fa-arrow-left"></i><span class="text-muted ms-2">Back to shop</span></a>
+
+      <div class="d-flex justify-content-between align-items-center mt-5">
+        <!-- Back to Shop Link -->
+        <a routerLink="/shop" class="text-decoration-none">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span class="text-muted ms-2">Back to shop</span>
+        </a>
+        <!-- Clear All -->
+        <button class="btn btn-outline-secondary">
+          <i class="fa-solid fa-trash text-danger me-2"></i>
+          Clear All Items
+        </button>
       </div>
     </div>
     <!-------------------------------------------------------------------------------------------->
     <!-- Start of Summary -->
     <div class="col-lg-4 summary">
+      <!-- Summary -->
       <div>
         <h5><p class="fw-semibold">Summary</p></h5>
       </div>
       <hr />
-
+      <!-- Items -->
       <div class="row mt-3">
         <div class="col-6 text-start"><strong>Items </strong></div>
         <div class="col-6 text-start">{{ shoppingCart?.itemsCount }}</div>
       </div>
       <br />
-
+      <!-- Products -->
       <div class="row mt-3">
         <div class="col-6 text-start"><strong>Products </strong></div>
         <div class="col-6 text-start">{{ shoppingCart?.cartItems.length }}</div>
       </div>
       <br />
-
+      <!-- Total Price -->
       <div class="row mt-3">
         <div class="col-6 text-start"><strong>Total Price </strong></div>
         <div class="col-6 text-start">&euro; {{ shoppingCart?.totalCartPrice | number : '1.2-2' }}</div>
       </div>
       <br />
-
+      <!-- Delivery -->
       <div class="row mt-3">
         <select>
           <option class="text-muted">Standard-Delivery- &euro;5.00</option>
         </select>
       </div>
       <hr />
+      <!-- Total Cart Price -->
       <div class="row">
         <div class="col"><strong>Total Cart Price </strong></div>
         <div class="col text-right">&euro; {{ shoppingCart?.totalCartPrice + 5 | number : '1.2-2' }}</div>

@@ -3,6 +3,7 @@ import { CartService } from '../../../services/cart.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
+import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-user-cart',
@@ -13,10 +14,9 @@ import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
 export class UserCartComponent implements OnInit {
   // Component properties
   cartLoading: boolean = false;
-  brandIdToDelete: number;
+  itemIdToDelete: number;
   shoppingCart: any;
-  cartItems: any[];
-  // brands: (Brand & { deleting?: boolean })[] = [];
+  cartItems: (any & { deleting?: boolean })[] = [];
   apiError: string | null = null;
   noItems: boolean = false;
   searchInput: string = '';
@@ -55,6 +55,38 @@ export class UserCartComponent implements OnInit {
   openImgModal(item: any): void {
     const modalRef = this._ModalService.open(ImgModalComponent);
     modalRef.componentInstance.model = item;
+  }
+  /*-----------------------------------------------------------------*/
+  // Open Delete Confirmation Modal
+  openDeleteConfirmationModal(itemId: number): void {
+    const modalRef = this._ModalService.open(DeleteConfirmationModalComponent);
+    this.itemIdToDelete = itemId;
+    modalRef.componentInstance.message = `Are you sure you want to remove this item from cart?`;
+    modalRef.componentInstance.confirmDelete.subscribe(() => {
+      this.deleteItem(itemId);
+    });
+  }
+  /*-----------------------------------------------------------------*/
+  // Delete Brand
+  deleteItem(itemId: number): void {
+    const item = this.cartItems.find((item) => item.id === itemId);
+    if (item) {
+      item.deleting = true;
+      this._CartService.deleteItem(itemId).subscribe({
+        next: () => {
+          this.cartItems = this.cartItems.filter((item) => item.id !== itemId);
+          this.shoppingCart.itemsCount = this.shoppingCart.itemsCount - item.quantity;
+          this.shoppingCart.cartItems.length--;
+          this._ToastrService.success('Item removed successfully');
+        },
+        error: (err) => {
+          console.log(err);
+
+          this._ToastrService.error('Failed to remove item, Please try again.');
+          item.deleting = false;
+        },
+      });
+    }
   }
   /*-----------------------------------------------------------------*/
   decreaseQuantity(item: any) {
