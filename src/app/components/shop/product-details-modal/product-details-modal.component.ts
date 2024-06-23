@@ -26,6 +26,11 @@ export class ProductDetailsModalComponent {
   }
   /*------------------------------------------------------------------*/
   increaseQuantity(): void {
+    const maxQuantity = 20;
+    if (this.quantity >= maxQuantity) {
+      this._ToastrService.error(`You can only add up to ${maxQuantity} items`);
+      return;
+    }
     this.quantity++;
   }
   /*------------------------------------------------------------------*/
@@ -39,6 +44,11 @@ export class ProductDetailsModalComponent {
     this.addToCartLoading = true;
     if (!this.selectedColorId || !this.selectedSizeId) {
       this._ToastrService.error('You must Select Color and Size');
+      this.addToCartLoading = false;
+      return;
+    }
+    if (this.quantity > 20) {
+      this._ToastrService.error(`You can only add up to 20 items`);
       this.addToCartLoading = false;
       return;
     }
@@ -60,8 +70,12 @@ export class ProductDetailsModalComponent {
         this.addToCartLoading = false;
       },
       error: (error) => {
-        console.error('Failed to add item to cart:', error);
-        this._ToastrService.error('Failed to add item to cart');
+        if (error.status === 400) {
+          this._ToastrService.error(`This Product does not have enough quantity in stock, Only available ${this.product.quantity}`);
+          return;
+        } else {
+          this._ToastrService.error('Failed to add item to cart');
+        }
         this.addToCartLoading = false;
       },
     });
