@@ -74,7 +74,10 @@
         <br />
         <!-- Add To Cart -->
         <div class="d-flex justify-content-center">
-          <button class="custombtn my-3 py-2" [disabled]="quantity < 1" (click)="addToCart()">Add To Cart</button>
+          <button class="custombtn my-3 py-2" [disabled]="quantity < 1" (click)="addToCart()">
+            <i *ngIf="addToCartLoading" class="fas fa-spinner fa-spin py-1"></i>
+            <span *ngIf="!addToCartLoading"> Add To Cart</span>
+          </button>
         </div>
       </div>
     </div>
