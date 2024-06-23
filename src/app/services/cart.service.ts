@@ -16,7 +16,7 @@ export class CartService {
   // Get a Specific Shopping Cart By User Claims
   // Get: api/ShoppingCarts/UserShoppingCart
   getShoppingCartByUserFromClaims(): Observable<any> {
-    return this._HttpClient.get<any>(`${this.baseUrl}/UserShoppingCart`).pipe(delay(0));
+    return this._HttpClient.get<any>(`${this.baseUrl}/UserShoppingCart`).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Add Items To Shopping Cart

@@ -41,7 +41,7 @@ export class UserCartComponent implements OnInit {
         console.log(this.cartItems);
 
         this.cartLoading = false;
-        // this.noItems = this.brands.length === 0;
+        this.noItems = this.cartItems.length === 0;
       },
       error: (err) => {
         this.apiError = 'Failed to load Cart, Please try again.';
@@ -76,24 +76,7 @@ export class UserCartComponent implements OnInit {
     });
   }
   /*-----------------------------------------------------------------*/
-  deleteAllItems() {
-    this.deleteAllLoading = true;
-    this._CartService.deleteAllItem().subscribe({
-      next: () => {
-        this.cartItems = [];
-        this.shoppingCart.itemsCount = 0;
-        this.shoppingCart.cartItems.length = 0;
-        this._ToastrService.success('All Items removed successfully');
-        this.deleteAllLoading = false;
-      },
-      error: (err) => {
-        this.deleteAllLoading = false;
-        this._ToastrService.error('Failed to remove items, Please try again.');
-      },
-    });
-  }
-  /*-----------------------------------------------------------------*/
-  // Delete Brand
+  // Delete Item
   deleteItem(itemId: number): void {
     const item = this.cartItems.find((item) => item.id === itemId);
     if (item) {
@@ -113,6 +96,24 @@ export class UserCartComponent implements OnInit {
         },
       });
     }
+  }
+  /*-----------------------------------------------------------------*/
+  // Delete All Items
+  deleteAllItems() {
+    this.deleteAllLoading = true;
+    this._CartService.deleteAllItem().subscribe({
+      next: () => {
+        this.cartItems = [];
+        this.shoppingCart.itemsCount = 0;
+        this.shoppingCart.cartItems.length = 0;
+        this._ToastrService.success('All Items removed successfully');
+        this.deleteAllLoading = false;
+      },
+      error: (err) => {
+        this.deleteAllLoading = false;
+        this._ToastrService.error('Failed to remove items, Please try again.');
+      },
+    });
   }
   /*-----------------------------------------------------------------*/
   decreaseQuantity(item: any) {

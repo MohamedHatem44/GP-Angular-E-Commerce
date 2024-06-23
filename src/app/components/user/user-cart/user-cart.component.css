@@ -101,3 +101,33 @@ select {
     margin-top: 1rem !important;
   }
 }
+
+/* Flexbox for buttons at the bottom */
+.cart {
+  display: flex;
+  flex-direction: column;
+}
+
+.cart .flex-grow-1 {
+  flex-grow: 1;
+}
+
+.cart .mt-5 {
+  margin-top: auto !important;
+}
+
+.custom-width {
+  width: 100%;
+}
+
+@media (min-width: 576px) {
+  .custom-width {
+    width: 50%;
+  }
+}
+
+@media (min-width: 992px) {
+  .custom-width {
+    width: 25%;
+  }
+}
