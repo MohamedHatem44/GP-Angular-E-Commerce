@@ -1,75 +1,96 @@
-<!-------------------------------------------------------------------------------------->
-<div class="container-xl px-4 my-8">
-  <div class="row">
-    <div class="col-xl-4">
-      <!-- Start of Profile Picture -->
-      <div class="card mb-4 mb-xl-0">
-        <div class="card-header d-flex justify-content-center">Profile Picture</div>
-        <div class="card-body text-center">
-          <div><img [src]="currentUser?.imageUrl" alt="Profile Picture" class="rounded-circle img-fluid my-3" style="width: 150px" /></div>
+<div>
+  <div class="user-profile-edit">
+    <div class="profile-bg">
+      <img src="https://wallpapers.com/images/featured/ultra-hd-wazf67lzyh5q7k32.jpg" alt="bg-placeholder" />
+    </div>  
+    <div *ngIf="isLoading">
+      <div class="card mx-md-auto mx-sm-3 mx-3 profile-card shadow bg-body rounded-none border-0" style="max-width: 900px">
+        <div class="profile-image__wrapper">
+          <div class="image-uploader">
+            <label>
+              <div class="profile-image shadow-lg rounded-circle"></div>
+            </label>
+          </div>
         </div>
-      </div>
-      <!-- End of Profile Picture -->
-    </div>
-    <!---------------------------------------------------------------------------------->
-    <div class="col-lg-8">
-      <div class="card mb-4">
-        <div class="card-body">
-          <!-- First Name -->
-          <div class="row">
-            <div class="col-sm-3">
-              <p class="my-2 fs-6">First Name :</p>
+        <div class="row p-3 mx-auto placeholder-glow w-100 px-5">
+          <div class="row mx-auto">
+            <div class="col-12 col-md-6 mb-md-0 mb-3">
+              <span class="placeholder w-100 w-md-50 border-1"></span>
             </div>
-            <div class="col-sm-9">
-              <p class="my-2 fs-6">{{ currentUser?.firstName }}</p>
+            <div class="col-12 col-md-6">
+              <span class="placeholder w-100 w-md-50 border-1"></span>
             </div>
           </div>
-          <hr />
-          <!-- Last Name -->
-          <div class="row">
-            <div class="col-sm-3">
-              <p class="my-2 fs-6">Last Name :</p>
+          <div class="row mt-3 mx-auto">
+            <div class="col-12 col-md-6 mb-md-0 mb-3">
+              <span class="placeholder w-100 w-md-50 border-1"></span>
             </div>
-            <div class="col-sm-9">
-              <p class="my-2 fs-6">{{ currentUser?.lastName }}</p>
+            <div class="col-12 col-md-6">
+              <span class="placeholder w-100 w-md-50 border-1"></span>
             </div>
           </div>
-          <hr />
-          <!-- Email -->
-          <div class="row">
-            <div class="col-sm-3">
-              <p class="my-2 fs-6">Email :</p>
-            </div>
-            <div class="col-sm-9">
-              <p class="my-2 fs-6">{{ currentUser?.email }}</p>
+          <div class="row mt-3 mx-auto">
+            <div class="col-12">
+              <span class="placeholder w-100 w-md-50 border-1"></span>
             </div>
           </div>
-          <hr />
-          <!-- Phone -->
-          <div class="row">
-            <div class="col-sm-3 fs-6">
-              <p class="my-2">Phone Number :</p>
-            </div>
-            <div class="col-sm-9 fs-6">
-              <p class="my-2">{{ currentUser?.phoneNumber }}</p>
-            </div>
+          <div class="mt-4 d-flex justify-content-center align-items-center">
+            <span class="placeholder" style="height: 30px; width:150px"></span>
           </div>
-          <hr />
-          <!-- Address -->
-          <div class="row">
-            <div class="col-sm-3 fs-6">
-              <p class="my-2">Address :</p>
-            </div>
-            <div class="col-sm-9 fs-6">
-              <p class="my-2">{{ currentUser?.address }}</p>
-            </div>
-          </div>
-          <br />
-          <button type="button" class="btn btn-primary w-25" routerLink="/editprofile">Edit Profile</button>
         </div>
       </div>
     </div>
-    <!---------------------------------------------------------------------------------->
+    <div *ngIf="currentUser" class="pt-5">
+      <div class="card mx-md-auto mx-sm-3 mx-3 profile-card shadow bg-body rounded-none border-0" style="max-width: 900px">
+        <div class="profile-image__wrapper">
+          <div class="image-uploader">
+            <label>
+              <img [src]="currentUser?.imageUrl" alt="profile" class="profile-image shadow-lg rounded-circle" />
+            </label>
+          </div>
+        </div>
+        <div class="row p-3 mx-auto">
+          <div class="row mx-auto">
+            <div class="d-flex gap-1 col-12 col-md-6 mb-md-0 mb-3">
+              <span class="fw-bold">First Name:</span>
+              <span class="flex-1 border-1">
+                {{ currentUser?.firstName }}
+              </span>
+            </div>
+            <div class="d-flex gap-1 col-12 col-md-6">
+              <span class="fw-bold">Last Name:</span>
+              <span class="flex-1 border-1">
+                {{ currentUser?.lastName }}
+              </span>
+            </div>
+          </div>
+          <div class="row mt-3 mx-auto">
+            <div class="d-flex gap-1 col-12 col-md-6 mb-md-0 mb-3">
+              <span class="fw-bold">Email:</span>
+              <span class="flex-1 border-1">
+                {{ currentUser?.email }}
+              </span>
+            </div>
+            <div class="d-flex gap-1 col-12 col-md-6">
+              <span class="fw-bold">Phone Number:</span>
+              <span class="flex-1 border-1">
+                {{ currentUser?.phoneNumber }}
+              </span>
+            </div>
+          </div>
+          <div class="row mt-3 mx-auto">
+            <div class="d-flex gap-1 col-12">
+              <span class="fw-bold">Address</span>
+              <span class="flex-1 border-1">
+                {{ currentUser?.address }}
+              </span>
+            </div>
+          </div>
+          <div class="mt-3 d-flex justify-content-center align-items-center">
+            <a class="btn btn-success btn-sm px-3" routerLink="/editprofile">Edit my profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<!-------------------------------------------------------------------------------------->

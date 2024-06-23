@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { User } from '../../../models/user';
+import { thumbnailImage } from '../../../../utils/constants';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-user-profile',
@@ -10,6 +11,7 @@ import { User } from '../../../models/user';
 /*--------------------------------------------------------------------*/
 export class UserProfileComponent implements OnInit {
   isLoading: boolean = false;
+  thumbnailProfile = thumbnailImage;
   currentUser: User | null = null;
   /*------------------------------------------------------------------*/
   // Ctor
@@ -22,8 +24,9 @@ export class UserProfileComponent implements OnInit {
   _getCurrentUserInfo() {
     this.isLoading = true;
     this._AuthService.getCurrentUserInfo().subscribe({
-      next: (response: any) => {
+      next: (response: User) => {
         this.currentUser = response;
+        this.currentUser.imageUrl = response.imageUrl?.trim() ? response.imageUrl : thumbnailImage;
         this.isLoading = false;
       },
       error: (err: any) => {

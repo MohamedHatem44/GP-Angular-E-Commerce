@@ -10,8 +10,9 @@ import { User } from '../models/user';
 })
 /*--------------------------------------------------------------------*/
 export class AuthService {
-  private baseUrl = 'http://localhost:5185/api/Auth';
-  userToken = new BehaviorSubject<any>(null);
+  private baseUrl = 'http://localhost:5185/api/Auth'; // We need to remove "Auth"
+  private baseApiUrl = 'http://localhost:5185/api';
+  userToken = new BehaviorSubject<string | null>(null);
   /*------------------------------------------------------------------*/
   // Ctor
   constructor(private _HttpClient: HttpClient, private _Router: Router) {
@@ -66,4 +67,17 @@ export class AuthService {
     return this._HttpClient.get<User>(`${this.baseUrl}/Manage/Info`);
   }
   /*------------------------------------------------------------------*/
+  
+  // Update profile info
+  updateProfileInfo(user:Partial<User>):Observable<User> {
+    return this._HttpClient.patch<User>(`${this.baseApiUrl}/Users/${user.id}`,user);
+  }
+  /*------------------------------------------------------------------*/
+
+  updateProfileImage(file:File):Observable<unknown> {
+    const formData = new FormData();
+    formData.append('formFile',file);
+    formData.append('controllerName','Users')
+    return this._HttpClient.post<unknown>(`${this.baseApiUrl}/Images/Upload`,formData);
+  }
 }
