@@ -3,7 +3,7 @@
   background-color: #e0e0e0;
   border-radius: 4px;
   width: 100%;
-  height: 100%;
+  height: 90%;
   animation: pulse 1.5s infinite;
 }
 /*--------------------------------------------*/
@@ -18,7 +18,7 @@
 
 .skeleton-img {
   width: 100%;
-  height: 100px;
+  height: 90px;
   background-color: #e0e0e0;
   border-radius: 4px;
 }
