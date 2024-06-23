@@ -29,17 +29,14 @@ export class UserCartComponent implements OnInit {
     this.getUserCart();
   }
   /*-----------------------------------------------------------------*/
+  // Get User Cart
   getUserCart() {
     this.cartLoading = true;
     this.apiError = null;
     this._CartService.getShoppingCartByUserFromClaims().subscribe({
       next: (response: any) => {
         this.shoppingCart = response;
-        console.log(this.shoppingCart);
-
         this.cartItems = this.shoppingCart.cartItems;
-        console.log(this.cartItems);
-
         this.cartLoading = false;
         this.noItems = this.cartItems.length === 0;
       },
@@ -87,10 +84,9 @@ export class UserCartComponent implements OnInit {
           this.shoppingCart.itemsCount = this.shoppingCart.itemsCount - item.quantity;
           this.shoppingCart.cartItems.length--;
           this._ToastrService.success('Item removed successfully');
+          this.noItems = this.cartItems.length === 0;
         },
         error: (err) => {
-          console.log(err);
-
           this._ToastrService.error('Failed to remove item, Please try again.');
           item.deleting = false;
         },
@@ -104,10 +100,11 @@ export class UserCartComponent implements OnInit {
     this._CartService.deleteAllItem().subscribe({
       next: () => {
         this.cartItems = [];
+        this.cartItems.length = 0;
         this.shoppingCart.itemsCount = 0;
-        this.shoppingCart.cartItems.length = 0;
         this._ToastrService.success('All Items removed successfully');
         this.deleteAllLoading = false;
+        this.noItems = this.cartItems.length === 0;
       },
       error: (err) => {
         this.deleteAllLoading = false;
@@ -126,7 +123,7 @@ export class UserCartComponent implements OnInit {
   increaseQuantity(item: any) {
     const maxQuantity = 20;
     if (item.quantity >= maxQuantity) {
-      this._ToastrService.error(`You can only add up to ${maxQuantity} items.`);
+      this._ToastrService.error(`You can only add up to ${maxQuantity} items`);
       return;
     }
     item.quantity++;

@@ -11,15 +11,14 @@
             <h4><p class="fw-semibold">Shopping Cart</p></h4>
           </div>
           <div class="w-100 d-md-none"></div>
-          <div *ngIf="!cartLoading" class="col-12 col-md align-self-center text-md-right text-left">{{ shoppingCart?.itemsCount }} items</div>
+          <div *ngIf="!cartLoading" class="col-12 col-md align-self-center text-md-right text-left">{{ shoppingCart.itemsCount }} items</div>
         </div>
       </div>
       <!-- End  of Title -->
       <!------------------------------------------------------------------------------------------>
       <!-- Placeholder for Empty Cart -->
       <div *ngIf="!cartLoading && noItems" class="text-center my-auto">
-        <p class="text-muted fs-5">Your cart is empty.</p>
-        <!-- <button routerLink="/shop" class="btnCustom mt-6 fw-semibold py-2 w-50">Back to Shop</button> -->
+        <p class="text-muted fs-5">Your cart is empty</p>
         <button routerLink="/shop" class="btnCustom mt-4 fw-semibold py-2 custom-width">Back to Shop</button>
       </div>
       <!------------------------------------------------------------------------------------------>
@@ -101,19 +100,19 @@
       <!-- Items -->
       <div class="row mt-3">
         <div class="col-6 text-start"><strong>Items </strong></div>
-        <div class="col-6 text-start">{{ shoppingCart?.itemsCount }}</div>
+        <div class="col-6 text-start">{{ shoppingCart.itemsCount }}</div>
       </div>
       <br />
       <!-- Products -->
       <div class="row mt-3">
         <div class="col-6 text-start"><strong>Products </strong></div>
-        <div class="col-6 text-start">{{ shoppingCart?.cartItems.length }}</div>
+        <div class="col-6 text-start">{{ cartItems.length }}</div>
       </div>
       <br />
       <!-- Total Price -->
       <div class="row mt-3">
         <div class="col-6 text-start"><strong>Total Price </strong></div>
-        <div *ngIf="!cartLoading" class="col-6 text-start">&euro; {{ shoppingCart?.totalCartPrice | number : '1.2-2' }}</div>
+        <div *ngIf="!cartLoading && !noItems" class="col-6 text-start">&euro; {{ shoppingCart.totalCartPrice | number : '1.2-2' }}</div>
       </div>
       <br />
       <!-- Delivery -->
@@ -126,10 +125,10 @@
       <!-- Total Cart Price -->
       <div class="row">
         <div class="col"><strong>Total Cart Price </strong></div>
-        <div *ngIf="!cartLoading && !noItems" class="col text-right">&euro; {{ shoppingCart?.totalCartPrice + 5 | number : '1.2-2' }}</div>
+        <div *ngIf="!cartLoading && !noItems" class="col text-right">&euro; {{ shoppingCart.totalCartPrice + 5 | number : '1.2-2' }}</div>
       </div>
       <!-- Check out Btn -->
-      <button class="btnCustom mt-6 fw-semibold py-2" routerLink="/orders" [disabled]="cartItems.length === 0">Check out</button>
+      <button class="btnCustom mt-6 fw-semibold py-2" routerLink="/orders" [disabled]="noItems">Check out</button>
     </div>
     <!-- End of Summary -->
     <!-------------------------------------------------------------------------------------------->
