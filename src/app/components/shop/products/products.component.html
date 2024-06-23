@@ -15,6 +15,40 @@
     <!-- Shop Sidebar Start -->
     <div class="col-lg-3 col-md-5 col-sm-6">
       <!------------------------------------------------------------------------------------------------>
+      <!-- Start of Price Filter -->
+      <div class="mb-4 py-3 px-3 bg-light">
+        <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
+        <div class="custom-control custom-radio d-flex align-items-center mb-3">
+          <input type="radio" class="custom-control-input me-3" name="priceFilter" id="price-all" checked (change)="onPriceFilterChange(null, null)" />
+          <label class="custom-control-label" for="price-all">All Price</label>
+        </div>
+        <div class="custom-control custom-radio d-flex align-items-center mb-3">
+          <input type="radio" class="custom-control-input me-3" name="priceFilter" id="price-1" (change)="onPriceFilterChange(0, 200)" />
+          <label class="custom-control-label" for="price-1">$0 - $200</label>
+        </div>
+        <div class="custom-control custom-radio d-flex align-items-center mb-3">
+          <input type="radio" class="custom-control-input me-3" name="priceFilter" id="price-2" (change)="onPriceFilterChange(200, 400)" />
+          <label class="custom-control-label" for="price-2">$200 - $400</label>
+        </div>
+        <div class="custom-control custom-radio d-flex align-items-center mb-3">
+          <input type="radio" class="custom-control-input me-3" name="priceFilter" id="price-3" (change)="onPriceFilterChange(400, 600)" />
+          <label class="custom-control-label" for="price-3">$400 - $600</label>
+        </div>
+        <div class="custom-control custom-radio d-flex align-items-center mb-3">
+          <input type="radio" class="custom-control-input me-3" name="priceFilter" id="price-4" (change)="onPriceFilterChange(600, 800)" />
+          <label class="custom-control-label" for="price-4">$600 - $800</label>
+        </div>
+        <div class="custom-control custom-radio d-flex align-items-center mb-3">
+          <input type="radio" class="custom-control-input me-3" name="priceFilter" id="price-5" (change)="onPriceFilterChange(800, 1000)" />
+          <label class="custom-control-label" for="price-5">$800 - $1000</label>
+        </div>
+        <div class="custom-control custom-radio d-flex align-items-center">
+          <input type="radio" class="custom-control-input me-3" name="priceFilter" id="price-6" (change)="onPriceFilterChange(1000, null)" />
+          <label class="custom-control-label" for="price-6">Over $1000</label>
+        </div>
+      </div>
+      <!-- End of Price Filter -->
+      <!------------------------------------------------------------------------------------------------>
       <!-- Start of Categories Filter -->
       <div class="mb-4 py-3 px-3 bg-light">
         <div class="d-flex justify-content-between">
@@ -79,7 +113,7 @@
       <!-- End of Sizes Filter -->
       <!------------------------------------------------------------------------------------------------>
       <!-- Start of Colors Filter -->
-      <div class="mb-4 py-3 px-3 bg-light">
+      <div class="mb-10 py-3 px-3 bg-light">
         <div class="d-flex justify-content-between">
           <h5 class="font-weight-semi-bold">Colors</h5>
           <h5 *ngIf="!colorsLoading" class="font-weight-semi-bold">{{ colors.length }}</h5>
@@ -98,40 +132,6 @@
         </div>
       </div>
       <!-- End of Colors Filter -->
-      <!------------------------------------------------------------------------------------------------>
-      <!-- Start of Price Filter -->
-      <div class="mb-10 py-3 px-3 bg-light">
-        <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
-        <div class="custom-control custom-radio d-flex align-items-center mb-3">
-          <input type="radio" class="custom-control-input me-3" name="priceFilter" id="price-all" checked (change)="onPriceFilterChange(null, null)" />
-          <label class="custom-control-label" for="price-all">All Price</label>
-        </div>
-        <div class="custom-control custom-radio d-flex align-items-center mb-3">
-          <input type="radio" class="custom-control-input me-3" name="priceFilter" id="price-1" (change)="onPriceFilterChange(0, 200)" />
-          <label class="custom-control-label" for="price-1">$0 - $200</label>
-        </div>
-        <div class="custom-control custom-radio d-flex align-items-center mb-3">
-          <input type="radio" class="custom-control-input me-3" name="priceFilter" id="price-2" (change)="onPriceFilterChange(200, 400)" />
-          <label class="custom-control-label" for="price-2">$200 - $400</label>
-        </div>
-        <div class="custom-control custom-radio d-flex align-items-center mb-3">
-          <input type="radio" class="custom-control-input me-3" name="priceFilter" id="price-3" (change)="onPriceFilterChange(400, 600)" />
-          <label class="custom-control-label" for="price-3">$400 - $600</label>
-        </div>
-        <div class="custom-control custom-radio d-flex align-items-center mb-3">
-          <input type="radio" class="custom-control-input me-3" name="priceFilter" id="price-4" (change)="onPriceFilterChange(600, 800)" />
-          <label class="custom-control-label" for="price-4">$600 - $800</label>
-        </div>
-        <div class="custom-control custom-radio d-flex align-items-center mb-3">
-          <input type="radio" class="custom-control-input me-3" name="priceFilter" id="price-5" (change)="onPriceFilterChange(800, 1000)" />
-          <label class="custom-control-label" for="price-5">$800 - $1000</label>
-        </div>
-        <div class="custom-control custom-radio d-flex align-items-center">
-          <input type="radio" class="custom-control-input me-3" name="priceFilter" id="price-6" (change)="onPriceFilterChange(1000, null)" />
-          <label class="custom-control-label" for="price-6">Over $1000</label>
-        </div>
-      </div>
-      <!-- End of Price Filter -->
       <!------------------------------------------------------------------------------------------------>
     </div>
     <!-- Shop Sidebar End -->
@@ -168,9 +168,7 @@
               <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                 <img class="img-fluid w-100 product-image" [src]="product.imageUrl" alt="" />
                 <div class="overlay">
-                  <button href="" class="btn btn-light text-dark overlay-btn"><i class="fa-solid fa-heart fs-5"></i></button>
-                  <a [routerLink]="['/productDetails', product.id]" class="btn btn-light text-dark overlay-btn fs-6 fw-bold">View</a>
-                  <button href="" class="btn btn-light text-dark overlay-btn"><i class="fa-solid fa-cart-shopping fs-5"></i></button>
+                  <button class="btn btn-light text-dark overlay-btn fw-semibold" (click)="openProductDetailsModal(product)">Quick View</button>
                 </div>
               </div>
               <div class="card-body text-center py-2">
@@ -190,7 +188,7 @@
         <!-- End of Products -->
         <!----------------------------------------------------------------------------------------------->
         <!-- Pagination -->
-        <div *ngIf="!apiError && !noProducts" class="container d-flex justify-content-center mt-5 pb-8">
+        <div *ngIf="(!apiError && !noProducts && products.length >= 9) || currentPage !== 1" class="container d-flex justify-content-center mt-5 pb-8">
           <nav aria-label="Page navigation">
             <ul class="pagination">
               <li class="page-item" [class.disabled]="currentPage === 1">

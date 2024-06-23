@@ -13,6 +13,7 @@ import { PagedResponse } from '../../../models/pagedResponse';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { ProductDetailsModalComponent } from '../product-details-modal/product-details-modal.component';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-products',
@@ -206,11 +207,10 @@ export class ProductsComponent implements OnInit {
   }
   /*-----------------------------------------------------------------*/
   // Open Product Details Modal
-  // openProductDetailsModal(product: any): void {
-  //   const modalRef = this._ModalService.open(AdminProductDetailsModalComponent, { size: 'xl' });
-  //   modalRef.componentInstance.product = product;
-  // }
-
+  openProductDetailsModal(product: any): void {
+    const modalRef = this._ModalService.open(ProductDetailsModalComponent, { size: 'xl' });
+    modalRef.componentInstance.product = product;
+  }
   /*-----------------------------------------------------------------*/
   // Search Products
   onSearchInputChanged(searchTerm: string): void {
