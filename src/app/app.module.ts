@@ -55,6 +55,8 @@ import { AdminBrandDetailsModalComponent } from './components/admin/admin-brand-
 import { AdminCategoryDetailsModalComponent } from './components/admin/admin-category-details-modal/admin-category-details-modal.component';
 import { AdminProductFormComponent } from './components/admin/admin-product-form/admin-product-form.component';
 import { UserProfileEditComponent } from './components/user/user-profile-edit/user-profile-edit.component';
+import { PaymentComponent } from './components/payment/payment.component';
+import { PaymentService } from './services/payment.service';
 import { AdminColorsComponent } from './components/admin/admin-colors/admin-colors.component';
 import { AdminColorFormComponent } from './components/admin/admin-color-form/admin-color-form.component';
 import { AdminSizesComponent } from './components/admin/admin-sizes/admin-sizes.component';
@@ -116,6 +118,7 @@ import { UserCartSkeletonLoaderComponent } from './components/user/user-cart-ske
     AdminCategoryDetailsModalComponent,
     AdminProductFormComponent,
     UserProfileEditComponent,
+    PaymentComponent,
     AdminColorsComponent,
     AdminColorFormComponent,
     AdminSizesComponent,
@@ -145,7 +148,7 @@ import { UserCartSkeletonLoaderComponent } from './components/user/user-cart-ske
       preventDuplicates: true,
     }),
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, PaymentService],
   bootstrap: [AppComponent],
 })
 /*-----------------------------------------------------------------------------------------------------------------*/
