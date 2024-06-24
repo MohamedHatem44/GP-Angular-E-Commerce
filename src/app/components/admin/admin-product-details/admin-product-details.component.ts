@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../services/product.service';
 import { ActivatedRoute } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from '../../../models/product';
 import { ReviewService } from '../../../services/review.service';
@@ -15,11 +14,11 @@ import { Review } from '../../../models/review';
 /*--------------------------------------------------------------------*/
 export class AdminProductDetailsComponent implements OnInit {
   // Component properties
-  isLoading: boolean = false;
   productLoading: boolean = false;
   reviewsLoading: boolean = false;
   product: Product;
   reviews: Review[];
+  apiError: string | null = null;
   selectedTab: string = 'description';
   /*------------------------------------------------------------------*/
   // Ctor
@@ -27,7 +26,6 @@ export class AdminProductDetailsComponent implements OnInit {
     private _ProductService: ProductService,
     private _ReviewService: ReviewService,
     private _Route: ActivatedRoute,
-    private _ModalService: NgbModal,
     private _ToastrService: ToastrService
   ) {}
   /*------------------------------------------------------------------*/
@@ -40,15 +38,18 @@ export class AdminProductDetailsComponent implements OnInit {
   /*------------------------------------------------------------------*/
   // Get a Specific Product By Id
   private loadProductDetails(productId: number): void {
-    this.isLoading = true;
+    this.productLoading = true;
+    this.apiError = null;
     this._ProductService.getSpecificProductWithDetails(productId).subscribe({
       next: (response: Product) => {
         this.product = response;
-        this.isLoading = false;
+        this.productLoading = false;
+        this.apiError = null;
       },
       error: (error) => {
         this._ToastrService.error('Error fetching Product by Id, Please try again');
-        this.isLoading = false;
+        this.apiError = 'An Error Occurred While loading Product by Id, Please try again';
+        this.productLoading = false;
       },
     });
   }
@@ -58,13 +59,10 @@ export class AdminProductDetailsComponent implements OnInit {
     this.reviewsLoading = true;
     this._ReviewService.getAllReviewsByProductId(productId).subscribe({
       next: (response: any) => {
-        console.log(response);
         this.reviews = response;
         this.reviewsLoading = false;
       },
       error: (error) => {
-        console.log(error);
-
         this._ToastrService.error('Error fetching Product Reviews by Id, Please try again.');
         this.reviewsLoading = false;
       },

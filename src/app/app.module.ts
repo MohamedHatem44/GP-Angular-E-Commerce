@@ -68,6 +68,7 @@ import { AdminBlogDetailsModalComponent } from './components/admin/admin-blog-de
 import { LoaderSkeletonV4Component } from './components/shared/loader-skeleton-v4/loader-skeleton-v4.component';
 import { ProductDetailsModalComponent } from './components/shop/product-details-modal/product-details-modal.component';
 import { UserCartSkeletonLoaderComponent } from './components/user/user-cart-skeleton-loader/user-cart-skeleton-loader.component';
+import { AdminProductDetailsLoaderComponent } from './components/admin/admin-product-details-loader/admin-product-details-loader.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -130,6 +131,7 @@ import { UserCartSkeletonLoaderComponent } from './components/user/user-cart-ske
     LoaderSkeletonV4Component,
     ProductDetailsModalComponent,
     UserCartSkeletonLoaderComponent,
+    AdminProductDetailsLoaderComponent,
   ],
   imports: [
     BrowserModule,
