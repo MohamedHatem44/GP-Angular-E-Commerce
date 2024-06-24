@@ -36,7 +36,8 @@ export class PaymentComponent implements OnInit {
         this.clientSecret = response.clientSecret;
       },
       (error) => {
-        this.errorMessage = 'Error creating payment intent';
+        console.log('Error creating payment intent');
+        this.errorMessage = 'Error Occurred While Payment Process, Please Try Again Later...';
       }
     );
   }
@@ -59,7 +60,8 @@ export class PaymentComponent implements OnInit {
     }
 
     if (!this.stripe || !this.clientSecret || !this.cardElement) {
-      this.errorMessage = 'Stripe.js has not loaded or client secret is missing';
+      console.log('Stripe.js has not loaded or client secret is missing');
+      this.errorMessage = 'Error Occurred While Payment Process, Please Try Again Later...';
       return;
     }
 
@@ -90,7 +92,7 @@ export class PaymentComponent implements OnInit {
   }
 
   validateForm(): boolean {
-    const phonePattern = /^(012|015|010|011)\d{8}$/;
+    const phonePattern = /^\[012|015|010|011]\d{8}$/;
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
     if (!this.email) {

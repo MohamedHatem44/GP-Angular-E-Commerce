@@ -1,18 +1,3 @@
-/* #card-element {
-  border: 1px solid #ced4da;
-  padding: 10px;
-  border-radius: 0.25rem;
-}
-
-#card-errors {
-  color: red;
-  margin-top: 10px;
-}
-
-.required input:focus {
-  outline: none !important;
-  box-shadow: none !important;
-} */
 /* payment.component.css */
 .container {
   max-width: 90%;
@@ -31,7 +16,7 @@
   padding: 2rem;
 }
 
-.btn-lg {
+.btn-sm {
   font-size: 1.25rem;
   margin: auto;
   width: 60%
