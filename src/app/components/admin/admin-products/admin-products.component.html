@@ -139,7 +139,7 @@
 <!-- End of Products Table -->
 <!----------------------------------------------------------------------------------------------->
 <!-- Start of Pagination -->
-<div *ngIf="!apiError && !noProducts" class="container d-flex justify-content-center mt-5 pb-8">
+<div *ngIf="!apiError && !noProducts && totalPages > 1" class="container d-flex justify-content-center mt-5 pb-8">
   <nav aria-label="Page navigation">
     <ul class="pagination">
       <li class="page-item" [class.disabled]="currentPage === 1">

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from '../../../services/message.service';
 import { Message } from '../../../models/message';
-import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
+import { PagedResponse } from '../../../models/pagedResponse';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
 import { AdminMessageDetailsModalComponent } from '../admin-message-details-modal/admin-message-details-modal.component';
 /*--------------------------------------------------------------------*/
 @Component({
@@ -39,7 +40,7 @@ export class AdminMessagesComponent implements OnInit {
     this.messageLoading = true;
     this.apiError = null;
     this._MessageService.getAllMessagesWithPagination(page).subscribe({
-      next: (response: any) => {
+      next: (response: PagedResponse<Message>) => {
         this.messages = response.items.map((msg: Message) => ({ ...msg, deleting: false }));
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;

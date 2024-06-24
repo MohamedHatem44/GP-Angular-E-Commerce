@@ -16,6 +16,7 @@ import { Review } from '../../../models/review';
 export class AdminProductDetailsComponent implements OnInit {
   // Component properties
   isLoading: boolean = false;
+  productLoading: boolean = false;
   reviewsLoading: boolean = false;
   product: Product;
   reviews: Review[];
@@ -46,7 +47,7 @@ export class AdminProductDetailsComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        this._ToastrService.error('Error fetching Product by Id, Please try again.');
+        this._ToastrService.error('Error fetching Product by Id, Please try again');
         this.isLoading = false;
       },
     });

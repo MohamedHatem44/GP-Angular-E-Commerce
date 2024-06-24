@@ -39,13 +39,13 @@ export class CategoryService {
   // Get a Specific Category By Id Without Products
   // Get: api/Categories/{id}
   getCategoryById(categoryId: number): Observable<Category> {
-    return this._HttpClient.get<Category>(`${this.baseUrl}/${categoryId}`);
+    return this._HttpClient.get<Category>(`${this.baseUrl}/${categoryId}`).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Get a Specific Category By Id With Products
   // Get: api/Categories/{id}/CategoriesWithProducts
   getCategoryByIdWithProducts(categoryId: number): Observable<Category> {
-    return this._HttpClient.get<Category>(`${this.baseUrl}/${categoryId}` + '/CategoriesWithProducts');
+    return this._HttpClient.get<Category>(`${this.baseUrl}/${categoryId}` + '/CategoriesWithProducts').pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Create a New Category

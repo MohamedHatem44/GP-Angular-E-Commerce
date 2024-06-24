@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from '../../../services/message.service';
+import { ToastrService } from 'ngx-toastr';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-contact',
@@ -12,7 +13,7 @@ export class ContactComponent {
   isLoading: boolean = false;
   apiError: string = '';
   /*--------------------------------------------------------------------*/
-  constructor(private _MessageService: MessageService) {}
+  constructor(private _MessageService: MessageService, private _ToastrService: ToastrService) {}
   /*--------------------------------------------------------------------*/
   messageForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
@@ -22,21 +23,19 @@ export class ContactComponent {
   sendMessage(messageForm: FormGroup) {
     this.isLoading = true;
     this.apiError = '';
-
     if (this.messageForm.valid) {
       this._MessageService.createMessage(messageForm.value).subscribe({
         next: (response) => {
           if (response) {
-            console.log(response);
+            this._ToastrService.success('Message Submited successfully');
             this.isLoading = false;
             this.messageForm.reset();
           }
         },
         error: (err) => {
-          console.log(err);
-
           this.isLoading = false;
           this.apiError = 'An error occurred while sending the message. Please try again later';
+          this._ToastrService.error('An error occurred while sending the message. Please try again later');
         },
         complete: () => {
           this.isLoading = false;

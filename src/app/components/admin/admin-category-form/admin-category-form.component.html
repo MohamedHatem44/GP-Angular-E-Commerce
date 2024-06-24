@@ -31,7 +31,12 @@
         <!-- Start of Category Name -->
         <div class="mb-5">
           <label for="categoryName" class="form-label">Category Name</label>
-          <input type="text" class="form-control" id="categoryName" formControlName="name" name="categoryName" placeholder="Category Name" required />
+          <div *ngIf="categoryLoading; else categoryNameInput">
+            <div class="skeleton-loader"></div>
+          </div>
+          <ng-template #categoryNameInput>
+            <input type="text" class="form-control" id="categoryName" formControlName="name" name="categoryName" placeholder="Category Name" required />
+          </ng-template>
           <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="categoryForm.get('name')?.errors && categoryForm.get('name')?.touched">
             <span *ngIf="categoryForm.get('name')?.errors?.['required']" class="text-danger">Category Name is required</span>
             <span *ngIf="categoryForm.get('name')?.errors?.['pattern']" class="text-danger">Invalid Category Name. only alphabets allowed</span>
@@ -44,15 +49,24 @@
         <!-- Start of Category Description -->
         <div class="mb-5">
           <label for="categoryDescription" class="form-label">Category Description</label>
-          <textarea
-            type="text"
-            class="form-control min-height-textarea"
-            id="brandDescription"
-            formControlName="description"
-            name="categoryDescription"
-            placeholder="Category Description"
-            required
-          ></textarea>
+          <div *ngIf="categoryLoading; else categoryDescriptionInput">
+            <div class="skeleton-loader"></div>
+            <div class="skeleton-loader"></div>
+            <div class="skeleton-loader"></div>
+            <div class="skeleton-loader"></div>
+            <div class="skeleton-loader"></div>
+          </div>
+          <ng-template #categoryDescriptionInput>
+            <textarea
+              type="text"
+              class="form-control min-height-textarea"
+              id="brandDescription"
+              formControlName="description"
+              name="categoryDescription"
+              placeholder="Category Description"
+              required
+            ></textarea>
+          </ng-template>
           <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="categoryForm.get('description')?.errors && categoryForm.get('description')?.touched">
             <span *ngIf="categoryForm.get('description')?.errors?.['required']" class="text-danger">Category Description is required</span>
             <span *ngIf="categoryForm.get('description')?.errors?.['minlength']" class="text-danger">Invalid Category Description, Min length is 20</span>
@@ -67,9 +81,10 @@
           <div class="input-group">
             <input type="file" class="form-control" name="categoryImage" accept="image/*" (change)="onImageUpload($event)" required />
           </div>
-          <div class="d-flex justify-content-center">
-            <img [src]="responseImageUrl" alt="" class="w-25 mt-4" />
+          <div class="d-flex justify-content-center" *ngIf="!categoryLoading">
+            <img [src]="responseImageUrl" alt="" class="w-50 mt-4" />
           </div>
+          <app-loader-spinner *ngIf="categoryLoading"></app-loader-spinner>
           <div class="mb-5 col-sm-12 errors" *ngIf="categoryForm.get('image')?.errors && categoryForm.get('image')?.dirty">
             <span *ngIf="categoryForm.get('image')?.errors?.['required']" class="text-danger">Please select an image</span>
           </div>

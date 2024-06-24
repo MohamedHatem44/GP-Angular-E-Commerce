@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
+import { PagedResponse } from '../../../models/pagedResponse';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-colors',
@@ -48,7 +49,7 @@ export class AdminColorsComponent implements OnInit {
     this.colorsLoading = true;
     this.apiError = null;
     this._ColorService.getAllColorsWithPagination(page, this.pageSize, colorName).subscribe({
-      next: (response: any) => {
+      next: (response: PagedResponse<Color>) => {
         this.colors = response.items.map((color: Color) => ({ ...color, deleting: false }));
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;

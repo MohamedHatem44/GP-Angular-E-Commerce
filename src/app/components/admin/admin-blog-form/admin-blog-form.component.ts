@@ -128,8 +128,6 @@ export class AdminBlogFormComponent implements OnInit {
         this.navigateToBlogsDashboard();
       },
       error: (error) => {
-        console.log(error);
-
         this._ToastrService.error('An error occurred while updating Blog, Please try again.');
         this.apiError = 'An error occurred while updating Blog, Please try again.';
         this.isLoading = false;

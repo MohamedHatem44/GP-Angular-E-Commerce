@@ -18,6 +18,7 @@ import { SaveConfirmationModalComponent } from '../../modals/save-confirmation-m
 export class AdminCategoryFormComponent implements OnInit {
   // Component properties
   isLoading: boolean = false;
+  categoryLoading: boolean = false;
   imageError: string | null = null;
   editMode: boolean = false;
   currentCategoryId: number;
@@ -151,12 +152,15 @@ export class AdminCategoryFormComponent implements OnInit {
   /*------------------------------------------------------------------*/
   // Get a Specific Category By Id Without Products
   private getCategoryById(id: number) {
+    this.categoryLoading = true;
     this._CategoryService.getCategoryById(id).subscribe({
       next: (response: Category) => {
         this.loadCategoryData(response);
+        this.categoryLoading = false;
       },
       error: (error) => {
-        this._ToastrService.error('Error fetching Category by Id, Please try again.');
+        this._ToastrService.error('Error fetching Category by Id, Please try again');
+        this.categoryLoading = false;
       },
     });
   }

@@ -11,6 +11,8 @@ import { Category } from '../../../models/category';
 import { Brand } from '../../../models/brand';
 import { CategoryService } from '../../../services/category.service';
 import { BrandService } from '../../../services/brand.service';
+import { PagedResponse } from '../../../models/pagedResponse';
+import { Product } from '../../../models/product';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-products',
@@ -68,7 +70,7 @@ export class AdminProductsComponent implements OnInit {
     this.productsLoading = true;
     this.apiError = null;
     (await this._ProductService.getAllProductsWithPaginationForAdmin(page, this.pageSize, searchParam, categoryId, brandId)).subscribe({
-      next: (response: any) => {
+      next: (response: PagedResponse<Product>) => {
         this.products = response.items.map((product: any) => ({ ...product, deleting: false }));
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;

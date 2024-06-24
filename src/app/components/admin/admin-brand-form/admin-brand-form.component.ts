@@ -18,6 +18,7 @@ import { SaveConfirmationModalComponent } from '../../modals/save-confirmation-m
 export class AdminBrandFormComponent implements OnInit {
   // Component properties
   isLoading: boolean = false;
+  brandLoading: boolean = false;
   imageError: string | null = null;
   editMode: boolean = false;
   currentBrandId: number;
@@ -151,12 +152,15 @@ export class AdminBrandFormComponent implements OnInit {
   /*------------------------------------------------------------------*/
   // Get a Specific Brand By Id Without Products
   private getBrandById(id: number) {
+    this.brandLoading = true;
     this._BrandService.getBrandById(id).subscribe({
       next: (response: Brand) => {
         this.loadBrandData(response);
+        this.brandLoading = false;
       },
       error: (error) => {
         this._ToastrService.error('Error fetching Brand by Id, Please try again.');
+        this.brandLoading = false;
       },
     });
   }

@@ -21,67 +21,67 @@
       <div class="container">
         <!-- Id -->
         <div class="row mt-3">
-          <div class="col-12 col-sm-4 text-start"><strong>Id : </strong></div>
+          <div class="col-12 col-sm-4 text-start"><strong>Id</strong></div>
           <div class="col-12 col-sm-8 text-start">{{ product.id }}</div>
         </div>
         <!-- Title -->
         <div class="row mt-3">
-          <div class="col-12 col-sm-4 text-start"><strong>Title : </strong></div>
+          <div class="col-12 col-sm-4 text-start"><strong>Title</strong></div>
           <div class="col-12 col-sm-8 text-start">{{ product.title }}</div>
         </div>
         <!-- Category -->
         <div class="row mt-3">
-          <div class="col-12 col-sm-4 text-start"><strong>Category : </strong></div>
+          <div class="col-12 col-sm-4 text-start"><strong>Category</strong></div>
           <div class="col-12 col-sm-8 text-start">{{ product.category.name }}</div>
         </div>
         <!-- Brand -->
         <div class="row mt-3">
-          <div class="col-12 col-sm-4 text-start"><strong>Brand : </strong></div>
+          <div class="col-12 col-sm-4 text-start"><strong>Brand</strong></div>
           <div class="col-12 col-sm-8 text-start">{{ product.brand.name }}</div>
         </div>
         <!-- Description -->
         <div class="row mt-3">
-          <div class="col-12 col-sm-4 text-start"><strong>Description : </strong></div>
+          <div class="col-12 col-sm-4 text-start"><strong>Description</strong></div>
           <div class="col-12 col-sm-8 text-start">{{ product.description }}</div>
         </div>
         <!-- Price -->
         <div class="row mt-3">
-          <div class="col-12 col-sm-4 text-start"><strong>Price : </strong></div>
+          <div class="col-12 col-sm-4 text-start"><strong>Price</strong></div>
           <div class="col-12 col-sm-8 text-start">{{ product.price | currency }}</div>
         </div>
         <!-- Price After Discount -->
         <div class="row mt-3">
-          <div class="col-12 col-sm-4 text-start"><strong>Price After Discount : </strong></div>
+          <div class="col-12 col-sm-4 text-start"><strong>Price After Discount</strong></div>
           <div class="col-12 col-sm-8 text-start">{{ product.priceAfterDiscount | currency }}</div>
         </div>
         <!-- Quantity -->
         <div class="row mt-3">
-          <div class="col-12 col-sm-4 text-start"><strong>Quantity : </strong></div>
+          <div class="col-12 col-sm-4 text-start"><strong>Quantity</strong></div>
           <div class="col-12 col-sm-8 text-start">{{ product.quantity }}</div>
         </div>
         <!-- Sold -->
         <div class="row mt-3">
-          <div class="col-12 col-sm-4 text-start"><strong>Sold : </strong></div>
+          <div class="col-12 col-sm-4 text-start"><strong>Sold</strong></div>
           <div class="col-12 col-sm-8 text-start">{{ product.sold }}</div>
         </div>
         <!-- Average Rating -->
         <div class="row mt-3">
-          <div class="col-12 col-sm-4 text-start"><strong>Average Rating : </strong></div>
+          <div class="col-12 col-sm-4 text-start"><strong>Average Rating</strong></div>
           <div class="col-12 col-sm-8 text-start">{{ product.ratingsAverage }}</div>
         </div>
         <!-- Ratings Quantity -->
         <div class="row mt-3">
-          <div class="col-12 col-sm-4 text-start"><strong>Ratings Quantity : </strong></div>
+          <div class="col-12 col-sm-4 text-start"><strong>Ratings Quantity</strong></div>
           <div class="col-12 col-sm-8 text-start">{{ product.ratingsQuantity }}</div>
         </div>
         <!-- Created At -->
         <div class="row mt-3">
-          <div class="col-12 col-sm-4 text-start"><strong>Created At : </strong></div>
+          <div class="col-12 col-sm-4 text-start"><strong>Created At</strong></div>
           <div class="col-12 col-sm-8 text-start">{{ product.createdAt | date : 'short' }}</div>
         </div>
         <!-- Colors -->
         <div class="row mt-3">
-          <div class="col-12 col-sm-4 text-start"><strong>Colors : </strong></div>
+          <div class="col-12 col-sm-4 text-start"><strong>Colors</strong></div>
           <div class="col-12 col-sm-8 text-start">
             <div class="color-bullets">
               <span *ngFor="let color of product.colors" class="color-bullet" [ngStyle]="{ 'background-color': color.name.toLowerCase() }"></span>
@@ -90,7 +90,7 @@
         </div>
         <!-- Sizes -->
         <div class="row mt-3">
-          <div class="col-12 col-sm-4 text-start"><strong>Sizes : </strong></div>
+          <div class="col-12 col-sm-4 text-start"><strong>Sizes</strong></div>
           <div class="col-12 col-sm-8 text-start">
             <span *ngFor="let size of product.sizes" class="size-badge">{{ size.name }}</span>
           </div>

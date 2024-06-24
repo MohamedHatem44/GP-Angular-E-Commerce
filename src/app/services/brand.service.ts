@@ -39,13 +39,13 @@ export class BrandService {
   // Get a Specific Brand By Id Without Products
   // Get: api/Brands/{id}
   getBrandById(brandId: number): Observable<Brand> {
-    return this._HttpClient.get<Brand>(`${this.baseUrl}/${brandId}`);
+    return this._HttpClient.get<Brand>(`${this.baseUrl}/${brandId}`).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Get a Specific Brand By Id With Products
   // Get: api/Brands/{id}/BrandsWithProducts
   getBrandByIdWithProducts(brandId: number): Observable<Brand> {
-    return this._HttpClient.get<Brand>(`${this.baseUrl}/${brandId}` + '/BrandsWithProducts');
+    return this._HttpClient.get<Brand>(`${this.baseUrl}/${brandId}` + '/BrandsWithProducts').pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Create a New Brand

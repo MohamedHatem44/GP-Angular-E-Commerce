@@ -37,7 +37,6 @@
           <ng-template #blogTitleInput>
             <input type="text" class="form-control" id="blogTitle" formControlName="title" name="blogTitle" placeholder="Blog Title" required />
           </ng-template>
-          <!-- <input type="text" class="form-control" id="blogTitle" formControlName="title" name="blogTitle" placeholder="Blog Title" required /> -->
           <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="blogForm.get('title')?.errors && blogForm.get('title')?.touched">
             <span *ngIf="blogForm.get('title')?.errors?.['required']" class="text-danger">Blog Title is required</span>
             <span *ngIf="blogForm.get('title')?.errors?.['minlength']" class="text-danger">Invalid Blog Title, Min length is 3</span>
@@ -67,15 +66,6 @@
               required
             ></textarea>
           </ng-template>
-          <!-- <textarea
-            type="text"
-            class="form-control min-height-textarea"
-            id="blogDescription"
-            formControlName="description"
-            name="blogDescription"
-            placeholder="Blog Description"
-            required
-          ></textarea> -->
           <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="blogForm.get('description')?.errors && blogForm.get('description')?.touched">
             <span *ngIf="blogForm.get('description')?.errors?.['required']" class="text-danger">Blog Description is required</span>
             <span *ngIf="blogForm.get('description')?.errors?.['minlength']" class="text-danger">Invalid Blog Description, Min length is 20</span>
@@ -90,9 +80,10 @@
           <div class="input-group">
             <input type="file" class="form-control" name="blogImage" accept="image/*" (change)="onImageUpload($event)" required />
           </div>
-          <div class="d-flex justify-content-center">
-            <img [src]="responseImageUrl" alt="" class="w-25 mt-4" />
+          <div class="d-flex justify-content-center" *ngIf="!blogLoading">
+            <img [src]="responseImageUrl" alt="" class="w-75 mt-4" />
           </div>
+          <app-loader-spinner *ngIf="blogLoading"></app-loader-spinner>
           <div class="mb-5 col-sm-12 errors" *ngIf="blogForm.get('imageUrl')?.errors && blogForm.get('imageUrl')?.dirty">
             <span *ngIf="blogForm.get('imageUrl')?.errors?.['required']" class="text-danger">Please select an image</span>
           </div>

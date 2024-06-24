@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { Blog } from '../../../models/blog';
-import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
-import { BlogService } from '../../../services/blog.service';
 import { Router } from '@angular/router';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Brand } from '../../../models/brand';
+import { BlogService } from '../../../services/blog.service';
+import { Blog } from '../../../models/blog';
+import { PagedResponse } from '../../../models/pagedResponse';
 import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
-import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
 import { AdminBlogDetailsModalComponent } from '../admin-blog-details-modal/admin-blog-details-modal.component';
+import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-blogs',
@@ -51,7 +51,7 @@ export class AdminBlogsComponent {
     this.blogsLoading = true;
     this.apiError = null;
     this._BlogService.getAllBlogsWithPagination(page, this.pageSize, blogTitle).subscribe({
-      next: (response: any) => {
+      next: (response: PagedResponse<Blog>) => {
         this.blogs = response.items.map((blog: Blog) => ({ ...blog, deleting: false }));
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;
