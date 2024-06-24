@@ -65,7 +65,6 @@ export class ProductDetailsModalComponent {
     };
     this._CartService.addToCart(itemToAdd).subscribe({
       next: (response: any) => {
-        console.log('Item added to cart successfully:', response);
         this._ToastrService.success('Item added to cart successfully');
         this.addToCartLoading = false;
       },
