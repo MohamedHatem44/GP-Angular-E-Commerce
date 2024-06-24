@@ -1,0 +1,47 @@
+/* #card-element {
+  border: 1px solid #ced4da;
+  padding: 10px;
+  border-radius: 0.25rem;
+}
+
+#card-errors {
+  color: red;
+  margin-top: 10px;
+}
+
+.required input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+} */
+/* payment.component.css */
+.container {
+  max-width: 90%;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.card-header {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-body {
+  padding: 2rem;
+}
+
+.btn-lg {
+  font-size: 1.25rem;
+  margin: auto;
+  width: 60%
+}
+
+#card-element {
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+.form-group input:focus {
+  box-shadow: none !important;
+}

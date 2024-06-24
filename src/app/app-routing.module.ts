@@ -26,6 +26,7 @@ import { AdminCategoryFormComponent } from './components/admin/admin-category-fo
 import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
 import { AdminProductFormComponent } from './components/admin/admin-product-form/admin-product-form.component';
 import { UserProfileEditComponent } from './components/user/user-profile-edit/user-profile-edit.component';
+import { PaymentComponent } from './components/payment/payment.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -62,6 +63,7 @@ const routes: Routes = [
   { path: 'orders', component: UserOrdersComponent },
   { path: 'users/login', component: LoginComponent },
   { path: 'users/register', component: RegisterComponent },
+  { path: 'payment', component: PaymentComponent },
   { path: '**', component: NotFoundComponent },
 ];
 /*-----------------------------------------------------------------------------------------------------------------*/

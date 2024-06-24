@@ -55,6 +55,8 @@ import { AdminBrandDetailsModalComponent } from './components/admin/admin-brand-
 import { AdminCategoryDetailsModalComponent } from './components/admin/admin-category-details-modal/admin-category-details-modal.component';
 import { AdminProductFormComponent } from './components/admin/admin-product-form/admin-product-form.component';
 import { UserProfileEditComponent } from './components/user/user-profile-edit/user-profile-edit.component';
+import { PaymentComponent } from './components/payment/payment.component';
+import { PaymentService } from './services/payment.service';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -105,6 +107,7 @@ import { UserProfileEditComponent } from './components/user/user-profile-edit/us
     AdminCategoryDetailsModalComponent,
     AdminProductFormComponent,
     UserProfileEditComponent,
+    PaymentComponent,
   ],
   imports: [
     BrowserModule,
@@ -123,7 +126,7 @@ import { UserProfileEditComponent } from './components/user/user-profile-edit/us
       preventDuplicates: true,
     }),
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, PaymentService],
   bootstrap: [AppComponent],
 })
 /*-----------------------------------------------------------------------------------------------------------------*/
