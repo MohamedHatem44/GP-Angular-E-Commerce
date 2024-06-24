@@ -8,6 +8,7 @@ import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmati
 import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { AdminCategoryDetailsModalComponent } from '../admin-category-details-modal/admin-category-details-modal.component';
+import { PagedResponse } from '../../../models/pagedResponse';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-categories',
@@ -50,7 +51,7 @@ export class AdminCategoriesComponent implements OnInit {
     this.categoriesLoading = true;
     this.apiError = null;
     this._CategoryService.getAllCategoriesWithPagination(page, this.pageSize, categoryName).subscribe({
-      next: (response: any) => {
+      next: (response: PagedResponse<Category>) => {
         this.categories = response.items.map((category: Category) => ({ ...category, deleting: false }));
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;
@@ -152,6 +153,7 @@ export class AdminCategoriesComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Search
   searchCategories(searchTerm: string = this.searchInput.trim()): void {
+    this.currentPage = 1;
     this.fetchCategories(this.currentPage, searchTerm);
   }
   /*-----------------------------------------------------------------*/

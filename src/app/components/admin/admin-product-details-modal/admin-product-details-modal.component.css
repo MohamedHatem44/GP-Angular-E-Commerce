@@ -22,3 +22,27 @@
   }
 }
 /*--------------------------------------------*/
+.color-bullets {
+  display: flex;
+  gap: 10px;
+}
+/*--------------------------------------------*/
+.color-bullet {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: inline-block;
+}
+/*--------------------------------------------*/
+.size-badge {
+  display: inline-block;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #333;
+  border: 1px solid #ccc;
+}
+/*--------------------------------------------*/

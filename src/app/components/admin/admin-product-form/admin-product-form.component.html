@@ -1,1 +1,279 @@
-<p>admin-product-form works!</p>
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Main Card -->
+<div class="container pt-6">
+  <div class="card mt-3 mb-5 bg-light shadow p-2 bg-body rounded">
+    <div class="card-body">
+      <h5 class="card-title fs-4">Products Form</h5>
+      <h5 class="fs-6 mb-4">You can add or edit Products here</h5>
+      <!-- Start of Breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb fs-6">
+          <li class="breadcrumb-item">
+            <a class="text-decoration-none text-dark" routerLink="/admindashboard"><i class="fas fa-tachometer-alt fa-lg me-2"></i>Admin Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active text-dark fs-6" aria-current="page">{{ editMode ? 'Edit Product' : 'Add Product' }}</li>
+        </ol>
+      </nav>
+      <!-- End of Breadcrumb -->
+    </div>
+  </div>
+</div>
+<!-- End of Main Card -->
+<hr />
+<!----------------------------------------------------------------------------------------------->
+<div class="container mt-5 pb-8">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title fs-4 mb-3">{{ editMode ? 'Edit Product' : 'Add Product' }}</h5>
+      <!----------------------------------------------------------------------------------------->
+      <!-- Start of Product Form -->
+      <form [formGroup]="productForm">
+        <!-- Start of Product Title -->
+        <div class="mb-5">
+          <label for="productTitle" class="form-label">Product Title</label>
+          <div *ngIf="singleProductLoading; else productTitleInput">
+            <div class="skeleton-loader"></div>
+          </div>
+          <ng-template #productTitleInput>
+            <input type="text" class="form-control" id="productTitle" formControlName="title" name="productTitle" placeholder="Product Title" required />
+          </ng-template>
+          <!-- <input type="text" class="form-control" id="productTitle" formControlName="title" name="productTitle" placeholder="Product Title" required /> -->
+          <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="productForm.get('title')?.errors && productForm.get('title')?.touched">
+            <span *ngIf="productForm.get('title')?.errors?.['required']" class="text-danger">Product Title is required</span>
+            <span *ngIf="productForm.get('title')?.errors?.['minlength']" class="text-danger">Invalid Product Title, Min length is 3</span>
+            <span *ngIf="productForm.get('title')?.errors?.['maxlength']" class="text-danger">Invalid Product Title, Max length is 15</span>
+          </div>
+        </div>
+        <!-- End of Product Title -->
+        <!--------------------------------------------------------------------------------------->
+        <!-- Start of Product Description -->
+        <div class="mb-5">
+          <label for="productDescription" class="form-label">Product Description</label>
+          <div *ngIf="singleProductLoading; else productDescriptionInput">
+            <div class="skeleton-loader"></div>
+            <div class="skeleton-loader"></div>
+            <div class="skeleton-loader"></div>
+            <div class="skeleton-loader"></div>
+            <div class="skeleton-loader"></div>
+          </div>
+          <ng-template #productDescriptionInput>
+            <textarea
+              type="text"
+              class="form-control min-height-textarea"
+              id="productDescription"
+              formControlName="description"
+              name="productDescription"
+              placeholder="Product Description"
+              required
+            ></textarea>
+          </ng-template>
+          <!-- <textarea
+            type="text"
+            class="form-control min-height-textarea"
+            id="productDescription"
+            formControlName="description"
+            name="productDescription"
+            placeholder="Product Description"
+            required
+          ></textarea> -->
+          <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="productForm.get('description')?.errors && productForm.get('description')?.touched">
+            <span *ngIf="productForm.get('description')?.errors?.['required']" class="text-danger">Product Description is required</span>
+            <span *ngIf="productForm.get('description')?.errors?.['minlength']" class="text-danger">Invalid Product Description, Min length is 20</span>
+            <span *ngIf="productForm.get('description')?.errors?.['maxlength']" class="text-danger">Invalid Product Description, Max length is 250</span>
+          </div>
+        </div>
+        <!-- End of Product Description -->
+        <!--------------------------------------------------------------------------------------->
+        <div class="row">
+          <!-- Start of Quantity -->
+          <div class="col-lg-6 col-md-6 mb-3">
+            <label for="quantity" class="form-label">Quantity</label>
+            <div *ngIf="singleProductLoading; else productQuantityInput">
+              <div class="skeleton-loader"></div>
+            </div>
+            <ng-template #productQuantityInput>
+              <input type="number" id="quantity" class="form-control" formControlName="quantity" />
+            </ng-template>
+            <!-- <input type="number" id="quantity" class="form-control" formControlName="quantity" /> -->
+            <div *ngIf="productForm.get('quantity')?.invalid && productForm.get('quantity')?.touched" class="text-danger">
+              <div *ngIf="productForm.get('quantity')?.errors?.['required']">Quantity is required</div>
+              <div *ngIf="productForm.get('quantity')?.errors?.['min']">Minimum quantity is 1</div>
+            </div>
+          </div>
+          <!-- End of Quantity -->
+          <!-- Start of Sold -->
+          <div class="col-lg-6 col-md-6 mb-3">
+            <label for="sold" class="form-label">Sold</label>
+            <div *ngIf="singleProductLoading; else productSoldInput">
+              <div class="skeleton-loader"></div>
+            </div>
+            <ng-template #productSoldInput>
+              <input type="number" id="sold" class="form-control" formControlName="sold" />
+            </ng-template>
+            <!-- <input type="number" id="sold" class="form-control" formControlName="sold" /> -->
+          </div>
+          <!-- End of Sold -->
+        </div>
+        <!--------------------------------------------------------------------------------------->
+        <div class="row">
+          <!-- Start of Price -->
+          <div class="col-lg-6 col-md-6 mb-3">
+            <label for="price" class="form-label">Price</label>
+            <div *ngIf="singleProductLoading; else productPriceInput">
+              <div class="skeleton-loader"></div>
+            </div>
+            <ng-template #productPriceInput>
+              <input type="number" id="price" class="form-control" formControlName="price" />
+            </ng-template>
+            <!-- <input type="number" id="price" class="form-control" formControlName="price" /> -->
+            <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" class="text-danger">
+              <div *ngIf="productForm.get('price')?.errors?.['required']">Price is required</div>
+              <div *ngIf="productForm.get('price')?.errors?.['min']">Minimum price is 0</div>
+            </div>
+          </div>
+          <!-- End of Price -->
+          <!-- Start of Price After Discount -->
+          <div class="col-lg-6 col-md-6 mb-3">
+            <label for="priceAfterDiscount" class="form-label">Price After Discount</label>
+            <div *ngIf="singleProductLoading; else productPriceAfterDiscountInput">
+              <div class="skeleton-loader"></div>
+            </div>
+            <ng-template #productPriceAfterDiscountInput>
+              <input type="number" id="priceAfterDiscount" class="form-control" formControlName="priceAfterDiscount" />
+            </ng-template>
+            <!-- <input type="number" id="priceAfterDiscount" class="form-control" formControlName="priceAfterDiscount" /> -->
+            <div *ngIf="productForm.get('priceAfterDiscount')?.invalid && productForm.get('priceAfterDiscount')?.touched" class="text-danger">
+              <div *ngIf="productForm.get('priceAfterDiscount')?.errors?.['min']">Minimum price after discount is 0</div>
+            </div>
+          </div>
+        </div>
+        <!-- End of Price After Discount -->
+        <!--------------------------------------------------------------------------------------->
+        <div class="mb-3 row">
+          <!-- Start of Categories Dropdown -->
+          <div class="col-lg-6 col-md-6 mb-3 mb-md-0">
+            <label for="categoryId" class="form-label">Category</label>
+            <div *ngIf="singleProductLoading; else productCategoryInput">
+              <div class="skeleton-loader"></div>
+            </div>
+            <ng-template #productCategoryInput>
+              <select id="categoryId" class="form-select" formControlName="categoryId">
+                <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+              </select>
+            </ng-template>
+            <!-- <select id="categoryId" class="form-select" formControlName="categoryId">
+              <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            </select> -->
+            <div *ngIf="productForm.get('categoryId')?.invalid && productForm.get('categoryId')?.touched" class="text-danger">
+              <div *ngIf="productForm.get('categoryId')?.errors?.['required']">Category is required</div>
+            </div>
+          </div>
+          <!-- End of Categories Dropdown -->
+          <!-- Start of Brands Dropdown -->
+          <div class="col-lg-6 col-md-6">
+            <div class="mb-3">
+              <label for="brandId" class="form-label">Brand</label>
+              <div *ngIf="singleProductLoading; else productBrandInput">
+                <div class="skeleton-loader"></div>
+              </div>
+              <ng-template #productBrandInput>
+                <select id="brandId" class="form-select" formControlName="brandId">
+                  <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</option>
+                </select>
+              </ng-template>
+              <!-- <select id="brandId" class="form-select" formControlName="brandId">
+                <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</option>
+              </select> -->
+              <div *ngIf="productForm.get('brandId')?.invalid && productForm.get('brandId')?.touched" class="text-danger">
+                <div *ngIf="productForm.get('brandId')?.errors?.['required']">Brand is required</div>
+              </div>
+            </div>
+          </div>
+          <!-- End of Brands Dropdown -->
+        </div>
+        <!--------------------------------------------------------------------------------------->
+        <div class="row">
+          <!-- Start of Colors Dropdown -->
+          <div class="col-md-6 mb-3">
+            <label for="colorIds" class="form-label">Colors</label>
+            <div class="dropdown">
+              <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="colorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Select Colors
+              </button>
+              <ul class="dropdown-menu overflow-auto" style="max-height: 200px" aria-labelledby="colorDropdown">
+                <li *ngFor="let color of colors">
+                  <label class="dropdown-item">
+                    <input type="checkbox" [value]="color.id" (change)="onColorChange($event)" [checked]="colorSelected(color.id)" /> {{ color.name }}
+                  </label>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="productForm.get('colorIds')?.invalid && productForm.get('colorIds')?.touched" class="text-danger">
+              <div *ngIf="productForm.get('colorIds')?.errors?.['required']">Select at least one color</div>
+            </div>
+          </div>
+          <!-- End of Colors Dropdown -->
+
+          <!-- Start of Sizes Dropdown -->
+          <div class="col-md-6 mb-3">
+            <label for="sizeIds" class="form-label">Sizes</label>
+            <div class="dropdown">
+              <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sizeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Select Sizes
+              </button>
+              <ul class="dropdown-menu overflow-auto" style="max-height: 200px" aria-labelledby="sizeDropdown">
+                <li *ngFor="let size of sizes">
+                  <label class="dropdown-item">
+                    <input type="checkbox" [value]="size.id" (change)="onSizeChange($event)" [checked]="sizeSelected(size.id)" /> {{ size.name }}
+                  </label>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="productForm.get('sizeIds')?.invalid && productForm.get('sizeIds')?.touched" class="text-danger">
+              <div *ngIf="productForm.get('sizeIds')?.errors?.['required']">Select at least one size</div>
+            </div>
+          </div>
+          <!-- End of Sizes Dropdown -->
+        </div>
+        <!--------------------------------------------------------------------------------------->
+        <!-- Start of Product Image -->
+        <div class="mb-2">
+          <label for="brandImage" class="form-label">Product Image</label>
+          <div class="input-group">
+            <input type="file" class="form-control" name="productImage" accept="image/*" (change)="onImageUpload($event)" required />
+          </div>
+          <div class="d-flex justify-content-center">
+            <img [src]="responseImageUrl" alt="" class="w-25 mt-4" />
+          </div>
+          <div class="mb-5 col-sm-12 errors" *ngIf="productForm.get('image')?.errors && productForm.get('image')?.dirty">
+            <span *ngIf="productForm.get('image')?.errors?.['required']" class="text-danger">Please select an image</span>
+          </div>
+          <div class="mb-2 col-sm-12 errors" *ngIf="imageError">
+            <span class="text-danger">{{ imageError }}</span>
+          </div>
+          <hr />
+        </div>
+        <!-- End of Product Image -->
+        <!--------------------------------------------------------------------------------------->
+        <!-- Start of API Error -->
+        <div *ngIf="apiError" class="alert alert-danger my-3" role="alert">
+          {{ apiError }}
+        </div>
+        <!-- End of API Error -->
+        <!--------------------------------------------------------------------------------------->
+        <!-- Start of Save Button with Spinner and Disabled State -->
+        <div class="d-flex justify-content-center mt-3">
+          <button type="submit" class="btn btn-success" (click)="openSaveConfirmationModal($event)" [disabled]="productForm.invalid">
+            <i *ngIf="isLoading" class="fas fa-spinner fa-spin mx-4"></i>
+            <span *ngIf="!isLoading"> {{ editMode ? 'Update' : ' + Create' }}</span>
+          </button>
+          <button type="reset" class="btn btn-secondary ms-4" routerLink="/admindashboard/products" (click)="resetAll()">Cancel</button>
+        </div>
+        <!-- End of Save Button with Spinner and Disabled State -->
+      </form>
+      <!-- End of Brand Form -->
+      <!----------------------------------------------------------------------------------------------->
+    </div>
+  </div>
+  <!----------------------------------------------------------------------------------------------->
+</div>

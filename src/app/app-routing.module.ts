@@ -27,6 +27,13 @@ import { AdminProductsComponent } from './components/admin/admin-products/admin-
 import { AdminProductFormComponent } from './components/admin/admin-product-form/admin-product-form.component';
 import { UserProfileEditComponent } from './components/user/user-profile-edit/user-profile-edit.component';
 import { PaymentComponent } from './components/payment/payment.component';
+import { AdminColorsComponent } from './components/admin/admin-colors/admin-colors.component';
+import { AdminColorFormComponent } from './components/admin/admin-color-form/admin-color-form.component';
+import { AdminSizesComponent } from './components/admin/admin-sizes/admin-sizes.component';
+import { AdminSizeFormComponent } from './components/admin/admin-size-form/admin-size-form.component';
+import { AdminProductDetailsComponent } from './components/admin/admin-product-details/admin-product-details.component';
+import { AdminBlogsComponent } from './components/admin/admin-blogs/admin-blogs.component';
+import { AdminBlogFormComponent } from './components/admin/admin-blog-form/admin-blog-form.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -39,6 +46,16 @@ const routes: Routes = [
       { path: 'products', component: AdminProductsComponent },
       { path: 'addproduct', component: AdminProductFormComponent },
       { path: 'editproduct/:id', component: AdminProductFormComponent },
+      { path: 'productdetails/:id', component: AdminProductDetailsComponent },
+      { path: 'colors', component: AdminColorsComponent },
+      { path: 'addcolor', component: AdminColorFormComponent },
+      { path: 'editcolor/:id', component: AdminColorFormComponent },
+      { path: 'sizes', component: AdminSizesComponent },
+      { path: 'addsize', component: AdminSizeFormComponent },
+      { path: 'editsize/:id', component: AdminSizeFormComponent },
+      { path: 'blogs', component: AdminBlogsComponent },
+      { path: 'addblog', component: AdminBlogFormComponent },
+      { path: 'editblog/:id', component: AdminBlogFormComponent },
       { path: 'categories', component: AdminCategoriesComponent },
       { path: 'addcategory', component: AdminCategoryFormComponent },
       { path: 'editcategory/:id', component: AdminCategoryFormComponent },

@@ -1,0 +1,65 @@
+<!-------------------------------------------------------------------------------------->
+<!-- Start of modal header -->
+<div class="modal-header">
+  <h5 class="modal-title" id="deleteConfirmationModalLabel">Blog Details</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+</div>
+<!-- End of modal header -->
+<!-------------------------------------------------------------------------------------->
+<!-- Start of modal body -->
+<div class="container py-4 px-5">
+  <!------------------------------------------------------------------------------------>
+  <div class="row wrapper">
+    <!-- Start of Image -->
+    <div class="col-12 mb-4 mt-2">
+      <img [src]="blog.imageUrl" class="img-responsive w-100" alt="blog Image" />
+    </div>
+    <!-- End of Image -->
+    <!------------------------------------------------------------------------------------>
+    <!-- Start of Details -->
+    <div class="col-12">
+      <div class="container">
+        <!-- Id -->
+        <div class="row mt-3">
+          <div class="col-12 col-sm-4 text-start"><strong>Id : </strong></div>
+          <div class="col-12 col-sm-8 text-start">{{ blog.id }}</div>
+        </div>
+        <br />
+        <!-- User Id -->
+        <div class="row mt-3">
+          <div class="col-12 col-sm-4 text-start"><strong>Admin Id : </strong></div>
+          <div class="col-12 col-sm-8 text-start">{{ blog.userId }}</div>
+        </div>
+        <br />
+        <!-- Admin Name -->
+        <div class="row mt-3">
+          <div class="col-12 col-sm-4 text-start"><strong>Admin Name : </strong></div>
+          <div class="col-12 col-sm-8 text-start">{{ blog.firstName }} {{ blog.lastName }}</div>
+        </div>
+        <br />
+        <!-- Title -->
+        <div class="row mt-3">
+          <div class="col-12 col-sm-4 text-start"><strong>Title : </strong></div>
+          <div class="col-12 col-sm-8 text-start">{{ blog.title }}</div>
+        </div>
+        <br />
+        <!-- Description -->
+        <div class="row mt-3">
+          <div class="col-12 col-sm-4 text-start"><strong>Description : </strong></div>
+          <div class="col-12 col-sm-8 text-start">{{ blog.description }}</div>
+        </div>
+        <br />
+        <!-- Created At -->
+        <div class="row mt-3">
+          <div class="col-12 col-sm-4 text-start"><strong>Created At : </strong></div>
+          <div class="col-12 col-sm-8 text-start">{{ blog.createdAt | date : 'short' }}</div>
+        </div>
+        <br />
+      </div>
+    </div>
+    <!-- End of Details -->
+    <!-------------------------------------------------------------------------------------->
+  </div>
+</div>
+<!-- End of modal body -->
+<!-------------------------------------------------------------------------------------->

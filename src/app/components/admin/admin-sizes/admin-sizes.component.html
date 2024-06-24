@@ -1,0 +1,124 @@
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Main Card -->
+<div class="container pt-6">
+  <div class="card mt-3 mb-5 bg-light shadow p-2 bg-body rounded">
+    <div class="card-body">
+      <h5 class="card-title fs-4 mb-4">Sizes Dashboard</h5>
+      <!-- Start of Breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb fs-6">
+          <li class="breadcrumb-item">
+            <a class="text-decoration-none text-dark" routerLink="/admindashboard"><i class="fas fa-tachometer-alt fa-lg me-2"></i>Admin Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active text-dark fs-6" aria-current="page">Sizes</li>
+        </ol>
+      </nav>
+      <!-- End of Breadcrumb -->
+    </div>
+  </div>
+</div>
+<!-- End of Main Card -->
+<hr />
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Search -->
+<div class="d-flex align-items-center justify-content-center mt-5">
+  <div class="w-75">
+    <form>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Size Name ..." [(ngModel)]="searchInput" name="sizeName" (keyup)="searchSizes()" />
+        <div class="btn btn-outline-secondary"><i class="fa fa-search"></i> Search</div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- End of Search -->
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Sizes Table -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4 class="card-title">All Sizes</h4>
+          <a type="button" class="btn btn-success" routerLink="/admindashboard/addsize"><i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>Add</a>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table id="basic-datatables" class="display table table-striped table-hover border">
+              <thead>
+                <tr class="text-center">
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Size</th>
+                  <th>Created At</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="!sizesLoading && !apiError && !noSizes">
+                  <tr *ngFor="let size of sizes; let i = index" class="text-center">
+                    <td>{{ size.id }}</td>
+                    <td>{{ size.name }}</td>
+                    <td>
+                      <span class="size-badge">{{ size.name }}</span>
+                    </td>
+                    <td>{{ size.createdAt | date : 'short' }}</td>
+                    <td><i class="fas fa-edit fa-lg" style="cursor: pointer" (click)="editSize(size.id)"></i></td>
+                    <td>
+                      <i *ngIf="size.deleting" class="fas fa-spinner fa-spin fa-lg"></i>
+                      <i
+                        *ngIf="!size.deleting"
+                        class="fa-solid fa-trash text-danger fa-lg"
+                        style="cursor: pointer"
+                        (click)="openDeleteConfirmationModal(size.id)"
+                      ></i>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <!-- Start of Sizes Loading -->
+          <app-loader-skeleton-v1 *ngIf="sizesLoading"></app-loader-skeleton-v1>
+          <!-- End of Sizes Loading -->
+          <!-- Start of Error Size -->
+          <div *ngIf="apiError" class="alert alert-danger my-8" role="alert">
+            {{ apiError }}
+          </div>
+          <!-- End of Error Size -->
+          <!-- Start of No Sizes Available -->
+          <div *ngIf="!sizesLoading && !apiError && noSizes" class="alert alert-info my-8" role="alert">No Sizes available</div>
+          <!-- End of No Sizes Available -->
+        </div>
+        <div class="card-footer d-flex justify-content-between" style="min-height: 50px">
+          <p class="my-auto" *ngIf="!sizesLoading && !apiError && !noSizes">Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} Sizes</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Sizes Table -->
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Pagination -->
+<div *ngIf="!apiError && !noSizes && totalPages > 1" class="container d-flex justify-content-center mt-5 pb-8">
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" aria-label="Previous" (click)="changePage(currentPage - 1)">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item" *ngFor="let page of pages" [class.active]="currentPage === page">
+        <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" aria-label="Next" (click)="changePage(currentPage + 1)">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<!-- End of Pagination -->
+<!----------------------------------------------------------------------------------------------->

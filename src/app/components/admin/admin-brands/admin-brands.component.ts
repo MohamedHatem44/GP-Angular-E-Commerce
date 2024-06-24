@@ -8,6 +8,7 @@ import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmati
 import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { AdminBrandDetailsModalComponent } from '../admin-brand-details-modal/admin-brand-details-modal.component';
+import { PagedResponse } from '../../../models/pagedResponse';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-brands',
@@ -50,7 +51,7 @@ export class AdminBrandsComponent implements OnInit {
     this.brandsLoading = true;
     this.apiError = null;
     this._BrandService.getAllBrandsWithPagination(page, this.pageSize, brandName).subscribe({
-      next: (response: any) => {
+      next: (response: PagedResponse<Brand>) => {
         this.brands = response.items.map((brand: Brand) => ({ ...brand, deleting: false }));
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;
@@ -122,9 +123,9 @@ export class AdminBrandsComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Delete Brand
   deleteBrand(brandId: number): void {
-    const message = this.brands.find((brand) => brand.id === brandId);
-    if (message) {
-      message.deleting = true;
+    const brand = this.brands.find((brand) => brand.id === brandId);
+    if (brand) {
+      brand.deleting = true;
       this._BrandService.deleteBrand(brandId).subscribe({
         next: () => {
           this.brands = this.brands.filter((brand) => brand.id !== brandId);
@@ -139,7 +140,7 @@ export class AdminBrandsComponent implements OnInit {
         },
         error: (err) => {
           this._ToastrService.error('Failed to delete Brand, Please try again.');
-          message.deleting = false;
+          brand.deleting = false;
         },
       });
     }
@@ -152,6 +153,7 @@ export class AdminBrandsComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Search
   searchBrands(searchTerm: string = this.searchInput.trim()): void {
+    this.currentPage = 1;
     this.fetchBrands(this.currentPage, searchTerm);
   }
   /*-----------------------------------------------------------------*/

@@ -11,6 +11,8 @@ import { Category } from '../../../models/category';
 import { Brand } from '../../../models/brand';
 import { CategoryService } from '../../../services/category.service';
 import { BrandService } from '../../../services/brand.service';
+import { PagedResponse } from '../../../models/pagedResponse';
+import { Product } from '../../../models/product';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-products',
@@ -64,11 +66,11 @@ export class AdminProductsComponent implements OnInit {
   }
   /*-----------------------------------------------------------------*/
   // Fetch Products
-  fetchProducts(page: number, searchParam?: string, categoryId?: number, brandId?: number): void {
+  async fetchProducts(page: number, searchParam?: string, categoryId?: number, brandId?: number): Promise<void> {
     this.productsLoading = true;
     this.apiError = null;
-    this._ProductService.getAllProductsWithPaginationForAdmin(page, this.pageSize, searchParam, categoryId, brandId).subscribe({
-      next: (response: any) => {
+    (await this._ProductService.getAllProductsWithPaginationForAdmin(page, this.pageSize, searchParam, categoryId, brandId)).subscribe({
+      next: (response: PagedResponse<Product>) => {
         this.products = response.items.map((product: any) => ({ ...product, deleting: false }));
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;
@@ -111,7 +113,8 @@ export class AdminProductsComponent implements OnInit {
   }
   /*-----------------------------------------------------------------*/
   onFilterChange(): void {
-    this.fetchProducts(1, this.searchInput, this.selectedCategory, this.selectedBrand);
+    this.currentPage = 1;
+    this.fetchProducts(this.currentPage, this.searchInput, this.selectedCategory, this.selectedBrand);
   }
   /*-----------------------------------------------------------------*/
   // Change Page
@@ -156,7 +159,7 @@ export class AdminProductsComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Open Product Details Modal
   openProductDetailsModal(product: any): void {
-    const modalRef = this._ModalService.open(AdminProductDetailsModalComponent, { size: 'lg' });
+    const modalRef = this._ModalService.open(AdminProductDetailsModalComponent, { size: 'xl' });
     modalRef.componentInstance.product = product;
   }
   /*-----------------------------------------------------------------*/
@@ -166,7 +169,7 @@ export class AdminProductsComponent implements OnInit {
     modalRef.componentInstance.model = product;
   }
   /*-----------------------------------------------------------------*/
-  // Delete Brand
+  // Delete Product
   deleteProduct(productId: number): void {
     const product = this.products.find((product) => product.id === productId);
     if (product) {
@@ -191,14 +194,15 @@ export class AdminProductsComponent implements OnInit {
     }
   }
   /*-----------------------------------------------------------------*/
-  // Search Brands
+  // Search Products
   onSearchInputChanged(searchTerm: string): void {
     this.searchInputChanged.next(searchTerm);
   }
   /*-----------------------------------------------------------------*/
   // Search
   searchProducts(searchTerm: string = this.searchInput.trim()): void {
-    this.fetchProducts(1, searchTerm);
+    this.currentPage = 1;
+    this.fetchProducts(this.currentPage, searchTerm);
   }
   /*-----------------------------------------------------------------*/
   // Edit Product

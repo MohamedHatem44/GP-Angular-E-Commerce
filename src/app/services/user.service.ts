@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, delay } from 'rxjs';
 import { User } from '../models/user';
+import { PagedResponse } from '../models/pagedResponse';
 /*--------------------------------------------------------------------*/
 @Injectable({
   providedIn: 'root',
@@ -15,12 +16,12 @@ export class UserService {
   /*------------------------------------------------------------------*/
   // Get All Users With Pagination
   // Get: api/Users/AllUsers
-  getAllUsersWithPagination(pageNumber: number, pageSize: number = 5, name?: string): Observable<User[]> {
+  getAllUsersWithPagination(pageNumber: number, pageSize: number = 5, name?: string): Observable<PagedResponse<User>> {
     let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
     if (name) {
       params = params.set('name', name);
     }
-    return this._HttpClient.get<User[]>(`${this.baseUrl}/AllUsers`, { params }).pipe(delay(3000));
+    return this._HttpClient.get<PagedResponse<User>>(`${this.baseUrl}/AllUsers`, { params }).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Toggle Active Status

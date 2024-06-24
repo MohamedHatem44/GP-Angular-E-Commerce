@@ -14,38 +14,38 @@
     <div class="container">
       <!-- Id -->
       <div class="row mt-3">
-        <div class="col-4 text-start"><strong>Id</strong></div>
-        <div class="col-8">{{ message.id }}</div>
+        <div class="col-12 col-sm-4 text-start"><strong>Id : </strong></div>
+        <div class="col-12 col-sm-8 text-start">{{ message.id }}</div>
       </div>
       <br />
       <!-- Name -->
       <div class="row mt-3">
-        <div class="col-4 text-start"><strong>Name</strong></div>
-        <div class="col-8">{{ message.firstName }} {{ message.lastName }}</div>
+        <div class="col-12 col-sm-4 text-start"><strong>Name : </strong></div>
+        <div class="col-12 col-sm-8 text-start">{{ message.firstName }} {{ message.lastName }}</div>
       </div>
       <br />
       <!-- Email -->
       <div class="row mt-3">
-        <div class="col-4 text-start"><strong>Email</strong></div>
-        <div class="col-8">{{ message.email }}</div>
+        <div class="col-12 col-sm-4 text-start"><strong>Email : </strong></div>
+        <div class="col-12 col-sm-8 text-start">{{ message.email }}</div>
       </div>
       <br />
       <!-- Message Details -->
       <div class="row mt-3">
-        <div class="col-4 text-start"><strong>Message Details</strong></div>
-        <div class="col-8">{{ message.messageDetails }}</div>
+        <div class="col-12 col-sm-4 text-start"><strong>Message Details : </strong></div>
+        <div class="col-12 col-sm-8 text-start">{{ message.messageDetails }}</div>
       </div>
       <br />
       <!-- User Emai -->
       <div class="row mt-3">
-        <div class="col-4 text-start"><strong>User Email</strong></div>
-        <div class="col-8">{{ message.userEmail }}</div>
+        <div class="col-12 col-sm-4 text-start"><strong>User Email : </strong></div>
+        <div class="col-12 col-sm-8 text-start">{{ message.userEmail }}</div>
       </div>
       <br />
       <!-- Created At -->
       <div class="row mt-3 mb-3">
-        <div class="col-4 text-start"><strong>Created At</strong></div>
-        <div class="col-8">{{ message.createdAt | date : 'short' }}</div>
+        <div class="col-12 col-sm-4 text-start"><strong>Time : </strong></div>
+        <div class="col-12 col-sm-8 text-start">{{ message.createdAt | date : 'short' }}</div>
       </div>
       <br />
     </div>

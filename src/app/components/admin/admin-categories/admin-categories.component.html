@@ -99,7 +99,7 @@
         </div>
         <div class="card-footer d-flex justify-content-between" style="min-height: 50px">
           <p class="my-auto" *ngIf="!categoriesLoading && !apiError && !noCategories">
-            Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} entries
+            Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} Categories
           </p>
         </div>
       </div>
@@ -109,7 +109,7 @@
 <!-- End of Categories Table -->
 <!----------------------------------------------------------------------------------------------->
 <!-- Start of Pagination -->
-<div *ngIf="!apiError && !noCategories" class="container d-flex justify-content-center mt-5 pb-8">
+<div *ngIf="!apiError && !noCategories && totalPages > 1" class="container d-flex justify-content-center mt-5 pb-8">
   <nav aria-label="Page navigation">
     <ul class="pagination">
       <li class="page-item" [class.disabled]="currentPage === 1">

@@ -31,7 +31,12 @@
         <!-- Start of Brand Name -->
         <div class="mb-5">
           <label for="brandName" class="form-label">Brand Name</label>
-          <input type="text" class="form-control" id="brandName" formControlName="name" name="brandName" placeholder="Brand Name" required />
+          <div *ngIf="brandLoading; else brandNameInput">
+            <div class="skeleton-loader"></div>
+          </div>
+          <ng-template #brandNameInput>
+            <input type="text" class="form-control" id="brandName" formControlName="name" name="brandName" placeholder="Brand Name" required />
+          </ng-template>
           <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="brandForm.get('name')?.errors && brandForm.get('name')?.touched">
             <span *ngIf="brandForm.get('name')?.errors?.['required']" class="text-danger">Brand Name is required</span>
             <span *ngIf="brandForm.get('name')?.errors?.['pattern']" class="text-danger">Invalid Brand Name. only alphabets allowed</span>
@@ -44,15 +49,24 @@
         <!-- Start of Brand Description -->
         <div class="mb-5">
           <label for="brandDescription" class="form-label">Brand Description</label>
-          <textarea
-            type="text"
-            class="form-control min-height-textarea"
-            id="brandDescription"
-            formControlName="description"
-            name="brandDescription"
-            placeholder="Brand Description"
-            required
-          ></textarea>
+          <div *ngIf="brandLoading; else brandDescriptionInput">
+            <div class="skeleton-loader"></div>
+            <div class="skeleton-loader"></div>
+            <div class="skeleton-loader"></div>
+            <div class="skeleton-loader"></div>
+            <div class="skeleton-loader"></div>
+          </div>
+          <ng-template #brandDescriptionInput>
+            <textarea
+              type="text"
+              class="form-control min-height-textarea"
+              id="brandDescription"
+              formControlName="description"
+              name="brandDescription"
+              placeholder="Brand Description"
+              required
+            ></textarea>
+          </ng-template>
           <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="brandForm.get('description')?.errors && brandForm.get('description')?.touched">
             <span *ngIf="brandForm.get('description')?.errors?.['required']" class="text-danger">Brand Description is required</span>
             <span *ngIf="brandForm.get('description')?.errors?.['minlength']" class="text-danger">Invalid Brand Description, Min length is 20</span>
@@ -67,9 +81,10 @@
           <div class="input-group">
             <input type="file" class="form-control" name="brandImage" accept="image/*" (change)="onImageUpload($event)" required />
           </div>
-          <div class="d-flex justify-content-center">
-            <img [src]="responseImageUrl" alt="" class="w-25 mt-4" />
+          <div class="d-flex justify-content-center" *ngIf="!brandLoading">
+            <img [src]="responseImageUrl" alt="" class="w-50 mt-4" />
           </div>
+          <app-loader-spinner *ngIf="brandLoading"></app-loader-spinner>
           <div class="mb-5 col-sm-12 errors" *ngIf="brandForm.get('image')?.errors && brandForm.get('image')?.dirty">
             <span *ngIf="brandForm.get('image')?.errors?.['required']" class="text-danger">Please select an image</span>
           </div>

@@ -57,6 +57,17 @@ import { AdminProductFormComponent } from './components/admin/admin-product-form
 import { UserProfileEditComponent } from './components/user/user-profile-edit/user-profile-edit.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { PaymentService } from './services/payment.service';
+import { AdminColorsComponent } from './components/admin/admin-colors/admin-colors.component';
+import { AdminColorFormComponent } from './components/admin/admin-color-form/admin-color-form.component';
+import { AdminSizesComponent } from './components/admin/admin-sizes/admin-sizes.component';
+import { AdminSizeFormComponent } from './components/admin/admin-size-form/admin-size-form.component';
+import { AdminProductDetailsComponent } from './components/admin/admin-product-details/admin-product-details.component';
+import { AdminBlogsComponent } from './components/admin/admin-blogs/admin-blogs.component';
+import { AdminBlogFormComponent } from './components/admin/admin-blog-form/admin-blog-form.component';
+import { AdminBlogDetailsModalComponent } from './components/admin/admin-blog-details-modal/admin-blog-details-modal.component';
+import { LoaderSkeletonV4Component } from './components/shared/loader-skeleton-v4/loader-skeleton-v4.component';
+import { ProductDetailsModalComponent } from './components/shop/product-details-modal/product-details-modal.component';
+import { UserCartSkeletonLoaderComponent } from './components/user/user-cart-skeleton-loader/user-cart-skeleton-loader.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -108,6 +119,17 @@ import { PaymentService } from './services/payment.service';
     AdminProductFormComponent,
     UserProfileEditComponent,
     PaymentComponent,
+    AdminColorsComponent,
+    AdminColorFormComponent,
+    AdminSizesComponent,
+    AdminSizeFormComponent,
+    AdminProductDetailsComponent,
+    AdminBlogsComponent,
+    AdminBlogFormComponent,
+    AdminBlogDetailsModalComponent,
+    LoaderSkeletonV4Component,
+    ProductDetailsModalComponent,
+    UserCartSkeletonLoaderComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,118 @@
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Main Card -->
+<div class="container pt-6">
+  <div class="card mt-3 mb-5 bg-light shadow p-2 bg-body rounded">
+    <div class="card-body">
+      <h5 class="card-title fs-4">Blogs Form</h5>
+      <h5 class="fs-6 mb-4">You can add or edit Blogs here</h5>
+      <!-- Start of Breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb fs-6">
+          <li class="breadcrumb-item">
+            <a class="text-decoration-none text-dark" routerLink="/admindashboard"><i class="fas fa-tachometer-alt fa-lg me-2"></i>Admin Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active text-dark fs-6" aria-current="page">{{ editMode ? 'Edit Blog' : 'Add Blog' }}</li>
+        </ol>
+      </nav>
+      <!-- End of Breadcrumb -->
+    </div>
+  </div>
+</div>
+<!-- End of Main Card -->
+<hr />
+<!----------------------------------------------------------------------------------------------->
+<div class="container mt-5 pb-8">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title fs-4 mb-3">{{ editMode ? 'Edit Blog' : 'Add Blog' }}</h5>
+      <!----------------------------------------------------------------------------------------->
+      <!-- Start of Blog Form -->
+      <form [formGroup]="blogForm">
+        <!-- Start of Blog Title -->
+        <div class="mb-5">
+          <label for="blogTitle" class="form-label">Blog Title</label>
+          <div *ngIf="blogLoading; else blogTitleInput">
+            <div class="skeleton-loader"></div>
+          </div>
+          <ng-template #blogTitleInput>
+            <input type="text" class="form-control" id="blogTitle" formControlName="title" name="blogTitle" placeholder="Blog Title" required />
+          </ng-template>
+          <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="blogForm.get('title')?.errors && blogForm.get('title')?.touched">
+            <span *ngIf="blogForm.get('title')?.errors?.['required']" class="text-danger">Blog Title is required</span>
+            <span *ngIf="blogForm.get('title')?.errors?.['minlength']" class="text-danger">Invalid Blog Title, Min length is 3</span>
+            <span *ngIf="blogForm.get('title')?.errors?.['maxlength']" class="text-danger">Invalid Blog Title, Max length is 100</span>
+          </div>
+        </div>
+        <!-- End of Blog Title -->
+        <!--------------------------------------------------------------------------------------->
+        <!-- Start of Blog Description -->
+        <div class="mb-5">
+          <label for="brandDescription" class="form-label">Blog Description</label>
+          <div *ngIf="blogLoading; else blogDescriptionInput">
+            <div class="skeleton-loader"></div>
+            <div class="skeleton-loader"></div>
+            <div class="skeleton-loader"></div>
+            <div class="skeleton-loader"></div>
+            <div class="skeleton-loader"></div>
+          </div>
+          <ng-template #blogDescriptionInput>
+            <textarea
+              type="text"
+              class="form-control min-height-textarea"
+              id="blogDescription"
+              formControlName="description"
+              name="blogDescription"
+              placeholder="Blog Description"
+              required
+            ></textarea>
+          </ng-template>
+          <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="blogForm.get('description')?.errors && blogForm.get('description')?.touched">
+            <span *ngIf="blogForm.get('description')?.errors?.['required']" class="text-danger">Blog Description is required</span>
+            <span *ngIf="blogForm.get('description')?.errors?.['minlength']" class="text-danger">Invalid Blog Description, Min length is 20</span>
+            <span *ngIf="blogForm.get('description')?.errors?.['maxlength']" class="text-danger">Invalid Blog Description, Max length is 1000</span>
+          </div>
+        </div>
+        <!-- End of Blog Description -->
+        <!--------------------------------------------------------------------------------------->
+        <!-- Start of Blog Image -->
+        <div class="mb-2">
+          <label for="blogImage" class="form-label">Blog Image</label>
+          <div class="input-group">
+            <input type="file" class="form-control" name="blogImage" accept="image/*" (change)="onImageUpload($event)" required />
+          </div>
+          <div class="d-flex justify-content-center" *ngIf="!blogLoading">
+            <img [src]="responseImageUrl" alt="" class="w-75 mt-4" />
+          </div>
+          <app-loader-spinner *ngIf="blogLoading"></app-loader-spinner>
+          <div class="mb-5 col-sm-12 errors" *ngIf="blogForm.get('imageUrl')?.errors && blogForm.get('imageUrl')?.dirty">
+            <span *ngIf="blogForm.get('imageUrl')?.errors?.['required']" class="text-danger">Please select an image</span>
+          </div>
+          <div class="mb-2 col-sm-12 errors" *ngIf="imageError">
+            <span class="text-danger">{{ imageError }}</span>
+          </div>
+          <hr />
+        </div>
+        <!-- End of Blog Image -->
+        <!--------------------------------------------------------------------------------------->
+        <!-- Start of API Error -->
+        <div *ngIf="apiError" class="alert alert-danger my-3" role="alert">
+          {{ apiError }}
+        </div>
+        <!-- End of API Error -->
+        <!--------------------------------------------------------------------------------------->
+        <!-- Start of Save Button with Spinner and Disabled State -->
+        <div class="d-flex justify-content-center mt-3">
+          <button type="submit" class="btn btn-success" (click)="openSaveConfirmationModal($event)" [disabled]="blogForm.invalid">
+            <i *ngIf="isLoading" class="fas fa-spinner fa-spin mx-4"></i>
+            <span *ngIf="!isLoading"> {{ editMode ? 'Update' : ' + Create' }}</span>
+          </button>
+          <button type="reset" class="btn btn-secondary ms-4" routerLink="/admindashboard/brands" (click)="resetAll()">Cancel</button>
+        </div>
+        <!-- End of Save Button with Spinner and Disabled State -->
+      </form>
+      <!-- End of Blog Form -->
+      <!----------------------------------------------------------------------------------------------->
+    </div>
+  </div>
+  <!----------------------------------------------------------------------------------------------->
+</div>

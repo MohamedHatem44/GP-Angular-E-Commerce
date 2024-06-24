@@ -1,88 +1,144 @@
-<div class="card my-5">
+<!------------------------------------------------------------------------------------------------>
+<div class="card my-6">
   <div class="row">
     <!-------------------------------------------------------------------------------------------->
-    <div class="col-md-8 cart">
-      <div class="title">
+    <div class="col-lg-8 cart">
+      <!------------------------------------------------------------------------------------------>
+      <!-- Start of Title -->
+      <div class="mb-4">
         <div class="row">
-          <div class="col">
-            <h4><b>Shopping Cart</b></h4>
+          <div class="col-12 col-md">
+            <h4>
+              <p class="fw-semibold">Shopping Cart</p>
+            </h4>
           </div>
-          <div class="col align-self-center text-right text-muted">3 items</div>
+          <div class="w-100 d-md-none"></div>
+          <div *ngIf="!cartLoading" class="col-12 col-md align-self-center text-md-right text-left">{{
+            shoppingCart.itemsCount }} items</div>
         </div>
       </div>
-      <div class="row border-top border-bottom">
-        <div class="row main align-items-center">
-          <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg" /></div>
-          <div class="col">
-            <div class="row text-muted">Shirt</div>
-            <div class="row">Cotton T-shirt</div>
-          </div>
-          <div class="col"><a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a></div>
-          <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-        </div>
+      <!-- End  of Title -->
+      <!------------------------------------------------------------------------------------------>
+      <!-- Placeholder for Empty Cart -->
+      <div *ngIf="!cartLoading && noItems" class="text-center my-auto">
+        <p class="text-muted fs-5">Your cart is empty</p>
+        <button routerLink="/shop" class="btnCustom mt-4 fw-semibold py-2 custom-width">Back to Shop</button>
       </div>
-      <div class="row">
-        <div class="row main align-items-center">
-          <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/ba3tvGm.jpg" /></div>
-          <div class="col">
-            <div class="row text-muted">Shirt</div>
-            <div class="row">Cotton T-shirt</div>
+      <!------------------------------------------------------------------------------------------>
+      <!-- Start of Items -->
+      <ng-container *ngIf="!cartLoading && !noItems">
+        <ng-container *ngFor="let item of cartItems">
+          <div class="row border-top border-bottom">
+            <div class="row main align-items-center">
+              <!-- Image Column -->
+              <div class="col-5 col-md-2"><img class="img-fluid" [src]="item.imageUrl" (click)="openImgModal(item)"
+                  style="cursor: pointer" /></div>
+              <!-- Product Details Column -->
+              <div class="col-6 col-md-3">
+                <div class="row">{{ item.productTitle }}</div>
+                <div class="row text-muted">Color : {{ item.colorName }}</div>
+                <div class="row text-muted">Size : {{ item.sizeName }}</div>
+              </div>
+              <!-- Quantity Control Column -->
+              <div class="col-5 col-md-3 mt-xs-3">
+                <div class="d-flex">
+                  <div class="col">
+                    <i class="fa-solid fa-minus" (click)="decreaseQuantity(item)" style="cursor: pointer"></i>
+                    <span class="px-2">{{ item.quantity }}</span>
+                    <i class="fa-solid fa-plus" (click)="increaseQuantity(item)" style="cursor: pointer"></i>
+                  </div>
+                </div>
+              </div>
+              <!-- Item Price Column -->
+              <div class="col-6 col-md-3 mt-xs-3">
+                <div class="row">&euro; {{ item.totalItemPrice | number : '1.2-2' }}</div>
+              </div>
+              <!-- Remove Item -->
+              <div class="col-1 col-md-1">
+                <i *ngIf="item.deleting" class="fas fa-spinner fa-spin fa-lg"></i>
+                <i *ngIf="!item.deleting" class="fa-solid fa-trash text-danger fa-lg" style="cursor: pointer"
+                  (click)="openDeleteItemConfirmationModal(item.id)"></i>
+              </div>
+            </div>
           </div>
-          <div class="col"><a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a></div>
-          <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-        </div>
-      </div>
-      <div class="row border-top border-bottom">
-        <div class="row main align-items-center">
-          <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/pHQ3xT3.jpg" /></div>
-          <div class="col">
-            <div class="row text-muted">Shirt</div>
-            <div class="row">Cotton T-shirt</div>
-          </div>
-          <div class="col"><a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a></div>
-          <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-        </div>
-      </div>
-      <div class="row border-top border-bottom">
-        <div class="row main align-items-center">
-          <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/pHQ3xT3.jpg" /></div>
-          <div class="col">
-            <div class="row text-muted">Shirt</div>
-            <div class="row">Cotton T-shirt</div>
-          </div>
-          <div class="col"><a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a></div>
-          <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-        </div>
-      </div>
-      <div class="back-to-shop">
-        <a routerLink="/shop" class="text-decoration-none"><i class="fa-solid fa-arrow-left"></i><span
-            class="text-muted ms-2">Back to shop</span></a>
+        </ng-container>
+      </ng-container>
+      <!-- End of Items -->
+      <!------------------------------------------------------------------------------------------>
+      <!-- Start of Skeleton Loading Placeholder -->
+      <ng-container *ngIf="cartLoading">
+        <app-user-cart-skeleton-loader></app-user-cart-skeleton-loader>
+        <app-user-cart-skeleton-loader></app-user-cart-skeleton-loader>
+        <app-user-cart-skeleton-loader></app-user-cart-skeleton-loader>
+        <app-user-cart-skeleton-loader></app-user-cart-skeleton-loader>
+      </ng-container>
+      <!-- End of Skeleton Loading Placeholder -->
+      <!------------------------------------------------------------------------------------------>
+      <div class="mb-4"></div>
+      <div *ngIf="!noItems && !cartLoading" class="mt-5 d-flex justify-content-between">
+        <!-- Back to Shop Link -->
+        <a routerLink="/shop" class="text-decoration-none">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span class="text-muted ms-2">Back to shop</span>
+        </a>
+        <!-- Clear All -->
+        <button (click)="openDeleteAllItemConfirmationModal()" class="btn btn-outline-secondary">
+          <i *ngIf="deleteAllLoading" class="fas fa-spinner fa-spin me-2"></i>
+          <i *ngIf="!deleteAllLoading" class="fa-solid fa-trash text-danger me-2"></i>
+          Clear All Items
+        </button>
       </div>
     </div>
     <!-------------------------------------------------------------------------------------------->
-    <div class="col-md-4 summary">
+    <!-- Start of Summary -->
+    <div class="col-lg-4 summary">
+      <!-- Summary -->
       <div>
-        <h5><b>Summary</b></h5>
+        <h5>
+          <p class="fw-semibold">Summary</p>
+        </h5>
       </div>
       <hr />
-      <div class="row">
-        <div class="col" style="padding-left: 0">Items 3</div>
-        <div class="col text-right">&euro; 132.00</div>
+      <!-- Items -->
+      <div class="row mt-3">
+        <div class="col-6 text-start"><strong>Items </strong></div>
+        <div class="col-6 text-start">{{ shoppingCart.itemsCount }}</div>
       </div>
-      <form>
-        <p>Shipping</p>
+      <br />
+      <!-- Products -->
+      <div class="row mt-3">
+        <div class="col-6 text-start"><strong>Products </strong></div>
+        <div class="col-6 text-start">{{ cartItems.length }}</div>
+      </div>
+      <br />
+      <!-- Total Price -->
+      <div class="row mt-3">
+        <div class="col-6 text-start"><strong>Total Price </strong></div>
+        <div *ngIf="!cartLoading && !noItems" class="col-6 text-start">&euro; {{ shoppingCart.totalCartPrice | number :
+          '1.2-2' }}</div>
+      </div>
+      <br />
+      <!-- Delivery -->
+      <div class="row mt-3">
         <select>
           <option class="text-muted">Standard-Delivery- &euro;5.00</option>
         </select>
-        <p>Give Code</p>
-        <input id="code" placeholder="Enter your code" />
-      </form>
-      <div class="row" style="border-top: 1px solid rgba(0, 0, 0, 0.1); padding: 2vh 0">
-        <div class="col">Total Cart Price</div>
-        <div class="col text-right">&euro; 137.00</div>
       </div>
-      <button class="btn" routerLink="/payment">Check out</button>
+      <<<<<<< HEAD <button class="btn" routerLink="/payment">Check out</button>
+        =======
+        <hr />
+        <!-- Total Cart Price -->
+        <div class="row">
+          <div class="col"><strong>Total Cart Price </strong></div>
+          <div *ngIf="!cartLoading && !noItems" class="col text-right">&euro; {{ shoppingCart.totalCartPrice + 5 |
+            number : '1.2-2' }}</div>
+        </div>
+        <!-- Check out Btn -->
+        <button class="btnCustom mt-6 fw-semibold py-2" routerLink="/orders" [disabled]="noItems">Check out</button>
+        >>>>>>> 4250aa8cf5e0d6ea4f41de0bd731ba991abb7e9b
     </div>
+    <!-- End of Summary -->
     <!-------------------------------------------------------------------------------------------->
   </div>
 </div>
+<!------------------------------------------------------------------------------------------------>

@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, delay } from 'rxjs';
 import { Brand } from '../models/brand';
+import { PagedResponse } from '../models/pagedResponse';
 /*--------------------------------------------------------------------*/
 @Injectable({
   providedIn: 'root',
@@ -15,36 +16,36 @@ export class BrandService {
   /*------------------------------------------------------------------*/
   // Get All Brands With Related Products With Pagination
   // Get: api/Brands/AllBrands
-  getAllBrandsWithPagination(pageNumber: number, pageSize: number = 5, brandName?: string): Observable<Brand[]> {
+  getAllBrandsWithPagination(pageNumber: number, pageSize: number = 5, brandName?: string): Observable<PagedResponse<Brand>> {
     let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
     if (brandName) {
       params = params.set('brandName', brandName);
     }
-    return this._HttpClient.get<Brand[]>(`${this.baseUrl}/AllBrands`, { params }).pipe(delay(3000));
+    return this._HttpClient.get<PagedResponse<Brand>>(`${this.baseUrl}/AllBrands`, { params }).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Get All Brands Without Products
   // Get: api/Brands
-  getAllBrands(): Observable<Brand[]> {
-    return this._HttpClient.get<Brand[]>(this.baseUrl).pipe(delay(3000));
+  getAllBrands(): Observable<{ brandsCount: number; brands: Brand[] }> {
+    return this._HttpClient.get<{ brandsCount: number; brands: Brand[] }>(this.baseUrl).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Get All Brands With Products
   // Get: api/Brands/BrandsWithProducts
-  getAllBrandsWithProducts(): Observable<Brand[]> {
-    return this._HttpClient.get<Brand[]>(this.baseUrl + '/BrandsWithProducts').pipe(delay(3000));
+  getAllBrandsWithProducts(): Observable<{ brandsCount: number; brands: Brand[] }> {
+    return this._HttpClient.get<{ brandsCount: number; brands: Brand[] }>(this.baseUrl + '/BrandsWithProducts').pipe(delay(3000));
   }
   /*-----------------------------------------------------------------*/
   // Get a Specific Brand By Id Without Products
   // Get: api/Brands/{id}
   getBrandById(brandId: number): Observable<Brand> {
-    return this._HttpClient.get<Brand>(`${this.baseUrl}/${brandId}`);
+    return this._HttpClient.get<Brand>(`${this.baseUrl}/${brandId}`).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Get a Specific Brand By Id With Products
   // Get: api/Brands/{id}/BrandsWithProducts
   getBrandByIdWithProducts(brandId: number): Observable<Brand> {
-    return this._HttpClient.get<Brand>(`${this.baseUrl}/${brandId}` + '/BrandsWithProducts');
+    return this._HttpClient.get<Brand>(`${this.baseUrl}/${brandId}` + '/BrandsWithProducts').pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Create a New Brand
