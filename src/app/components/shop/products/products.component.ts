@@ -75,7 +75,11 @@ export class ProductsComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.selectedCategoryId = Number(params.get('categoryId'));
     });
-    this.loadProdcuts(this.currentPage);
+    if (this.selectedCategoryId !== 0) {
+      this.loadProdcuts(this.currentPage, this.searchInput, this.selectedCategoryId);
+    } else {
+      this.loadProdcuts(this.currentPage);
+    }
     this.loadCategories();
     this.loadBrands();
     this.loadSizes();
@@ -96,17 +100,7 @@ export class ProductsComponent implements OnInit {
     this.productsLoading = true;
     this.apiError = null;
     (
-      await this._ProductService.getAllProductsWithPaginationForUser(
-        page,
-        this.pageSize,
-        searchParam,
-        this.selectedCategoryId,
-        brandId,
-        colorId,
-        sizeId,
-        minPrice,
-        maxPrice
-      )
+      await this._ProductService.getAllProductsWithPaginationForUser(page, this.pageSize, searchParam, categoryId, brandId, colorId, sizeId, minPrice, maxPrice)
     ).subscribe({
       next: (response: PagedResponse<Product>) => {
         this.products = response.items;
