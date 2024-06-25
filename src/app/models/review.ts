@@ -3,5 +3,9 @@ export interface Review {
   description: string;
   createdAt?: string;
   userId?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
   productId: number;
+  title?: string;
 }

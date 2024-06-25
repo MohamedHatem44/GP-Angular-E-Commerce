@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, delay } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Size } from '../models/size';
+import { PagedResponse } from '../models/pagedResponse';
 /*--------------------------------------------------------------------*/
 @Injectable({
   providedIn: 'root',
@@ -15,18 +16,18 @@ export class SizeService {
   /*------------------------------------------------------------------*/
   // Get All Sizes With Pagination
   // Get: api/Sizes/AllSizes
-  getAllSizesWithPagination(pageNumber: number, pageSize: number = 5, sizeName?: string): Observable<Size[]> {
+  getAllSizesWithPagination(pageNumber: number, pageSize: number = 5, sizeName?: string): Observable<PagedResponse<Size>> {
     let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
     if (sizeName) {
       params = params.set('sizeName', sizeName);
     }
-    return this._HttpClient.get<Size[]>(`${this.baseUrl}/AllSizes`, { params }).pipe(delay(3000));
+    return this._HttpClient.get<PagedResponse<Size>>(`${this.baseUrl}/AllSizes`, { params }).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Get All Sizes
   // Get: api/Sizes
-  getAllSizes(): Observable<Size[]> {
-    return this._HttpClient.get<Size[]>(this.baseUrl).pipe(delay(3000));
+  getAllSizes(): Observable<{ sizesCount: number; sizes: Size[] }> {
+    return this._HttpClient.get<{ sizesCount: number; sizes: Size[] }>(this.baseUrl).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Get a Specific Size By Id

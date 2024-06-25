@@ -1,0 +1,89 @@
+<!-------------------------------------------------------------------------------------->
+<!-- Start of modal body -->
+<div class="container py-4 px-5">
+  <!------------------------------------------------------------------------------------>
+  <div class="row wrapper">
+    <!-- Start of Image -->
+    <div class="col-md-12 col-lg-6 px-0">
+      <img [src]="product.imageUrl" class="img-responsive" alt="product Image" />
+    </div>
+    <!-- End of Image -->
+    <!------------------------------------------------------------------------------------>
+    <!-- Start of Details -->
+    <div class="col-md-12 col-lg-6">
+      <div class="container">
+        <!-- Title -->
+        <div class="row mt-3">
+          <div class="col-12 text-center fs-4">{{ product.title }}</div>
+        </div>
+        <br />
+        <!-- Description -->
+        <div class="row mt-3">
+          <div class="col-12 text-center fs-5">{{ product.description }}</div>
+        </div>
+        <!-- Average Rating -->
+        <div class="row mt-3">
+          <div class="col-12 text-center">
+            <span class="rating">
+              <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                <span class="fa fa-star" [class.checked]="star <= product.ratingsAverage"></span>
+              </ng-container>
+            </span>
+          </div>
+        </div>
+        <!-- Price -->
+        <div class="row mt-3">
+          <div class="col-12 text-center fs-5">{{ product.price | currency }}</div>
+        </div>
+        <!-- In Stock  -->
+        <div class="row mt-3">
+          <div class="col-12 text-center">In Stock: {{ product.quantity }}</div>
+        </div>
+        <br />
+        <!-- Quantity -->
+        <div class="row mt-3 justify-content-center">
+          <div class="col-12 col-md-6 text-center">
+            <div class="input-group">
+              <button class="btn btn-outline-secondary" type="button" (click)="decreaseQuantity()">-</button>
+              <input type="number" class="form-control text-center" [(ngModel)]="quantity" [min]="1" />
+              <button class="btn btn-outline-secondary" type="button" (click)="increaseQuantity()">+</button>
+            </div>
+            <div *ngIf="quantity < 1" class="text-danger mt-2">Quantity must be at least 1</div>
+          </div>
+        </div>
+        <br />
+        <!-- Colors -->
+        <div class="row mt-3">
+          <div class="col-12 col-sm-4 text-start"><strong>Colors : </strong></div>
+          <div class="col-12 col-sm-8 text-start">
+            <select class="form-select" [(ngModel)]="selectedColorId">
+              <option *ngFor="let color of product.colors" [value]="color.id">{{ color.name }}</option>
+            </select>
+          </div>
+        </div>
+        <br />
+        <!-- Sizes -->
+        <div class="row mt-3">
+          <div class="col-12 col-sm-4 text-start"><strong>Sizes : </strong></div>
+          <div class="col-12 col-sm-8 text-start">
+            <select class="form-select" [(ngModel)]="selectedSizeId">
+              <option *ngFor="let size of product.sizes" [value]="size.id">{{ size.name }}</option>
+            </select>
+          </div>
+        </div>
+        <br />
+        <!-- Add To Cart -->
+        <div class="d-flex justify-content-center">
+          <button class="custombtn my-3 py-2" [disabled]="quantity < 1" (click)="addToCart()">
+            <i *ngIf="addToCartLoading" class="fas fa-spinner fa-spin py-1"></i>
+            <span *ngIf="!addToCartLoading"> Add To Cart</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- End of Details -->
+    <!-------------------------------------------------------------------------------------->
+  </div>
+</div>
+<!-- End of modal body -->
+<!-------------------------------------------------------------------------------------->

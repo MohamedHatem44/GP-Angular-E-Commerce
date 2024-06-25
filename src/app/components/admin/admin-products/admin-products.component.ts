@@ -11,6 +11,8 @@ import { Category } from '../../../models/category';
 import { Brand } from '../../../models/brand';
 import { CategoryService } from '../../../services/category.service';
 import { BrandService } from '../../../services/brand.service';
+import { PagedResponse } from '../../../models/pagedResponse';
+import { Product } from '../../../models/product';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-products',
@@ -68,7 +70,7 @@ export class AdminProductsComponent implements OnInit {
     this.productsLoading = true;
     this.apiError = null;
     (await this._ProductService.getAllProductsWithPaginationForAdmin(page, this.pageSize, searchParam, categoryId, brandId)).subscribe({
-      next: (response: any) => {
+      next: (response: PagedResponse<Product>) => {
         this.products = response.items.map((product: any) => ({ ...product, deleting: false }));
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;
@@ -111,7 +113,8 @@ export class AdminProductsComponent implements OnInit {
   }
   /*-----------------------------------------------------------------*/
   onFilterChange(): void {
-    this.fetchProducts(1, this.searchInput, this.selectedCategory, this.selectedBrand);
+    this.currentPage = 1;
+    this.fetchProducts(this.currentPage, this.searchInput, this.selectedCategory, this.selectedBrand);
   }
   /*-----------------------------------------------------------------*/
   // Change Page
@@ -166,7 +169,7 @@ export class AdminProductsComponent implements OnInit {
     modalRef.componentInstance.model = product;
   }
   /*-----------------------------------------------------------------*/
-  // Delete Brand
+  // Delete Product
   deleteProduct(productId: number): void {
     const product = this.products.find((product) => product.id === productId);
     if (product) {
@@ -191,7 +194,7 @@ export class AdminProductsComponent implements OnInit {
     }
   }
   /*-----------------------------------------------------------------*/
-  // Search Brands
+  // Search Products
   onSearchInputChanged(searchTerm: string): void {
     this.searchInputChanged.next(searchTerm);
   }

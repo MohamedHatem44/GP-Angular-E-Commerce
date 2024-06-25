@@ -37,6 +37,8 @@ export class AdminProductFormComponent implements OnInit {
   responseImageUrl: string | null = null;
   controllerName: string = 'Products';
   apiError: string | null = null;
+  colorsLoading: boolean = false;
+  sizeLoading: boolean = false;
   /*------------------------------------------------------------------*/
   // Ctor
   constructor(
@@ -66,7 +68,7 @@ export class AdminProductFormComponent implements OnInit {
     description: new FormControl<string>('', [Validators.required, Validators.minLength(20), Validators.maxLength(250)]),
     imageUrl: new FormControl<string | null>('', [Validators.required]),
     quantity: new FormControl<number>(0, [Validators.required, Validators.min(1)]),
-    sold: new FormControl<number>(0),
+    sold: new FormControl<number>(0, [Validators.min(0)]),
     price: new FormControl<number>(0, [Validators.required, Validators.min(0)]),
     priceAfterDiscount: new FormControl(0, [Validators.min(0)]),
     colorIds: new FormControl<number[]>([], [Validators.required]),
@@ -100,25 +102,31 @@ export class AdminProductFormComponent implements OnInit {
   }
   /*------------------------------------------------------------------*/
   loadColors(): void {
+    this.colorsLoading = true;
     this._ColorService.getAllColors().subscribe({
       next: (response: any) => {
         this.colors = response.colors;
+        this.colorsLoading = false;
       },
       error: (err) => {
         console.error('Failed to load colors', err);
         this._ToastrService.error('Failed to load colors, please try again.');
+        this.colorsLoading = false;
       },
     });
   }
   /*------------------------------------------------------------------*/
   loadSizes(): void {
+    this.sizeLoading = true;
     this._SizeService.getAllSizes().subscribe({
       next: (response: any) => {
         this.sizes = response.sizes;
+        this.sizeLoading = false;
       },
       error: (err) => {
         console.error('Failed to load sizes', err);
         this._ToastrService.error('Failed to load sizes, please try again.');
+        this.sizeLoading = false;
       },
     });
   }

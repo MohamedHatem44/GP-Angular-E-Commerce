@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
+import { PagedResponse } from '../../../models/pagedResponse';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-sizes',
@@ -48,7 +49,7 @@ export class AdminSizesComponent implements OnInit {
     this.sizesLoading = true;
     this.apiError = null;
     this._SizeService.getAllSizesWithPagination(page, this.pageSize, sizeName).subscribe({
-      next: (response: any) => {
+      next: (response: PagedResponse<Size>) => {
         this.sizes = response.items.map((size: Size) => ({ ...size, deleting: false }));
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;

@@ -1,0 +1,63 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white text-center">
+          <h4>Credit or Debit Card Payment</h4>
+        </div>
+        <div class="card-body">
+          <form (submit)="onSubmit()">
+            <div class="form-group mb-3">
+              <label for="cardName" class="form-label">Card Holder's Name</label>
+              <input class="form-control" type="text" [(ngModel)]="cardName" name="cardName"
+                placeholder="Card Holder's Name" required />
+            </div>
+            <div class="form-group mb-3">
+              <label for="card-element" class="form-label">Card Details</label>
+              <div id="card-element" class="form-control p-2">
+                <!-- Stripe.js will inject the card element here -->
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input class="form-control" type="email" [(ngModel)]="email" name="email" placeholder="Enter Your Email"
+                required />
+            </div>
+            <div class="form-group mb-3">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input class="form-control" type="text" [(ngModel)]="phone" name="phone"
+                placeholder="Enter Your Phone Number" required />
+            </div>
+            <!-- <div class="form-group mb-3">
+              <label for="city" class="form-label">City</label>
+              <input class='form-control' type='text' [(ngModel)]="city" name="city" placeholder="Enter Your City"
+                required>
+            </div>
+            <div class="form-group mb-3">
+              <label for="country" class="form-label">Country</label>
+              <input class='form-control' type='text' [(ngModel)]="country" name="country"
+                placeholder="Enter Your Country" required>
+            </div> -->
+            <div class="d-grid gap-2 my-5">
+              <button type="submit" class="btn btn-success btn-sm">
+                <i *ngIf="isLoading" class="fas fa-spinner fa-spin py-1"></i>
+                <span *ngIf="!isLoading">Pay Now &euro; {{ amount |
+                  number : '1.2-2' }}</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Success Message -->
+          <div *ngIf="successMessage" class="alert alert-success mt-3" role="alert">
+            {{ successMessage }}
+          </div>
+
+          <!-- Error Message -->
+          <div *ngIf="errorMessage && !successMessage" class="alert alert-danger mt-3" role="alert">
+            {{ errorMessage }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

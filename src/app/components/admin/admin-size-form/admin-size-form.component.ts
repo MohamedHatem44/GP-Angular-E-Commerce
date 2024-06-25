@@ -139,8 +139,8 @@ export class AdminSizeFormComponent {
         this.sizeLoading = false;
       },
       error: (error) => {
-        this._ToastrService.error('Error fetching Size by Id, Please try again.');
-        this.apiError = 'Error fetching Size by Id, Please try again.';
+        this._ToastrService.error('An Error Occurred while Loading Size, Please try again.');
+        this.apiError = 'An Error Occurred while Loading Size, Please try again.';
         this.sizeLoading = false;
       },
     });

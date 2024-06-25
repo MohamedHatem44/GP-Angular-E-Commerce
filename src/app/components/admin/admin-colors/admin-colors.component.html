@@ -39,7 +39,9 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <h4 class="card-title">All Colors</h4>
+          <h4 class="card-title" *ngIf="colorsLoading && !apiError">Loading Colors ...</h4>
+          <h4 class="card-title" *ngIf="!colorsLoading && !apiError">All Colors</h4>
+          <h4 class="card-title" *ngIf="!colorsLoading && apiError">{{ apiError }}</h4>
           <a type="button" class="btn btn-success" routerLink="/admindashboard/addcolor"><i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>Add</a>
         </div>
         <div class="card-body">
@@ -85,12 +87,12 @@
           <app-loader-skeleton-v1 *ngIf="colorsLoading"></app-loader-skeleton-v1>
           <!-- End of Colors Loading -->
           <!-- Start of Error Color -->
-          <div *ngIf="apiError" class="alert alert-danger my-8" role="alert">
+          <div *ngIf="!colorsLoading && apiError" class="alert alert-danger my-8 text-center" role="alert">
             {{ apiError }}
           </div>
           <!-- End of Error Color -->
           <!-- Start of No Colors Available -->
-          <div *ngIf="!colorsLoading && !apiError && noColors" class="alert alert-info my-8" role="alert">No Colors available</div>
+          <div *ngIf="!colorsLoading && !apiError && noColors" class="alert alert-info my-8 text-center" role="alert">No Colors available</div>
           <!-- End of No Colors Available -->
         </div>
         <div class="card-footer d-flex justify-content-between" style="min-height: 50px">
@@ -103,7 +105,7 @@
 <!-- End of Colors Table -->
 <!----------------------------------------------------------------------------------------------->
 <!-- Start of Pagination -->
-<div *ngIf="!apiError && !noColors" class="container d-flex justify-content-center mt-5 pb-8">
+<div *ngIf="!apiError && !noColors && totalPages > 1" class="container d-flex justify-content-center mt-5 pb-8">
   <nav aria-label="Page navigation">
     <ul class="pagination">
       <li class="page-item" [class.disabled]="currentPage === 1">

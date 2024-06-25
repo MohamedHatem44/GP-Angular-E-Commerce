@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, delay } from 'rxjs';
 import { Category } from '../models/category';
+import { PagedResponse } from '../models/pagedResponse';
 /*--------------------------------------------------------------------*/
 @Injectable({
   providedIn: 'root',
@@ -15,36 +16,36 @@ export class CategoryService {
   /*------------------------------------------------------------------*/
   // Get All Categories With Related Products With Pagination
   // Get: api/Categories/AllCategories
-  getAllCategoriesWithPagination(pageNumber: number, pageSize: number = 5, categoryName?: string): Observable<Category[]> {
+  getAllCategoriesWithPagination(pageNumber: number, pageSize: number = 5, categoryName?: string): Observable<PagedResponse<Category>> {
     let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
     if (categoryName) {
       params = params.set('categoryName', categoryName);
     }
-    return this._HttpClient.get<Category[]>(`${this.baseUrl}/AllCategories`, { params }).pipe(delay(3000));
+    return this._HttpClient.get<PagedResponse<Category>>(`${this.baseUrl}/AllCategories`, { params }).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Get All Categories Without Products
   // Get: api/Categories
-  getAllCategories(): Observable<Category[]> {
-    return this._HttpClient.get<Category[]>(this.baseUrl).pipe(delay(3000));
+  getAllCategories(): Observable<{ categoriesCount: number; categories: Category[] }> {
+    return this._HttpClient.get<{ categoriesCount: number; categories: Category[] }>(this.baseUrl).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Get All Categories With Products
   // Get: api/Categories/CategoriesWithProducts
-  getAllCategoriesWithProducts(): Observable<Category[]> {
-    return this._HttpClient.get<Category[]>(this.baseUrl + '/CategoriesWithProducts').pipe(delay(3000));
+  getAllCategoriesWithProducts(): Observable<{ categoriesCount: number; categories: Category[] }> {
+    return this._HttpClient.get<{ categoriesCount: number; categories: Category[] }>(this.baseUrl + '/CategoriesWithProducts').pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Get a Specific Category By Id Without Products
   // Get: api/Categories/{id}
   getCategoryById(categoryId: number): Observable<Category> {
-    return this._HttpClient.get<Category>(`${this.baseUrl}/${categoryId}`);
+    return this._HttpClient.get<Category>(`${this.baseUrl}/${categoryId}`).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Get a Specific Category By Id With Products
   // Get: api/Categories/{id}/CategoriesWithProducts
   getCategoryByIdWithProducts(categoryId: number): Observable<Category> {
-    return this._HttpClient.get<Category>(`${this.baseUrl}/${categoryId}` + '/CategoriesWithProducts');
+    return this._HttpClient.get<Category>(`${this.baseUrl}/${categoryId}` + '/CategoriesWithProducts').pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Create a New Category

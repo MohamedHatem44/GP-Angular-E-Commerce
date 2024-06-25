@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
 import { AdminUserDetailsModalComponent } from '../admin-user-details-modal/admin-user-details-modal.component';
 import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
+import { PagedResponse } from '../../../models/pagedResponse';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-users',
@@ -49,7 +50,7 @@ export class AdminUsersComponent implements OnInit {
     this.usersLoading = true;
     this.apiError = null;
     this._UserService.getAllUsersWithPagination(page, this.pageSize, name).subscribe({
-      next: (response: any) => {
+      next: (response: PagedResponse<User>) => {
         this.users = response.items.map((user: User) => ({ ...user, deleting: false }));
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;
@@ -59,7 +60,7 @@ export class AdminUsersComponent implements OnInit {
         this.usersLoading = false;
         this.noUsers = this.users.length === 0;
       },
-      error: (err) => {
+      error: (error) => {
         this.apiError = 'Failed to load Users, Please try again.';
         this._ToastrService.error('Failed to load Users, Please try again.');
         this.usersLoading = false;

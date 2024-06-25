@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, delay } from 'rxjs';
 import { Review } from '../models/review';
 /*--------------------------------------------------------------------*/
 @Injectable({
@@ -22,7 +22,7 @@ export class ReviewService {
   // Get All Reviews for one Product By Product Id
   // Get: api/Reviews/ProductReviews/{Id}
   getAllReviewsByProductId(productId: number): Observable<Review[]> {
-    return this._HttpClient.get<Review[]>(`${this.baseUrl}/ProductReviews/${productId}`);
+    return this._HttpClient.get<Review[]>(`${this.baseUrl}/ProductReviews/${productId}`).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Get All Reviews for one User By User Id

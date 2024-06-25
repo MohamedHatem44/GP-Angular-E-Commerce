@@ -139,8 +139,8 @@ export class AdminColorFormComponent implements OnInit {
         this.colorLoading = false;
       },
       error: (error) => {
-        this._ToastrService.error('Error fetching Color by Id, Please try again.');
-        this.apiError = 'Error fetching Color by Id, Please try again.';
+        this._ToastrService.error('An Error Occurred while Loading Color, Please try again.');
+        this.apiError = 'An Error Occurred while Loading Color, Please try again.';
         this.colorLoading = false;
       },
     });
