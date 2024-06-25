@@ -2,6 +2,7 @@
   --image-circle: 200px;
   min-height: 100vh;
   position: relative;
+  background-color: #e4e5e9;
 }
 
 .profile-bg {

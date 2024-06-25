@@ -1,7 +1,6 @@
 import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { JwtService } from '../../../services/jwt.service';
 /*--------------------------------------------------------------------*/
 @Component({
@@ -22,7 +21,6 @@ export class NavBarComponent implements OnInit {
   /*--------------------------------------------------------------------*/
   // Ctor
   constructor(
-    private _HttpClient: HttpClient,
     private _AuthService: AuthService,
     private _JwtService: JwtService,
     private _Router: Router,
