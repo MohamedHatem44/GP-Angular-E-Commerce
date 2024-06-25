@@ -38,13 +38,18 @@ export class UserCartComponent implements OnInit {
     this._CartService.getShoppingCartByUserFromClaims().subscribe({
       next: (response: any) => {
         this.shoppingCart = response;
-        console.log(response);
         this.cartItems = this.shoppingCart.cartItems;
         this.noItems = this.cartItems.length === 0;
         this.cartLoading = false;
         this.apiError = null;
       },
-      error: (err) => {
+      error: (error) => {
+        if (error.status === 404) {
+          this.noItems = true;
+          this.cartLoading = false;
+          this.apiError = null;
+          return;
+        }
         this.apiError = 'Failed to load Cart, Please try again.';
         this._ToastrService.error('Failed to load Cart, Please try again.');
         this.cartLoading = false;
