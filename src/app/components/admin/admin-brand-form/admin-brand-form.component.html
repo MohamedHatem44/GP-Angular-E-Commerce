@@ -24,10 +24,12 @@
 <div class="container mt-5 pb-8">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title fs-4 mb-3">{{ editMode ? 'Edit Brand' : 'Add Brand' }}</h5>
+      <h5 *ngIf="brandLoading" class="card-title fs-4 mb-3">Lodaing Brand Details ...</h5>
+      <h5 *ngIf="!brandLoading" class="card-title fs-4 mb-3">{{ editMode ? 'Edit Brand' : 'Add Brand' }}</h5>
+      <hr />
       <!----------------------------------------------------------------------------------------->
       <!-- Start of Brand Form -->
-      <form [formGroup]="brandForm">
+      <form [formGroup]="brandForm" class="mt-5">
         <!-- Start of Brand Name -->
         <div class="mb-5">
           <label for="brandName" class="form-label">Brand Name</label>

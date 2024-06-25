@@ -24,12 +24,12 @@
 <div class="container mt-5 pb-8">
   <div class="card">
     <div class="card-body">
-      <h5 *ngIf="!singleProductLoading" class="card-title fs-4 mb-5">{{ editMode ? 'Edit Product' : 'Add Product' }}</h5>
-      <h5 *ngIf="singleProductLoading" class="card-title fs-4 mb-5">Lodaing Product Details ...</h5>
-
+      <h5 *ngIf="!singleProductLoading" class="card-title fs-4 mb-3">{{ editMode ? 'Edit Product' : 'Add Product' }}</h5>
+      <h5 *ngIf="singleProductLoading" class="card-title fs-4 mb-3">Lodaing Product Details ...</h5>
+      <hr />
       <!----------------------------------------------------------------------------------------->
       <!-- Start of Product Form -->
-      <form [formGroup]="productForm">
+      <form [formGroup]="productForm" class="mt-5">
         <!-- Start of Product Title -->
         <div class="mb-5">
           <label for="productTitle" class="form-label">Product Title</label>

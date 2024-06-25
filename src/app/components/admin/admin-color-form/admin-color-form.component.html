@@ -24,7 +24,9 @@
 <div class="container mt-5 pb-8">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title fs-4 mb-3">{{ editMode ? 'Edit Color' : 'Add Color' }}</h5>
+      <h5 *ngIf="colorLoading" class="card-title fs-4 mb-3">Lodaing Color Details ...</h5>
+      <h5 *ngIf="!colorLoading" class="card-title fs-4 mb-3">{{ editMode ? 'Edit Color' : 'Add Color' }}</h5>
+      <hr />
       <!----------------------------------------------------------------------------------------->
       <!-- Start of Color Form -->
       <form [formGroup]="colorForm" class="py-5">

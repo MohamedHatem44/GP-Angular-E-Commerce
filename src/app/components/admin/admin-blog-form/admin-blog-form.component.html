@@ -24,10 +24,12 @@
 <div class="container mt-5 pb-8">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title fs-4 mb-3">{{ editMode ? 'Edit Blog' : 'Add Blog' }}</h5>
+      <h5 *ngIf="blogLoading" class="card-title fs-4 mb-3">Lodaing Category Details ...</h5>
+      <h5 *ngIf="!blogLoading" class="card-title fs-4 mb-3">{{ editMode ? 'Edit Blog' : 'Add Blog' }}</h5>
+      <hr />
       <!----------------------------------------------------------------------------------------->
       <!-- Start of Blog Form -->
-      <form [formGroup]="blogForm">
+      <form [formGroup]="blogForm" class="mt-5">
         <!-- Start of Blog Title -->
         <div class="mb-5">
           <label for="blogTitle" class="form-label">Blog Title</label>
