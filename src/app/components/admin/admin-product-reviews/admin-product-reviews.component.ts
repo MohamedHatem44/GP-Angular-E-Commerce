@@ -8,6 +8,7 @@ import { Product } from '../../../models/product';
 import { PagedResponse } from '../../../models/pagedResponse';
 import { ReviewService } from '../../../services/review.service';
 import { Review } from '../../../models/review';
+import { AdminProductReviewModalComponent } from '../admin-product-review-modal/admin-product-review-modal.component';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-admin-product-reviews',
@@ -120,4 +121,10 @@ export class AdminProductReviewsComponent implements OnInit {
     });
   }
   /*------------------------------------------------------------------*/
+  // Open Product Details Modal
+  openProductReviewDetailsModal(review: Review): void {
+    const modalRef = this._ModalService.open(AdminProductReviewModalComponent, { size: 'lg' });
+    modalRef.componentInstance.review = review;
+  }
+  /*-----------------------------------------------------------------*/
 }

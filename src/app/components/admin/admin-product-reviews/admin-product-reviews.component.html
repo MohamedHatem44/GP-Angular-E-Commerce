@@ -49,7 +49,7 @@
       <div class="mb-4 py-3 px-3 bg-light">
         <div class="d-flex justify-content-between">
           <h5 class="font-weight-semi-bold">Products</h5>
-          <h5 *ngIf="!productsLoading && !apiError" class="font-weight-semi-bold">{{ products.length }}</h5>
+          <h5 *ngIf="!categoriesLoading && !productsLoading && !apiError" class="font-weight-semi-bold">{{ products.length }}</h5>
         </div>
         <div class="border-bottom my-3"></div>
         <div class="mb-3">
@@ -102,7 +102,7 @@
                     <td>{{ review.lastName }}</td>
                     <td>{{ review.rate }}</td>
                     <td>{{ review.description | slice : 0 : 15 }}{{ review.description.length > 15 ? '...' : '' }}</td>
-                    <td><i class="fa-solid fa-info fa-lg" style="cursor: pointer" (click)="openProductDetailsModal(product)"></i></td>
+                    <td><i class="fa-solid fa-info fa-lg" style="cursor: pointer" (click)="openProductReviewDetailsModal(review)"></i></td>
                   </tr>
                 </ng-container>
               </tbody>
