@@ -13,8 +13,7 @@
             </h4>
           </div>
           <div class="w-100 d-md-none"></div>
-          <div *ngIf="!cartLoading" class="col-12 col-md align-self-center text-md-right text-left">{{
-            shoppingCart.itemsCount }} items</div>
+          <div *ngIf="!cartLoading && !apiError" class="col-12 col-md align-self-center text-md-right text-left">{{ shoppingCart.itemsCount }} items</div>
         </div>
       </div>
       <!-- End  of Title -->
@@ -31,8 +30,7 @@
           <div class="row border-top border-bottom">
             <div class="row main align-items-center">
               <!-- Image Column -->
-              <div class="col-5 col-md-2"><img class="img-fluid" [src]="item.imageUrl" (click)="openImgModal(item)"
-                  style="cursor: pointer" /></div>
+              <div class="col-5 col-md-2"><img class="img-fluid" [src]="item.imageUrl" (click)="openImgModal(item)" style="cursor: pointer" /></div>
               <!-- Product Details Column -->
               <div class="col-6 col-md-3">
                 <div class="row">{{ item.productTitle }}</div>
@@ -56,8 +54,12 @@
               <!-- Remove Item -->
               <div class="col-1 col-md-1">
                 <i *ngIf="item.deleting" class="fas fa-spinner fa-spin fa-lg"></i>
-                <i *ngIf="!item.deleting" class="fa-solid fa-trash text-danger fa-lg" style="cursor: pointer"
-                  (click)="openDeleteItemConfirmationModal(item.id)"></i>
+                <i
+                  *ngIf="!item.deleting"
+                  class="fa-solid fa-trash text-danger fa-lg"
+                  style="cursor: pointer"
+                  (click)="openDeleteItemConfirmationModal(item.id)"
+                ></i>
               </div>
             </div>
           </div>
@@ -102,7 +104,7 @@
       <!-- Items -->
       <div class="row mt-3">
         <div class="col-6 text-start"><strong>Items </strong></div>
-        <div class="col-6 text-start">{{ shoppingCart.itemsCount }}</div>
+        <div class="col-6 text-start" *ngIf="!cartLoading">{{ shoppingCart.itemsCount }}</div>
       </div>
       <br />
       <!-- Products -->
@@ -114,8 +116,7 @@
       <!-- Total Price -->
       <div class="row mt-3">
         <div class="col-6 text-start"><strong>Total Price </strong></div>
-        <div *ngIf="!cartLoading && !noItems" class="col-6 text-start">&euro; {{ shoppingCart.totalCartPrice | number :
-          '1.2-2' }}</div>
+        <div *ngIf="!cartLoading && !noItems" class="col-6 text-start">&euro; {{ shoppingCart.totalCartPrice | number : '1.2-2' }}</div>
       </div>
       <br />
       <!-- Delivery -->
@@ -124,16 +125,14 @@
           <option class="text-muted">Standard-Delivery- &euro;5.00</option>
         </select>
       </div>
-      <button class="btn" routerLink="/payment">Check out</button>
       <hr />
       <!-- Total Cart Price -->
       <div class="row">
         <div class="col"><strong>Total Cart Price </strong></div>
-        <div *ngIf="!cartLoading && !noItems" class="col text-right">&euro; {{ shoppingCart.totalCartPrice + 5 |
-          number : '1.2-2' }}</div>
+        <div *ngIf="!cartLoading && !noItems" class="col text-right">&euro; {{ shoppingCart.totalCartPrice + 5 | number : '1.2-2' }}</div>
       </div>
       <!-- Check out Btn -->
-      <button class="btnCustom mt-6 fw-semibold py-2" routerLink="/orders" [disabled]="noItems">Check out</button>
+      <button class="btnCustom mt-6 fw-semibold py-2" routerLink="/payment" [disabled]="noItems">Check out</button>
     </div>
     <!-- End of Summary -->
     <!-------------------------------------------------------------------------------------------->

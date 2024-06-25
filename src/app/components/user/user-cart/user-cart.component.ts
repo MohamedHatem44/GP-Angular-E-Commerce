@@ -26,6 +26,8 @@ export class UserCartComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Ng OnInit
   ngOnInit(): void {
+    this.cartLoading = true;
+
     this.getUserCart();
   }
   /*-----------------------------------------------------------------*/
@@ -38,8 +40,9 @@ export class UserCartComponent implements OnInit {
         this.shoppingCart = response;
         console.log(response);
         this.cartItems = this.shoppingCart.cartItems;
-        this.cartLoading = false;
         this.noItems = this.cartItems.length === 0;
+        this.cartLoading = false;
+        this.apiError = null;
       },
       error: (err) => {
         this.apiError = 'Failed to load Cart, Please try again.';
