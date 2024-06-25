@@ -24,10 +24,8 @@ export class PaymentComponent implements OnInit {
 
   constructor(private paymentService: PaymentService, private cartService: CartService) {}
 
-  onLoad() {
-    this.getTotalPrice();
-  }
   async ngOnInit() {
+    this.getTotalPrice();
     this.stripe = await loadStripe(environment.stripePublishableKey);
     this.createPaymentIntent();
     this.setupStripeElements();
@@ -37,8 +35,7 @@ export class PaymentComponent implements OnInit {
   getTotalPrice() {
     this.cartService.getShoppingCartByUserFromClaims().subscribe(
       (response) => {
-        this.amount = response.total;
-        console.log(response.totalPrice);
+        this.amount = response.totalCartPrice + 5;
       },
       (error) => {
         this.errorMessage = 'Error Occured, Please try again.';
