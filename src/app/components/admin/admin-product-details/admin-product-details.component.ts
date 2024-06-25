@@ -54,7 +54,7 @@ export class AdminProductDetailsComponent implements OnInit {
     });
   }
   /*------------------------------------------------------------------*/
-  // Get a Specific Product By Id
+  // Get Reviews By Product Id
   private loadProductReviews(productId: number): void {
     this.reviewsLoading = true;
     this._ReviewService.getAllReviewsByProductId(productId).subscribe({

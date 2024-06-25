@@ -34,6 +34,7 @@ import { AdminSizeFormComponent } from './components/admin/admin-size-form/admin
 import { AdminProductDetailsComponent } from './components/admin/admin-product-details/admin-product-details.component';
 import { AdminBlogsComponent } from './components/admin/admin-blogs/admin-blogs.component';
 import { AdminBlogFormComponent } from './components/admin/admin-blog-form/admin-blog-form.component';
+import { AdminProductReviewsComponent } from './components/admin/admin-product-reviews/admin-product-reviews.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -45,6 +46,7 @@ const routes: Routes = [
       { path: '', component: AdminMainComponent, pathMatch: 'full' },
       { path: 'products', component: AdminProductsComponent },
       { path: 'addproduct', component: AdminProductFormComponent },
+      { path: 'productreviews', component: AdminProductReviewsComponent },
       { path: 'editproduct/:id', component: AdminProductFormComponent },
       { path: 'productdetails/:id', component: AdminProductDetailsComponent },
       { path: 'colors', component: AdminColorsComponent },
