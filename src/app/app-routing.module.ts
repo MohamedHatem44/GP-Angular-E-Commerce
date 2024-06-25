@@ -34,6 +34,7 @@ import { AdminSizeFormComponent } from './components/admin/admin-size-form/admin
 import { AdminProductDetailsComponent } from './components/admin/admin-product-details/admin-product-details.component';
 import { AdminBlogsComponent } from './components/admin/admin-blogs/admin-blogs.component';
 import { AdminBlogFormComponent } from './components/admin/admin-blog-form/admin-blog-form.component';
+import { ProductsComponent } from './components/shop/products/products.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -81,6 +82,8 @@ const routes: Routes = [
   { path: 'users/login', component: LoginComponent },
   { path: 'users/register', component: RegisterComponent },
   { path: 'payment', component: PaymentComponent },
+  { path: 'products', component: ProductsComponent },
+  { path: 'products/:categoryId', component: ProductsComponent },
   { path: '**', component: NotFoundComponent },
 ];
 /*-----------------------------------------------------------------------------------------------------------------*/

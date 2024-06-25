@@ -124,18 +124,16 @@
           <option class="text-muted">Standard-Delivery- &euro;5.00</option>
         </select>
       </div>
-      <<<<<<< HEAD <button class="btn" routerLink="/payment">Check out</button>
-        =======
-        <hr />
-        <!-- Total Cart Price -->
-        <div class="row">
-          <div class="col"><strong>Total Cart Price </strong></div>
-          <div *ngIf="!cartLoading && !noItems" class="col text-right">&euro; {{ shoppingCart.totalCartPrice + 5 |
-            number : '1.2-2' }}</div>
-        </div>
-        <!-- Check out Btn -->
-        <button class="btnCustom mt-6 fw-semibold py-2" routerLink="/orders" [disabled]="noItems">Check out</button>
-        >>>>>>> 4250aa8cf5e0d6ea4f41de0bd731ba991abb7e9b
+      <button class="btn" routerLink="/payment">Check out</button>
+      <hr />
+      <!-- Total Cart Price -->
+      <div class="row">
+        <div class="col"><strong>Total Cart Price </strong></div>
+        <div *ngIf="!cartLoading && !noItems" class="col text-right">&euro; {{ shoppingCart.totalCartPrice + 5 |
+          number : '1.2-2' }}</div>
+      </div>
+      <!-- Check out Btn -->
+      <button class="btnCustom mt-6 fw-semibold py-2" routerLink="/orders" [disabled]="noItems">Check out</button>
     </div>
     <!-- End of Summary -->
     <!-------------------------------------------------------------------------------------------->
