@@ -54,13 +54,13 @@
         <!-- End of Size Name -->
         <!--------------------------------------------------------------------------------------->
         <!-- Start of API Error -->
-        <div *ngIf="apiError" class="alert alert-danger my-3" role="alert">
+        <div *ngIf="!sizeLoading && apiError" class="alert alert-danger my-3 text-center" role="alert">
           {{ apiError }}
         </div>
         <!-- End of API Error -->
         <!--------------------------------------------------------------------------------------->
         <!-- Start of Save Button with Spinner and Disabled State -->
-        <div class="d-flex justify-content-center mt-3">
+        <div class="d-flex justify-content-center mt-6">
           <button type="submit" class="btn btn-success" (click)="openSaveConfirmationModal($event)" [disabled]="sizeForm.invalid">
             <i *ngIf="isLoading" class="fas fa-spinner fa-spin mx-4"></i>
             <span *ngIf="!isLoading"> {{ editMode ? 'Update' : ' + Create' }}</span>

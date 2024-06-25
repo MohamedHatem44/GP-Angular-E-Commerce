@@ -24,7 +24,9 @@
 <div class="container mt-5 pb-8">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title fs-4 mb-3">{{ editMode ? 'Edit Product' : 'Add Product' }}</h5>
+      <h5 *ngIf="!singleProductLoading" class="card-title fs-4 mb-5">{{ editMode ? 'Edit Product' : 'Add Product' }}</h5>
+      <h5 *ngIf="singleProductLoading" class="card-title fs-4 mb-5">Lodaing Product Details ...</h5>
+
       <!----------------------------------------------------------------------------------------->
       <!-- Start of Product Form -->
       <form [formGroup]="productForm">
@@ -110,6 +112,9 @@
             <ng-template #productSoldInput>
               <input type="number" id="sold" class="form-control" formControlName="sold" />
             </ng-template>
+            <div *ngIf="productForm.get('sold')?.invalid && productForm.get('sold')?.touched" class="text-danger">
+              <div *ngIf="productForm.get('sold')?.errors?.['min']">Minimum sold is 0</div>
+            </div>
             <!-- <input type="number" id="sold" class="form-control" formControlName="sold" /> -->
           </div>
           <!-- End of Sold -->
@@ -194,43 +199,38 @@
         <!--------------------------------------------------------------------------------------->
         <div class="row">
           <!-- Start of Colors Dropdown -->
-          <div class="col-md-6 mb-3">
-            <label for="colorIds" class="form-label">Colors</label>
-            <div class="dropdown">
-              <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="colorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                Select Colors
-              </button>
-              <ul class="dropdown-menu overflow-auto" style="max-height: 200px" aria-labelledby="colorDropdown">
-                <li *ngFor="let color of colors">
-                  <label class="dropdown-item">
-                    <input type="checkbox" [value]="color.id" (change)="onColorChange($event)" [checked]="colorSelected(color.id)" /> {{ color.name }}
-                  </label>
-                </li>
-              </ul>
-            </div>
-            <div *ngIf="productForm.get('colorIds')?.invalid && productForm.get('colorIds')?.touched" class="text-danger">
-              <div *ngIf="productForm.get('colorIds')?.errors?.['required']">Select at least one color</div>
+          <div class="col-lg-6 col-md-6">
+            <div class="mb-3">
+              <label for="colorIds" class="form-label">Colors</label>
+              <div *ngIf="singleProductLoading; else productColorInput">
+                <div class="skeleton-loader"></div>
+              </div>
+              <ng-template #productColorInput>
+                <select id="colorIds" class="form-select" formControlName="colorIds" multiple>
+                  <option *ngFor="let color of colors" [value]="color.id">{{ color.name }}</option>
+                </select>
+              </ng-template>
+              <div *ngIf="productForm.get('colorIds')?.invalid && productForm.get('colorIds')?.touched" class="text-danger">
+                <div *ngIf="productForm.get('colorIds')?.errors?.['required']">Select at least one color</div>
+              </div>
             </div>
           </div>
           <!-- End of Colors Dropdown -->
-
           <!-- Start of Sizes Dropdown -->
-          <div class="col-md-6 mb-3">
-            <label for="sizeIds" class="form-label">Sizes</label>
-            <div class="dropdown">
-              <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sizeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                Select Sizes
-              </button>
-              <ul class="dropdown-menu overflow-auto" style="max-height: 200px" aria-labelledby="sizeDropdown">
-                <li *ngFor="let size of sizes">
-                  <label class="dropdown-item">
-                    <input type="checkbox" [value]="size.id" (change)="onSizeChange($event)" [checked]="sizeSelected(size.id)" /> {{ size.name }}
-                  </label>
-                </li>
-              </ul>
-            </div>
-            <div *ngIf="productForm.get('sizeIds')?.invalid && productForm.get('sizeIds')?.touched" class="text-danger">
-              <div *ngIf="productForm.get('sizeIds')?.errors?.['required']">Select at least one size</div>
+          <div class="col-lg-6 col-md-6">
+            <div class="mb-3">
+              <label for="sizeIds" class="form-label">Sizes</label>
+              <div *ngIf="singleProductLoading; else productSizeInput">
+                <div class="skeleton-loader"></div>
+              </div>
+              <ng-template #productSizeInput>
+                <select id="sizeIds" class="form-select" formControlName="sizeIds" multiple>
+                  <option *ngFor="let size of sizes" [value]="size.id">{{ size.name }}</option>
+                </select>
+              </ng-template>
+              <div *ngIf="productForm.get('sizeIds')?.invalid && productForm.get('sizeIds')?.touched" class="text-danger">
+                <div *ngIf="productForm.get('sizeIds')?.errors?.['required']">Select at least one size</div>
+              </div>
             </div>
           </div>
           <!-- End of Sizes Dropdown -->
@@ -243,7 +243,7 @@
             <input type="file" class="form-control" name="productImage" accept="image/*" (change)="onImageUpload($event)" required />
           </div>
           <div class="d-flex justify-content-center">
-            <img [src]="responseImageUrl" alt="" class="w-25 mt-4" />
+            <img [src]="responseImageUrl" alt="" class="w-50 mt-4" />
           </div>
           <div class="mb-5 col-sm-12 errors" *ngIf="productForm.get('image')?.errors && productForm.get('image')?.dirty">
             <span *ngIf="productForm.get('image')?.errors?.['required']" class="text-danger">Please select an image</span>

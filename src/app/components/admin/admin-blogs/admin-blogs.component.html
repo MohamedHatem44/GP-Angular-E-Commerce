@@ -39,7 +39,9 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <h4 class="card-title">All Blogs</h4>
+          <h4 class="card-title" *ngIf="blogsLoading && !apiError">Loading Blogs ...</h4>
+          <h4 class="card-title" *ngIf="!blogsLoading && !apiError">All Blogs</h4>
+          <h4 class="card-title" *ngIf="!blogsLoading && apiError">{{ apiError }}</h4>
           <a type="button" class="btn btn-success" routerLink="/admindashboard/addblog"><i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>Add</a>
         </div>
         <div class="card-body">
@@ -85,12 +87,12 @@
           <app-loader-skeleton-v2 *ngIf="blogsLoading"></app-loader-skeleton-v2>
           <!-- End of Blogs Loading -->
           <!-- Start of Error Blog -->
-          <div *ngIf="apiError" class="alert alert-danger my-8" role="alert">
+          <div *ngIf="!blogsLoading && apiError" class="alert alert-danger my-8 text-center" role="alert">
             {{ apiError }}
           </div>
           <!-- End of Error Blog -->
           <!-- Start of No Blogs Available -->
-          <div *ngIf="!blogsLoading && !apiError && noBlogs" class="alert alert-info my-8" role="alert">No Blogs available</div>
+          <div *ngIf="!blogsLoading && !apiError && noBlogs" class="alert alert-info my-8 text-center" role="alert">No Blogs available</div>
           <!-- End of No Blogs Available -->
         </div>
         <div class="card-footer d-flex justify-content-between" style="min-height: 50px">

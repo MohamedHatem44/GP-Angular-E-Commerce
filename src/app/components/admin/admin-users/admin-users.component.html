@@ -39,8 +39,10 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <h4 class="card-title">All Users</h4>
-          <h6 class="card-title" *ngIf="!usersLoading">Total Count : {{ totalCount }}</h6>
+          <h4 class="card-title" *ngIf="usersLoading && !apiError">Loading Users ...</h4>
+          <h4 class="card-title" *ngIf="!usersLoading && !apiError">All Users</h4>
+          <h4 class="card-title" *ngIf="!usersLoading && apiError">{{ apiError }}</h4>
+          <h6 class="card-title" *ngIf="!usersLoading && !apiError">Total Count : {{ totalCount }}</h6>
         </div>
         <div class="card-body">
           <div class="table-responsive-xxl">
@@ -96,12 +98,12 @@
           <app-loader-skeleton-v2 *ngIf="usersLoading"></app-loader-skeleton-v2>
           <!-- End of Users Loading -->
           <!-- Start of Error User -->
-          <div *ngIf="apiError" class="alert alert-danger my-8" role="alert">
+          <div *ngIf="!usersLoading && apiError" class="alert alert-danger my-8 text-center" role="alert">
             {{ apiError }}
           </div>
           <!-- End of Error User -->
           <!-- Start of No Users Available -->
-          <div *ngIf="!usersLoading && !apiError && noUsers" class="alert alert-info my-8" role="alert">No Users available</div>
+          <div *ngIf="!usersLoading && !apiError && noUsers" class="alert alert-info my-8 text-center" role="alert">No Users available</div>
           <!-- End of No Users Available -->
         </div>
         <div class="card-footer d-flex justify-content-between" style="min-height: 50px">

@@ -39,14 +39,16 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <h4 class="card-title">All Categories</h4>
+          <h4 class="card-title" *ngIf="categoriesLoading && !apiError">Loading Categories ...</h4>
+          <h4 class="card-title" *ngIf="!categoriesLoading && !apiError">All Categories</h4>
+          <h4 class="card-title" *ngIf="!categoriesLoading && apiError">{{ apiError }}</h4>
           <a type="button" class="btn btn-success" routerLink="/admindashboard/addcategory"><i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>Add</a>
         </div>
         <div class="card-body">
           <div class="table-responsive">
             <table id="basic-datatables" class="display table table-striped table-hover border">
               <thead>
-                <tr>
+                <tr class="text-center">
                   <th>Id</th>
                   <th>Name</th>
                   <th>Description</th>
@@ -60,7 +62,7 @@
               </thead>
               <tbody>
                 <ng-container *ngIf="!categoriesLoading && !apiError && !noCategories">
-                  <tr *ngFor="let category of categories; let i = index">
+                  <tr *ngFor="let category of categories; let i = index" class="text-center">
                     <td>{{ category.id }}</td>
                     <td>{{ category.name }}</td>
                     <td>{{ category.description | slice : 0 : 15 }}{{ category.description.length > 15 ? '...' : '' }}</td>
@@ -89,12 +91,12 @@
           <app-loader-skeleton-v2 *ngIf="categoriesLoading"></app-loader-skeleton-v2>
           <!-- End of Categories Loading -->
           <!-- Start of Error Category -->
-          <div *ngIf="apiError" class="alert alert-danger my-8" role="alert">
+          <div *ngIf="!categoriesLoading && apiError" class="alert alert-danger my-8 text-center" role="alert">
             {{ apiError }}
           </div>
           <!-- End of Error Category -->
           <!-- Start of No Categories Available -->
-          <div *ngIf="!categoriesLoading && !apiError && noCategories" class="alert alert-info my-8" role="alert">No Categories available</div>
+          <div *ngIf="!categoriesLoading && !apiError && noCategories" class="alert alert-info my-8 text-center" role="alert">No Categories available</div>
           <!-- End of No Categories Available -->
         </div>
         <div class="card-footer d-flex justify-content-between" style="min-height: 50px">

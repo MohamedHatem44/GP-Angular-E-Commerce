@@ -52,7 +52,6 @@ export class AdminCategoryFormComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
-
     this._ImageService.uploadImage(file, this.controllerName).subscribe({
       next: (response: uploadImage) => {
         this.responseImageUrl = response.url;
@@ -159,7 +158,8 @@ export class AdminCategoryFormComponent implements OnInit {
         this.categoryLoading = false;
       },
       error: (error) => {
-        this._ToastrService.error('Error fetching Category by Id, Please try again');
+        this.apiError = 'An Error Occurred while Loading Category, Please try again.';
+        this._ToastrService.error('An Error Occurred while Loading Category, Please try again.');
         this.categoryLoading = false;
       },
     });

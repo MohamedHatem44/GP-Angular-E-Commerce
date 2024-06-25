@@ -64,7 +64,9 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <h4 class="card-title">All Products</h4>
+          <h4 class="card-title" *ngIf="!productsLoading && !apiError">All Products</h4>
+          <h4 class="card-title" *ngIf="productsLoading && !apiError">Loading Products ...</h4>
+          <h4 class="card-title" *ngIf="productsLoading && apiError">{{ apiError }}</h4>
           <a type="button" class="btn btn-success" routerLink="/admindashboard/addproduct"><i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>Add</a>
         </div>
         <div class="card-body">
@@ -118,17 +120,17 @@
           <app-loader-skeleton-v2 *ngIf="productsLoading"></app-loader-skeleton-v2>
           <!-- End of Products Loading -->
           <!-- Start of Error Product -->
-          <div *ngIf="apiError" class="alert alert-danger my-8" role="alert">
+          <div *ngIf="!productsLoading && apiError" class="alert alert-danger my-8 text-center" role="alert">
             {{ apiError }}
           </div>
           <!-- End of Error Product -->
           <!-- Start of No Products Available -->
-          <div *ngIf="!productsLoading && !apiError && noProducts" class="alert alert-info my-8" role="alert">No Products available</div>
+          <div *ngIf="!productsLoading && !apiError && noProducts" class="alert alert-info my-8 text-center" role="alert">No Products available</div>
           <!-- End of No Products Available -->
         </div>
         <div class="card-footer d-flex justify-content-between" style="min-height: 50px">
           <p class="my-auto" *ngIf="!productsLoading && !apiError && !noProducts">
-            Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} Product
+            Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} Products
           </p>
         </div>
       </div>
