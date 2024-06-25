@@ -26,6 +26,7 @@ export class RegisterComponent implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
   });
+
   /*--------------------------------------------------------------------*/
   constructor(private authService: AuthService, private router: Router, private toaster: ToastrService) {}
 
@@ -45,9 +46,15 @@ export class RegisterComponent implements OnInit {
         this.loading = false;
         this.router.navigateByUrl('/home');
       },
-      error: () => {
+      error: (err) => {
         this.loading = false;
-        this.error = 'Error just occurred, try again later!';
+        console.log(err);
+        //this.error = 'Error just occurred, try again later!';
+        if (err.status === 400 && err.error === 'Email is already exist') {
+          this.error = 'User with this email already exists. Please choose a different email.';
+        } else {
+          this.error = 'An unexpected error occurred. Please try again later.';
+        }
       },
     });
   }

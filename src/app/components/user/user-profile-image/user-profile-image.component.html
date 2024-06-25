@@ -1,0 +1,15 @@
+<div class="profile-image__wrapper">
+  <div class="image-uploader">
+    <label>
+      <img [src]="imagePreview || imageSrc" alt="profile" class="profile-image shadow-lg rounded-circle" />
+      <input type="file" class="d-none" name="profile-image" accept=".png,.jpg,.jpeg" #uploader (change)="onUploadImage($event)" />
+      <span *ngIf="!imagePreview" class="btn btn-success btn-sm edit-image-btn rounded-circle">
+        <i class="fa-solid fa-pen"></i>
+      </span>
+    </label>
+    <div *ngIf="imagePreview" class="controllers">
+      <button class="btn btn-success btn-sm" [disabled]="isSubmitting" (click)="onSaveImage()">Save</button>
+      <button class="btn btn-danger btn-sm" (click)="reset()">Cancel</button>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { thumbnailImage } from '../../../../utils/constants';
 import { AuthService } from '../../../services/auth.service';
@@ -15,29 +14,19 @@ import { Router } from '@angular/router';
 export class UserProfileEditComponent implements OnInit {
   // Just when user uploaded image
   // After finishing the edit , you should reset this to null
-  imagePreview: string | null = null;
-  uploadedFile: File | null = null;
   imageSrc: string = thumbnailImage;
   userId: string = '';
   isSubmitting: boolean = false;
-  isProfileUpdating: boolean = false;
-  loadingUserInfo:boolean =true;
+  loadingUserInfo: boolean = true;
   profileForm = new FormGroup({
     firstName: new FormControl('', [Validators.minLength(3), Validators.maxLength(50), Validators.required]),
     lastName: new FormControl('', [Validators.minLength(3), Validators.maxLength(50), Validators.required]),
     address: new FormControl('', [Validators.minLength(3), Validators.maxLength(100), Validators.required]),
-    phoneNumber: new FormControl('', [
-      Validators.minLength(3),
-      Validators.maxLength(100),
-      Validators.required,
-    ]),
-    email: new FormControl({value:'', disabled:true}, [Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g), Validators.required]),
+    phoneNumber: new FormControl('', [Validators.minLength(3), Validators.maxLength(100), Validators.required]),
+    email: new FormControl({ value: '', disabled: true }, [Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g), Validators.required]),
   });
 
-  @ViewChild('uploader')
-  uploader: ElementRef | undefined;
-
-  constructor(private authService: AuthService, private toastr:ToastrService, private router:Router) {}
+  constructor(private authService: AuthService, private toastr: ToastrService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadingUserInfo = true;
@@ -51,68 +40,31 @@ export class UserProfileEditComponent implements OnInit {
           address: user.address,
           phoneNumber: user.phoneNumber,
         });
-        
+
         this.profileForm.markAllAsTouched();
         this.userId = user.id;
         this.imageSrc = user.imageUrl || thumbnailImage;
       },
-      error:()=>{
-        this.loadingUserInfo = false
-      },
-      complete:()=>{
-        this.loadingUserInfo = false
-      }
-    });
-  }
-
-  onUploadImage(event: Event) {
-    const file = ((event.target as HTMLInputElement).files || [])[0];
-    this.uploadedFile = file;
-    this.setPreviewImage(file);
-  }
-
-  setPreviewImage(image: File) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      this.imagePreview = (e.target as FileReader & { result: string }).result;
-    };
-    reader.readAsDataURL(image);
-  }
-
-  reset() {
-    (this.uploader as ElementRef).nativeElement.value = '';
-    this.imagePreview = null;
-  }
-
-  onSaveImage() {
-    this.isProfileUpdating = true;
-    this.authService.updateProfileImage(this.uploadedFile).subscribe({
-      next: () => {
-        this.imageSrc = this.imagePreview as string;
-        this.imagePreview = null;
-        this.toastr.success('Woohoo image is updated!')
-      },
-      error:()=>{
-        this.isProfileUpdating = false;
-        this.toastr.error('Ummm failed to update!')
+      error: () => {
+        this.loadingUserInfo = false;
       },
       complete: () => {
-        this.isProfileUpdating = false;
+        this.loadingUserInfo = false;
       },
     });
   }
 
   saveProfile() {
     this.isSubmitting = true;
-    const updates:Partial<User> = { ...this.profileForm.value,email:this.profileForm.get('email').value, id: this.userId };
+    const updates: Partial<User> = { ...this.profileForm.value, email: this.profileForm.get('email').value, id: this.userId };
     this.authService.updateProfileInfo(updates).subscribe({
       next: () => {
         this.router.navigateByUrl('/profile');
-        this.toastr.success('Woohoo profile is updated!')
+        this.toastr.success('Woohoo profile is updated!');
       },
-      error:() => {
+      error: () => {
         this.isSubmitting = false;
-        this.toastr.error('Ummm failed to update!')
+        this.toastr.error('Ummm failed to update!');
       },
       complete: () => {
         this.isSubmitting = false;

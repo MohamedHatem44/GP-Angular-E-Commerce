@@ -79,9 +79,9 @@ export class AuthService {
   }
   /*------------------------------------------------------------------*/
 
-  updateProfileImage(file: File): Observable<unknown> {
+  updateProfileImage(file: File): Observable<{ url?: string }> {
     const formData = new FormData();
     formData.append('formFile', file);
-    return this.http.post<unknown>(`${this.baseUrl}/Upload`, formData);
+    return this.http.post<{ url?: string }>(`${this.baseUrl}/Upload`, formData);
   }
 }

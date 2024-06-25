@@ -1,22 +1,11 @@
 <div>
   <div class="user-profile-edit">
     <div class="profile-bg">
-      <img src="https://wallpapers.com/images/featured/ultra-hd-wazf67lzyh5q7k32.jpg" alt="bg-placeholder" />
+      <img src="https://images.limely.co.uk/wp-content/uploads/fashion-shopify-header-image-e1701774356161.jpg" alt="bg-placeholder" />
     </div>
     <div *ngIf="!loadingUserInfo" class="pt-5">
       <div class="card mx-md-auto mx-sm-3 mx-3 profile-card shadow bg-body rounded-none border-0" style="max-width: 900px">
-        <div class="profile-image__wrapper">
-          <div class="image-uploader">
-            <label>
-              <img [src]="imagePreview || imageSrc" alt="profile" class="profile-image shadow-lg rounded-circle" />
-              <input type="file" name="profile-image" accept=".png,.jpg,.jpeg" #uploader (change)="onUploadImage($event)" />
-            </label>
-            <div *ngIf="imagePreview" class="controllers">
-              <button class="btn btn-success btn-sm" [disabled]="isSubmitting" (click)="onSaveImage()">Save</button>
-              <button class="btn btn-danger btn-sm" (click)="reset()">Cancel</button>
-            </div>
-          </div>
-        </div>
+        <app-user-profile-image [imageSrc]="imageSrc"></app-user-profile-image>
         <form [formGroup]="profileForm" class="row p-3 mx-auto" (submit)="saveProfile()">
           <div class="row mx-auto">
             <div class="col-12 col-md-6 mb-md-0 mb-3">

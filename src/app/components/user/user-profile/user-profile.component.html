@@ -1,8 +1,8 @@
 <div>
   <div class="user-profile-edit">
     <div class="profile-bg">
-      <img src="https://wallpapers.com/images/featured/ultra-hd-wazf67lzyh5q7k32.jpg" alt="bg-placeholder" />
-    </div>  
+      <img src="https://images.limely.co.uk/wp-content/uploads/fashion-shopify-header-image-e1701774356161.jpg" alt="bg-placeholder" />
+    </div>
     <div *ngIf="isLoading">
       <div class="card mx-md-auto mx-sm-3 mx-3 profile-card shadow bg-body rounded-none border-0" style="max-width: 900px">
         <div class="profile-image__wrapper">
@@ -35,20 +35,14 @@
             </div>
           </div>
           <div class="mt-4 d-flex justify-content-center align-items-center">
-            <span class="placeholder" style="height: 30px; width:150px"></span>
+            <span class="placeholder" style="height: 30px; width: 150px"></span>
           </div>
         </div>
       </div>
     </div>
     <div *ngIf="currentUser" class="pt-5">
       <div class="card mx-md-auto mx-sm-3 mx-3 profile-card shadow bg-body rounded-none border-0" style="max-width: 900px">
-        <div class="profile-image__wrapper">
-          <div class="image-uploader">
-            <label>
-              <img [src]="currentUser?.imageUrl" alt="profile" class="profile-image shadow-lg rounded-circle" />
-            </label>
-          </div>
-        </div>
+        <app-user-profile-image [imageSrc]="currentUser?.imageUrl"></app-user-profile-image>
         <div class="row p-3 mx-auto">
           <div class="row mx-auto">
             <div class="d-flex gap-1 col-12 col-md-6 mb-md-0 mb-3">
@@ -80,7 +74,7 @@
           </div>
           <div class="row mt-3 mx-auto">
             <div class="d-flex gap-1 col-12">
-              <span class="fw-bold">Address</span>
+              <span class="fw-bold">Address:</span>
               <span class="flex-1 border-1">
                 {{ currentUser?.address }}
               </span>
@@ -90,6 +84,11 @@
             <a class="btn btn-success btn-sm px-3" routerLink="/editprofile">Edit my profile</a>
           </div>
         </div>
+      </div>
+    </div>
+    <div *ngIf="!isLoading && error">
+      <div class="text-danger fs-3">
+        {{ error }}
       </div>
     </div>
   </div>
