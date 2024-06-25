@@ -21,6 +21,7 @@ export class PaymentComponent implements OnInit {
   amount: number;
   errorMessage: string | null = null;
   successMessage: string | null = null;
+  isLoading: boolean = false;
 
   constructor(private paymentService: PaymentService, private cartService: CartService) {}
 
@@ -33,8 +34,10 @@ export class PaymentComponent implements OnInit {
 
   //get total price
   getTotalPrice() {
+    this.isLoading = true;
     this.cartService.getShoppingCartByUserFromClaims().subscribe(
       (response) => {
+        this.isLoading = false;
         this.amount = response.totalCartPrice + 5;
       },
       (error) => {

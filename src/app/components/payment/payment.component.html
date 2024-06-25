@@ -39,8 +39,11 @@
                 placeholder="Enter Your Country" required>
             </div> -->
             <div class="d-grid gap-2 my-5">
-              <button type="submit" class="btn btn-success btn-sm">Pay Now &euro; {{ amount |
-                number : '1.2-2' }}</button>
+              <button type="submit" class="btn btn-success btn-sm">
+                <i *ngIf="isLoading" class="fas fa-spinner fa-spin py-1"></i>
+                <span *ngIf="!isLoading">Pay Now &euro; {{ amount |
+                  number : '1.2-2' }}</span>
+              </button>
             </div>
           </form>
 
