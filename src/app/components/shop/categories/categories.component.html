@@ -6,8 +6,7 @@
   <nav aria-label="breadcrumb" class="pt-3">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <a class="text-decoration-none text-white fs-5" routerLink="/home"><i
-            class="fa-solid fa-house fa-lg me-2"></i>Home</a>
+        <a class="text-decoration-none text-white fs-5" routerLink="/home"><i class="fa-solid fa-house fa-lg me-2"></i>Home</a>
       </li>
       <li class="breadcrumb-item active text-white fs-5" aria-current="page">Categories</li>
     </ol>
@@ -29,8 +28,14 @@
         <div class="w-75">
           <form>
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Category Name ..." [(ngModel)]="searchInput"
-                name="categoryName" (keyup)="searchCategories()" />
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Category Name ..."
+                [(ngModel)]="searchInput"
+                name="categoryName"
+                (keyup)="searchCategories()"
+              />
               <div class="btn btn-outline-secondary"><i class="fa fa-search"></i> Search</div>
             </div>
           </form>
@@ -57,11 +62,11 @@
       <!-- Start of Categories -->
       <ng-container *ngIf="!categoriesLoading">
         <div *ngFor="let category of categories" class="col-lg-4 col-md-6 col-sm-10 p-5">
-          <div class="card product-item border-0 shadow bg-white rounded" [routerLink]="['/products', category.id]">
+          <div class="card product-item border-0 shadow bg-white rounded">
             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
               <img class="img-fluid w-100 product-image" [src]="category.imageUrl" alt="" />
               <div class="overlay">
-                <!-- <a [routerLink]="['/products', category.id]" class="btn btn-light text-dark overlay-btn fs-6 fw-bold">View</a> -->
+                <a [routerLink]="['/shop', category.id]" class="btn btn-light text-dark overlay-btn fs-6 fw-bold">View Products</a>
               </div>
             </div>
             <div class="card-body text-center py-2">
@@ -82,8 +87,7 @@
       </div>
       <!-- End of Error Category -->
       <!-- Start of No Categories Available -->
-      <div *ngIf="!categoriesLoading && !apiError && noCategories" class="alert alert-info my-8" role="alert">No
-        Categories available</div>
+      <div *ngIf="!categoriesLoading && !apiError && noCategories" class="alert alert-info my-8" role="alert">No Categories available</div>
       <!-- End of No Categories Available -->
       <!-------------------------------------------------------------------------------------->
     </div>
