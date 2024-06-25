@@ -74,6 +74,8 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'shop', component: MainShopComponent },
+  { path: 'shop/:categoryId', component: MainShopComponent },
+  { path: 'shop/:brandId', component: MainShopComponent },
   { path: 'productDetails/:id', component: ProductDetailsComponent },
   { path: 'cart', component: UserCartComponent },
   { path: 'wishlist', component: UserWishlistComponent },

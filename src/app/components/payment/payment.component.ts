@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PaymentService } from '../../services/payment.service';
 import { Stripe, StripeCardElement, loadStripe } from '@stripe/stripe-js';
 import { environment } from '../../env';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-payment',
@@ -17,18 +18,33 @@ export class PaymentComponent implements OnInit {
   phone: string = '';
   // city: string = '';
   // country: string = '';
-  amount: number = 1500;
+  amount: number;
   errorMessage: string | null = null;
   successMessage: string | null = null;
+  isLoading: boolean = false;
 
-  constructor(private paymentService: PaymentService) {}
+  constructor(private paymentService: PaymentService, private cartService: CartService) {}
 
   async ngOnInit() {
+    this.getTotalPrice();
     this.stripe = await loadStripe(environment.stripePublishableKey);
     this.createPaymentIntent();
     this.setupStripeElements();
   }
 
+  //get total price
+  getTotalPrice() {
+    this.isLoading = true;
+    this.cartService.getShoppingCartByUserFromClaims().subscribe(
+      (response) => {
+        this.isLoading = false;
+        this.amount = response.totalCartPrice + 5;
+      },
+      (error) => {
+        this.errorMessage = 'Error Occured, Please try again.';
+      }
+    );
+  }
   createPaymentIntent() {
     const paymentRequest = { amount: this.amount };
     this.paymentService.createPaymentIntent(paymentRequest).subscribe(
@@ -44,7 +60,6 @@ export class PaymentComponent implements OnInit {
 
   setupStripeElements() {
     if (!this.stripe) return;
-
     const elements = this.stripe.elements();
     this.cardElement = elements.create('card');
     this.cardElement.mount('#card-element');

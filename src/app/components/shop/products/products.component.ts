@@ -14,6 +14,7 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ProductDetailsModalComponent } from '../product-details-modal/product-details-modal.component';
+import { ActivatedRoute } from '@angular/router';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-products',
@@ -61,7 +62,8 @@ export class ProductsComponent implements OnInit {
     private _ColorService: ColorService,
     private _BrandService: BrandService,
     private _ModalService: NgbModal,
-    private _ToastrService: ToastrService
+    private _ToastrService: ToastrService,
+    private route: ActivatedRoute
   ) {
     this.searchInputChanged.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
       this.searchProducts(searchTerm);
@@ -70,6 +72,9 @@ export class ProductsComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Ng OnInit
   ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      this.selectedCategoryId = Number(params.get('categoryId'));
+    });
     this.loadProdcuts(this.currentPage);
     this.loadCategories();
     this.loadBrands();
@@ -91,7 +96,17 @@ export class ProductsComponent implements OnInit {
     this.productsLoading = true;
     this.apiError = null;
     (
-      await this._ProductService.getAllProductsWithPaginationForUser(page, this.pageSize, searchParam, categoryId, brandId, colorId, sizeId, minPrice, maxPrice)
+      await this._ProductService.getAllProductsWithPaginationForUser(
+        page,
+        this.pageSize,
+        searchParam,
+        this.selectedCategoryId,
+        brandId,
+        colorId,
+        sizeId,
+        minPrice,
+        maxPrice
+      )
     ).subscribe({
       next: (response: PagedResponse<Product>) => {
         this.products = response.items;
@@ -99,6 +114,7 @@ export class ProductsComponent implements OnInit {
         this.totalPages = response.totalPages;
         this.pageSize = response.pageSize;
         this.totalCount = response.totalCount;
+        console.log(response);
         this.updateEntryRange();
         this.productsLoading = false;
         this.noProducts = this.products.length === 0;

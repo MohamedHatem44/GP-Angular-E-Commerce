@@ -36,6 +36,7 @@ export class UserCartComponent implements OnInit {
     this._CartService.getShoppingCartByUserFromClaims().subscribe({
       next: (response: any) => {
         this.shoppingCart = response;
+        console.log(response);
         this.cartItems = this.shoppingCart.cartItems;
         this.cartLoading = false;
         this.noItems = this.cartItems.length === 0;
