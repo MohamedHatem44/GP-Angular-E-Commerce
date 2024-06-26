@@ -26,14 +26,16 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <h4 class="card-title">All Messages</h4>
-          <h6 class="card-title" *ngIf="!messageLoading">Total Count : {{ totalCount }}</h6>
+          <h4 class="card-title" *ngIf="messageLoading && !apiError">Loading Messages ...</h4>
+          <h4 class="card-title" *ngIf="!messageLoading && !apiError">All Messages</h4>
+          <h4 class="card-title" *ngIf="!messageLoading && apiError">{{ apiError }}</h4>
+          <h6 class="card-title" *ngIf="!messageLoading && !apiError">Total Count : {{ totalCount }}</h6>
         </div>
         <div class="card-body">
           <div class="table-responsive">
             <table id="basic-datatables" class="display table table-striped table-hover border">
               <thead>
-                <tr>
+                <tr class="text-center">
                   <th>Id</th>
                   <th>Name</th>
                   <th>Email</th>
@@ -45,7 +47,7 @@
               </thead>
               <tbody>
                 <ng-container *ngIf="!messageLoading && !apiError && !noMessages">
-                  <tr *ngFor="let message of messages; let i = index">
+                  <tr *ngFor="let message of messages; let i = index" class="text-center">
                     <td>{{ message.id }}</td>
                     <td>{{ message.firstName }} {{ message.lastName }}</td>
                     <td>{{ message.email }}</td>
@@ -70,12 +72,12 @@
           <app-loader-skeleton-v1 *ngIf="messageLoading"></app-loader-skeleton-v1>
           <!-- End of Messages Loading -->
           <!-- Start of Error Message -->
-          <div *ngIf="apiError" class="alert alert-danger my-8" role="alert">
+          <div *ngIf="!messageLoading && apiError" class="alert alert-danger my-8 text-center" role="alert">
             {{ apiError }}
           </div>
           <!-- End of Error Message -->
           <!-- Start of No Messages Available -->
-          <div *ngIf="!messageLoading && !apiError && noMessages" class="alert alert-info my-8" role="alert">No messages available</div>
+          <div *ngIf="!messageLoading && !apiError && noMessages" class="alert alert-info my-8 text-center" role="alert">No messages available</div>
           <!-- End of No Messages Available -->
         </div>
         <div class="card-footer d-flex justify-content-between" style="min-height: 50px">

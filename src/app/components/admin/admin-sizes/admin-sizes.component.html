@@ -39,7 +39,9 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <h4 class="card-title">All Sizes</h4>
+          <h4 class="card-title" *ngIf="sizesLoading && !apiError">Loading Sizes ...</h4>
+          <h4 class="card-title" *ngIf="!sizesLoading && !apiError">All Sizes</h4>
+          <h4 class="card-title" *ngIf="!sizesLoading && apiError">{{ apiError }}</h4>
           <a type="button" class="btn btn-success" routerLink="/admindashboard/addsize"><i class="fa fa-plus fa-lg me-3" aria-hidden="true"></i>Add</a>
         </div>
         <div class="card-body">
@@ -83,12 +85,12 @@
           <app-loader-skeleton-v1 *ngIf="sizesLoading"></app-loader-skeleton-v1>
           <!-- End of Sizes Loading -->
           <!-- Start of Error Size -->
-          <div *ngIf="apiError" class="alert alert-danger my-8" role="alert">
+          <div *ngIf="!sizesLoading && apiError" class="alert alert-danger my-8 text-center" role="alert">
             {{ apiError }}
           </div>
           <!-- End of Error Size -->
           <!-- Start of No Sizes Available -->
-          <div *ngIf="!sizesLoading && !apiError && noSizes" class="alert alert-info my-8" role="alert">No Sizes available</div>
+          <div *ngIf="!sizesLoading && !apiError && noSizes" class="alert alert-info my-8 text-center" role="alert">No Sizes available</div>
           <!-- End of No Sizes Available -->
         </div>
         <div class="card-footer d-flex justify-content-between" style="min-height: 50px">

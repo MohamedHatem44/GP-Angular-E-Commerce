@@ -16,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ProductDetailsModalComponent } from '../product-details-modal/product-details-modal.component';
 import { WishListService } from '../../../services/wishList.service';
 import { WishList } from '../../../models/wishList';
+import { ActivatedRoute } from '@angular/router';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-products',
@@ -69,7 +70,8 @@ export class ProductsComponent implements OnInit {
     private _BrandService: BrandService,
     private _ModalService: NgbModal,
     private _ToastrService: ToastrService,
-    private _WishListService:WishListService
+    private _WishListService:WishListService,
+    private route: ActivatedRoute
   ) {
     this.searchInputChanged.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
       this.searchProducts(searchTerm);
@@ -78,7 +80,14 @@ export class ProductsComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Ng OnInit
   ngOnInit(): void {
-    this.loadProdcuts(this.currentPage);
+    this.route.paramMap.subscribe((params) => {
+      this.selectedCategoryId = Number(params.get('categoryId'));
+    });
+    if (this.selectedCategoryId !== 0) {
+      this.loadProdcuts(this.currentPage, this.searchInput, this.selectedCategoryId);
+    } else {
+      this.loadProdcuts(this.currentPage);
+    }
     this.loadCategories();
     this.loadBrands();
     this.loadSizes();
@@ -107,6 +116,7 @@ export class ProductsComponent implements OnInit {
         this.totalPages = response.totalPages;
         this.pageSize = response.pageSize;
         this.totalCount = response.totalCount;
+        console.log(response);
         this.updateEntryRange();
         this.productsLoading = false;
         this.noProducts = this.products.length === 0;

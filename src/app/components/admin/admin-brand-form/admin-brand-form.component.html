@@ -24,10 +24,12 @@
 <div class="container mt-5 pb-8">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title fs-4 mb-3">{{ editMode ? 'Edit Brand' : 'Add Brand' }}</h5>
+      <h5 *ngIf="brandLoading" class="card-title fs-4 mb-3">Lodaing Brand Details ...</h5>
+      <h5 *ngIf="!brandLoading" class="card-title fs-4 mb-3">{{ editMode ? 'Edit Brand' : 'Add Brand' }}</h5>
+      <hr />
       <!----------------------------------------------------------------------------------------->
       <!-- Start of Brand Form -->
-      <form [formGroup]="brandForm">
+      <form [formGroup]="brandForm" class="mt-5">
         <!-- Start of Brand Name -->
         <div class="mb-5">
           <label for="brandName" class="form-label">Brand Name</label>
@@ -96,13 +98,13 @@
         <!-- End of Brand Image -->
         <!--------------------------------------------------------------------------------------->
         <!-- Start of API Error -->
-        <div *ngIf="apiError" class="alert alert-danger my-3" role="alert">
+        <div *ngIf="!brandLoading && apiError" class="alert alert-danger my-3 text-center" role="alert">
           {{ apiError }}
         </div>
         <!-- End of API Error -->
         <!--------------------------------------------------------------------------------------->
         <!-- Start of Save Button with Spinner and Disabled State -->
-        <div class="d-flex justify-content-center mt-3">
+        <div class="d-flex justify-content-center mt-6">
           <button type="submit" class="btn btn-success" (click)="openSaveConfirmationModal($event)" [disabled]="brandForm.invalid">
             <i *ngIf="isLoading" class="fas fa-spinner fa-spin mx-4"></i>
             <span *ngIf="!isLoading"> {{ editMode ? 'Update' : ' + Create' }}</span>

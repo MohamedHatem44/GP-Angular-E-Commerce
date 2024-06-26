@@ -37,7 +37,7 @@ export class ProductService {
       params = params.set('brandId', brandId);
     }
 
-    return await this._HttpClient.get<PagedResponse<Product>>(`${this.baseUrl}/AllProductsForAdmin`, { params });
+    return await this._HttpClient.get<PagedResponse<Product>>(`${this.baseUrl}/AllProductsForAdmin`, { params }).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get All Products With Details With Pagination For User
@@ -82,7 +82,7 @@ export class ProductService {
     if (maxPrice !== undefined && maxPrice !== null) {
       params = params.set('maxPrice', maxPrice.toString());
     }
-    return await this._HttpClient.get<PagedResponse<Product>>(`${this.baseUrl}/AllProductsForUser`, { params });
+    return await this._HttpClient.get<PagedResponse<Product>>(`${this.baseUrl}/AllProductsForUser`, { params }).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get All Products Without Details
@@ -112,7 +112,7 @@ export class ProductService {
   // Get a Specific Product By Id With Details
   // Get: api/Products/{id}/ProductsDetails
   getSpecificProductWithDetails(productId: number): Observable<Product> {
-    return this._HttpClient.get<Product>(`${this.baseUrl}/ProductsDetails/${productId}`).pipe(delay(3000));
+    return this._HttpClient.get<Product>(`${this.baseUrl}/ProductsDetails/${productId}`).pipe(delay(5000));
   }
   /*------------------------------------------------------------------*/
   // Create a New Product

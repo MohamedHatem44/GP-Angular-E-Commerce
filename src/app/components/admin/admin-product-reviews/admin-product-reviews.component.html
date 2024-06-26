@@ -1,0 +1,134 @@
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Main Card -->
+<div class="container pt-6">
+  <div class="card mt-3 mb-5 bg-light shadow p-2 bg-body rounded">
+    <div class="card-body">
+      <h5 class="card-title fs-4 mb-4">Reviews Dashboard</h5>
+      <!-- Start of Breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb fs-6">
+          <li class="breadcrumb-item">
+            <a class="text-decoration-none text-dark" routerLink="/admindashboard"><i class="fas fa-tachometer-alt fa-lg me-2"></i>Admin Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active text-dark fs-6" aria-current="page">Reviews</li>
+        </ol>
+      </nav>
+      <!-- End of Breadcrumb -->
+    </div>
+  </div>
+</div>
+<!-- End of Main Card -->
+<hr />
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Filters -->
+<div class="container mt-5">
+  <div class="row">
+    <!-- Start of Categories -->
+    <div class="col-md-6">
+      <div class="mb-4 py-3 px-3 bg-light">
+        <div class="d-flex justify-content-between">
+          <h5 class="font-weight-semi-bold">Categories</h5>
+          <h5 *ngIf="!categoriesLoading && !apiError" class="font-weight-semi-bold">{{ categories.length }}</h5>
+        </div>
+        <div class="border-bottom my-3"></div>
+        <div class="mb-3">
+          <div *ngIf="categoriesLoading; else categoriesInput">
+            <div class="skeleton-loader"></div>
+          </div>
+          <ng-template #categoriesInput>
+            <select class="form-select" [(ngModel)]="selectedCategory" (change)="onFilterChange()">
+              <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            </select>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <!-- End of Categories -->
+    <!-- Start of Products -->
+    <div class="col-md-6">
+      <div class="mb-4 py-3 px-3 bg-light">
+        <div class="d-flex justify-content-between">
+          <h5 class="font-weight-semi-bold">Products</h5>
+          <h5 *ngIf="!categoriesLoading && !productsLoading && !apiError" class="font-weight-semi-bold">{{ products.length }}</h5>
+        </div>
+        <div class="border-bottom my-3"></div>
+        <div class="mb-3">
+          <div *ngIf="productsLoading || categoriesLoading; else productsInput">
+            <div class="skeleton-loader"></div>
+          </div>
+          <ng-template #productsInput>
+            <select id="productSelect" class="form-select" [(ngModel)]="selectedProduct" (change)="onSelectChanged()">
+              <option *ngFor="let product of products" [value]="product.id">{{ product.title }}</option>
+            </select>
+          </ng-template>
+        </div>
+        <!--  -->
+      </div>
+    </div>
+    <!-- End of Products -->
+  </div>
+</div>
+<!-- End of Filters -->
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Products Table -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4 class="card-title" *ngIf="categoriesLoading || productsLoading || reviewsLoading">Loading Product Reviews ...</h4>
+          <h4 class="card-title" *ngIf="!categoriesLoading && !productsLoading && !reviewsLoading && !noProducts && !apiError">
+            Product No. {{ selectedProduct }} Reviews
+          </h4>
+          <h4 class="card-title" *ngIf="!categoriesLoading && !productsLoading && !reviewsLoading && noProducts && !apiError">No Products in this Category</h4>
+          <h4 class="card-title" *ngIf="!categoriesLoading && !productsLoading && !reviewsLoading && apiError">Error Loading Product Reviews</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table id="basic-datatables" class="display table table-striped table-hover border">
+              <thead>
+                <tr class="text-center">
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Rating</th>
+                  <th>Description</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="!categoriesLoading && !productsLoading && !reviewsLoading && !apiError && !noProducts">
+                  <tr *ngFor="let review of reviews; let i = index" class="text-center">
+                    <td>{{ review.firstName }}</td>
+                    <td>{{ review.lastName }}</td>
+                    <td>{{ review.rate }}</td>
+                    <td>{{ review.description | slice : 0 : 15 }}{{ review.description.length > 15 ? '...' : '' }}</td>
+                    <td><i class="fa-solid fa-info fa-lg" style="cursor: pointer" (click)="openProductReviewDetailsModal(review)"></i></td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <!-- Start of Loading -->
+          <app-loader-skeleton-v1 *ngIf="reviewsLoading || productsLoading || categoriesLoading"></app-loader-skeleton-v1>
+          <!-- End of Loading -->
+          <!-- Start of Api Error -->
+          <div *ngIf="!reviewsLoading && !productsLoading && !categoriesLoading && apiError" class="alert alert-danger my-8 text-center" role="alert">
+            {{ apiError }}
+          </div>
+          <!-- End of Api Error -->
+          <!-- Start of No Products Available -->
+          <div *ngIf="!productsLoading && !apiError && noProducts" class="alert alert-info my-6 text-center" role="alert">No Products in this Category</div>
+          <!-- End of No Products Available -->
+          <!-- Start of No Reviews Available -->
+          <div *ngIf="!reviewsLoading && !productsLoading && !apiError && noReviews" class="alert alert-info my-6 text-center" role="alert">
+            No Reviews available for this Products
+          </div>
+          <!-- End of No Reviews Available -->
+        </div>
+        <div class="card-footer d-flex justify-content-between" style="min-height: 50px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Products Table -->
+<!----------------------------------------------------------------------------------------------->

@@ -19,8 +19,8 @@ export class LoginComponent {
   constructor(private _AuthService: AuthService, private _JwtService: JwtService, private _Router: Router) {}
   /*--------------------------------------------------------------------*/
   loginForm: FormGroup = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    password: new FormControl(null, [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
   });
   /*--------------------------------------------------------------------*/
   loginUser(loginForm: FormGroup) {

@@ -24,10 +24,12 @@
 <div class="container mt-5 pb-8">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title fs-4 mb-3">{{ editMode ? 'Edit Category' : 'Add Category' }}</h5>
+      <h5 *ngIf="categoryLoading" class="card-title fs-4 mb-3">Lodaing Category Details ...</h5>
+      <h5 *ngIf="!categoryLoading" class="card-title fs-4 mb-">{{ editMode ? 'Edit Category' : 'Add Category' }}</h5>
+      <hr />
       <!----------------------------------------------------------------------------------------->
       <!-- Start of Category Form -->
-      <form [formGroup]="categoryForm">
+      <form [formGroup]="categoryForm" class="mt-5">
         <!-- Start of Category Name -->
         <div class="mb-5">
           <label for="categoryName" class="form-label">Category Name</label>
@@ -96,13 +98,13 @@
         <!-- End of Category Image -->
         <!--------------------------------------------------------------------------------------->
         <!-- Start of API Error -->
-        <div *ngIf="apiError" class="alert alert-danger my-3" role="alert">
+        <div *ngIf="!categoryLoading && apiError" class="alert alert-danger my-3 text-center" role="alert">
           {{ apiError }}
         </div>
         <!-- End of API Error -->
         <!--------------------------------------------------------------------------------------->
         <!-- Start of Save Button with Spinner and Disabled State -->
-        <div class="d-flex justify-content-center mt-3">
+        <div class="d-flex justify-content-center mt-6">
           <button type="submit" class="btn btn-success" (click)="openSaveConfirmationModal($event)" [disabled]="categoryForm.invalid">
             <i *ngIf="isLoading" class="fas fa-spinner fa-spin mx-4"></i>
             <span *ngIf="!isLoading"> {{ editMode ? 'Update' : ' + Create' }}</span>

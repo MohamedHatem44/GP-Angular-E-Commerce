@@ -47,13 +47,13 @@
         <!-------------------------------------------------------------------------------------------->
         <!-- Login Btn -->
         <div class="d-flex justify-content-center flex-column">
-          <button [disabled]="loginForm.invalid" type="submit" class="btn btn-success my-5 w-25 d-flex mx-auto justify-content-center">
+          <button [disabled]="loginForm.invalid || isLoading" type="submit" class="btn btn-success my-5 w-25 d-flex mx-auto justify-content-center">
             <i *ngIf="isLoading" class="fas fa-spinner fa-spin py-1"></i>
             <span *ngIf="!isLoading">Login</span>
           </button>
           <div class="d-flex justify-content-center pb-5">
-            Don't Have Account?
-            <a routerLink="/users/register"> Register Now </a>
+            <span> Don't Have Account? </span>
+            <a routerLink="/users/register" class="ml-1 d-inline-block"> Register Now </a>
           </div>
         </div>
       </form>

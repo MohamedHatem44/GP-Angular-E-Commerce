@@ -1,0 +1,27 @@
+/*--------------------------------------------*/
+.skeleton-details {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+}
+/*--------------------------------------------*/
+.skeleton-row {
+  height: 20px;
+  margin-bottom: 10px;
+  background-color: #d1d1d1;
+  border-radius: 4px;
+  animation: skeleton-animation 1.5s infinite ease-in-out;
+}
+/*--------------------------------------------*/
+@keyframes skeleton-animation {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f0f0f0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+/*--------------------------------------------*/

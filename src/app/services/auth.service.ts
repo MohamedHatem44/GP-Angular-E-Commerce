@@ -10,11 +10,12 @@ import { User } from '../models/user';
 })
 /*--------------------------------------------------------------------*/
 export class AuthService {
-  private baseUrl = 'http://localhost:5185/api/Auth';
-  userToken = new BehaviorSubject<any>(null);
+  private baseUrl = 'http://localhost:5185/api/Auth'; // We need to remove "Auth"
+  private baseApiUrl = 'http://localhost:5185/api';
+  userToken = new BehaviorSubject<string | null>(null);
   /*------------------------------------------------------------------*/
   // Ctor
-  constructor(private _HttpClient: HttpClient, private _Router: Router) {
+  constructor(private http: HttpClient, private _Router: Router) {
     const token = localStorage.getItem('token');
     if (token !== null) {
       this.userToken.next(token);
@@ -39,7 +40,7 @@ export class AuthService {
   // Login
   // Post: api/Auth/Login
   login(credentials: { email: string; password: string }): Observable<any> {
-    return this._HttpClient.post(`${this.baseUrl}/Login`, credentials).pipe(
+    return this.http.post(`${this.baseUrl}/Login`, credentials).pipe(
       tap((response: any) => {
         localStorage.setItem('token', response.token);
         this.userToken.next(response.token);
@@ -50,7 +51,12 @@ export class AuthService {
   // Register
   // Post: api/Auth/Register
   register(user: { firstName: string; lastName: string; email: string; password: string }): Observable<any> {
-    return this._HttpClient.post(`${this.baseUrl}/Register`, user);
+    return this.http.post<{ token: string; expiryDate: string }>(`${this.baseUrl}/Register`, user).pipe(
+      tap<{ token: string; expiryDate: string }>((response) => {
+        localStorage.setItem('token', response.token);
+        this.userToken.next(response.token);
+      })
+    );
   }
   /*------------------------------------------------------------------*/
   // logout
@@ -63,7 +69,19 @@ export class AuthService {
   // Get User Info
   // Post: api/Auth/Manage/Info
   getCurrentUserInfo(): Observable<User> {
-    return this._HttpClient.get<User>(`${this.baseUrl}/Manage/Info`);
+    return this.http.get<User>(`${this.baseUrl}/Manage/Info`);
   }
   /*------------------------------------------------------------------*/
+
+  // Update profile info
+  updateProfileInfo(user: Partial<User>): Observable<User> {
+    return this.http.patch<User>(`${this.baseUrl}/UpdateUserInfo`, user);
+  }
+  /*------------------------------------------------------------------*/
+
+  updateProfileImage(file: File): Observable<{ url?: string }> {
+    const formData = new FormData();
+    formData.append('formFile', file);
+    return this.http.post<{ url?: string }>(`${this.baseUrl}/Upload`, formData);
+  }
 }

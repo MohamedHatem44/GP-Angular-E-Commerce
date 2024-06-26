@@ -1,1 +1,124 @@
-<p>Residc</p>
+<!---------------------------------------------------------------------------------------->
+<!-- Main content -->
+<div class="d-lg-flex half">
+  <div class="bg order-1 order-md-2" style="background-image: url('assets/images/login/login.jpg')"></div>
+  <div class="contents order-2 order-md-1">
+    <div class="d-flex justify-content-center pt-5">
+      <img src="../../../../assets/images/icons/logo-01.png" alt="IMG-LOGO" />
+    </div>
+    <!-------------------------------------------------------------------------------------------->
+    <div class="w-75 mx-auto py-5">
+      <h4 class="my-4 d-flex justify-content-center">Join our beloved community!</h4>
+      <p class="my-4 d-flex justify-content-center">Very few steps are separating you away from a real excitement .. join us NOW!</p>
+
+      <form (submit)="onRegister()" [formGroup]="registerForm">
+        <!-------------------------------------------------------------------------------------------->
+        <!-- API Error -->
+        <div *ngIf="error" class="alert alert-danger">
+          {{ error }}
+        </div>
+        <!-------------------------------------------------------------------------------------------->
+        <!-- First Name -->
+        <label for="firstName">First Name</label>
+        <input formControlName="firstName" class="form-control mb-2" id="firstName" placeholder="John" />
+        <div *ngIf="registerForm.get('firstName')?.errors && registerForm.get('firstName')?.touched" class="alert alert-danger">
+          <p *ngIf="registerForm.get('firstName')?.getError('minlength') || registerForm.get('firstName')?.getError('maxlength')" class="m-0">
+            First Name should be within 3 ~ 50 characters
+          </p>
+          <p *ngIf="registerForm.get('firstName')?.getError('required')" class="m-0">First name is required</p>
+        </div>
+        <!-------------------------------------------------------------------------------------------->
+        <!-- Last Name -->
+        <label for="lastName">Last Name</label>
+        <input formControlName="lastName" class="form-control mb-2" id="lastName" placeholder="Doe" />
+        <div *ngIf="registerForm.get('lastName')?.errors && registerForm.get('lastName')?.touched" class="alert alert-danger">
+          <p *ngIf="registerForm.get('lastName')?.getError('minlength') || registerForm.get('lastName')?.getError('maxlength')" class="m-0">
+            Last Name should be within 3 ~ 50 characters
+          </p>
+          <p *ngIf="registerForm.get('lastName')?.getError('required')" class="m-0">Last name is required</p>
+        </div>
+        <!-------------------------------------------------------------------------------------------->
+        <!-- Email -->
+        <label for="email">Email</label>
+        <input formControlName="email" class="form-control mb-2" id="email" placeholder="example@gmail.com" />
+        <div *ngIf="registerForm.get('email')?.errors && registerForm.get('email')?.touched" class="alert alert-danger">
+          <p *ngIf="registerForm.get('email')?.getError('email')" class="m-0">Email should be valid</p>
+          <p *ngIf="registerForm.get('email')?.getError('required')" class="m-0">Email is required</p>
+        </div>
+        <!-------------------------------------------------------------------------------------------->
+        <!-- Address -->
+        <label for="address">Address</label>
+        <textarea formControlName="address" class="form-control mb-2" id="address" placeholder="Enter you address.."></textarea>
+        <div *ngIf="registerForm.get('address')?.errors && registerForm.get('address')?.touched" class="alert alert-danger">
+          <p *ngIf="registerForm.get('address')?.getError('minlength') || registerForm.get('address')?.getError('maxlength')" class="m-0">
+            Address should be within 3 ~ 100 characters
+          </p>
+          <p *ngIf="registerForm.get('address')?.getError('required')" class="m-0">Address is required</p>
+        </div>
+        <!-------------------------------------------------------------------------------------------->
+        <!-- Phone Number -->
+        <label for="phoneNumber">Phone Number</label>
+        <input formControlName="phoneNumber" class="form-control mb-2" id="phoneNumber" placeholder="0123456789" />
+        <div *ngIf="registerForm.get('phoneNumber')?.errors && registerForm.get('phoneNumber')?.touched" class="alert alert-danger">
+          <p *ngIf="registerForm.get('phoneNumber')?.getError('pattern')" class="m-0">Phone number is not valid</p>
+          <p *ngIf="registerForm.get('phoneNumber')?.getError('required')" class="m-0">Phone number is required</p>
+        </div>
+        <!-------------------------------------------------------------------------------------------->
+        <!-- Password -->
+        <label for="password">Password</label>
+        <div style="position: relative; width: 100%">
+          <input formControlName="password" [type]="showPassword ? 'text' : 'password'" class="form-control mb-2" id="password" />
+          <i
+            [class]="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"
+            (click)="showPassword = !showPassword"
+            style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer"
+          ></i>
+        </div>
+
+        <div *ngIf="registerForm.get('password')?.errors && registerForm.get('password')?.touched" class="alert alert-danger">
+          <p *ngIf="registerForm.get('password')?.getError('minlength') || registerForm.get('password')?.getError('maxlength')" class="m-0">
+            Password should be within 8 ~ 20 characters
+          </p>
+          <p *ngIf="registerForm.get('password')?.getError('required')" class="m-0">Password is Required</p>
+        </div>
+        <!-------------------------------------------------------------------------------------------->
+        <!-- Confirm Password -->
+        <label for="confirmPassword">Confirm Password</label>
+        <div style="position: relative; width: 100%">
+          <input formControlName="confirmPassword" [type]="showPassword ? 'text' : 'password'" class="form-control mb-2" id="confirmPassword" />
+          <i
+            [class]="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"
+            (click)="showPassword = !showPassword"
+            style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer"
+          ></i>
+        </div>
+
+        <div *ngIf="registerForm.get('confirmPassword')?.errors && registerForm.get('confirmPassword')?.touched" class="alert alert-danger">
+          <p *ngIf="registerForm.get('confirmPassword')?.getError('minlength') || registerForm.get('confirmPassword')?.getError('maxlength')" class="m-0">
+            Password should be within 8 ~ 20 characters
+          </p>
+          <p *ngIf="registerForm.get('confirmPassword')?.getError('required')" class="m-0">Password is Required</p>
+          <p *ngIf="registerForm.get('password')?.value?.trim() !== registerForm.get('confirmPassword')?.value?.trim()" class="m-0">
+            Both passwords are not matching!
+          </p>
+        </div>
+        <!-------------------------------------------------------------------------------------------->
+        <!-- Register Btn -->
+        <div class="d-flex justify-content-center flex-column">
+          <button [disabled]="registerForm.invalid || loading" type="submit" class="btn btn-success my-5 w-25 d-flex mx-auto justify-content-center">
+            <i *ngIf="loading" class="fas fa-spinner fa-spin py-1"></i>
+            <span *ngIf="!loading">Register</span>
+          </button>
+          <div class="d-flex justify-content-center pb-5">
+            <span> I have an account! </span>
+            <a routerLink="/users/login" class="ml-1 d-inline-block"> Login Now </a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!---------------------------------------------------------------------------------------->
+<!-- Auth Footer -->
+<app-auth-footer></app-auth-footer>
+<!---------------------------------------------------------------------------------------->

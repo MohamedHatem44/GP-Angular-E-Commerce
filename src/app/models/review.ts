@@ -7,4 +7,5 @@ export interface Review {
   lastName?: string;
   email?: string;
   productId: number;
+  title?: string;
 }
