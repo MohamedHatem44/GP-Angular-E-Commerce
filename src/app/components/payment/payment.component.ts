@@ -3,6 +3,7 @@ import { PaymentService } from '../../services/payment.service';
 import { Stripe, StripeCardElement, loadStripe } from '@stripe/stripe-js';
 import { environment } from '../../env';
 import { CartService } from '../../services/cart.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-payment',
@@ -25,7 +26,7 @@ export class PaymentComponent implements OnInit {
   isLoading: boolean = false;
   /*-----------------------------------------------------------------*/
   // Ctor
-  constructor(private paymentService: PaymentService, private cartService: CartService) {}
+  constructor(private paymentService: PaymentService, private cartService: CartService, private _ToastrService: ToastrService) {}
   /*-----------------------------------------------------------------*/
   async ngOnInit() {
     this.getTotalPrice();
@@ -109,13 +110,14 @@ export class PaymentComponent implements OnInit {
     if (error) {
       this.errorMessage = error.message;
     } else {
-      this.successMessage = 'Payment successful!';
+      this._ToastrService.success('Payment successful');
+      this.successMessage = 'Payment successful';
       this.resetForm();
     }
   }
 
   validateForm(): boolean {
-    const phonePattern = /^\[012|015|010|011]\d{8}$/;
+    const phonePattern = /^(?:012|015|010|011)\d{8}$/;
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
     if (!this.email) {
