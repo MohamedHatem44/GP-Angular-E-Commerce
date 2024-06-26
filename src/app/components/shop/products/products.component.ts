@@ -14,6 +14,8 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ProductDetailsModalComponent } from '../product-details-modal/product-details-modal.component';
+import { WishListService } from '../../../services/wishList.service';
+import { WishList } from '../../../models/wishList';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-products',
@@ -52,6 +54,11 @@ export class ProductsComponent implements OnInit {
   brandsLoading: boolean = false;
   sizesLoading: boolean = false;
   colorsLoading: boolean = false;
+  addToWishListLoading:boolean=false;
+  productId:number=null;
+  isWishList:boolean=false;
+  wishList: any;
+  wishListItems: (any & { deleting?: boolean })[] = [];
   /*-----------------------------------------------------------------*/
   // Ctor
   constructor(
@@ -61,7 +68,8 @@ export class ProductsComponent implements OnInit {
     private _ColorService: ColorService,
     private _BrandService: BrandService,
     private _ModalService: NgbModal,
-    private _ToastrService: ToastrService
+    private _ToastrService: ToastrService,
+    private _WishListService:WishListService
   ) {
     this.searchInputChanged.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
       this.searchProducts(searchTerm);
@@ -135,6 +143,7 @@ export class ProductsComponent implements OnInit {
       next: (response: { brandsCount: number; brands: Brand[] }) => {
         this.brands = response.brands;
         this.brandsLoading = false;
+   
       },
       error: (err) => {
         this.brandsLoading = false;
@@ -261,4 +270,52 @@ export class ProductsComponent implements OnInit {
     this.onFilterChange();
   }
   /*-----------------------------------------------------------------*/
+  addToWishList(id:number) {
+    this.addToWishListLoading = true;
+   
+    const itemToAdd: WishList = {
+      productId:id,
+    };
+    this._WishListService.AddAndRemoveFromWishList(itemToAdd).subscribe({
+      next: (response: any) => {
+        console.log('Item added to wish List successfully:', response);
+    
+        this._ToastrService.success('Operation Done Successfully');
+     
+        this.addToWishListLoading = true;
+      },
+      error: (error) => {
+        if (error.status === 400) {
+          this._ToastrService.error(`This Product Not Found}`);
+          return;
+        } else {
+          this._ToastrService.error('Failed to add item to Wish List');
+        }
+  //      this.addToCartLoading = false;
+      },
+    });
+    this._WishListService.getWishListByUserFromClaims().subscribe({
+      next: (response: any) => {
+      
+        
+       response.wishListItems.forEach(e => {
+        if(e.productId==id){
+          this.isWishList=true;
+          console.log("true");
+          
+              } else{
+                this.isWishList=false;
+                console.log("false");
+                
+              }
+       });;
+      
+      },
+      error: (err) => {
+        this.apiError = 'Failed to load WishList, Please try again.';
+       
+      },
+    });
+  }
+
 }

@@ -168,6 +168,12 @@
               <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                 <img class="img-fluid w-100 product-image" [src]="product.imageUrl" alt="" />
                 <div class="overlay">
+                  <button class="btn btn-light text-dark overlay-btn fw-semibold" (click)="addToWishList(product.id) ">
+                 
+                    <i  class="fa-regular fa-heart text-danger fs-2"></i>
+                    <i    class="fa-solid fa-heart text-danger fs-2"></i>
+                  
+                  </button>
                   <button class="btn btn-light text-dark overlay-btn fw-semibold" (click)="openProductDetailsModal(product)">Quick View</button>
                 </div>
               </div>
