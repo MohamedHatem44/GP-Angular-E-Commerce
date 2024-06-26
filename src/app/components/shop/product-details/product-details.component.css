@@ -1,0 +1,107 @@
+/*--------------------------------------------*/
+.wrapper {
+  border-radius: 7px 7px 7px 7px;
+  box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+}
+
+/*--------------------------------------------*/
+.img-responsive {
+  max-width: 100%;
+  height: 100%;
+  display: block;
+  margin: 0 auto;
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+}
+
+/*--------------------------------------------*/
+@media (max-width: 992px) {
+  .img-responsive {
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+}
+
+/*--------------------------------------------*/
+.color-bullets {
+  display: flex;
+  gap: 10px;
+}
+
+/*--------------------------------------------*/
+.color-bullet {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/*--------------------------------------------*/
+.size-badge {
+  display: inline-block;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+/*--------------------------------------------*/
+.rating {
+  color: #dddddd;
+}
+
+/*--------------------------------------------*/
+.rating .fa-star.checked {
+  color: #f0c419;
+}
+
+/*--------------------------------------------*/
+.rating-value {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+/*--------------------------------------------*/
+.custombtn {
+  background-color: #000;
+  border: none;
+  color: white;
+  width: 60%;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/*--------------------------------------------*/
+.custombtn:hover {
+  color: rgb(187, 187, 187);
+}
+
+/*--------------------------------------------*/
+.skeleton-loader {
+  width: 100%;
+  height: 38px;
+  border-radius: 4px;
+  background-color: #e0e0e0;
+  animation: skeleton-loading 1.5s infinite linear;
+}
+
+/*--------------------------------------------*/
+@keyframes skeleton-loading {
+  0% {
+    background-color: #e7e7e7;
+  }
+
+  50% {
+    background-color: #d8d8d8;
+  }
+
+  100% {
+    background-color: #e7e7e7;
+  }
+}
