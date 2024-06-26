@@ -18,53 +18,61 @@ export class PaymentComponent implements OnInit {
   phone: string = '';
   // city: string = '';
   // country: string = '';
-  amount: number;
+  amount: number | null = null;
   errorMessage: string | null = null;
+  cartError: string | null = null;
   successMessage: string | null = null;
   isLoading: boolean = false;
-
+  /*-----------------------------------------------------------------*/
+  // Ctor
   constructor(private paymentService: PaymentService, private cartService: CartService) {}
-
+  /*-----------------------------------------------------------------*/
   async ngOnInit() {
     this.getTotalPrice();
     this.stripe = await loadStripe(environment.stripePublishableKey);
-    this.createPaymentIntent();
     this.setupStripeElements();
   }
-
+  /*-----------------------------------------------------------------*/
   //get total price
   getTotalPrice() {
+    this.cartError = null;
     this.isLoading = true;
     this.cartService.getShoppingCartByUserFromClaims().subscribe(
       (response) => {
-        this.isLoading = false;
         this.amount = response.totalCartPrice + 5;
+        this.createPaymentIntent(this.amount);
+        this.isLoading = false;
+        this.cartError = null;
       },
       (error) => {
-        this.errorMessage = 'Error Occured, Please try again.';
+        this.cartError = 'Error Occured while loading Price, Please try again.';
+        this.isLoading = false;
       }
     );
   }
-  createPaymentIntent() {
-    const paymentRequest = { amount: this.amount };
+  /*-----------------------------------------------------------------*/
+  createPaymentIntent(price: number) {
+    const amount = Math.ceil(price);
+    this.errorMessage = null;
+    const paymentRequest = { amount: amount };
     this.paymentService.createPaymentIntent(paymentRequest).subscribe(
-      (response) => {
+      (response: any) => {
         this.clientSecret = response.clientSecret;
+        // Implemet logig for order
       },
       (error) => {
-        console.log('Error creating payment intent');
         this.errorMessage = 'Error Occurred While Payment Process, Please Try Again Later...';
       }
     );
   }
-
+  /*-----------------------------------------------------------------*/
   setupStripeElements() {
     if (!this.stripe) return;
     const elements = this.stripe.elements();
     this.cardElement = elements.create('card');
     this.cardElement.mount('#card-element');
   }
-
+  /*-----------------------------------------------------------------*/
   async onSubmit() {
     this.errorMessage = null;
     this.successMessage = null;
@@ -142,4 +150,5 @@ export class PaymentComponent implements OnInit {
     }
     this.errorMessage = null;
   }
+  /*-----------------------------------------------------------------*/
 }
