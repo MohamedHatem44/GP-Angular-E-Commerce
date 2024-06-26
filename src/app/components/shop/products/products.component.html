@@ -5,15 +5,15 @@
 </section>
 <!------------------------------------------------------------------------------------------------------>
 <section class="d-flex justify-content-center">
-  <p class="pb-4 fs-5" *ngIf="!productsLoading && !noProducts">Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} Product</p>
-  <p class="pb-4 fs-5" *ngIf="!productsLoading && noProducts">No Products Found</p>
-  <p class="pb-5 fs-5" *ngIf="productsLoading"></p>
+  <p class="pb-4 fs-5 text-center" *ngIf="!productsLoading && !noProducts">Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} Product</p>
+  <p class="pb-4 fs-5 text-center" *ngIf="!productsLoading && noProducts">No Products Found</p>
+  <p class="pb-4 fs-5 text-center" *ngIf="productsLoading">Loading Products ...</p>
 </section>
 <!------------------------------------------------------------------------------------------------------>
 <div class="container-fluid">
   <div class="row px-3">
     <!-- Shop Sidebar Start -->
-    <div class="col-lg-3 col-md-5 col-sm-6">
+    <div class="col-lg-3 col-md-4 col-sm-6">
       <!------------------------------------------------------------------------------------------------>
       <!-- Start of Price Filter -->
       <div class="mb-4 py-3 px-3 bg-light">
@@ -139,7 +139,7 @@
 
     <!-------------------------------------------------------------------------------------------------->
     <!-- Shop Product Start -->
-    <div class="col-lg-9 col-md-7 col-md-6 col-sm-6">
+    <div class="col-lg-9 col-md-8 col-md-6 col-sm-6">
       <div class="row pb-3">
         <!----------------------------------------------------------------------------------------------->
         <!-- Start of Search -->
@@ -169,9 +169,9 @@
                 <img class="img-fluid w-100 product-image" [src]="product.imageUrl" alt="" />
                 <div class="overlay">
                   <button (click)="addToWishList(product)" class="btn btn-light">
-                    <i *ngIf="!addToWishListLoading && product.isInWishList" class="fa-solid fa-heart text-dark fs-1"></i>
-                    <i *ngIf="!addToWishListLoading && !product.isInWishList" class="fa-regular fa-heart text-dark fs-1"></i>
-                    <i *ngIf="addToWishListLoading" class="fas fa-spinner fa-spin py-2"></i>
+                    <i *ngIf="!product.isWishListLoading && product.isInWishList" class="fa-solid fa-heart text-dark fa-xl"></i>
+                    <i *ngIf="!product.isWishListLoading && !product.isInWishList" class="fa-regular fa-heart text-dark fa-xl"></i>
+                    <i *ngIf="product.isWishListLoading" class="fas fa-spinner fa-spin fa-xl"></i>
                   </button>
                   <button class="btn btn-light text-dark overlay-btn fw-semibold" (click)="openProductDetailsModal(product)">Quick View</button>
                 </div>

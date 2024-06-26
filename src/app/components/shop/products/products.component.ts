@@ -4,7 +4,7 @@ import { CategoryService } from '../../../services/category.service';
 import { BrandService } from '../../../services/brand.service';
 import { SizeService } from '../../../services/size.service';
 import { ColorService } from '../../../services/color.service';
-import { Product } from '../../../models/product';
+import { ExtendedProduct, Product } from '../../../models/product';
 import { Category } from '../../../models/category';
 import { Brand } from '../../../models/brand';
 import { Size } from '../../../models/size';
@@ -26,14 +26,14 @@ import { ActivatedRoute } from '@angular/router';
 /*--------------------------------------------------------------------*/
 export class ProductsComponent implements OnInit {
   // Component properties
-  products: Product[] = [];
+  products: ExtendedProduct[] = [];
   categories: Category[] = [];
   brands: Brand[] = [];
   sizes: Size[] = [];
   colors: Color[] = [];
   currentPage: number = 1;
   totalPages: number;
-  pageSize: number;
+  pageSize: number = 9;
   totalCount: number;
   maxPagesToShow: number = 3;
   startEntry: number;
@@ -42,6 +42,7 @@ export class ProductsComponent implements OnInit {
   noProducts: boolean = false;
   searchInput: string = '';
   searchInputChanged: Subject<string> = new Subject<string>();
+
   // Additional filters
   selectedCategoryId: number | null = null;
   selectedBrandId: number | null = null;
@@ -49,17 +50,16 @@ export class ProductsComponent implements OnInit {
   selectedSizeId: number | null = null;
   minPrice: number | null = null;
   maxPrice: number | null = null;
+
   // Loading
   productsLoading: boolean = false;
   categoriesLoading: boolean = false;
   brandsLoading: boolean = false;
   sizesLoading: boolean = false;
   colorsLoading: boolean = false;
-  addToWishListLoading: boolean = false;
   productId: number = null;
-  isWishList: boolean = false;
   wishList: any;
-  wishListItems: (any & { deleting?: boolean })[] = [];
+  wishListItems: any[] = [];
   /*-----------------------------------------------------------------*/
   // Ctor
   constructor(
@@ -80,6 +80,7 @@ export class ProductsComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Ng OnInit
   ngOnInit(): void {
+    this.productsLoading = true;
     this.route.paramMap.subscribe((params) => {
       this.selectedCategoryId = Number(params.get('categoryId'));
     });
@@ -91,23 +92,17 @@ export class ProductsComponent implements OnInit {
         this.loadProducts(this.currentPage);
       }
     });
-    // if (this.selectedCategoryId !== 0) {
-    //   this.loadProdcuts(this.currentPage, this.searchInput, this.selectedCategoryId);
-    // } else {
-    //   this.loadProdcuts(this.currentPage);
-    // }
     this.loadCategories();
     this.loadBrands();
     this.loadSizes();
     this.loadColors();
   }
   /*-----------------------------------------------------------------*/
+  // Load WishList
   private async loadWishList(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this._WishListService.getWishListByUserFromClaims().subscribe({
         next: (response: any) => {
-          console.log(response);
-
           this.wishList = response;
           this.wishListItems = response.wishListItems;
           resolve();
@@ -119,7 +114,6 @@ export class ProductsComponent implements OnInit {
       });
     });
   }
-
   /*-----------------------------------------------------------------*/
   // Load Products
   async loadProducts(
@@ -137,11 +131,11 @@ export class ProductsComponent implements OnInit {
     (
       await this._ProductService.getAllProductsWithPaginationForUser(page, this.pageSize, searchParam, categoryId, brandId, colorId, sizeId, minPrice, maxPrice)
     ).subscribe({
-      next: (response: PagedResponse<Product>) => {
-        // this.products = response.items;
+      next: (response: PagedResponse<ExtendedProduct>) => {
         this.products = response.items.map((product) => ({
           ...product,
           isInWishList: this.isProductInWishList(product.id),
+          isWishListLoading: false,
         }));
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;
@@ -273,6 +267,7 @@ export class ProductsComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Reset Filters
   resetFilters(): void {
+    this.currentPage = 1;
     this.selectedCategoryId = null;
     this.selectedBrandId = null;
     this.selectedColorId = null;
@@ -281,6 +276,17 @@ export class ProductsComponent implements OnInit {
     this.maxPrice = null;
     this.currentPage = 1;
     this.loadProducts(this.currentPage, this.searchInput);
+  }
+  /*-----------------------------------------------------------------*/
+  onPriceFilterChange(min: number | null, max: number | null): void {
+    if (min === null && max === null) {
+      this.minPrice = null;
+      this.maxPrice = null;
+    } else {
+      this.minPrice = min;
+      this.maxPrice = max;
+    }
+    this.onFilterChange();
   }
   /*-----------------------------------------------------------------*/
   // Handle Filter Changes
@@ -298,95 +304,21 @@ export class ProductsComponent implements OnInit {
     );
   }
   /*-----------------------------------------------------------------*/
-  onPriceFilterChange(min: number | null, max: number | null): void {
-    if (min === null && max === null) {
-      this.minPrice = null;
-      this.maxPrice = null;
-    } else {
-      this.minPrice = min;
-      this.maxPrice = max;
-    }
-    this.onFilterChange();
-  }
-  /*-----------------------------------------------------------------*/
-  // addToWishList(id: number) {
-  //   this.addToWishListLoading = true;
-  //   const itemToAdd: WishList = {
-  //     productId: id,
-  //   };
-  //   this._WishListService.AddAndRemoveFromWishList(itemToAdd).subscribe({
-  //     next: (response: any) => {
-  //       console.log('Item added to wish List successfully:', response);
-  //       this._ToastrService.success('Operation Done Successfully');
-  //       this.addToWishListLoading = true;
-  //     },
-  //     error: (error) => {
-  //       if (error.status === 400) {
-  //         this._ToastrService.error(`This Product Not Found}`);
-  //         return;
-  //       } else {
-  //         this._ToastrService.error('Failed to add item to Wish List');
-  //       }
-  //       //      this.addToCartLoading = false;
-  //     },
-  //   });
-  //   this._WishListService.getWishListByUserFromClaims().subscribe({
-  //     next: (response: any) => {
-  //       response.wishListItems.forEach((e) => {
-  //         if (e.productId == id) {
-  //           this.isWishList = true;
-  //           console.log('true');
-  //         } else {
-  //           this.isWishList = false;
-  //           console.log('false');
-  //         }
-  //       });
-  //     },
-  //     error: (err) => {
-  //       this.apiError = 'Failed to load WishList, Please try again.';
-  //     },
-  //   });
-  // }
-  /*-----------------------------------------------------------------*/
-  // addToWishList(id: number) {
-  //   this.addToWishListLoading = true;
-
-  //   const itemToAdd: WishList = {
-  //     productId: id,
-  //   };
-
-  //   this._WishListService.AddAndRemoveFromWishList(itemToAdd).subscribe({
-  //     next: (response: any) => {
-  //       console.log('Item added/removed from wish list successfully:', response);
-  //       this._ToastrService.success('Operation Done Successfully');
-  //       this.addToWishListLoading = false;
-  //       this.updateProductWishListState(id);
-  //     },
-  //     error: (error) => {
-  //       if (error.status === 400) {
-  //         this._ToastrService.error(`This Product Not Found`);
-  //       } else {
-  //         this._ToastrService.error('Failed to add/remove item to/from Wish List');
-  //       }
-  //       this.addToWishListLoading = false;
-  //     },
-  //   });
-  // }
-  addToWishList(product: Product) {
-    this.addToWishListLoading = true;
-    const itemToAdd: WishList = {
+  // Add / Remove from WishList
+  addToWishList(product: ExtendedProduct) {
+    product.isWishListLoading = true;
+    const itemIdToAdd: WishList = {
       productId: product.id,
     };
     const isCurrentlyInWishList = product.isInWishList;
-    this._WishListService.AddAndRemoveFromWishList(itemToAdd).subscribe({
+    this._WishListService.AddAndRemoveFromWishList(itemIdToAdd).subscribe({
       next: (response: any) => {
-        console.log('Item added/removed from wish list successfully:', response);
         if (isCurrentlyInWishList) {
           this._ToastrService.success('Product removed from wish list successfully');
         } else {
           this._ToastrService.success('Product added to wish list successfully');
         }
-        this.addToWishListLoading = false;
+        product.isWishListLoading = false;
         this.updateProductWishListState(product.id);
       },
       error: (error) => {
@@ -395,7 +327,7 @@ export class ProductsComponent implements OnInit {
         } else {
           this._ToastrService.error('Failed to add/remove item to/from wish list');
         }
-        this.addToWishListLoading = false;
+        product.isWishListLoading = false;
       },
     });
   }

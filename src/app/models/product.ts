@@ -27,3 +27,8 @@ export interface Product {
   isInWishList?: boolean;
 }
 /*--------------------------------------------------------------------*/
+export interface ExtendedProduct extends Product {
+  isInWishList?: boolean;
+  isWishListLoading?: boolean;
+}
+/*--------------------------------------------------------------------*/
