@@ -24,5 +24,6 @@ export interface Product {
   brandId: number;
   brand?: Brand;
   reviews?: Review[];
+  isInWishList?: boolean;
 }
 /*--------------------------------------------------------------------*/

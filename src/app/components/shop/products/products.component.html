@@ -163,16 +163,15 @@
         <!----------------------------------------------------------------------------------------------->
         <!-- Products -->
         <ng-container *ngIf="!productsLoading">
-          <div *ngFor="let product of products" class="col-lg-4 col-md-6 col-sm-10 p-4 bg-light">
+          <div *ngFor="let product of products" class="col-lg-4 col-md-6 col-sm-12 p-4 bg-light">
             <div class="card product-item border-0 shadow bg-white rounded">
               <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                 <img class="img-fluid w-100 product-image" [src]="product.imageUrl" alt="" />
                 <div class="overlay">
-                  <button class="btn btn-light text-dark overlay-btn fw-semibold" (click)="addToWishList(product.id) ">
-                 
-                    <i  class="fa-regular fa-heart text-danger fs-2"></i>
-                    <i    class="fa-solid fa-heart text-danger fs-2"></i>
-                  
+                  <button (click)="addToWishList(product)" class="btn btn-light">
+                    <i *ngIf="!addToWishListLoading && product.isInWishList" class="fa-solid fa-heart text-dark fs-1"></i>
+                    <i *ngIf="!addToWishListLoading && !product.isInWishList" class="fa-regular fa-heart text-dark fs-1"></i>
+                    <i *ngIf="addToWishListLoading" class="fas fa-spinner fa-spin py-2"></i>
                   </button>
                   <button class="btn btn-light text-dark overlay-btn fw-semibold" (click)="openProductDetailsModal(product)">Quick View</button>
                 </div>

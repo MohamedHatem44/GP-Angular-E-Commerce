@@ -55,9 +55,9 @@ export class ProductsComponent implements OnInit {
   brandsLoading: boolean = false;
   sizesLoading: boolean = false;
   colorsLoading: boolean = false;
-  addToWishListLoading:boolean=false;
-  productId:number=null;
-  isWishList:boolean=false;
+  addToWishListLoading: boolean = false;
+  productId: number = null;
+  isWishList: boolean = false;
   wishList: any;
   wishListItems: (any & { deleting?: boolean })[] = [];
   /*-----------------------------------------------------------------*/
@@ -70,7 +70,7 @@ export class ProductsComponent implements OnInit {
     private _BrandService: BrandService,
     private _ModalService: NgbModal,
     private _ToastrService: ToastrService,
-    private _WishListService:WishListService,
+    private _WishListService: WishListService,
     private route: ActivatedRoute
   ) {
     this.searchInputChanged.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
@@ -83,19 +83,46 @@ export class ProductsComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.selectedCategoryId = Number(params.get('categoryId'));
     });
-    if (this.selectedCategoryId !== 0) {
-      this.loadProdcuts(this.currentPage, this.searchInput, this.selectedCategoryId);
-    } else {
-      this.loadProdcuts(this.currentPage);
-    }
+
+    this.loadWishList().then(() => {
+      if (this.selectedCategoryId !== 0) {
+        this.loadProducts(this.currentPage, this.searchInput, this.selectedCategoryId);
+      } else {
+        this.loadProducts(this.currentPage);
+      }
+    });
+    // if (this.selectedCategoryId !== 0) {
+    //   this.loadProdcuts(this.currentPage, this.searchInput, this.selectedCategoryId);
+    // } else {
+    //   this.loadProdcuts(this.currentPage);
+    // }
     this.loadCategories();
     this.loadBrands();
     this.loadSizes();
     this.loadColors();
   }
   /*-----------------------------------------------------------------*/
+  private async loadWishList(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this._WishListService.getWishListByUserFromClaims().subscribe({
+        next: (response: any) => {
+          console.log(response);
+
+          this.wishList = response;
+          this.wishListItems = response.wishListItems;
+          resolve();
+        },
+        error: (err) => {
+          this.apiError = 'Failed to load WishList, Please try again.';
+          reject(err);
+        },
+      });
+    });
+  }
+
+  /*-----------------------------------------------------------------*/
   // Load Products
-  async loadProdcuts(
+  async loadProducts(
     page: number,
     searchParam?: string,
     categoryId?: number,
@@ -111,12 +138,15 @@ export class ProductsComponent implements OnInit {
       await this._ProductService.getAllProductsWithPaginationForUser(page, this.pageSize, searchParam, categoryId, brandId, colorId, sizeId, minPrice, maxPrice)
     ).subscribe({
       next: (response: PagedResponse<Product>) => {
-        this.products = response.items;
+        // this.products = response.items;
+        this.products = response.items.map((product) => ({
+          ...product,
+          isInWishList: this.isProductInWishList(product.id),
+        }));
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;
         this.pageSize = response.pageSize;
         this.totalCount = response.totalCount;
-        console.log(response);
         this.updateEntryRange();
         this.productsLoading = false;
         this.noProducts = this.products.length === 0;
@@ -153,7 +183,6 @@ export class ProductsComponent implements OnInit {
       next: (response: { brandsCount: number; brands: Brand[] }) => {
         this.brands = response.brands;
         this.brandsLoading = false;
-   
       },
       error: (err) => {
         this.brandsLoading = false;
@@ -199,7 +228,7 @@ export class ProductsComponent implements OnInit {
   changePage(page: number): void {
     this.productsLoading = true;
     if (page >= 1 && page <= this.totalPages) {
-      this.loadProdcuts(page);
+      this.loadProducts(page);
     }
   }
   /*-----------------------------------------------------------------*/
@@ -239,7 +268,7 @@ export class ProductsComponent implements OnInit {
   // Search
   searchProducts(searchTerm: string = this.searchInput.trim()): void {
     this.currentPage = 1;
-    this.loadProdcuts(this.currentPage, searchTerm);
+    this.loadProducts(this.currentPage, searchTerm);
   }
   /*-----------------------------------------------------------------*/
   // Reset Filters
@@ -251,13 +280,13 @@ export class ProductsComponent implements OnInit {
     this.minPrice = null;
     this.maxPrice = null;
     this.currentPage = 1;
-    this.loadProdcuts(this.currentPage, this.searchInput);
+    this.loadProducts(this.currentPage, this.searchInput);
   }
   /*-----------------------------------------------------------------*/
   // Handle Filter Changes
   onFilterChange(): void {
     this.currentPage = 1;
-    this.loadProdcuts(
+    this.loadProducts(
       this.currentPage,
       this.searchInput,
       this.selectedCategoryId,
@@ -280,52 +309,106 @@ export class ProductsComponent implements OnInit {
     this.onFilterChange();
   }
   /*-----------------------------------------------------------------*/
-  addToWishList(id:number) {
+  // addToWishList(id: number) {
+  //   this.addToWishListLoading = true;
+  //   const itemToAdd: WishList = {
+  //     productId: id,
+  //   };
+  //   this._WishListService.AddAndRemoveFromWishList(itemToAdd).subscribe({
+  //     next: (response: any) => {
+  //       console.log('Item added to wish List successfully:', response);
+  //       this._ToastrService.success('Operation Done Successfully');
+  //       this.addToWishListLoading = true;
+  //     },
+  //     error: (error) => {
+  //       if (error.status === 400) {
+  //         this._ToastrService.error(`This Product Not Found}`);
+  //         return;
+  //       } else {
+  //         this._ToastrService.error('Failed to add item to Wish List');
+  //       }
+  //       //      this.addToCartLoading = false;
+  //     },
+  //   });
+  //   this._WishListService.getWishListByUserFromClaims().subscribe({
+  //     next: (response: any) => {
+  //       response.wishListItems.forEach((e) => {
+  //         if (e.productId == id) {
+  //           this.isWishList = true;
+  //           console.log('true');
+  //         } else {
+  //           this.isWishList = false;
+  //           console.log('false');
+  //         }
+  //       });
+  //     },
+  //     error: (err) => {
+  //       this.apiError = 'Failed to load WishList, Please try again.';
+  //     },
+  //   });
+  // }
+  /*-----------------------------------------------------------------*/
+  // addToWishList(id: number) {
+  //   this.addToWishListLoading = true;
+
+  //   const itemToAdd: WishList = {
+  //     productId: id,
+  //   };
+
+  //   this._WishListService.AddAndRemoveFromWishList(itemToAdd).subscribe({
+  //     next: (response: any) => {
+  //       console.log('Item added/removed from wish list successfully:', response);
+  //       this._ToastrService.success('Operation Done Successfully');
+  //       this.addToWishListLoading = false;
+  //       this.updateProductWishListState(id);
+  //     },
+  //     error: (error) => {
+  //       if (error.status === 400) {
+  //         this._ToastrService.error(`This Product Not Found`);
+  //       } else {
+  //         this._ToastrService.error('Failed to add/remove item to/from Wish List');
+  //       }
+  //       this.addToWishListLoading = false;
+  //     },
+  //   });
+  // }
+  addToWishList(product: Product) {
     this.addToWishListLoading = true;
-   
     const itemToAdd: WishList = {
-      productId:id,
+      productId: product.id,
     };
+    const isCurrentlyInWishList = product.isInWishList;
     this._WishListService.AddAndRemoveFromWishList(itemToAdd).subscribe({
       next: (response: any) => {
-        console.log('Item added to wish List successfully:', response);
-    
-        this._ToastrService.success('Operation Done Successfully');
-     
-        this.addToWishListLoading = true;
+        console.log('Item added/removed from wish list successfully:', response);
+        if (isCurrentlyInWishList) {
+          this._ToastrService.success('Product removed from wish list successfully');
+        } else {
+          this._ToastrService.success('Product added to wish list successfully');
+        }
+        this.addToWishListLoading = false;
+        this.updateProductWishListState(product.id);
       },
       error: (error) => {
         if (error.status === 400) {
-          this._ToastrService.error(`This Product Not Found}`);
-          return;
+          this._ToastrService.error('This Product Not Found');
         } else {
-          this._ToastrService.error('Failed to add item to Wish List');
+          this._ToastrService.error('Failed to add/remove item to/from wish list');
         }
-  //      this.addToCartLoading = false;
-      },
-    });
-    this._WishListService.getWishListByUserFromClaims().subscribe({
-      next: (response: any) => {
-      
-        
-       response.wishListItems.forEach(e => {
-        if(e.productId==id){
-          this.isWishList=true;
-          console.log("true");
-          
-              } else{
-                this.isWishList=false;
-                console.log("false");
-                
-              }
-       });;
-      
-      },
-      error: (err) => {
-        this.apiError = 'Failed to load WishList, Please try again.';
-       
+        this.addToWishListLoading = false;
       },
     });
   }
-
+  /*-----------------------------------------------------------------*/
+  private updateProductWishListState(productId: number): void {
+    const index = this.products.findIndex((product) => product.id === productId);
+    if (index !== -1) {
+      this.products[index].isInWishList = !this.products[index].isInWishList;
+    }
+  }
+  /*-----------------------------------------------------------------*/
+  private isProductInWishList(productId: number): boolean {
+    return this.wishListItems.some((item) => item.productId === productId);
+  }
+  /*-----------------------------------------------------------------*/
 }
