@@ -209,5 +209,41 @@
 
 <!-------------------------------------------------------------------------------------->
 <!-- Start of Slider -->
+<div class="container-fluid mt-3 mb-5">
+  <div class="row">
+    <h3 class="text-center text-main p-2 fw-bold fs-4 p-3">Related Products</h3>
+
+    <!-- categories slider -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item" *ngFor="let slide of productsInSlides; let i = index" [class.active]="i === 0">
+          <div class="row">
+            <div class="col-12 col-md-4" *ngFor="let product of slide">
+              <div class="card">
+                <div [routerLink]="['/productDetails', product.id]"
+                  class="card-body cardCategory text-center rounded-2 text-capitalize d-flex flex-column align-items-center  w-100">
+                  <img [src]="product.imageUrl" class="w-100 rounded-2 catImg" />
+                  <h5 class="card-title m-auto">{{ product.title }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation buttons -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</div>
 <!-- End of Slider -->
 <!-------------------------------------------------------------------------------------->
