@@ -152,7 +152,7 @@ import { AdminProductReviewModalComponent } from './components/admin/admin-produ
       timeOut: 5000,
       progressBar: true,
       progressAnimation: 'increasing',
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
   ],

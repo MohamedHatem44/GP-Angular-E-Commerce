@@ -1,157 +1,142 @@
 /*--------------------------------------------*/
 .card {
-    margin: auto;
-    max-width: 1250px;
-    width: 95%;
-    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 1rem;
-    border: transparent;
+  margin: auto;
+  max-width: 1250px;
+  width: 95%;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 1rem;
+  border: transparent;
+}
+/*--------------------------------------------*/
+@media (max-width: 992px) {
+  .card {
+    margin: 3vh auto;
   }
-  /*--------------------------------------------*/
-  @media (max-width: 992px) {
-    .card {
-      margin: 3vh auto;
-    }
+}
+/*--------------------------------------------*/
+.wishList {
+  background-color: #fff;
+  padding: 4vh 5vh;
+  border-radius: 1rem;
+  /* border-bottom-left-radius: 1rem;
+  border-top-left-radius: 1rem; */
+}
+/*--------------------------------------------*/
+.summary {
+  background-color: #ddd;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  padding: 4vh;
+  color: rgb(65, 65, 65);
+}
+/*--------------------------------------------*/
+.summary .col-2 {
+  padding: 0;
+}
+/*--------------------------------------------*/
+.summary .col-10 {
+  padding: 0;
+}
+/*--------------------------------------------*/
+.row {
+  margin: 0;
+}
+/*--------------------------------------------*/
+.main {
+  margin: 0;
+  padding: 2vh 0;
+  width: 100%;
+}
+/*--------------------------------------------*/
+.col-2,
+.col {
+  padding: 0 1vh;
+}
+/*--------------------------------------------*/
+a {
+  padding: 0 1vh;
+}
+/*--------------------------------------------*/
+img {
+  width: 4rem;
+}
+/*--------------------------------------------*/
+h5 {
+  margin-top: 4vh;
+}
+/*--------------------------------------------*/
+hr {
+  margin-top: 1.25rem;
+}
+/*--------------------------------------------*/
+select {
+  border: 1px solid rgba(0, 0, 0, 0.137);
+  padding: 1.5vh 1vh;
+  margin-bottom: 4vh;
+  outline: none;
+  width: 100%;
+  background-color: rgb(247, 247, 247);
+}
+/*--------------------------------------------*/
+.btnCustom {
+  background-color: #000;
+  color: white;
+  border: none;
+  width: 100%;
+  font-size: 0.9rem;
+  border-radius: 0;
+}
+/*--------------------------------------------*/
+.btnCustom:hover {
+  color: rgb(187, 187, 187);
+}
+/*--------------------------------------------*/
+@media (max-width: 768px) {
+  .mt-xs-3 {
+    margin-top: 1rem !important;
   }
-  /*--------------------------------------------*/
-  .wishList {
-    background-color: #fff;
-    padding: 4vh 5vh;
-    border-bottom-left-radius: 1rem;
-    border-top-left-radius: 1rem;
-  }
-  /*--------------------------------------------*/
-  @media (max-width: 992px) {
-    .wishList {
-      padding: 4vh;
-      border-bottom-left-radius: unset;
-      border-top-right-radius: 1rem;
-    }
-  }
-  /*--------------------------------------------*/
-  .summary {
-    background-color: #ddd;
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
-    padding: 4vh;
-    color: rgb(65, 65, 65);
-  }
-  /*--------------------------------------------*/
-  @media (max-width: 992px) {
-    .summary {
-      border-top-right-radius: unset;
-      border-bottom-left-radius: 1rem;
-    }
-  }
-  /*--------------------------------------------*/
-  .summary .col-2 {
-    padding: 0;
-  }
-  /*--------------------------------------------*/
-  .summary .col-10 {
-    padding: 0;
-  }
-  /*--------------------------------------------*/
-  .row {
-    margin: 0;
-  }
-  /*--------------------------------------------*/
-  .main {
-    margin: 0;
-    padding: 2vh 0;
-    width: 100%;
-  }
-  /*--------------------------------------------*/
-  .col-2,
-  .col {
-    padding: 0 1vh;
-  }
-  /*--------------------------------------------*/
-  a {
-    padding: 0 1vh;
-  }
-  /*--------------------------------------------*/
-  img {
-    width: 4rem;
-  }
-  /*--------------------------------------------*/
-  h5 {
-    margin-top: 4vh;
-  }
-  /*--------------------------------------------*/
-  hr {
-    margin-top: 1.25rem;
-  }
-  /*--------------------------------------------*/
-  select {
-    border: 1px solid rgba(0, 0, 0, 0.137);
-    padding: 1.5vh 1vh;
-    margin-bottom: 4vh;
-    outline: none;
-    width: 100%;
-    background-color: rgb(247, 247, 247);
-  }
-  /*--------------------------------------------*/
-  .btnCustom {
-    background-color: #000;
-    color: white;
-    border: none;
-    width: 100%;
-    font-size: 0.9rem;
-    border-radius: 0;
-  }
-  /*--------------------------------------------*/
-  .btnCustom:hover {
-    color: rgb(187, 187, 187);
-  }
-  /*--------------------------------------------*/
-  @media (max-width: 768px) {
-    .mt-xs-3 {
-      margin-top: 1rem !important;
-    }
-  }
-  /*--------------------------------------------*/
-  .wishList{
-    display: flex;
-    flex-direction: column;
-  }
-  /*--------------------------------------------*/
-  .wishList .flex-grow-1 {
-    flex-grow: 1;
-  }
-  /*--------------------------------------------*/
-  .wishList .mt-5 {
-    margin-top: auto !important;
-  }
-  /*--------------------------------------------*/
+}
+/*--------------------------------------------*/
+.wishList {
+  display: flex;
+  flex-direction: column;
+}
+/*--------------------------------------------*/
+.wishList .flex-grow-1 {
+  flex-grow: 1;
+}
+/*--------------------------------------------*/
+.wishList .mt-5 {
+  margin-top: auto !important;
+}
+/*--------------------------------------------*/
+.custom-width {
+  width: 100%;
+}
+/*--------------------------------------------*/
+@media (min-width: 576px) {
   .custom-width {
-    width: 100%;
+    width: 50%;
   }
-  /*--------------------------------------------*/
-  @media (min-width: 576px) {
-    .custom-width {
-      width: 50%;
-    }
+}
+/*--------------------------------------------*/
+@media (min-width: 992px) {
+  .custom-width {
+    width: 25%;
   }
-  /*--------------------------------------------*/
-  @media (min-width: 992px) {
-    .custom-width {
-      width: 25%;
-    }
-  }
-  /*--------------------------------------------*/
+}
+/*--------------------------------------------*/
 
 .custombtn {
-    background-color: #000;
-    border: none;
-    color: white;
-    width: 60%;
-    font-size: 0.9rem;
-    cursor: pointer;
-  }
-  /*--------------------------------------------*/
-  .custombtn:hover {
-    color: rgb(187, 187, 187);
-  }
-  /*--------------------------------------------*/
-
+  background-color: #000;
+  border: none;
+  color: white;
+  width: 60%;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+/*--------------------------------------------*/
+.custombtn:hover {
+  color: rgb(187, 187, 187);
+}
+/*--------------------------------------------*/
