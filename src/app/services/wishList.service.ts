@@ -9,7 +9,6 @@ import { WishList } from '../models/wishList';
 })
 /*--------------------------------------------------------------------*/
 export class WishListService {
- 
   baseUrl = 'http://localhost:5185/api/WishLists';
   /*------------------------------------------------------------------*/
   // Ctor
@@ -23,8 +22,8 @@ export class WishListService {
   /*------------------------------------------------------------------*/
   // Add Items To  WishList
   // Post: api/WishLists/AddAndRemoveFromWishList
-  AddAndRemoveFromWishList(item: WishList ): Observable<WishList > {
-    return this._HttpClient.post<WishList >(`${this.baseUrl}/AddAndRemoveFromWishList`, item).pipe(delay(3000));
+  AddAndRemoveFromWishList(item: WishList): Observable<WishList> {
+    return this._HttpClient.post<WishList>(`${this.baseUrl}/AddAndRemoveFromWishList`, item).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Remove a Specific Item From WishList By User Claims and Item Id
@@ -38,5 +37,5 @@ export class WishListService {
   deleteAllItem(): Observable<Object> {
     return this._HttpClient.delete<Object>(`${this.baseUrl}/RemoveAllItemsFromWishList`).pipe(delay(3000));
   }
- 
+  /*------------------------------------------------------------------*/
 }

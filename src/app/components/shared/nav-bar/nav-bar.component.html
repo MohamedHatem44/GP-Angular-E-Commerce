@@ -54,20 +54,20 @@
         </a>
       </li>
       <!-- Profile -->
-      <li class="nav-item" *ngIf="isLogin && isUser">
+      <li *ngIf="isLogin && isUser" class="nav-item me-2">
         <a class="nav-link" aria-current="page" routerLink="profile" routerLinkActive="text-white" [routerLinkActiveOptions]="{ exact: true }"
           ><i class="fas fa-user fa-lg"></i
         ></a>
       </li>
       <!-- Wish List -->
-      <li *ngIf="isLogin && isUser" class="nav-item">
+      <li *ngIf="isLogin && isUser" class="nav-item me-2">
         <a class="nav-link" aria-current="page" routerLink="wishlist" routerLinkActive="text-white" [routerLinkActiveOptions]="{ exact: true }">
           <i class="fa-solid fa-heart fa-lg"></i>
-          <!-- <span class="badge bg-main text-white position-absolute top-0 start-100 translate-middle border border-light">{{ cartLength }}</span> -->
+          <span class="badge bg-main text-white translate-middle fs-6 position-absolute ms-2">{{ cartItemCount }}</span>
         </a>
       </li>
       <!-- Shopping Cart -->
-      <li *ngIf="isLogin && isUser" class="nav-item me-5">
+      <li *ngIf="isLogin && isUser" class="nav-item me-8">
         <a class="nav-link" aria-current="page" routerLink="cart" routerLinkActive="text-white" [routerLinkActiveOptions]="{ exact: true }">
           <i class="fa-solid fa-cart-shopping fa-lg"></i>
           <span class="badge bg-main text-white translate-middle fs-6 position-absolute ms-2">{{ cartItemCount }}</span>
