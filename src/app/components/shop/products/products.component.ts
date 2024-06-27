@@ -228,7 +228,7 @@ export class ProductsComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Reset Filters
   resetFilters(): void {
-    this.currentPage = 1;
+    this.searchInput = '';
     this.selectedCategoryId = null;
     this.selectedBrandId = null;
     this.selectedColorId = null;
@@ -236,7 +236,7 @@ export class ProductsComponent implements OnInit {
     this.minPrice = null;
     this.maxPrice = null;
     this.currentPage = 1;
-    this.loadProducts(this.currentPage, this.searchInput);
+    this.loadProducts(this.currentPage);
   }
   /*-----------------------------------------------------------------*/
   onPriceFilterChange(min: number | null, max: number | null): void {
