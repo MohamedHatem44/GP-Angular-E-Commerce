@@ -8,11 +8,6 @@
   padding: 2px
 }
 
-h3 {
-  background-color: #aaaaaa;
-  color: white
-}
-
 .cardCategory:hover {
   background-color: #aaaaaa;
   border-color: #aaaaaa;
