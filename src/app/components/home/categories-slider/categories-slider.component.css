@@ -41,6 +41,14 @@ h3 {
   transition: transform 0.6s ease;
 }
 
+h5 {
+  color: #aaaaaa;
+}
+
+.cardCategory:hover h5 {
+  color: white;
+}
+
 .catImg {
   width: 100px;
   height: 100px;
