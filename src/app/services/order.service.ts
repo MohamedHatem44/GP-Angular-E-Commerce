@@ -13,6 +13,12 @@ export class OrderService {
   // Ctor
   constructor(private _HttpClient: HttpClient, private _CartService: CartService) {}
   /*------------------------------------------------------------------*/
+  // Get Orders By User Clamis
+  // Get: api/Orders/UserOrders
+  getUserOrdersFromClaims(): Observable<any> {
+    return this._HttpClient.get<any>(`${this.baseUrl}/UserOrders`).pipe(delay(3000));
+  }
+  /*------------------------------------------------------------------*/
   // Create Order From Cart
   // Post: api/orders/CreateOrderFromCart
   createOrder(): Observable<any> {

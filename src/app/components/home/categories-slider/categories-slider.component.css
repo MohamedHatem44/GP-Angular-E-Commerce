@@ -1,0 +1,55 @@
+.cardCategory {
+  cursor: pointer;
+  background-color: #ffffff;
+  border: 1px solid #198754;
+  border-radius: 10px;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.cardCategory:hover {
+  background-color: #198754;
+  border-color: #198754;
+  color: #ffffff;
+}
+
+.cardCategory .card-img-top {
+  height: 150px;
+  object-fit: cover;
+}
+
+.cardCategory .card-body {
+  padding: 10px;
+}
+
+.carousel-inner {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  transition: transform 0.6s ease;
+}
+
+.catImg {
+  width: 100px;
+  height: 100px;
+}
+
+@media (max-width: 576px) {
+  .carousel-item .row {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  .carousel-item .col-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .carousel-item .col-md-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
