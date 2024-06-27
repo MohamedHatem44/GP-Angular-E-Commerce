@@ -85,12 +85,10 @@ export class UserWishlistComponent implements OnInit {
   deleteItem(itemId: number): void {
     const item = this.wishListItems.find((item) => item.productId === itemId);
     if (item) {
-      console.log(itemId);
       item.deleting = true;
       this._WishListService.deleteProItem(itemId).subscribe({
         next: () => {
           this.wishListItems = this.wishListItems.filter((item) => item.productId !== itemId);
-          console.log(this.wishListItems);
           this._ToastrService.success('Item removed successfully');
           this.wishList.wishListItems.length--;
           this.noItems = this.wishListItems.length === 0;

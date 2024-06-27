@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { JwtService } from '../../../services/jwt.service';
 import { CartService } from '../../../services/cart.service';
 import { Subscription } from 'rxjs';
+import { WishListService } from '../../../services/wishList.service';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-nav-bar',
@@ -16,6 +17,7 @@ export class NavBarComponent implements OnInit {
   cartItemCount: number = 0;
   wishlistItemCount: number = 0;
   private cartCountSubscription: Subscription;
+  private wishlistCountSubscription: Subscription;
 
   isLogin: boolean = false;
   isAdmin: boolean = false;
@@ -29,6 +31,7 @@ export class NavBarComponent implements OnInit {
   constructor(
     private _AuthService: AuthService,
     private _CartService: CartService,
+    private _WishListService: WishListService,
     private _JwtService: JwtService,
     private _Router: Router,
     private _renderer: Renderer2,
@@ -38,11 +41,15 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
     this.updateLoginStatus();
     this.subscribeToCartItemCount();
+    this.subscribeToWishlistItemCount();
   }
   /*--------------------------------------------------------------------*/
   ngOnDestroy(): void {
     if (this.cartCountSubscription) {
       this.cartCountSubscription.unsubscribe();
+    }
+    if (this.wishlistCountSubscription) {
+      this.wishlistCountSubscription.unsubscribe();
     }
   }
   /*--------------------------------------------------------------------*/
@@ -104,10 +111,18 @@ export class NavBarComponent implements OnInit {
     );
   }
   /*--------------------------------------------------------------------*/
+  private subscribeToWishlistItemCount() {
+    this.wishlistCountSubscription = this._WishListService.wishListItemCount$.subscribe(
+      (count) => (this.wishlistItemCount = count),
+      (error) => console.error('Error subscribing to wishlist item count:', error)
+    );
+  }
+  /*--------------------------------------------------------------------*/
   // Method to log out
   logOut() {
     this._AuthService.logout();
     this._CartService.clearCartItemCount();
+    this._WishListService.clearWishListItemCount();
   }
   /*-----------------------------------------------------------------*/
 }
