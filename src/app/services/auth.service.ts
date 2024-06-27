@@ -4,22 +4,20 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 import { User } from '../models/user';
+import { CartService } from './cart.service';
+import { WishListService } from './wishList.service';
 /*--------------------------------------------------------------------*/
 @Injectable({
   providedIn: 'root',
 })
 /*--------------------------------------------------------------------*/
 export class AuthService {
-  private baseUrl = 'http://localhost:5185/api/Auth'; // We need to remove "Auth"
-  private baseApiUrl = 'http://localhost:5185/api';
-  userToken = new BehaviorSubject<string | null>(null);
+  private baseUrl = 'http://localhost:5185/api/Auth';
+  public userToken: BehaviorSubject<string | null>;
   /*------------------------------------------------------------------*/
   // Ctor
-  constructor(private http: HttpClient, private _Router: Router) {
-    const token = localStorage.getItem('token');
-    if (token !== null) {
-      this.userToken.next(token);
-    }
+  constructor(private http: HttpClient, private _Router: Router, private _CartService: CartService, private _WishListService: WishListService) {
+    this.userToken = new BehaviorSubject<string | null>(localStorage.getItem('token'));
   }
   /*------------------------------------------------------------------*/
   // Getter for user data
@@ -44,6 +42,10 @@ export class AuthService {
       tap((response: any) => {
         localStorage.setItem('token', response.token);
         this.userToken.next(response.token);
+
+        // Update cart item and wishList count for the logged-in user
+        this._CartService.updateCartItemCount();
+        this._WishListService.updateWishListItemCount();
       })
     );
   }
@@ -62,6 +64,8 @@ export class AuthService {
   // logout
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('cartItemCount');
+    localStorage.removeItem('wishListItemCount');
     this.userToken.next(null);
     this._Router.navigate(['users/login']);
   }
@@ -72,16 +76,15 @@ export class AuthService {
     return this.http.get<User>(`${this.baseUrl}/Manage/Info`);
   }
   /*------------------------------------------------------------------*/
-
   // Update profile info
   updateProfileInfo(user: Partial<User>): Observable<User> {
     return this.http.patch<User>(`${this.baseUrl}/UpdateUserInfo`, user);
   }
   /*------------------------------------------------------------------*/
-
   updateProfileImage(file: File): Observable<{ url?: string }> {
     const formData = new FormData();
     formData.append('formFile', file);
     return this.http.post<{ url?: string }>(`${this.baseUrl}/Upload`, formData);
   }
+  /*------------------------------------------------------------------*/
 }

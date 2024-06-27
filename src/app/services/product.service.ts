@@ -37,14 +37,14 @@ export class ProductService {
       params = params.set('brandId', brandId);
     }
 
-    return await this._HttpClient.get<PagedResponse<Product>>(`${this.baseUrl}/AllProductsForAdmin`, { params }).pipe(delay(1000));
+    return await this._HttpClient.get<PagedResponse<Product>>(`${this.baseUrl}/AllProductsForAdmin`, { params }).pipe(delay(300));
   }
   /*------------------------------------------------------------------*/
   // Get All Products With Details With Pagination For User
   // Get: api/Products/AllProductsForUser
-  async getAllProductsWithPaginationForUser(
+  getAllProductsWithPaginationForUser(
     pageNumber: number,
-    pageSize: number = 9,
+    pageSize: number,
     searchParam?: string,
     categoryId?: number,
     brandId?: number,
@@ -52,7 +52,7 @@ export class ProductService {
     sizeId?: number,
     minPrice?: number,
     maxPrice?: number
-  ): Promise<Observable<PagedResponse<Product>>> {
+  ): Observable<PagedResponse<Product>> {
     let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
 
     if (searchParam) {
@@ -76,13 +76,13 @@ export class ProductService {
     }
 
     if (minPrice !== undefined && minPrice !== null) {
-      params = params.set('minPrice', minPrice.toString());
+      params = params.set('minPrice', minPrice);
     }
 
     if (maxPrice !== undefined && maxPrice !== null) {
-      params = params.set('maxPrice', maxPrice.toString());
+      params = params.set('maxPrice', maxPrice);
     }
-    return await this._HttpClient.get<PagedResponse<Product>>(`${this.baseUrl}/AllProductsForUser`, { params }).pipe(delay(1000));
+    return this._HttpClient.get<PagedResponse<Product>>(`${this.baseUrl}/AllProductsForUser`, { params }).pipe(delay(300));
   }
   /*------------------------------------------------------------------*/
   // Get All Products Without Details

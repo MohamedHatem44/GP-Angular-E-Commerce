@@ -1,9 +1,11 @@
-import { Component, Input } from '@angular/core';
-import { Product } from '../../../models/product';
+import { Component, Input, OnInit } from '@angular/core';
+import { ExtendedProduct, Product } from '../../../models/product';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CartService } from '../../../services/cart.service';
 import { ToastrService } from 'ngx-toastr';
 import { Cart } from '../../../models/cart';
+import { WishListService } from '../../../services/wishList.service';
+import { WishList } from '../../../models/wishList';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-product-details-modal',
@@ -11,15 +13,46 @@ import { Cart } from '../../../models/cart';
   styleUrl: './product-details-modal.component.css',
 })
 /*--------------------------------------------------------------------*/
-export class ProductDetailsModalComponent {
-  @Input() product: Product;
+export class ProductDetailsModalComponent implements OnInit {
+  @Input() product: ExtendedProduct;
   selectedColorId: number;
   selectedSizeId: number;
   quantity: number = 1;
   addToCartLoading: boolean = false;
+
+  wishList: any;
+  wishListItems: any[] = [];
+  apiError: string | null = null;
   /*------------------------------------------------------------------*/
   // Ctor
-  constructor(private _CartService: CartService, public _ActiveModal: NgbActiveModal, private _ToastrService: ToastrService) {}
+  constructor(
+    private _CartService: CartService,
+    private _WishListService: WishListService,
+    public _ActiveModal: NgbActiveModal,
+    private _ToastrService: ToastrService
+  ) {}
+  /*-----------------------------------------------------------------*/
+  // Ng OnInit
+  ngOnInit(): void {
+    this.loadWishList();
+  }
+  /*-----------------------------------------------------------------*/
+  // Load WishList
+  private async loadWishList(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this._WishListService.getWishListByUserFromClaims().subscribe({
+        next: (response: any) => {
+          this.wishList = response;
+          this.wishListItems = response.wishListItems;
+          resolve();
+        },
+        error: (err) => {
+          this.apiError = 'Failed to load WishList, Please try again.';
+          reject(err);
+        },
+      });
+    });
+  }
   /*------------------------------------------------------------------*/
   close() {
     this._ActiveModal.close();
@@ -80,4 +113,40 @@ export class ProductDetailsModalComponent {
     });
   }
   /*------------------------------------------------------------------*/
+  // Add / Remove from WishList
+  addToWishList(product: ExtendedProduct) {
+    product.isWishListLoading = true;
+    const itemIdToAdd: WishList = {
+      productId: product.id,
+    };
+    const isCurrentlyInWishList = product.isInWishList;
+    this._WishListService.AddAndRemoveFromWishList(itemIdToAdd).subscribe({
+      next: (response: any) => {
+        if (isCurrentlyInWishList) {
+          this._ToastrService.success('Product removed from wish list successfully');
+        } else {
+          this._ToastrService.success('Product added to wish list successfully');
+        }
+        product.isWishListLoading = false;
+        this.updateProductWishListState(product);
+      },
+      error: (error) => {
+        if (error.status === 400) {
+          this._ToastrService.error('This Product Not Found');
+        } else {
+          this._ToastrService.error('Failed to add/remove item to/from wish list');
+        }
+        product.isWishListLoading = false;
+      },
+    });
+  }
+  /*-----------------------------------------------------------------*/
+  private updateProductWishListState(product: ExtendedProduct): void {
+    this.product.isInWishList = !this.product.isInWishList;
+  }
+  /*-----------------------------------------------------------------*/
+  private isProductInWishList(productId: number): boolean {
+    return this.wishListItems.some((item) => item.productId === productId);
+  }
+  /*-----------------------------------------------------------------*/
 }

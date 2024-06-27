@@ -4,12 +4,14 @@ import { Stripe, StripeCardElement, loadStripe } from '@stripe/stripe-js';
 import { environment } from '../../env';
 import { CartService } from '../../services/cart.service';
 import { ToastrService } from 'ngx-toastr';
-
+import { OrderService } from '../../services/order.service';
+/*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css'],
 })
+/*--------------------------------------------------------------------*/
 export class PaymentComponent implements OnInit {
   stripe: Stripe | null = null;
   cardElement: StripeCardElement | null = null;
@@ -24,9 +26,15 @@ export class PaymentComponent implements OnInit {
   cartError: string | null = null;
   successMessage: string | null = null;
   isLoading: boolean = false;
+  orderLoading: boolean = false;
   /*-----------------------------------------------------------------*/
   // Ctor
-  constructor(private paymentService: PaymentService, private cartService: CartService, private _ToastrService: ToastrService) {}
+  constructor(
+    private paymentService: PaymentService,
+    private cartService: CartService,
+    private _OrderService: OrderService,
+    private _ToastrService: ToastrService
+  ) {}
   /*-----------------------------------------------------------------*/
   async ngOnInit() {
     this.getTotalPrice();
@@ -59,7 +67,6 @@ export class PaymentComponent implements OnInit {
     this.paymentService.createPaymentIntent(paymentRequest).subscribe(
       (response: any) => {
         this.clientSecret = response.clientSecret;
-        // Implemet logig for order
       },
       (error) => {
         this.errorMessage = 'Error Occurred While Payment Process, Please Try Again Later...';
@@ -77,18 +84,15 @@ export class PaymentComponent implements OnInit {
   async onSubmit() {
     this.errorMessage = null;
     this.successMessage = null;
-
     if (this.cardName == '') {
       this.errorMessage = 'Card Name Is Required';
       return;
     }
-
     if (!this.stripe || !this.clientSecret || !this.cardElement) {
       console.log('Stripe.js has not loaded or client secret is missing');
       this.errorMessage = 'Error Occurred While Payment Process, Please Try Again Later...';
       return;
     }
-
     if (!this.validateForm()) {
       return;
     }
@@ -110,12 +114,14 @@ export class PaymentComponent implements OnInit {
     if (error) {
       this.errorMessage = error.message;
     } else {
-      this._ToastrService.success('Payment successful');
-      this.successMessage = 'Payment successful';
+      // Call order creation logic
+      this.createOrder();
+      // this._ToastrService.success('Payment successful');
+      this.successMessage = 'Payment successful and you order placed successfully';
       this.resetForm();
     }
   }
-
+  /*-----------------------------------------------------------------*/
   validateForm(): boolean {
     const phonePattern = /^(?:012|015|010|011)\d{8}$/;
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
@@ -136,11 +142,10 @@ export class PaymentComponent implements OnInit {
       this.errorMessage = 'Invalid Phone Number';
       return false;
     }
-
     this.errorMessage = null;
     return true;
   }
-
+  /*-----------------------------------------------------------------*/
   resetForm() {
     if (this.cardElement) {
       this.cardElement.clear();
@@ -151,6 +156,22 @@ export class PaymentComponent implements OnInit {
       // this.country = '';
     }
     this.errorMessage = null;
+  }
+  /*-----------------------------------------------------------------*/
+  createOrder() {
+    this.orderLoading = true;
+    this._OrderService.createOrder().subscribe(
+      (response) => {
+        console.log('Order created successfully', response);
+        this._ToastrService.success('Order created successfully');
+        this.orderLoading = false;
+      },
+      (error) => {
+        console.error('An error occurred while creating the order', error);
+        this._ToastrService.error('Error occurred while creating the order');
+        this.orderLoading = false;
+      }
+    );
   }
   /*-----------------------------------------------------------------*/
 }

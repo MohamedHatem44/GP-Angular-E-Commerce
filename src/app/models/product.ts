@@ -24,5 +24,11 @@ export interface Product {
   brandId: number;
   brand?: Brand;
   reviews?: Review[];
+  isInWishList?: boolean;
+}
+/*--------------------------------------------------------------------*/
+export interface ExtendedProduct extends Product {
+  isInWishList?: boolean;
+  isWishListLoading?: boolean;
 }
 /*--------------------------------------------------------------------*/

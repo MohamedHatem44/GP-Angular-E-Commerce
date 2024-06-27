@@ -1,8 +1,8 @@
 <!-------------------------------------------------------------------------------------->
 <!-- Start of modal body -->
-<div class="container py-4 px-5 ">
+<div class="container py-4 px-5">
   <!------------------------------------------------------------------------------------>
-  <div class="row wrapper ">
+  <div class="row wrapper">
     <!-- Start of Image -->
     <div class="col-md-12 col-lg-6 px-0">
       <img [src]="product.imageUrl" class="img-responsive" alt="product Image" />
@@ -73,10 +73,15 @@
         </div>
         <br />
         <!-- Add To Cart -->
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center flex-row">
           <button class="custombtn my-3 py-2" [disabled]="quantity < 1" (click)="addToCart()">
             <i *ngIf="addToCartLoading" class="fas fa-spinner fa-spin py-1"></i>
             <span *ngIf="!addToCartLoading"> Add To Cart</span>
+          </button>
+          <button (click)="addToWishList(product)" class="btn btn-light my-3 py-2">
+            <i *ngIf="!product.isWishListLoading && product.isInWishList" class="fa-solid fa-heart text-dark fa-xl"></i>
+            <i *ngIf="!product.isWishListLoading && !product.isInWishList" class="fa-regular fa-heart text-dark fa-xl"></i>
+            <i *ngIf="product.isWishListLoading" class="fas fa-spinner fa-spin fa-xl"></i>
           </button>
         </div>
       </div>

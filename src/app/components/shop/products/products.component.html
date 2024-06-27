@@ -5,15 +5,15 @@
 </section>
 <!------------------------------------------------------------------------------------------------------>
 <section class="d-flex justify-content-center">
-  <p class="pb-4 fs-5" *ngIf="!productsLoading && !noProducts">Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} Product</p>
-  <p class="pb-4 fs-5" *ngIf="!productsLoading && noProducts">No Products Found</p>
-  <p class="pb-5 fs-5" *ngIf="productsLoading"></p>
+  <p class="pb-4 fs-5 text-center" *ngIf="!productsLoading && !noProducts">Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} Product</p>
+  <p class="pb-4 fs-5 text-center" *ngIf="!productsLoading && noProducts">No Products Found</p>
+  <p class="pb-4 fs-5 text-center" *ngIf="productsLoading">Loading Products ...</p>
 </section>
 <!------------------------------------------------------------------------------------------------------>
 <div class="container-fluid">
   <div class="row px-3">
     <!-- Shop Sidebar Start -->
-    <div class="col-lg-3 col-md-5 col-sm-6">
+    <div class="col-lg-3 col-md-4 col-sm-6">
       <!------------------------------------------------------------------------------------------------>
       <!-- Start of Price Filter -->
       <div class="mb-4 py-3 px-3 bg-light">
@@ -139,7 +139,7 @@
 
     <!-------------------------------------------------------------------------------------------------->
     <!-- Shop Product Start -->
-    <div class="col-lg-9 col-md-7 col-md-6 col-sm-6">
+    <div class="col-lg-9 col-md-8 col-md-6 col-sm-6">
       <div class="row pb-3">
         <!----------------------------------------------------------------------------------------------->
         <!-- Start of Search -->
@@ -163,18 +163,20 @@
         <!----------------------------------------------------------------------------------------------->
         <!-- Products -->
         <ng-container *ngIf="!productsLoading">
-          <div *ngFor="let product of products" class="col-lg-4 col-md-6 col-sm-10 p-4 bg-light">
+          <div *ngFor="let product of products" class="col-lg-4 col-md-6 col-sm-12 p-4 bg-light">
             <div class="card product-item border-0 shadow bg-white rounded">
               <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                 <img class="img-fluid w-100 product-image" [src]="product.imageUrl" alt="" />
                 <div class="overlay">
-                  <button class="btn btn-light text-dark overlay-btn fw-semibold" (click)="addToWishList(product.id) ">
-                 
-                    <i  class="fa-regular fa-heart text-danger fs-2"></i>
-                    <i    class="fa-solid fa-heart text-danger fs-2"></i>
-                  
+                  <button class="btn btn-light" (click)="openProductDetailsModal(product)">
+                    <i class="fa-solid fa-cart-shopping fa-xl"></i>
                   </button>
-                  <button class="btn btn-light text-dark overlay-btn fw-semibold" (click)="openProductDetailsModal(product)">Quick View</button>
+                  <button class="btn btn-light text-dark overlay-btn fw-semibold fs-5" [routerLink]="['/productDetails', product.id]">View</button>
+                  <button (click)="addToWishList(product)" class="btn btn-light">
+                    <i *ngIf="!product.isWishListLoading && product.isInWishList" class="fa-solid fa-heart text-dark fa-xl"></i>
+                    <i *ngIf="!product.isWishListLoading && !product.isInWishList" class="fa-regular fa-heart text-dark fa-xl"></i>
+                    <i *ngIf="product.isWishListLoading" class="fas fa-spinner fa-spin fa-xl"></i>
+                  </button>
                 </div>
               </div>
               <a style="text-decoration: none; cursor: pointer" class="text-dark-emphasis" [routerLink]="['/productDetails', product.id]">

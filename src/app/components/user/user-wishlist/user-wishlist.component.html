@@ -1,83 +1,70 @@
 <!------------------------------------------------------------------------------------------------>
-<div class="card my-6">
-    <div class="row">
-      <!-------------------------------------------------------------------------------------------->
-      <div class="col-lg-12 wishList">
-        <!------------------------------------------------------------------------------------------>
-        <!-- Start of Title -->
-        <div class="mb-4">
-          <div class="row">
-            <div class="col-12 col-md">
-              <h4><p class="fw-semibold">Wish List</p></h4>
-            </div>
-           
+<div class="card my-6" style="min-height: 500px">
+  <div class="row">
+    <div class="col-lg-12 wishList">
+      <!------------------------------------------------------------------------------------------>
+      <!-- Start of Title -->
+      <div class="mb-4">
+        <div class="row">
+          <div class="col-12 col-md">
+            <h4><p class="fw-semibold">Wish List</p></h4>
+          </div>
+          <div *ngIf="wishListLoading" class="col-12 col-md align-self-center text-md-right text-left">Loading items...</div>
+          <div *ngIf="!wishListLoading && noItems && !apiError" class="col-12 col-md align-self-center text-md-right text-left">No items</div>
+          <div *ngIf="!wishListLoading && !noItems && !apiError" class="col-12 col-md align-self-center text-md-right text-left">
+            {{ wishListItems.length }} items
+          </div>
         </div>
-
         <!-- End  of Title -->
         <!------------------------------------------------------------------------------------------>
         <!-- Placeholder for Empty WishList -->
-        <div *ngIf="!wishListLoading && noItems" class="text-center my-auto">
-          <p class="text-muted fs-5">Your WishList is empty</p>
+        <div *ngIf="!wishListLoading && noItems!; apiError" class="text-center mt-8">
+          <p class="text-muted fs-5">Your Wish List is empty</p>
           <button routerLink="/shop" class="btnCustom mt-4 fw-semibold py-2 custom-width">Back to Shop</button>
         </div>
         <!------------------------------------------------------------------------------------------>
+        <!-- Start of Api Error -->
+        <div *ngIf="!wishListLoading && apiError" class="text-center my-auto">
+          <p class="text-muted fs-5">{{ apiError }}</p>
+          <button routerLink="/shop" class="btnCustom mt-3 fw-semibold py-2 custom-width">Back to Shop</button>
+        </div>
+        <!-- End of Api Error -->
+        <!------------------------------------------------------------------------------------------>
         <!-- Start of Items -->
-        <ng-container *ngIf="!wishListLoading  && !noItems">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row">
-                    <div class="col-1 col-md-1"></div>
-                    <div class="col-3 col-md-3">Image</div>
-                    <div class="col-3 col-md-3">Title</div>
-                    <div class="col-3 col-md-3">Price</div>
-                    <div class="col-2 col-md-2"></div>
-                    </div>
+        <ng-container *ngIf="!wishListLoading && !noItems">
+          <ng-container *ngFor="let item of wishListItems">
+            <div class="row border-top border-bottom">
+              <div class="row main align-items-center">
+                <!-- Remove Item -->
+                <div class="col-4 col-sm-1 col-md-1">
+                  <i *ngIf="item.deleting" class="fas fa-spinner fa-spin fa-lg"></i>
+                  <i
+                    *ngIf="!item.deleting"
+                    class="fs-3 fa-regular fa-circle-xmark"
+                    style="cursor: pointer"
+                    (click)="openDeleteItemConfirmationModal(item.productId)"
+                  ></i>
                 </div>
-                <div class="col-12">
-                    <ng-container *ngFor="let item of wishListItems">
-                        <div class="row border-top border-bottom">
-                          <div class="row main align-items-center">
-
-                              <!-- Remove Item -->
-                              <div class="col-1 col-md-1">
-                                <i *ngIf="item.deleting" class="fas fa-spinner fa-spin fa-lg"></i>
-                                <i
-                                  *ngIf="!item.deleting"
-                                  class="fs-3 fa-regular fa-circle-xmark"
-                                  style="cursor: pointer"
-                                  (click)="openDeleteItemConfirmationModal(item.productId)"
-                                ></i>
-                              </div>
-                           
-                            <!-- Image Column -->
-                            <div class="col-3 col-md-3"><img class="img-fluid" [src]="item.imageUrl" (click)="openImgModal(item)" style="cursor: pointer" /></div>
-                            <!-- Product Details Column -->
-                            <div class="col-3 col-md-3">
-                              <div class="row">{{ item.productTitle }}</div>
-                            
-                            </div>
-                            <div class="col-3 col-md-3">
-                                <div class="row">{{ item.itemPrice }}</div>
-                              
-                              </div>
-                              <div class="col-2 col-md-2">
-                                <div class="overlay">
-                                    <button class="btn btn-light text-dark overlay-btn fw-semibold" 
-                                    (click)="openProductDetailsModal(item.productId)">
-                                    <i *ngIf="productLoading" class="fas fa-spinner fa-spin py-1"></i>
-                                    <span *ngIf="!productLoading"> Add To Cart</span>
-                                   </button>
-                                  </div>
-                               
-                              </div>
-                           
-                          
-                          </div>
-                        </div>
-                      </ng-container>
+                <!-- Image Column -->
+                <div class="col-8 col-sm-3 col-md-3"><img class="img-fluid" [src]="item.imageUrl" (click)="openImgModal(item)" style="cursor: pointer" /></div>
+                <!-- Product Details Column -->
+                <div class="col-12 col-sm-8 col-md-3 mt-xs-3 d-flex justify-content-center">
+                  <div class="row">{{ item.productTitle }}</div>
                 </div>
+                <div class="col-6 col-sm-6 col-md-3 mt-xs-3 d-flex justify-content-center">
+                  <div class="row">&euro; {{ item.itemPrice | number : '1.2-2' }}</div>
+                </div>
+                <div class="col-6 col-sm-6 col-md-2 mt-xs-3 d-flex justify-content-center">
+                  <div class="overlay">
+                    <button class="btn btn-light text-dark overlay-btn fw-semibold" (click)="openProductDetailsModal(item.productId)">
+                      <i *ngIf="productLoading" class="fas fa-spinner fa-spin fa-xl"></i>
+                      <i *ngIf="!productLoading" class="fa-solid fa-cart-shopping fa-xl"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-         
+          </ng-container>
         </ng-container>
         <!-- End of Items -->
         <!------------------------------------------------------------------------------------------>
@@ -91,7 +78,7 @@
         <!-- End of Skeleton Loading Placeholder -->
         <!------------------------------------------------------------------------------------------>
         <div class="mb-4"></div>
-        <div *ngIf="!noItems && !wishListLoading" class="mt-5 d-flex justify-content-between">
+        <div *ngIf="!noItems && !wishListLoading && !apiError" class="mt-5 d-flex justify-content-between">
           <!-- Back to Shop Link -->
           <a routerLink="/shop" class="text-decoration-none">
             <i class="fa-solid fa-arrow-left"></i>
@@ -100,17 +87,13 @@
           <!-- Clear All -->
           <button (click)="openDeleteAllItemConfirmationModal()" class="btn btn-outline-secondary">
             <i *ngIf="deleteAllLoading" class="fas fa-spinner fa-spin me-2"></i>
-            <i *ngIf="!deleteAllLoading" class="fa-solid fa-trash text-danger me-2"></i>
+            <i *ngIf="!deleteAllLoading" class="fa-solid fa-trash text-dark me-2"></i>
             Clear All Items
           </button>
         </div>
       </div>
       <!-------------------------------------------------------------------------------------------->
-      <!-- Start of Summary -->
-     
-      <!-- End of Summary -->
-      <!-------------------------------------------------------------------------------------------->
     </div>
   </div>
-  <!------------------------------------------------------------------------------------------------>
-  
+</div>
+<!------------------------------------------------------------------------------------------------>

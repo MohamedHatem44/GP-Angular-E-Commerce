@@ -6,14 +6,14 @@ import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
 import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
 import { ProductDetailsModalComponent } from '../../shop/product-details-modal/product-details-modal.component';
 import { ProductService } from '../../../services/product.service';
-
+/*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-user-wishlist',
   templateUrl: './user-wishlist.component.html',
-  styleUrl: './user-wishlist.component.css'
+  styleUrl: './user-wishlist.component.css',
 })
-export class UserWishlistComponent implements OnInit{
-
+/*--------------------------------------------------------------------*/
+export class UserWishlistComponent implements OnInit {
   // Component properties
   wishListLoading: boolean = false;
   productLoading: boolean = false;
@@ -23,11 +23,14 @@ export class UserWishlistComponent implements OnInit{
   apiError: string | null = null;
   noItems: boolean = false;
   deleteAllLoading: boolean = false;
-  
-
   /*-----------------------------------------------------------------*/
   // Ctor
-  constructor(private _WishListService: WishListService,private _productService:ProductService, private _ModalService: NgbModal, private _ToastrService: ToastrService) {}
+  constructor(
+    private _WishListService: WishListService,
+    private _productService: ProductService,
+    private _ModalService: NgbModal,
+    private _ToastrService: ToastrService
+  ) {}
   /*-----------------------------------------------------------------*/
   // Ng OnInit
   ngOnInit(): void {
@@ -40,13 +43,18 @@ export class UserWishlistComponent implements OnInit{
     this.apiError = null;
     this._WishListService.getWishListByUserFromClaims().subscribe({
       next: (response: any) => {
-        this.wishList= response;
-        this. wishListItems = this.wishList.wishListItems;
+        this.wishList = response;
+        this.wishListItems = this.wishList.wishListItems;
         this.wishListLoading = false;
-       // this.noItems = this.wishListItems.length === 0;
-       console.log(response)
+        this.noItems = this.wishListItems.length === 0;
       },
       error: (err) => {
+        if (err.status === 404) {
+          this.noItems = true;
+          this.wishListLoading = false;
+          this.apiError = null;
+          return;
+        }
         this.apiError = 'Failed to load WishList, Please try again.';
         this._ToastrService.error('Failed to load WishList, Please try again.');
         this.wishListLoading = false;
@@ -59,7 +67,7 @@ export class UserWishlistComponent implements OnInit{
     const modalRef = this._ModalService.open(ImgModalComponent);
     modalRef.componentInstance.model = item;
   }
-   /*-----------------------------------------------------------------*/
+  /*-----------------------------------------------------------------*/
   // Open Delete Item Confirmation Modal
   openDeleteItemConfirmationModal(itemId: number): void {
     const modalRef = this._ModalService.open(DeleteConfirmationModalComponent);
@@ -78,27 +86,22 @@ export class UserWishlistComponent implements OnInit{
       this.deleteAllItems();
     });
   }
- 
   /*-----------------------------------------------------------------*/
   // Delete Item
   deleteItem(itemId: number): void {
     const item = this.wishListItems.find((item) => item.productId === itemId);
     if (item) {
-      console.log(itemId);
-        item.deleting = true;
+      item.deleting = true;
       this._WishListService.deleteProItem(itemId).subscribe({
         next: () => {
-         
           this.wishListItems = this.wishListItems.filter((item) => item.productId !== itemId);
-          console.log(this.wishListItems);
           this._ToastrService.success('Item removed successfully');
           this.wishList.wishListItems.length--;
           this.noItems = this.wishListItems.length === 0;
-        
         },
         error: (err) => {
-        console.log( this._ToastrService.error(`${err.message}Failed to remove item, Please try again.`));
-         
+          console.log(this._ToastrService.error(`${err.message}Failed to remove item, Please try again.`));
+
           item.deleting = false;
         },
       });
@@ -124,23 +127,20 @@ export class UserWishlistComponent implements OnInit{
     });
   }
   /*-----------------------------------------------------------------*/
-   /*-----------------------------------------------------------------*/
   // Open Product Details Modal
   openProductDetailsModal(productId: number): void {
     this.productLoading = true;
- 
-    this._productService. getSpecificProductWithDetails(productId).subscribe({
-    next: (response:any) => {
-      this.productLoading = false;
-      const modalRef = this._ModalService.open(ProductDetailsModalComponent, { size: 'xl' });
-      modalRef.componentInstance.product = response;
-    
-    },
-    error: (err) => {
-    
-      this._ToastrService.error('Failed get producr data');
-    },
-  });
-   
+
+    this._productService.getSpecificProductWithDetails(productId).subscribe({
+      next: (response: any) => {
+        this.productLoading = false;
+        const modalRef = this._ModalService.open(ProductDetailsModalComponent, { size: 'xl' });
+        modalRef.componentInstance.product = response;
+      },
+      error: (err) => {
+        this._ToastrService.error('Failed get producr data');
+      },
+    });
   }
+  /*-----------------------------------------------------------------*/
 }

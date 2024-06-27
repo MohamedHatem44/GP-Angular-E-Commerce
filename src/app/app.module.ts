@@ -72,6 +72,7 @@ import { UserCartSkeletonLoaderComponent } from './components/user/user-cart-ske
 import { AdminProductDetailsLoaderComponent } from './components/admin/admin-product-details-loader/admin-product-details-loader.component';
 import { AdminProductReviewsComponent } from './components/admin/admin-product-reviews/admin-product-reviews.component';
 import { AdminProductReviewModalComponent } from './components/admin/admin-product-review-modal/admin-product-review-modal.component';
+import { CategoriesSliderComponent } from './components/home/categories-slider/categories-slider.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -138,6 +139,7 @@ import { AdminProductReviewModalComponent } from './components/admin/admin-produ
     AdminProductDetailsLoaderComponent,
     AdminProductReviewsComponent,
     AdminProductReviewModalComponent,
+    CategoriesSliderComponent,
   ],
   imports: [
     BrowserModule,
@@ -152,7 +154,7 @@ import { AdminProductReviewModalComponent } from './components/admin/admin-produ
       timeOut: 5000,
       progressBar: true,
       progressAnimation: 'increasing',
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
   ],
