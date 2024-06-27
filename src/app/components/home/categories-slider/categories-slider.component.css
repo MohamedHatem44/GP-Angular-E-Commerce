@@ -4,11 +4,13 @@
   border: 1px solid #aaaaaa;
   border-radius: 10px;
   transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-  height: 160px;
+  height: 180px;
+  padding: 2px
 }
 
 h3 {
   background-color: #aaaaaa;
+  color: white
 }
 
 .cardCategory:hover {
@@ -49,9 +51,9 @@ h5 {
   color: white;
 }
 
-.catImg {
-  width: 100px;
-  height: 100px;
+img {
+  width: 100%;
+  width: 100%
 }
 
 @media (max-width: 576px) {
