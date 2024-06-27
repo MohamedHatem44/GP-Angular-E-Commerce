@@ -4,22 +4,24 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 import { User } from '../models/user';
+import { CartService } from './cart.service';
 /*--------------------------------------------------------------------*/
 @Injectable({
   providedIn: 'root',
 })
 /*--------------------------------------------------------------------*/
 export class AuthService {
-  private baseUrl = 'http://localhost:5185/api/Auth'; // We need to remove "Auth"
-  private baseApiUrl = 'http://localhost:5185/api';
-  userToken = new BehaviorSubject<string | null>(null);
+  private baseUrl = 'http://localhost:5185/api/Auth';
+  public userToken: BehaviorSubject<string | null>;
   /*------------------------------------------------------------------*/
   // Ctor
-  constructor(private http: HttpClient, private _Router: Router) {
-    const token = localStorage.getItem('token');
-    if (token !== null) {
-      this.userToken.next(token);
-    }
+  constructor(private http: HttpClient, private _Router: Router, private _CartService: CartService) {
+    // const token = localStorage.getItem('token');
+    // if (token !== null) {
+    //   this.userToken.next(token);
+    // }
+
+    this.userToken = new BehaviorSubject<string | null>(localStorage.getItem('token'));
   }
   /*------------------------------------------------------------------*/
   // Getter for user data
@@ -44,6 +46,9 @@ export class AuthService {
       tap((response: any) => {
         localStorage.setItem('token', response.token);
         this.userToken.next(response.token);
+
+        // Update cart item count for the logged-in user
+        this._CartService.updateCartItemCount();
       })
     );
   }
@@ -62,6 +67,7 @@ export class AuthService {
   // logout
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('cartItemCount');
     this.userToken.next(null);
     this._Router.navigate(['users/login']);
   }

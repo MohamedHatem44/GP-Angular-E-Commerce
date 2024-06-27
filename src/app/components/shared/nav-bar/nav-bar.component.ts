@@ -2,6 +2,8 @@ import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { JwtService } from '../../../services/jwt.service';
+import { CartService } from '../../../services/cart.service';
+import { Subscription } from 'rxjs';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-nav-bar',
@@ -11,6 +13,10 @@ import { JwtService } from '../../../services/jwt.service';
 /*--------------------------------------------------------------------*/
 export class NavBarComponent implements OnInit {
   /*--------------------------------------------------------------------*/
+  cartItemCount: number = 0;
+  wishlistItemCount: number = 0;
+  private cartCountSubscription: Subscription;
+
   isLogin: boolean = false;
   isAdmin: boolean = false;
   isUser: boolean = false;
@@ -22,6 +28,7 @@ export class NavBarComponent implements OnInit {
   // Ctor
   constructor(
     private _AuthService: AuthService,
+    private _CartService: CartService,
     private _JwtService: JwtService,
     private _Router: Router,
     private _renderer: Renderer2,
@@ -30,6 +37,13 @@ export class NavBarComponent implements OnInit {
   /*--------------------------------------------------------------------*/
   ngOnInit(): void {
     this.updateLoginStatus();
+    this.subscribeToCartItemCount();
+  }
+  /*--------------------------------------------------------------------*/
+  ngOnDestroy(): void {
+    if (this.cartCountSubscription) {
+      this.cartCountSubscription.unsubscribe();
+    }
   }
   /*--------------------------------------------------------------------*/
   // Method to Update Login Status
@@ -56,12 +70,6 @@ export class NavBarComponent implements OnInit {
     });
   }
   /*--------------------------------------------------------------------*/
-  // Method to log out
-  logOut() {
-    this._AuthService.logout();
-  }
-  /*-----------------------------------------------------------------*/
-
   isActiveRoute(route: string) {
     return this._Router.url.includes(route);
   }
@@ -89,4 +97,17 @@ export class NavBarComponent implements OnInit {
     }
   }
   /*--------------------------------------------------------------------*/
+  private subscribeToCartItemCount() {
+    this.cartCountSubscription = this._CartService.cartItemCount$.subscribe(
+      (count) => (this.cartItemCount = count),
+      (error) => console.error('Error subscribing to cart item count:', error)
+    );
+  }
+  /*--------------------------------------------------------------------*/
+  // Method to log out
+  logOut() {
+    this._AuthService.logout();
+    this._CartService.clearCartItemCount();
+  }
+  /*-----------------------------------------------------------------*/
 }

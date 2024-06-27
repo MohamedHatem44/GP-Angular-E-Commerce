@@ -115,45 +115,7 @@ export class ProductsComponent implements OnInit {
     });
   }
   /*-----------------------------------------------------------------*/
-  // Load Products
-  async loadProducts(
-    page: number,
-    searchParam?: string,
-    categoryId?: number,
-    brandId?: number,
-    colorId?: number,
-    sizeId?: number,
-    minPrice?: number,
-    maxPrice?: number
-  ): Promise<void> {
-    this.productsLoading = true;
-    this.apiError = null;
-    (
-      await this._ProductService.getAllProductsWithPaginationForUser(page, this.pageSize, searchParam, categoryId, brandId, colorId, sizeId, minPrice, maxPrice)
-    ).subscribe({
-      next: (response: PagedResponse<ExtendedProduct>) => {
-        this.products = response.items.map((product) => ({
-          ...product,
-          isInWishList: this.isProductInWishList(product.id),
-          isWishListLoading: false,
-        }));
-        this.currentPage = response.currentPage;
-        this.totalPages = response.totalPages;
-        this.pageSize = response.pageSize;
-        this.totalCount = response.totalCount;
-        this.updateEntryRange();
-        this.productsLoading = false;
-        this.noProducts = this.products.length === 0;
-      },
-      error: (err) => {
-        console.log(err);
-        this.apiError = 'Failed to load Products, Please try again.';
-        this._ToastrService.error('Failed to load Products, Please try again.');
-        this.productsLoading = false;
-      },
-    });
-  }
-  /*------------------------------------------------------------------*/
+
   // Load Categories
   private loadCategories(): void {
     this.categoriesLoading = true;
@@ -343,4 +305,45 @@ export class ProductsComponent implements OnInit {
     return this.wishListItems.some((item) => item.productId === productId);
   }
   /*-----------------------------------------------------------------*/
+  // Load Products
+  loadProducts(
+    page: number,
+    searchParam?: string,
+    categoryId?: number,
+    brandId?: number,
+    colorId?: number,
+    sizeId?: number,
+    minPrice?: number,
+    maxPrice?: number
+  ): void {
+    this.productsLoading = true;
+    this.apiError = null;
+    console.log(minPrice, maxPrice);
+    this._ProductService
+      .getAllProductsWithPaginationForUser(page, this.pageSize, searchParam, categoryId, brandId, colorId, sizeId, minPrice, maxPrice)
+      .subscribe({
+        next: (response: PagedResponse<ExtendedProduct>) => {
+          console.log(response.items);
+          this.products = response.items.map((product) => ({
+            ...product,
+            isInWishList: this.isProductInWishList(product.id),
+            isWishListLoading: false,
+          }));
+          this.currentPage = response.currentPage;
+          this.totalPages = response.totalPages;
+          this.pageSize = response.pageSize;
+          this.totalCount = response.totalCount;
+          this.updateEntryRange();
+          this.productsLoading = false;
+          this.noProducts = this.products.length === 0;
+        },
+        error: (err) => {
+          console.log(err);
+          this.apiError = 'Failed to load Products, Please try again.';
+          this._ToastrService.error('Failed to load Products, Please try again.');
+          this.productsLoading = false;
+        },
+      });
+  }
+  /*------------------------------------------------------------------*/
 }

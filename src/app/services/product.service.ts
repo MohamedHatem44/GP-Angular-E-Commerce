@@ -42,7 +42,7 @@ export class ProductService {
   /*------------------------------------------------------------------*/
   // Get All Products With Details With Pagination For User
   // Get: api/Products/AllProductsForUser
-  async getAllProductsWithPaginationForUser(
+  getAllProductsWithPaginationForUser(
     pageNumber: number,
     pageSize: number,
     searchParam?: string,
@@ -52,7 +52,7 @@ export class ProductService {
     sizeId?: number,
     minPrice?: number,
     maxPrice?: number
-  ): Promise<Observable<PagedResponse<Product>>> {
+  ): Observable<PagedResponse<Product>> {
     let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
 
     if (searchParam) {
@@ -82,7 +82,7 @@ export class ProductService {
     if (maxPrice !== undefined && maxPrice !== null) {
       params = params.set('maxPrice', maxPrice);
     }
-    return await this._HttpClient.get<PagedResponse<Product>>(`${this.baseUrl}/AllProductsForUser`, { params }).pipe(delay(300));
+    return this._HttpClient.get<PagedResponse<Product>>(`${this.baseUrl}/AllProductsForUser`, { params }).pipe(delay(300));
   }
   /*------------------------------------------------------------------*/
   // Get All Products Without Details
