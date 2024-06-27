@@ -34,5 +34,8 @@ export class ReviewService {
   /*------------------------------------------------------------------*/
   // Create a New Review
   // Post: api/Reviews
+  createReview(review: Review): Observable<Review> {
+    return this._HttpClient.post<Review>(this.baseUrl, review).pipe(delay(3000));
+  }
   /*------------------------------------------------------------------*/
 }

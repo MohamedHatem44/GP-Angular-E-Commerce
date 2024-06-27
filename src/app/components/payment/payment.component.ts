@@ -84,18 +84,15 @@ export class PaymentComponent implements OnInit {
   async onSubmit() {
     this.errorMessage = null;
     this.successMessage = null;
-
     if (this.cardName == '') {
       this.errorMessage = 'Card Name Is Required';
       return;
     }
-
     if (!this.stripe || !this.clientSecret || !this.cardElement) {
       console.log('Stripe.js has not loaded or client secret is missing');
       this.errorMessage = 'Error Occurred While Payment Process, Please Try Again Later...';
       return;
     }
-
     if (!this.validateForm()) {
       return;
     }
