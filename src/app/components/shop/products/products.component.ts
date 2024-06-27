@@ -115,7 +115,6 @@ export class ProductsComponent implements OnInit {
     });
   }
   /*-----------------------------------------------------------------*/
-
   // Load Categories
   private loadCategories(): void {
     this.categoriesLoading = true;
