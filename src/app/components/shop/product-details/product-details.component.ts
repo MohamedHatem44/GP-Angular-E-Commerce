@@ -5,18 +5,22 @@ import { ReviewService } from '../../../services/review.service';
 import { CartService } from '../../../services/cart.service';
 import { ToastrService } from 'ngx-toastr';
 import { Cart } from '../../../models/cart';
-import { Product } from '../../../models/product';
+import { ExtendedProduct, Product } from '../../../models/product';
 import { Review } from '../../../models/review';
 import { Category } from '../../../models/category';
-
+import { WishListService } from '../../../services/wishList.service';
+import { WishList } from '../../../models/wishList';
+/*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css'],
 })
+/*--------------------------------------------------------------------*/
 export class ProductDetailsComponent implements OnInit {
   product: Product;
   category: Category;
+  extendedProduct: ExtendedProduct;
   reviews: Review[] = [];
   productId: number;
   selectedColorId: number;
@@ -28,29 +32,54 @@ export class ProductDetailsComponent implements OnInit {
   apiError: string | null = null;
   selectedTab: string = 'description';
   allProductsParCategory: Product[] = [];
+  allProducts: ExtendedProduct[] = [];
   isLoading: boolean = false;
   productsInSlides: any[] = [];
   iterationIncrement: number = 0;
   error: string = '';
 
+  // WishList
+  wishList: any;
+  wishListItems: any[] = [];
+  wishListApiError: string | null = null;
+  /*------------------------------------------------------------------*/
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private _ReviewService: ReviewService,
     private _CartService: CartService,
+    private _WishListService: WishListService,
     private _ToastrService: ToastrService
   ) {}
-
+  /*-----------------------------------------------------------------*/
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.productId = +params['id'];
       this.getProductDetails();
     });
+    this.loadWishList();
     this.getProductDetails();
     this.loadProductReviews(this.productId);
     this.onResize(null);
   }
-
+  /*-----------------------------------------------------------------*/
+  // Load WishList
+  private async loadWishList(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this._WishListService.getWishListByUserFromClaims().subscribe({
+        next: (response: any) => {
+          this.wishList = response;
+          this.wishListItems = response.wishListItems;
+          resolve();
+        },
+        error: (err) => {
+          this.wishListApiError = 'Failed to load WishList, Please try again.';
+          reject(err);
+        },
+      });
+    });
+  }
+  /*------------------------------------------------------------------*/
   getProductDetails() {
     this.productService.getSpecificProductWithDetails(this.productId).subscribe(
       (data) => {
@@ -63,6 +92,7 @@ export class ProductDetailsComponent implements OnInit {
     );
   }
 
+  /*------------------------------------------------------------------*/
   increaseQuantity(): void {
     const maxQuantity = 20;
     if (this.quantity >= maxQuantity) {
@@ -71,13 +101,13 @@ export class ProductDetailsComponent implements OnInit {
     }
     this.quantity++;
   }
-
+  /*------------------------------------------------------------------*/
   decreaseQuantity(): void {
     if (this.quantity > 1) {
       this.quantity--;
     }
   }
-
+  /*------------------------------------------------------------------*/
   addToCart() {
     this.addToCartLoading = true;
     if (!this.selectedColorId || !this.selectedSizeId) {
@@ -182,4 +212,40 @@ export class ProductDetailsComponent implements OnInit {
     return `path_to_images/${imagePath}`;
   }
   /*------------------------------------------------------------------*/
+  // Add / Remove from WishList
+  addToWishList(extendedProduct: ExtendedProduct) {
+    extendedProduct.isWishListLoading = true;
+    const itemIdToAdd: WishList = {
+      productId: extendedProduct.id,
+    };
+    const isCurrentlyInWishList = extendedProduct.isInWishList;
+    this._WishListService.AddAndRemoveFromWishList(itemIdToAdd).subscribe({
+      next: (response: any) => {
+        if (isCurrentlyInWishList) {
+          this._ToastrService.success('Product removed from wish list successfully');
+        } else {
+          this._ToastrService.success('Product added to wish list successfully');
+        }
+        extendedProduct.isWishListLoading = false;
+        this.updateProductWishListState(extendedProduct);
+      },
+      error: (error) => {
+        if (error.status === 400) {
+          this._ToastrService.error('This Product Not Found');
+        } else {
+          this._ToastrService.error('Failed to add/remove item to/from wish list');
+        }
+        extendedProduct.isWishListLoading = false;
+      },
+    });
+  }
+  /*-----------------------------------------------------------------*/
+  private updateProductWishListState(extendedProduct: ExtendedProduct): void {
+    this.extendedProduct.isInWishList = !this.extendedProduct.isInWishList;
+  }
+  /*-----------------------------------------------------------------*/
+  private isProductInWishList(productId: number): boolean {
+    return this.wishListItems.some((item) => item.productId === productId);
+  }
+  /*-----------------------------------------------------------------*/
 }

@@ -15,25 +15,32 @@ export class CategoriesSliderComponent {
   iterationIncrement: number = 3;
   isLoading: boolean = false;
   error: string = '';
-
+  /*------------------------------------------------------------------*/
+  // Ctor
   constructor(private _CategoryService: CategoryService) {}
-
+  /*------------------------------------------------------------------*/
   ngOnInit(): void {
     this.onResize(null);
     this.getAllCategories();
   }
-
+  /*------------------------------------------------------------------*/
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    this.iterationIncrement = window.innerWidth < 500 ? 1 : 3;
+    if (window.innerWidth < 801) {
+      this.iterationIncrement = 1;
+    } else if (window.innerWidth >= 801 && window.innerWidth < 1100) {
+      this.iterationIncrement = 2;
+    } else {
+      this.iterationIncrement = 3;
+    }
     this.processCategoriesForSlider();
   }
-
+  /*------------------------------------------------------------------*/
   async getAllCategories(): Promise<void> {
     try {
       this.isLoading = true;
-      const resppp: any = await this._CategoryService.getAllCategories().toPromise();
-      const res = resppp.categories;
+      const response: any = await this._CategoryService.getAllCategories().toPromise();
+      const res = response.categories;
       this.allCategories = Array.isArray(res) ? res : [res];
       this.processCategoriesForSlider();
       this.isLoading = false;
@@ -43,7 +50,7 @@ export class CategoriesSliderComponent {
       this.error = err.error.message;
     }
   }
-
+  /*------------------------------------------------------------------*/
   processCategoriesForSlider(): void {
     this.categoriesInSlides = [];
     for (let i = 0; i < this.allCategories.length; i += this.iterationIncrement) {
@@ -51,8 +58,5 @@ export class CategoriesSliderComponent {
       this.categoriesInSlides.push(slice);
     }
   }
-
-  getImageUrl(imagePath: string): string {
-    return `path_to_images/${imagePath}`;
-  }
+  /*------------------------------------------------------------------*/
 }

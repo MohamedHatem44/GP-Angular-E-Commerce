@@ -1,57 +1,58 @@
+/*--------------------------------------------*/
 .cardCategory {
   cursor: pointer;
   background-color: #ffffff;
   border: 1px solid #aaaaaa;
   border-radius: 10px;
   transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-  height: 180px;
-  padding: 2px
+  height: 250px;
+  padding: 2px;
 }
-
+/*--------------------------------------------*/
 .cardCategory:hover {
   background-color: #aaaaaa;
   border-color: #aaaaaa;
   color: #ffffff;
 }
-
+/*--------------------------------------------*/
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   background-color: #aaaaaa;
   border-radius: 29%;
 }
-
+/*--------------------------------------------*/
 .cardCategory .card-img-top {
   object-fit: cover;
 }
-
+/*--------------------------------------------*/
 .cardCategory .card-body {
   padding: 10px;
 }
-
+/*--------------------------------------------*/
 .carousel-inner {
   display: flex;
   flex-wrap: nowrap;
 }
-
+/*--------------------------------------------*/
 .carousel-item {
   flex: 0 0 auto;
   transition: transform 0.6s ease;
 }
-
+/*--------------------------------------------*/
 h5 {
   color: #aaaaaa;
 }
-
+/*--------------------------------------------*/
 .cardCategory:hover h5 {
   color: white;
 }
-
+/*--------------------------------------------*/
 img {
   width: 100%;
-  width: 100%
+  width: 100%;
 }
-
-@media (max-width: 576px) {
+/*--------------------------------------------*/
+@media (max-width: 800px) {
   .carousel-item .row {
     display: flex;
     flex-wrap: nowrap;
@@ -62,10 +63,18 @@ img {
     max-width: 100%;
   }
 }
-
-@media (min-width: 577px) and (max-width: 768px) {
+/*--------------------------------------------*/
+@media (min-width: 801px) and (max-width: 1100px) {
   .carousel-item .col-md-4 {
     flex: 0 0 50%;
     max-width: 50%;
   }
 }
+/*--------------------------------------------*/
+@media (min-width: 1100px) {
+  .carousel-item .col-lg-4 {
+    flex: 0 0 33.333%;
+    max-width: 33.333%;
+  }
+}
+/*--------------------------------------------*/

@@ -52,6 +52,11 @@
 }
 
 /*--------------------------------------------*/
+.nav-tabs .nav-item .nav-link {
+  cursor: pointer;
+}
+
+/*--------------------------------------------*/
 .rating {
   color: #dddddd;
 }
@@ -106,6 +111,7 @@
   }
 }
 
+/*--------------------------------------------*/
 /* //////////////////////////////////////Slider//////////////////////////////////////////// */
 .cardCategory {
   cursor: pointer;
@@ -125,6 +131,7 @@
 
 img.catImg {
   height: 80% !important;
+  width: 98% !important;
 }
 
 .carousel-control-prev-icon,

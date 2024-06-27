@@ -27,7 +27,7 @@ export class CategoryService {
   // Get All Categories Without Products
   // Get: api/Categories
   getAllCategories(): Observable<{ categoriesCount: number; categories: Category[] }> {
-    return this._HttpClient.get<{ categoriesCount: number; categories: Category[] }>(this.baseUrl).pipe(delay(3000));
+    return this._HttpClient.get<{ categoriesCount: number; categories: Category[] }>(this.baseUrl).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get All Categories With Products

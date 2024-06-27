@@ -145,6 +145,7 @@
         <!-- Start of Search -->
         <div class="col-12 mb-5">
           <div class="input-group">
+            <button class="btn btn-outline-secondary" (click)="resetFilters()"><i class="fa fa-times"></i> Reset</button>
             <input type="text" class="form-control" placeholder="Search ..." [(ngModel)]="searchInput" name="productName" (keyup)="searchProducts()" />
             <div class="btn btn-outline-secondary"><i class="fa fa-search"></i> Search</div>
           </div>

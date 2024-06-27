@@ -1,6 +1,6 @@
 <!-------------------------------------------------------------------------------------->
 <!-- Start of Product Details body -->
-<div class="container py-4 px-5">
+<div class="container py-4 px-5 mt-5">
   <!------------------------------------------------------------------------------------>
   <div class="row wrapper">
     <!-- Start of Image -->
@@ -79,6 +79,12 @@
           <button class="custombtn my-3 py-2" [disabled]="quantity < 1" (click)="addToCart()">
             <i *ngIf="addToCartLoading" class="fas fa-spinner fa-spin py-1"></i>
             <span *ngIf="!addToCartLoading"> Add To Cart</span>
+          </button>
+          <button (click)="addToWishList(product)" class="btn btn-light my-3 py-2">
+            <i *ngIf="!product.isWishListLoading && product.isInWishList" class="fa-solid fa-heart text-dark fa-xl"></i>
+            <i *ngIf="!product.isWishListLoading && !product.isInWishList"
+              class="fa-regular fa-heart text-dark fa-xl"></i>
+            <i *ngIf="product.isWishListLoading" class="fas fa-spinner fa-spin fa-xl"></i>
           </button>
         </div>
       </div>
@@ -218,11 +224,11 @@
       <div class="carousel-inner">
         <div class="carousel-item" *ngFor="let slide of productsInSlides; let i = index" [class.active]="i === 0">
           <div class="row">
-            <div class="col-12 col-md-4" *ngFor="let product of slide">
+            <div class="col-12 col-md-4" style="width:25%" *ngFor="let product of slide">
               <div class="card">
                 <div [routerLink]="['/productDetails', product.id]"
                   class="card-body cardCategory text-center rounded-2 text-capitalize d-flex flex-column align-items-center  w-100">
-                  <img [src]="product.imageUrl" class="w-100 rounded-2 catImg" />
+                  <img [src]="product.imageUrl" class="rounded-2 catImg" />
                   <h5 class="card-title m-auto">{{ product.title }}</h5>
                 </div>
               </div>
