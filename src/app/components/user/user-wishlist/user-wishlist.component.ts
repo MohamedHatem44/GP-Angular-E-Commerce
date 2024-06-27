@@ -49,6 +49,12 @@ export class UserWishlistComponent implements OnInit {
         this.noItems = this.wishListItems.length === 0;
       },
       error: (err) => {
+        if (err.status === 404) {
+          this.noItems = true;
+          this.wishListLoading = false;
+          this.apiError = null;
+          return;
+        }
         this.apiError = 'Failed to load WishList, Please try again.';
         this._ToastrService.error('Failed to load WishList, Please try again.');
         this.wishListLoading = false;
