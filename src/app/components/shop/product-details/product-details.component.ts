@@ -3,10 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
 import { ReviewService } from '../../../services/review.service';
 import { CartService } from '../../../services/cart.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Cart } from '../../../models/cart';
 import { Product } from '../../../models/product';
+import { Review } from '../../../models/review';
 
 @Component({
   selector: 'app-product-details',
@@ -15,17 +15,26 @@ import { Product } from '../../../models/product';
 })
 export class ProductDetailsComponent implements OnInit {
   product: Product;
-  reviews: any[] = [];
+  reviews: Review[] = [];
   productId: number;
   selectedColorId: number;
   selectedSizeId: number;
   quantity: number = 1;
   addToCartLoading: boolean = false;
+  reviewsLoading: boolean;
+  productLoading: boolean = false;
+  apiError: string | null = null;
+  selectedTab: string = 'description';
+  allProducts: Product[] = [];
+  isLoading: boolean = false;
+  itemsPerPage: number = 9;
+  productsInSlides: any[] = [];
+  iterationIncrement: number = 0;
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private reviewService: ReviewService,
+    private _ReviewService: ReviewService,
     private _CartService: CartService,
     private _ToastrService: ToastrService
   ) {}
@@ -33,6 +42,7 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.productId = Number(this.route.snapshot.paramMap.get('id'));
     this.getProductDetails();
+    this.loadProductReviews(this.productId);
   }
 
   getProductDetails() {
@@ -103,4 +113,26 @@ export class ProductDetailsComponent implements OnInit {
       },
     });
   }
+  /*------------------------------------------------------------------*/
+  // Get Reviews By Product Id
+  private loadProductReviews(productId: number): void {
+    this.reviewsLoading = true;
+    this._ReviewService.getAllReviewsByProductId(productId).subscribe({
+      next: (response: any) => {
+        this.reviews = response;
+        this.reviewsLoading = false;
+      },
+      error: (error) => {
+        this._ToastrService.error('Error fetching Product Reviews by Id, Please try again.');
+        this.reviewsLoading = false;
+      },
+    });
+  }
+  /*------------------------------------------------------------------*/
+  selectTab(tab: string) {
+    this.selectedTab = tab;
+  }
+  /*------------------------------------------------------------------*/
+
+  /*------------------------------------------------------------------*/
 }
