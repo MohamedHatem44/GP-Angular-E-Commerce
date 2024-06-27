@@ -6,12 +6,13 @@ import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
 import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
 import { ProductDetailsModalComponent } from '../../shop/product-details-modal/product-details-modal.component';
 import { ProductService } from '../../../services/product.service';
-
+/*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-user-wishlist',
   templateUrl: './user-wishlist.component.html',
   styleUrl: './user-wishlist.component.css',
 })
+/*--------------------------------------------------------------------*/
 export class UserWishlistComponent implements OnInit {
   // Component properties
   wishListLoading: boolean = false;
@@ -22,7 +23,6 @@ export class UserWishlistComponent implements OnInit {
   apiError: string | null = null;
   noItems: boolean = false;
   deleteAllLoading: boolean = false;
-
   /*-----------------------------------------------------------------*/
   // Ctor
   constructor(
@@ -47,7 +47,6 @@ export class UserWishlistComponent implements OnInit {
         this.wishListItems = this.wishList.wishListItems;
         this.wishListLoading = false;
         this.noItems = this.wishListItems.length === 0;
-        console.log(response);
       },
       error: (err) => {
         this.apiError = 'Failed to load WishList, Please try again.';
@@ -81,7 +80,6 @@ export class UserWishlistComponent implements OnInit {
       this.deleteAllItems();
     });
   }
-
   /*-----------------------------------------------------------------*/
   // Delete Item
   deleteItem(itemId: number): void {
@@ -125,7 +123,6 @@ export class UserWishlistComponent implements OnInit {
     });
   }
   /*-----------------------------------------------------------------*/
-  /*-----------------------------------------------------------------*/
   // Open Product Details Modal
   openProductDetailsModal(productId: number): void {
     this.productLoading = true;
@@ -141,4 +138,5 @@ export class UserWishlistComponent implements OnInit {
       },
     });
   }
+  /*-----------------------------------------------------------------*/
 }
