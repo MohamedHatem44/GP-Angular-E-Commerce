@@ -168,12 +168,15 @@
               <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                 <img class="img-fluid w-100 product-image" [src]="product.imageUrl" alt="" />
                 <div class="overlay">
+                  <button class="btn btn-light" (click)="openProductDetailsModal(product)">
+                    <i class="fa-solid fa-cart-shopping fa-xl"></i>
+                  </button>
+                  <button class="btn btn-light text-dark overlay-btn fw-semibold fs-5" [routerLink]="['/productDetails', product.id]">View</button>
                   <button (click)="addToWishList(product)" class="btn btn-light">
                     <i *ngIf="!product.isWishListLoading && product.isInWishList" class="fa-solid fa-heart text-dark fa-xl"></i>
                     <i *ngIf="!product.isWishListLoading && !product.isInWishList" class="fa-regular fa-heart text-dark fa-xl"></i>
                     <i *ngIf="product.isWishListLoading" class="fas fa-spinner fa-spin fa-xl"></i>
                   </button>
-                  <button class="btn btn-light text-dark overlay-btn fw-semibold" (click)="openProductDetailsModal(product)">Quick View</button>
                 </div>
               </div>
               <a style="text-decoration: none; cursor: pointer" class="text-dark-emphasis" [routerLink]="['/productDetails', product.id]">
