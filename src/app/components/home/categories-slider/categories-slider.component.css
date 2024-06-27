@@ -1,19 +1,29 @@
 .cardCategory {
   cursor: pointer;
   background-color: #ffffff;
-  border: 1px solid #198754;
+  border: 1px solid #aaaaaa;
   border-radius: 10px;
   transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  height: 160px;
+}
+
+h3 {
+  background-color: #aaaaaa;
 }
 
 .cardCategory:hover {
-  background-color: #198754;
-  border-color: #198754;
+  background-color: #aaaaaa;
+  border-color: #aaaaaa;
   color: #ffffff;
 }
 
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #aaaaaa;
+  border-radius: 29%;
+}
+
 .cardCategory .card-img-top {
-  height: 150px;
   object-fit: cover;
 }
 
@@ -41,6 +51,7 @@
     display: flex;
     flex-wrap: nowrap;
   }
+
   .carousel-item .col-12 {
     flex: 0 0 100%;
     max-width: 100%;

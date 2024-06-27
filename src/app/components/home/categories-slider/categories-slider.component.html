@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-    <h3 class="text-center text-main bg-success text-light rounded-2 p-2 fw-bold fs-4">Categories</h3>
+    <h3 class="text-center text-main text-light p-2 fw-bold fs-4 p-3">Categories</h3>
 
     <!-- categories slider -->
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -9,9 +9,9 @@
           <div class="row">
             <div class="col-12 col-md-4" *ngFor="let category of slide">
               <div class="card">
-                <div class="card-body cardCategory text-center rounded-2 text-capitalize d-flex">
-                  <img [src]="category.imageUrl" class="w-50 catImg" />
-                  <h5 class="card-title ms-4 mt-4">{{ category.name }}</h5>
+                <div class="card-body cardCategory text-center rounded-2 text-capitalize d-flex ">
+                  <img [src]="category.imageUrl" class="w-50 h-100 rounded-2  catImg" />
+                  <h5 class="card-title m-auto mt-5">{{ category.name }}</h5>
                 </div>
               </div>
             </div>
@@ -20,11 +20,13 @@
       </div>
 
       <!-- Navigation buttons -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
       </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
