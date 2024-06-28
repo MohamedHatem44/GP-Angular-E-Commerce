@@ -3,6 +3,7 @@
   border-radius: 7px 7px 7px 7px;
   box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
 }
+
 /*--------------------------------------------*/
 .img-responsive {
   max-width: 100%;
@@ -12,6 +13,7 @@
   border-top-left-radius: 7px;
   border-bottom-left-radius: 7px;
 }
+
 /*--------------------------------------------*/
 @media (max-width: 992px) {
   .img-responsive {
@@ -21,11 +23,13 @@
     border-bottom-right-radius: 0px;
   }
 }
+
 /*--------------------------------------------*/
 .color-bullets {
   display: flex;
   gap: 10px;
 }
+
 /*--------------------------------------------*/
 .color-bullet {
   width: 25px;
@@ -33,6 +37,7 @@
   border-radius: 50%;
   display: inline-block;
 }
+
 /*--------------------------------------------*/
 .size-badge {
   display: inline-block;
@@ -45,23 +50,28 @@
   color: #333;
   border: 1px solid #ccc;
 }
+
 /*--------------------------------------------*/
 .nav-tabs .nav-item .nav-link {
   cursor: pointer;
 }
+
 /*--------------------------------------------*/
 .rating {
   color: #dddddd;
 }
+
 /*--------------------------------------------*/
 .rating .fa-star.checked {
   color: #f0c419;
 }
+
 /*--------------------------------------------*/
 .rating-value {
   margin-left: 5px;
   font-weight: bold;
 }
+
 /*--------------------------------------------*/
 .custombtn {
   background-color: #000;
@@ -71,10 +81,12 @@
   font-size: 0.9rem;
   cursor: pointer;
 }
+
 /*--------------------------------------------*/
 .custombtn:hover {
   color: rgb(187, 187, 187);
 }
+
 /*--------------------------------------------*/
 .skeleton-loader {
   width: 100%;
@@ -83,6 +95,7 @@
   background-color: #e0e0e0;
   animation: skeleton-loading 1.5s infinite linear;
 }
+
 /*--------------------------------------------*/
 @keyframes skeleton-loading {
   0% {
@@ -97,5 +110,77 @@
     background-color: #e7e7e7;
   }
 }
+
 /*--------------------------------------------*/
 /* //////////////////////////////////////Slider//////////////////////////////////////////// */
+.cardCategory {
+  cursor: pointer;
+  background-color: #ffffff;
+  border: 1px solid #aaaaaa;
+  border-radius: 10px;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  height: 350px;
+  padding: 2px
+}
+
+.cardCategory:hover {
+  background-color: #aaaaaa;
+  border-color: #aaaaaa;
+  color: #ffffff;
+}
+
+img.catImg {
+  height: 80% !important;
+  width: 98% !important;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #aaaaaa;
+  border-radius: 29%;
+}
+
+.cardCategory .card-img-top {
+  object-fit: cover;
+}
+
+.cardCategory .card-body {
+  padding: 10px;
+}
+
+.carousel-inner {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  transition: transform 0.6s ease;
+}
+
+h5 {
+  color: #aaaaaa;
+}
+
+.cardCategory:hover h5 {
+  color: white;
+}
+
+@media (max-width: 576px) {
+  .carousel-item .row {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .carousel-item .col-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .carousel-item .col-md-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
