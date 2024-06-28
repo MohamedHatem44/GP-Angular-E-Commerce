@@ -185,3 +185,17 @@ h5 {
     max-width: 50%;
   }
 }
+
+/* add review form */
+.container {
+  max-width: 85%;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.text-danger {
+  font-size: 0.875em;
+}

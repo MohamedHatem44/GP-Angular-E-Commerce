@@ -10,24 +10,28 @@ import { Review } from '../../../models/review';
 import { Category } from '../../../models/category';
 import { WishListService } from '../../../services/wishList.service';
 import { WishList } from '../../../models/wishList';
-/*--------------------------------------------------------------------*/
+import { switchMap } from 'rxjs/operators'; // Import switchMap operator
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../../../services/user.service';
+
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css'],
 })
-/*--------------------------------------------------------------------*/
 export class ProductDetailsComponent implements OnInit {
   product: Product;
   category: Category;
   extendedProduct: ExtendedProduct;
   reviews: Review[] = [];
+  myReviews: Review[] = [];
   productId: number;
   selectedColorId: number;
   selectedSizeId: number;
   quantity: number = 1;
   addToCartLoading: boolean = false;
   reviewsLoading: boolean;
+  myReviewsLoading: boolean;
   productLoading: boolean = false;
   apiError: string | null = null;
   selectedTab: string = 'description';
@@ -42,28 +46,60 @@ export class ProductDetailsComponent implements OnInit {
   wishList: any;
   wishListItems: any[] = [];
   wishListApiError: string | null = null;
-  /*------------------------------------------------------------------*/
+
+  //review form
+  reviewForm: FormGroup;
+  userInfo: any;
+  userId: string = '';
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private _ReviewService: ReviewService,
     private _CartService: CartService,
     private _WishListService: WishListService,
-    private _ToastrService: ToastrService
+    private _ToastrService: ToastrService,
+    private fb: FormBuilder,
+    private _userService: UserService
   ) {}
-  /*-----------------------------------------------------------------*/
+
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.productId = +params['id'];
-      this.getProductDetails();
+    this.route.params
+      .pipe(
+        switchMap((params) => {
+          this.productId = +params['id'];
+          this.productLoading = true;
+          return this.productService.getSpecificProductWithDetails(this.productId);
+        })
+      )
+      .subscribe(
+        (product) => {
+          this.product = product;
+          this.productLoading = false;
+          this.loadProductReviews(this.productId);
+          this.getRelatedProducts(product.category.id);
+        },
+        (error) => {
+          this.productLoading = false;
+          console.error('Error fetching product details', error);
+        }
+      );
+
+    this.reviewForm = this.fb.group({
+      rate: ['', [Validators.required, Validators.min(1), Validators.max(5)]],
+      title: ['', Validators.required],
+      description: ['', [Validators.required, Validators.minLength(10)]],
+      email: ['', [Validators.required, Validators.email]],
     });
     this.loadWishList();
-    this.getProductDetails();
-    this.loadProductReviews(this.productId);
     this.onResize(null);
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.userInfo = this._userService.getUserInfoFromToken(token);
+      this.userId = this.userInfo['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+      this.loadProductReviewsForUser();
+    }
   }
-  /*-----------------------------------------------------------------*/
-  // Load WishList
+
   private async loadWishList(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this._WishListService.getWishListByUserFromClaims().subscribe({
@@ -79,20 +115,36 @@ export class ProductDetailsComponent implements OnInit {
       });
     });
   }
-  /*------------------------------------------------------------------*/
-  getProductDetails() {
-    this.productService.getSpecificProductWithDetails(this.productId).subscribe(
-      (data) => {
-        this.product = data;
-        this.getRelatedProducts(data.category.id);
+
+  private loadProductReviews(productId: number): void {
+    this.reviewsLoading = true;
+    this._ReviewService.getAllReviewsByProductId(productId).subscribe({
+      next: (response: any) => {
+        this.reviews = response;
+        this.reviewsLoading = false;
+        console.log(response);
       },
-      (error) => {
-        console.error('Error fetching product details', error);
-      }
-    );
+      error: (error) => {
+        this._ToastrService.error('Error fetching Product Reviews by Id, Please try again.');
+        this.reviewsLoading = false;
+      },
+    });
+  }
+  private loadProductReviewsForUser(): void {
+    this.myReviewsLoading = true;
+    this._ReviewService.getReviewByUserIdProductId().subscribe({
+      next: (response: any) => {
+        this.myReviews = response;
+        this.myReviewsLoading = false;
+        console.log(response);
+      },
+      error: (error) => {
+        this._ToastrService.error('Error fetching Product Reviews by Id, Please try again.');
+        this.myReviewsLoading = false;
+      },
+    });
   }
 
-  /*------------------------------------------------------------------*/
   increaseQuantity(): void {
     const maxQuantity = 20;
     if (this.quantity >= maxQuantity) {
@@ -101,13 +153,13 @@ export class ProductDetailsComponent implements OnInit {
     }
     this.quantity++;
   }
-  /*------------------------------------------------------------------*/
+
   decreaseQuantity(): void {
     if (this.quantity > 1) {
       this.quantity--;
     }
   }
-  /*------------------------------------------------------------------*/
+
   addToCart() {
     this.addToCartLoading = true;
     if (!this.selectedColorId || !this.selectedSizeId) {
@@ -147,27 +199,11 @@ export class ProductDetailsComponent implements OnInit {
       },
     });
   }
-  /*------------------------------------------------------------------*/
-  // Get Reviews By Product Id
-  private loadProductReviews(productId: number): void {
-    this.reviewsLoading = true;
-    this._ReviewService.getAllReviewsByProductId(productId).subscribe({
-      next: (response: any) => {
-        this.reviews = response;
-        this.reviewsLoading = false;
-      },
-      error: (error) => {
-        this._ToastrService.error('Error fetching Product Reviews by Id, Please try again.');
-        this.reviewsLoading = false;
-      },
-    });
-  }
-  /*------------------------------------------------------------------*/
+
   selectTab(tab: string) {
     this.selectedTab = tab;
   }
-  /*------------------------------------------------------------------*/
-  // Start slider
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     if (window.innerWidth < 801) {
@@ -181,17 +217,13 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   async getRelatedProducts(categoryId: number): Promise<void> {
-    console.log(categoryId);
     try {
       this.isLoading = true;
       this.productService.getAllProductsWithPaginationForUser(1, 20, '', categoryId).subscribe(
         (data) => {
-          console.log(data);
-
           this.allProductsParCategory = Array.isArray(data.items) ? data.items : [data.items];
           this.processProductsForSlider();
           this.isLoading = false;
-          console.log(this.allProductsParCategory);
         },
         (error) => {
           console.error('Error fetching product details', error);
@@ -208,8 +240,6 @@ export class ProductDetailsComponent implements OnInit {
     this.productsInSlides = [];
     for (let i = 0; i < this.allProductsParCategory.length; i += this.iterationIncrement) {
       const slice = this.allProductsParCategory.slice(i, i + this.iterationIncrement);
-      console.log(slice);
-
       this.productsInSlides.push(slice);
     }
   }
@@ -217,10 +247,7 @@ export class ProductDetailsComponent implements OnInit {
   getImageUrl(imagePath: string): string {
     return `path_to_images/${imagePath}`;
   }
-  // End slider
-  /*------------------------------------------------------------------*/
-  /*------------------------------------------------------------------*/
-  // Add / Remove from WishList
+
   addToWishList(extendedProduct: ExtendedProduct) {
     extendedProduct.isWishListLoading = true;
     const itemIdToAdd: WishList = {
@@ -247,13 +274,37 @@ export class ProductDetailsComponent implements OnInit {
       },
     });
   }
-  /*-----------------------------------------------------------------*/
+
   private updateProductWishListState(extendedProduct: ExtendedProduct): void {
-    this.extendedProduct.isInWishList = !this.extendedProduct.isInWishList;
+    extendedProduct.isInWishList = !extendedProduct.isInWishList;
   }
-  /*-----------------------------------------------------------------*/
+
   private isProductInWishList(productId: number): boolean {
     return this.wishListItems.some((item) => item.productId === productId);
   }
-  /*-----------------------------------------------------------------*/
+
+  // review form
+  onSubmit() {
+    console.log(this.productId);
+    console.log(this.userId);
+
+    if (this.reviewForm.valid) {
+      const review: Review = {
+        ...this.reviewForm.value,
+        productId: this.productId,
+        userId: this.userId,
+      };
+      console.log(review);
+      console.log(review.userId);
+      this._ReviewService.createReview(review);
+      this._ToastrService.success('Review Added successfully');
+      this.reviewForm = this.fb.group({
+        rate: '',
+        title: '',
+        description: '',
+        email: '',
+      });
+      this.loadProductReviews(this.productId);
+    }
+  }
 }
