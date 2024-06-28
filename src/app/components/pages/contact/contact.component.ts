@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from '../../../services/message.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-contact',
@@ -13,7 +15,7 @@ export class ContactComponent {
   isLoading: boolean = false;
   apiError: string = '';
   /*--------------------------------------------------------------------*/
-  constructor(private _MessageService: MessageService, private _ToastrService: ToastrService) {}
+  constructor(private _MessageService: MessageService, private _AuthService: AuthService, private _Router: Router, private _ToastrService: ToastrService) {}
   /*--------------------------------------------------------------------*/
   messageForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
@@ -22,6 +24,13 @@ export class ContactComponent {
   /*--------------------------------------------------------------------*/
   sendMessage(messageForm: FormGroup) {
     this.isLoading = true;
+    const isAuthenticated = this._AuthService.isAuthenticated();
+    if (!isAuthenticated) {
+      this._ToastrService.error('To Have Access, Please login');
+      this.isLoading = false;
+      this._Router.navigate(['users/login']);
+      return;
+    }
     this.apiError = '';
     if (this.messageForm.valid) {
       this._MessageService.createMessage(messageForm.value).subscribe({

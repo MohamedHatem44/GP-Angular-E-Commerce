@@ -13,65 +13,66 @@
             </h4>
           </div>
           <div class="w-100 d-md-none"></div>
-          <div *ngIf="cartLoading" class="col-12 col-md align-self-center text-md-right text-left">Loading items...</div>
-          <div *ngIf="!cartLoading && noItems && !apiError" class="col-12 col-md align-self-center text-md-right text-left">No items</div>
-          <div *ngIf="!cartLoading && !noItems && !apiError" class="col-12 col-md align-self-center text-md-right text-left">
-            {{ shoppingCart.itemsCount }} items
-          </div>
+          <div *ngIf="orderloading" class="col-12 col-md align-self-center text-md-right text-left">Loading items...</div>
+          <div *ngIf="!orderloading && noItems && !apiError" class="col-12 col-md align-self-center text-md-right text-left">No items</div>
+          <div *ngIf="!orderloading && !noItems && !apiError" class="col-12 col-md align-self-center text-md-right text-left">{{ userOrdersCount }} Orders</div>
         </div>
       </div>
       <!-- End  of Title -->
       <!------------------------------------------------------------------------------------------>
-      <!-- Placeholder for Empty Cart -->
-      <div *ngIf="!cartLoading && noItems && !apiError" class="text-center my-auto">
-        <p class="text-muted fs-5">Your cart is empty</p>
+      <!-- Placeholder for No Orders -->
+      <div *ngIf="!orderloading && noItems && !apiError" class="text-center my-auto">
+        <p class="text-muted fs-5">No Orders</p>
         <button routerLink="/shop" class="btnCustom mt-3 fw-semibold py-2 custom-width">Back to Shop</button>
       </div>
       <!------------------------------------------------------------------------------------------>
       <!-- Start of Api Error -->
-      <div *ngIf="!cartLoading && apiError" class="text-center my-auto">
+      <div *ngIf="!orderloading && apiError" class="text-center my-auto">
         <p class="text-muted fs-5">{{ apiError }}</p>
         <button routerLink="/shop" class="btnCustom mt-3 fw-semibold py-2 custom-width">Back to Shop</button>
       </div>
       <!-- End of Api Error -->
       <!------------------------------------------------------------------------------------------>
       <!-- Start of Items -->
-      <ng-container *ngIf="!cartLoading && !noItems && !apiError">
-        <ng-container *ngFor="let item of cartItems">
-          <div class="row border-top border-bottom">
-            <div class="row main align-items-center">
-              <!-- Image Column -->
-              <div class="col-5 col-md-2"><img class="img-fluid" [src]="item.imageUrl" (click)="openImgModal(item)" style="cursor: pointer" /></div>
-              <!-- Product Details Column -->
-              <div class="col-6 col-md-3">
-                <div class="row">{{ item.productTitle }}</div>
-                <div class="row text-muted">Color : {{ item.colorName }}</div>
-                <div class="row text-muted">Size : {{ item.sizeName }}</div>
-              </div>
-              <!-- Quantity Control Column -->
-              <div class="col-5 col-md-3 mt-xs-3">
-                <div class="d-flex">
-                  <div class="col">
-                    <i class="fa-solid fa-minus" (click)="decreaseQuantity(item)" style="cursor: pointer"></i>
-                    <span class="px-2">{{ item.quantity }}</span>
-                    <i class="fa-solid fa-plus" (click)="increaseQuantity(item)" style="cursor: pointer"></i>
+      <ng-container *ngIf="!orderloading && !noItems && !apiError">
+        <ng-container *ngFor="let order of orders">
+          <div class="order-section mb-4">
+            <h5 class="order-title">Order #{{ order.id }} - {{ order.createdDate | date : 'short' }}</h5>
+            <div class="order-details">
+              <p>Name: {{ order.firstName }} {{ order.lastName }}</p>
+              <p>Shipping Address: {{ order.shippingAddress }}</p>
+              <p>Status: {{ order.orderStatus }}</p>
+              <p>Payment Method: {{ order.paymentMethod }}</p>
+              <p>Deliver Date : {{ order.deliverDate | date : 'short' }}</p>
+              <p>Total Price: &euro; {{ order.totalOrderPrice | number : '1.2-2' }}</p>
+            </div>
+
+            <div class="items">
+              <ng-container *ngFor="let item of order.orderItems">
+                <div class="row border-top border-bottom">
+                  <div class="row main align-items-center">
+                    <div class="col-5 col-md-2"><img class="img-fluid" [src]="item.imageUrl" (click)="openImgModal(item)" style="cursor: pointer" /></div>
+                    <div class="col-6 col-md-3">
+                      <div class="row">{{ item.productTitle }}</div>
+                      <div class="row text-muted">Color: {{ item.colorName }}</div>
+                      <div class="row text-muted">Size: {{ item.sizeName }}</div>
+                    </div>
+                    <div class="col-5 col-md-3 mt-xs-3">
+                      <div class="d-flex">
+                        <div class="col">
+                          <span class="px-2">{{ item.quantity }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6 col-md-3 mt-xs-3">
+                      <div class="row">&euro; {{ item.totalItemPrice | number : '1.2-2' }}</div>
+                    </div>
+                    <div class="col-1 col-md-1">
+                      <i class="fa-solid fa-info fa-lg" style="cursor: pointer" (click)="openOrderItemModal(item)"></i>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <!-- Item Price Column -->
-              <div class="col-6 col-md-3 mt-xs-3">
-                <div class="row">&euro; {{ item.totalItemPrice | number : '1.2-2' }}</div>
-              </div>
-              <!-- Remove Item -->
-              <div class="col-1 col-md-1">
-                <i *ngIf="item.deleting" class="fas fa-spinner fa-spin fa-lg"></i>
-                <i
-                  *ngIf="!item.deleting"
-                  class="fa-solid fa-trash text-dark fa-lg"
-                  style="cursor: pointer"
-                  (click)="openDeleteItemConfirmationModal(item.id)"
-                ></i>
-              </div>
+              </ng-container>
             </div>
           </div>
         </ng-container>
@@ -79,7 +80,7 @@
       <!-- End of Items -->
       <!------------------------------------------------------------------------------------------>
       <!-- Start of Skeleton Loading Placeholder -->
-      <ng-container *ngIf="cartLoading">
+      <ng-container *ngIf="orderloading">
         <app-user-cart-skeleton-loader></app-user-cart-skeleton-loader>
         <app-user-cart-skeleton-loader></app-user-cart-skeleton-loader>
         <app-user-cart-skeleton-loader></app-user-cart-skeleton-loader>
@@ -88,18 +89,18 @@
       <!-- End of Skeleton Loading Placeholder -->
       <!------------------------------------------------------------------------------------------>
       <div class="mb-4"></div>
-      <div *ngIf="!noItems && !cartLoading && !apiError" class="mt-5 d-flex justify-content-between">
+      <div *ngIf="!noItems && !orderloading && !apiError" class="mt-5 d-flex justify-content-between">
         <!-- Back to Shop Link -->
         <a routerLink="/shop" class="text-decoration-none">
           <i class="fa-solid fa-arrow-left"></i>
           <span class="text-muted ms-2">Back to shop</span>
         </a>
         <!-- Clear All -->
-        <button (click)="openDeleteAllItemConfirmationModal()" class="btn btn-outline-secondary">
+        <!-- <button (click)="openDeleteAllItemConfirmationModal()" class="btn btn-outline-secondary">
           <i *ngIf="deleteAllLoading" class="fas fa-spinner fa-spin me-2"></i>
           <i *ngIf="!deleteAllLoading" class="fa-solid fa-trash text-dark me-2"></i>
           Clear All Items
-        </button>
+        </button> -->
       </div>
     </div>
     <!-------------------------------------------------------------------------------------------->
@@ -114,8 +115,8 @@
       <hr />
       <!-- Items -->
       <div class="row mt-3">
-        <div class="col-6 text-start"><strong>Items </strong></div>
-        <div class="col-6 text-start" *ngIf="!cartLoading && !noItems && !apiError">{{ shoppingCart.itemsCount }}</div>
+        <div class="col-6 text-start"><strong>Orders </strong></div>
+        <div class="col-6 text-start" *ngIf="!orderloading && !noItems && !apiError">{{ userOrdersCount }}</div>
       </div>
       <br />
       <!-- Products -->
@@ -127,23 +128,17 @@
       <!-- Total Price -->
       <div class="row mt-3">
         <div class="col-6 text-start"><strong>Total Price </strong></div>
-        <div *ngIf="!cartLoading && !noItems && !apiError" class="col-6 text-start">&euro; {{ shoppingCart.totalCartPrice | number : '1.2-2' }}</div>
+        <!-- <div *ngIf="!cartLoading && !noItems && !apiError" class="col-6 text-start">&euro; {{ shoppingCart.totalCartPrice | number : '1.2-2' }}</div> -->
       </div>
       <br />
-      <!-- Delivery -->
-      <div class="row mt-3">
-        <select>
-          <option class="text-muted">Standard-Delivery- &euro;5.00</option>
-        </select>
-      </div>
       <hr />
       <!-- Total Cart Price -->
       <div class="row">
         <div class="col"><strong>Total Cart Price </strong></div>
-        <div *ngIf="!cartLoading && !noItems && !apiError" class="col text-right">&euro; {{ shoppingCart.totalCartPrice + 5 | number : '1.2-2' }}</div>
+        <!-- <div *ngIf="!cartLoading && !noItems && !apiError" class="col text-right">&euro; {{ shoppingCart.totalCartPrice + 5 | number : '1.2-2' }}</div> -->
       </div>
       <!-- Check out Btn -->
-      <button class="btnCustom mt-6 fw-semibold py-2" routerLink="/payment" [disabled]="noItems || apiError">Check out</button>
+      <button class="btnCustom mt-6 fw-semibold py-2" routerLink="/shop" [disabled]="noItems || apiError">Back To Shop</button>
     </div>
     <!-- End of Summary -->
     <!-------------------------------------------------------------------------------------------->

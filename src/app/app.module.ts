@@ -73,6 +73,8 @@ import { AdminProductDetailsLoaderComponent } from './components/admin/admin-pro
 import { AdminProductReviewsComponent } from './components/admin/admin-product-reviews/admin-product-reviews.component';
 import { AdminProductReviewModalComponent } from './components/admin/admin-product-review-modal/admin-product-review-modal.component';
 import { CategoriesSliderComponent } from './components/home/categories-slider/categories-slider.component';
+import { UserPassEditComponent } from './components/user/user-pass-edit/user-pass-edit.component';
+import { UserOrderItemModalComponent } from './components/user/user-order-item-modal/user-order-item-modal.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -140,6 +142,8 @@ import { CategoriesSliderComponent } from './components/home/categories-slider/c
     AdminProductReviewsComponent,
     AdminProductReviewModalComponent,
     CategoriesSliderComponent,
+    UserPassEditComponent,
+    UserOrderItemModalComponent,
   ],
   imports: [
     BrowserModule,

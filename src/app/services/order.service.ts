@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, delay, tap } from 'rxjs';
 import { CartService } from './cart.service';
+import { OrdersResponse } from '../models/order';
 /*--------------------------------------------------------------------*/
 @Injectable({
   providedIn: 'root',
@@ -15,8 +16,8 @@ export class OrderService {
   /*------------------------------------------------------------------*/
   // Get Orders By User Clamis
   // Get: api/Orders/UserOrders
-  getUserOrdersFromClaims(): Observable<any> {
-    return this._HttpClient.get<any>(`${this.baseUrl}/UserOrders`).pipe(delay(3000));
+  getUserOrdersFromClaims(): Observable<OrdersResponse> {
+    return this._HttpClient.get<OrdersResponse>(`${this.baseUrl}/UserOrders`).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Create Order From Cart

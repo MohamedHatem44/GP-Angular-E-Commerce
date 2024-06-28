@@ -46,15 +46,18 @@ export class RegisterComponent implements OnInit {
       },
       error: (err) => {
         this.loading = false;
-        console.log(err);
-        //this.error = 'Error just occurred, try again later!';
-        if (err.status === 400 && err.error === 'Email is already exist') {
+        if (err.status === 400 && err.error.message === 'Email is already exist') {
           this.error = 'User with this email already exists. Please choose a different email.';
         } else {
           this.error = 'An unexpected error occurred. Please try again later.';
         }
       },
     });
+  }
+  /*------------------------------------------------------------------*/
+  public get passwordMismatch(): boolean {
+    if (!this.registerForm.get('confirmPassword')?.touched) return false;
+    return this.registerForm.get('password')?.value?.trim() !== this.registerForm.get('confirmPassword')?.value?.trim();
   }
   /*------------------------------------------------------------------*/
 }
