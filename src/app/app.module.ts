@@ -48,6 +48,7 @@ import { AdminProductDetailsLoaderComponent } from './components/admin/admin-pro
 import { AdminProductReviewsComponent } from './components/admin/admin-product-reviews/admin-product-reviews.component';
 import { AdminProductReviewModalComponent } from './components/admin/admin-product-review-modal/admin-product-review-modal.component';
 import { AdminBrandFormComponent } from './components/admin/admin-brand-form/admin-brand-form.component';
+import { AdminOrdersComponent } from './components/admin/admin-orders/admin-orders.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 // Shared
 import { FooterComponent } from './components/shared/footer/footer.component';
@@ -98,6 +99,8 @@ import { ImgModalComponent } from './components/modals/img-modal/img-modal.compo
 // payment
 import { PaymentComponent } from './components/payment/payment.component';
 import { PaymentService } from './services/payment.service';
+import { AdminOrderDetailsModalComponent } from './components/admin/admin-order-details-modal/admin-order-details-modal.component';
+import { AdminOrderitemDetailsModalComponent } from './components/admin/admin-orderitem-details-modal/admin-orderitem-details-modal.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -167,6 +170,9 @@ import { PaymentService } from './services/payment.service';
     CategoriesSliderComponent,
     UserPassEditComponent,
     UserOrderItemModalComponent,
+    AdminOrdersComponent,
+    AdminOrderDetailsModalComponent,
+    AdminOrderitemDetailsModalComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,58 @@
+<!-------------------------------------------------------------------------------------->
+<!-- Start of modal header -->
+<div class="modal-header">
+  <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+</div>
+<!-- End of modal header -->
+<!-------------------------------------------------------------------------------------->
+<!-- Start of modal body -->
+<div class="container py-4 px-5">
+  <!------------------------------------------------------------------------------------>
+  <div class="row wrapper">
+    <!-- Start of Image -->
+    <div class="col-md-12 col-lg-6 px-0">
+      <img [src]="item.imageUrl" class="img-responsive" alt="product Image" />
+    </div>
+    <!-- End of Image -->
+    <!------------------------------------------------------------------------------------>
+    <!-- Start of Details -->
+    <div class="col-md-12 col-lg-6">
+      <div class="container">
+        <!-- Title -->
+        <div class="row mt-3">
+          <div class="col-12 text-center fs-5">{{ item.productTitle }}</div>
+        </div>
+        <br />
+        <!-- Price -->
+        <div class="row mt-3">
+          <div class="col-12 text-center fs-5">{{ item.itemPrice | currency }}</div>
+        </div>
+        <br />
+        <!-- In Quantity  -->
+        <div class="row mt-3">
+          <div class="col-12 text-center fs-5">Quantity : {{ item.quantity }}</div>
+        </div>
+        <br />
+        <!-- Price -->
+        <div class="row mt-3">
+          <div class="col-12 text-center fs-5">{{ item.totalItemPrice | currency }}</div>
+        </div>
+        <br />
+        <!-- Color  -->
+        <div class="row mt-3">
+          <div class="col-12 text-center fs-5">Color : {{ item.colorName }}</div>
+        </div>
+        <br />
+        <!-- Size  -->
+        <div class="row mt-3">
+          <div class="col-12 text-center fs-5">Size : {{ item.sizeName }}</div>
+        </div>
+        <br />
+      </div>
+      <!-- End of Details -->
+      <!-------------------------------------------------------------------------------------->
+    </div>
+  </div>
+  <!-- End of modal body -->
+  <!-------------------------------------------------------------------------------------->
+</div>

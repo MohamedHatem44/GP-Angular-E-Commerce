@@ -26,6 +26,7 @@ import { AdminProductsComponent } from './components/admin/admin-products/admin-
 import { AdminProductFormComponent } from './components/admin/admin-product-form/admin-product-form.component';
 import { AdminProductReviewsComponent } from './components/admin/admin-product-reviews/admin-product-reviews.component';
 import { AdminProductDetailsComponent } from './components/admin/admin-product-details/admin-product-details.component';
+import { AdminOrdersComponent } from './components/admin/admin-orders/admin-orders.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 //Home
 import { MainHomeComponent } from './components/home/main-home/main-home.component';
@@ -86,6 +87,7 @@ const routes: Routes = [
       { path: 'addbrand', component: AdminBrandFormComponent },
       { path: 'editbrand/:id', component: AdminBrandFormComponent },
       { path: 'users', component: AdminUsersComponent },
+      { path: 'orders', component: AdminOrdersComponent },
       { path: 'messages', component: AdminMessagesComponent },
     ],
   },

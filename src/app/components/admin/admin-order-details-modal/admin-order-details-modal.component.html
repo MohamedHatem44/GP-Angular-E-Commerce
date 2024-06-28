@@ -1,0 +1,59 @@
+<!------------------------------------------------------------------------------------------------>
+<!-- Start of modal header -->
+<div class="modal-header">
+  <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+</div>
+<!-- End of modal header -->
+<!------------------------------------------------------------------------------------------------>
+<div class="card my-6">
+  <div class="row">
+    <!-------------------------------------------------------------------------------------------->
+    <div class="col-12 cart">
+      <div class="mb-4">
+        <!---------------------------------------------------------------------------------------->
+        <div class="order-section mb-4">
+          <h5 class="order-title">Order #{{ order.id }} - {{ order.createdDate | date : 'short' }}</h5>
+          <div class="order-details">
+            <p>Name: {{ order.firstName }} {{ order.lastName }}</p>
+            <p>Shipping Address: {{ order.shippingAddress }}</p>
+            <p>Status: {{ order.orderStatus }}</p>
+            <p>Payment Method: {{ order.paymentMethod }}</p>
+            <p>Deliver Date : {{ order.deliverDate | date : 'short' }}</p>
+            <p>Total Price: &euro; {{ order.totalOrderPrice | number : '1.2-2' }}</p>
+          </div>
+
+          <div class="items border-bottom">
+            <ng-container *ngFor="let item of order.orderItems">
+              <div class="row border-top border-bottom">
+                <div class="row main align-items-center">
+                  <div class="col-5 col-md-2"><img class="img-fluid" [src]="item.imageUrl" (click)="openImgModal(item)" style="cursor: pointer" /></div>
+                  <div class="col-6 col-md-3">
+                    <div class="row">{{ item.productTitle }}</div>
+                    <div class="row text-muted">Color: {{ item.colorName }}</div>
+                    <div class="row text-muted">Size: {{ item.sizeName }}</div>
+                  </div>
+                  <div class="col-5 col-md-3 mt-xs-3">
+                    <div class="d-flex">
+                      <div class="col">
+                        <span class="px-2">{{ item.quantity }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6 col-md-3 mt-xs-3">
+                    <div class="row">&euro; {{ item.totalItemPrice | number : '1.2-2' }}</div>
+                  </div>
+                  <div class="col-1 col-md-1">
+                    <i class="fa-solid fa-info fa-lg" style="cursor: pointer" (click)="openOrderItemModal(item)"></i>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <!------------------------------------------------------------------------------------------>
+      </div>
+    </div>
+    <!------------------------------------------------------------------------------------------------>
+  </div>
+</div>
+<!------------------------------------------------------------------------------------------------>

@@ -1,8 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, delay, tap } from 'rxjs';
 import { CartService } from './cart.service';
 import { OrdersResponse } from '../models/order';
+import { Order } from '@stripe/stripe-js';
+import { PagedResponse } from '../models/pagedResponse';
 /*--------------------------------------------------------------------*/
 @Injectable({
   providedIn: 'root',
@@ -18,6 +20,13 @@ export class OrderService {
   // Get: api/Orders/UserOrders
   getUserOrdersFromClaims(): Observable<OrdersResponse> {
     return this._HttpClient.get<OrdersResponse>(`${this.baseUrl}/UserOrders`).pipe(delay(3000));
+  }
+  /*------------------------------------------------------------------*/
+  // Get All Blogs With Pagination
+  // Get: api/Orders/AllOrders
+  getAllOrdersWithPagination(pageNumber: number, pageSize: number = 5): Observable<PagedResponse<Order>> {
+    let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
+    return this._HttpClient.get<PagedResponse<Order>>(`${this.baseUrl}/AllOrders`, { params }).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
   // Create Order From Cart

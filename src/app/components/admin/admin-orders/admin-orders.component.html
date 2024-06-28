@@ -1,0 +1,105 @@
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Main Card -->
+<div class="container pt-6">
+  <div class="card mt-3 mb-5 bg-light shadow p-2 bg-body rounded">
+    <div class="card-body">
+      <h5 class="card-title fs-4 mb-4">Orders Dashboard</h5>
+      <!-- Start of Breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb fs-6">
+          <li class="breadcrumb-item">
+            <a class="text-decoration-none text-dark" routerLink="/admindashboard"><i class="fas fa-tachometer-alt fa-lg me-2"></i>Admin Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active text-dark fs-6" aria-current="page">Orders</li>
+        </ol>
+      </nav>
+      <!-- End of Breadcrumb -->
+    </div>
+  </div>
+</div>
+<!-- End of Main Card -->
+<hr />
+<!----------------------------------------------------------------------------------------------->
+<!-- End of Orders Table -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4 class="card-title" *ngIf="ordersLoading && !apiError">Loading Orders ...</h4>
+          <h4 class="card-title" *ngIf="!ordersLoading && !apiError">All Orders</h4>
+          <h4 class="card-title" *ngIf="!ordersLoading && apiError">{{ apiError }}</h4>
+          <h6 class="card-title" *ngIf="!ordersLoading && !apiError">Total Count : {{ totalCount }}</h6>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table id="basic-datatables" class="display table table-striped table-hover border">
+              <thead>
+                <tr class="text-center">
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Phone Number</th>
+                  <th>Shipping Address</th>
+                  <th>Order Status</th>
+                  <th>Total Order Price</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="!ordersLoading && !apiError && !noOrders">
+                  <tr *ngFor="let order of orders; let i = index" class="text-center">
+                    <td>{{ order.firstName }}</td>
+                    <td>{{ order.lastName }}</td>
+                    <td>{{ order.phoneNumber }}</td>
+                    <td>{{ order.shippingAddress }}</td>
+                    <td>{{ order.orderStatus }}</td>
+                    <td>{{ order.totalOrderPrice | currency }}</td>
+                    <td><i class="fa-solid fa-info fa-lg" style="cursor: pointer" (click)="openOrderDetailsModal(order)"></i></td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <!-- Start of Orders Loading -->
+          <app-loader-skeleton-v1 *ngIf="ordersLoading"></app-loader-skeleton-v1>
+          <!-- End of Orders Loading -->
+          <!-- Start of Error Orders -->
+          <div *ngIf="!ordersLoading && apiError" class="alert alert-danger my-8 text-center" role="alert">
+            {{ apiError }}
+          </div>
+          <!-- End of Error Orders -->
+          <!-- Start of No Orders Available -->
+          <div *ngIf="!ordersLoading && !apiError && noOrders" class="alert alert-info my-8 text-center" role="alert">No Orders available</div>
+          <!-- End of No Orders Available -->
+        </div>
+        <div class="card-footer d-flex justify-content-between" style="min-height: 50px">
+          <p class="my-auto" *ngIf="!ordersLoading && !apiError && !noOrders">Showing from {{ startEntry }} to {{ endEntry }} of {{ totalCount }} Orders</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Orders Table -->
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Pagination -->
+<div *ngIf="!apiError && !noOrders && totalPages > 1" class="container d-flex justify-content-center mt-5 pb-8">
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" aria-label="Previous" (click)="changePage(currentPage - 1)">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item" *ngFor="let page of pages" [class.active]="currentPage === page">
+        <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" aria-label="Next" (click)="changePage(currentPage + 1)">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<!-- End of Pagination -->
+<!----------------------------------------------------------------------------------------------->
