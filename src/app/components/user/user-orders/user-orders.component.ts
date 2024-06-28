@@ -39,8 +39,6 @@ export class UserOrdersComponent implements OnInit {
     this.apiError = null;
     this._OrderService.getUserOrdersFromClaims().subscribe({
       next: (response: OrdersResponse) => {
-        console.log(response.orders);
-
         this.orders = response.orders;
         this.userOrdersCount = response.userOrdersCount;
         this.calculateSummary();
