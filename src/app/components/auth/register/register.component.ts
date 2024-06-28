@@ -1,22 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import { JwtService } from '../../../services/jwt.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-
+/*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
+/*--------------------------------------------------------------------*/
 export class RegisterComponent implements OnInit {
   user: any;
   loading: boolean = false;
   error: string | null = null;
   showPassword: boolean = false;
-
-  /*--------------------------------------------------------------------*/
+  /*------------------------------------------------------------------*/
+  // Ctor
+  constructor(private authService: AuthService, private router: Router, private toaster: ToastrService) {}
+  /*------------------------------------------------------------------*/
   registerForm: FormGroup = new FormGroup({
     firstName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
     lastName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
@@ -26,11 +28,7 @@ export class RegisterComponent implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
   });
-
-  /*--------------------------------------------------------------------*/
-  constructor(private authService: AuthService, private router: Router, private toaster: ToastrService) {}
-
-  /*--------------------------------------------------------------------*/
+  /*------------------------------------------------------------------*/
   ngOnInit(): void {
     this.registerForm.valueChanges.subscribe({
       next: () => {
@@ -58,5 +56,5 @@ export class RegisterComponent implements OnInit {
       },
     });
   }
-  /*--------------------------------------------------------------------*/
+  /*------------------------------------------------------------------*/
 }

@@ -17,8 +17,7 @@ export class CartService {
   constructor(private _HttpClient: HttpClient) {
     const storedItemCount = localStorage.getItem('cartItemCount');
     this.cartItemCountSubject = new BehaviorSubject<number>(storedItemCount ? +storedItemCount : 0);
-
-    if (!storedItemCount) {
+    if (storedItemCount) {
       this.updateCartItemCount();
     }
   }
