@@ -84,10 +84,15 @@ export class ProductsComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.selectedCategoryId = Number(params.get('categoryId'));
     });
+    this.route.paramMap.subscribe((params) => {
+      this.selectedBrandId = Number(params.get('brandId'));
+    });
 
     this.loadWishList().then(() => {
       if (this.selectedCategoryId !== 0) {
         this.loadProducts(this.currentPage, this.searchInput, this.selectedCategoryId);
+      } else if (this.selectedBrandId !== 0) {
+        this.loadProducts(this.currentPage, this.searchInput, null, this.selectedBrandId);
       } else {
         this.loadProducts(this.currentPage);
       }
