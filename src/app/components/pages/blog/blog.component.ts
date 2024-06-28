@@ -75,7 +75,6 @@ export class BlogComponent implements OnInit {
         this.blogs = response.items;
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;
-        // this.pageSize = response.pageSize;
         this.totalCount = response.totalCount;
         this.updateEntryRange();
         this.blogsLoading = false;

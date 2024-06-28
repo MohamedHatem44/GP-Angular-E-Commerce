@@ -44,7 +44,7 @@
   <div class="row px-3">
     <!------------------------------------------------------------------------------------------->
     <!-- Start of First Column -->
-    <div class="col-lg-9 col-md-9 col-sm-12">
+    <div class="col-lg-9 col-md-12 col-sm-12">
       <!-- Start of Loading -->
       <div *ngIf="blogsLoading">
         <app-loader-spinner></app-loader-spinner>
@@ -52,8 +52,8 @@
       <!-- End of Loading -->
       <div class="row mt-8" *ngIf="!blogsLoading">
         <!-- Loop over blogs array -->
-        <div class="col-12 mb-7" *ngFor="let blog of blogs">
-          <div class="card border-0 w-75 mx-auto">
+        <div class="col-12 mb-7 w-75 mx-auto" *ngFor="let blog of blogs">
+          <div class="card border-0 mx-auto">
             <div class="card-img-container">
               <img [src]="blog.imageUrl" class="card-img-top" alt="Blog Image" (click)="openImgModal(blog)" style="cursor: pointer" />
             </div>
@@ -63,9 +63,17 @@
                 {{ blog.expanded ? blog.description : (blog.description | slice : 0 : 100) }}
                 <span *ngIf="!blog.expanded">...</span>
               </div>
+              <div class="d-sm-flex flex-sm-column flex-md-row justify-content-between mt-4">
+                <p class="col-sm-12 col-md-auto card-text mb-0">By Admin | Fashion, mens, Women</p>
+                <button
+                  class="col-sm-12 col-md-auto btn btn-link p-0 text-decoration-none"
+                  (click)="toggleDescription(blog)"
+                  [innerHTML]="getButtonText(blog)"
+                ></button>
+              </div>
+
               <div class="d-flex justify-content-between mt-4">
-                <p class="card-text">By Admin | Fashion, mens, Women</p>
-                <button class="btn btn-link p-0 text-decoration-none" (click)="toggleDescription(blog)" [innerHTML]="getButtonText(blog)"></button>
+                <p class="card-text">{{ blog.createdAt | date : 'short' }}</p>
               </div>
             </div>
           </div>
@@ -75,7 +83,7 @@
     <!-- End of First Column -->
     <!------------------------------------------------------------------------------------------->
     <!-- Start of Second Column -->
-    <div class="col-lg-3 col-md-3 col-sm-12">
+    <div class="col-lg-3 col-md-12 col-sm-12">
       <div class="side-menu">
         <!-- Start of Loader -->
         <div class="mb-5 p-3">
