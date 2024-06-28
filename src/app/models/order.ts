@@ -22,8 +22,8 @@ export interface Order {
   totalOrderPrice: number;
   orderStatus: string;
   paymentMethod: string;
-  createdDate: string;
-  deliverDate: string;
+  createdDate: Date;
+  deliverDate: Date;
   orderItems: OrderItem[];
 }
 

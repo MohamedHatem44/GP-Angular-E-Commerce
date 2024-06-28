@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Order } from '@stripe/stripe-js';
+import { Order } from '../../../models/order';
 import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
 import { OrderItem } from '../../../models/order';
 import { AdminOrderitemDetailsModalComponent } from '../admin-orderitem-details-modal/admin-orderitem-details-modal.component';
@@ -12,7 +12,7 @@ import { AdminOrderitemDetailsModalComponent } from '../admin-orderitem-details-
 })
 /*--------------------------------------------------------------------*/
 export class AdminOrderDetailsModalComponent {
-  @Input() order: any;
+  @Input() order: Order;
   /*------------------------------------------------------------------*/
   // Ctor
   constructor(public _ActiveModal: NgbActiveModal, private _ModalService: NgbModal) {}
