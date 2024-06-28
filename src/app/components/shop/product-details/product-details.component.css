@@ -120,7 +120,8 @@
   border-radius: 10px;
   transition: background-color 0.3s, border-color 0.3s, color 0.3s;
   height: 350px;
-  padding: 2px
+  padding: 2px;
+  box-shadow: 1px 4px 8px -3px #aaaaaa;
 }
 
 .cardCategory:hover {

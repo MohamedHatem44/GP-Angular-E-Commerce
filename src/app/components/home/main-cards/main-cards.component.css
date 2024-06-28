@@ -2,17 +2,29 @@
 .carousel-item img {
   filter: brightness(50%);
 }
+
 /*--------------------------------------------*/
 .card {
   overflow: hidden;
+  box-shadow: 1px 4px 8px -3px #aaaaaa;
 }
+
 /*--------------------------------------------*/
 .card:hover .card-img {
   transform: scale(1.08);
   transition: transform 0.6s ease;
 }
+
 /*--------------------------------------------*/
 .card .card-img {
   transition: transform 0.6s ease;
 }
+
 /*--------------------------------------------*/
+h4 {
+  font-size: 1.3rem !important;
+}
+
+p {
+  font-size: 1rem !important;
+}
