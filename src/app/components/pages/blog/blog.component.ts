@@ -4,17 +4,37 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { BlogService } from '../../../services/blog.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PagedResponse } from '../../../models/pagedResponse';
+import { Category } from '../../../models/category';
+import { CategoryService } from '../../../services/category.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
+import { BrandService } from '../../../services/brand.service';
+import { Brand } from '../../../models/brand';
+import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
   styleUrl: './blog.component.css',
+  animations: [
+    trigger('expandCollapse', [
+      state('collapsed', style({ height: '0px', overflow: 'hidden', opacity: 0 })),
+      state('expanded', style({ height: '*', opacity: 1 })),
+      transition('collapsed <=> expanded', animate('300ms ease-in-out')),
+    ]),
+  ],
 })
 /*--------------------------------------------------------------------*/
 export class BlogComponent implements OnInit {
   // Component properties
-  blogsLoading: boolean = false;
   blogs: Blog[] = [];
+  categories: Category[] = [];
+  brands: Brand[] = [];
+  blogsLoading: boolean = false;
+  categoriesLoading: boolean = false;
+  brandsLoading: boolean = false;
+  showAllCategories: boolean = false;
+  showAllBrands: boolean = false;
+  placeholders: any[] = Array.from({ length: 3 });
   currentPage: number = 1;
   totalPages: number;
   pageSize: number = 3;
@@ -28,7 +48,12 @@ export class BlogComponent implements OnInit {
   searchInputChanged: Subject<string> = new Subject<string>();
   /*-----------------------------------------------------------------*/
   // Ctor
-  constructor(private _BlogService: BlogService, private _ModalService: NgbModal) {
+  constructor(
+    private _BlogService: BlogService,
+    private _CategoryService: CategoryService,
+    private _BrandService: BrandService,
+    private _ModalService: NgbModal
+  ) {
     this.searchInputChanged.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
       this.searchBlogs(searchTerm);
     });
@@ -36,8 +61,9 @@ export class BlogComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Ng OnInit
   ngOnInit(): void {
-    this.blogsLoading = true;
     this.fetchBlogs(this.currentPage);
+    this.loadCategories();
+    this.loadBrands();
   }
   /*-----------------------------------------------------------------*/
   // Fetch Blogs
@@ -58,6 +84,36 @@ export class BlogComponent implements OnInit {
       error: (err) => {
         this.apiError = 'Failed to load Blogs, Please try again.';
         this.blogsLoading = false;
+      },
+    });
+  }
+  /*-----------------------------------------------------------------*/
+  // Load Categories
+  private loadCategories(): void {
+    this.categoriesLoading = true;
+    this._CategoryService.getAllCategories().subscribe({
+      next: (response: { categoriesCount: number; categories: Category[] }) => {
+        this.categories = response.categories;
+        this.categoriesLoading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load Categories', err);
+        this.categoriesLoading = false;
+      },
+    });
+  }
+  /*-----------------------------------------------------------------*/
+  // Load Brands
+  private loadBrands(): void {
+    this.brandsLoading = true;
+    this._BrandService.getAllBrands().subscribe({
+      next: (response: { brandsCount: number; brands: Brand[] }) => {
+        this.brands = response.brands;
+        this.brandsLoading = false;
+      },
+      error: (err) => {
+        this.brandsLoading = false;
+        console.error('Failed to load Brands', err);
       },
     });
   }
@@ -99,10 +155,10 @@ export class BlogComponent implements OnInit {
   // }
   /*-----------------------------------------------------------------*/
   // Open Img Modal
-  // openImgModal(blog: Blog): void {
-  //   const modalRef = this._ModalService.open(ImgModalComponent, { size: 'lg' });
-  //   modalRef.componentInstance.model = blog;
-  // }
+  openImgModal(blog: Blog): void {
+    const modalRef = this._ModalService.open(ImgModalComponent, { size: 'lg' });
+    modalRef.componentInstance.model = blog;
+  }
   /*-----------------------------------------------------------------*/
   // Search blogs
   onSearchInputChanged(searchTerm: string): void {
@@ -113,6 +169,22 @@ export class BlogComponent implements OnInit {
   searchBlogs(searchTerm: string = this.searchInput.trim()): void {
     this.currentPage = 1;
     this.fetchBlogs(this.currentPage, searchTerm);
+  }
+  /*-----------------------------------------------------------------*/
+  toggleDescription(blog: any) {
+    blog.expanded = !blog.expanded;
+  }
+  /*-----------------------------------------------------------------*/
+  getButtonText(blog: any): string {
+    return blog.expanded ? '<i class="fa-solid fa-arrow-left"></i> Show less' : 'Continue reading <i class="fa-solid fa-arrow-right"></i>';
+  }
+  /*-----------------------------------------------------------------*/
+  toggleShowAllCategories(): void {
+    this.showAllCategories = !this.showAllCategories;
+  }
+  /*-----------------------------------------------------------------*/
+  toggleShowAllBrands(): void {
+    this.showAllBrands = !this.showAllBrands;
   }
   /*-----------------------------------------------------------------*/
 }

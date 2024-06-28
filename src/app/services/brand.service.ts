@@ -27,7 +27,7 @@ export class BrandService {
   // Get All Brands Without Products
   // Get: api/Brands
   getAllBrands(): Observable<{ brandsCount: number; brands: Brand[] }> {
-    return this._HttpClient.get<{ brandsCount: number; brands: Brand[] }>(this.baseUrl).pipe(delay(3000));
+    return this._HttpClient.get<{ brandsCount: number; brands: Brand[] }>(this.baseUrl).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get All Brands With Products
