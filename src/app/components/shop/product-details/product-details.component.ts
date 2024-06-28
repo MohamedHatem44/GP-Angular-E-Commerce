@@ -22,12 +22,14 @@ export class ProductDetailsComponent implements OnInit {
   category: Category;
   extendedProduct: ExtendedProduct;
   reviews: Review[] = [];
+  myReviews: Review[] = [];
   productId: number;
   selectedColorId: number;
   selectedSizeId: number;
   quantity: number = 1;
   addToCartLoading: boolean = false;
   reviewsLoading: boolean;
+  myReviewsLoading: boolean;
   productLoading: boolean = false;
   apiError: string | null = null;
   selectedTab: string = 'description';
@@ -76,6 +78,7 @@ export class ProductDetailsComponent implements OnInit {
 
     this.loadWishList();
     this.onResize(null);
+    this.loadProductReviewsForUser();
   }
 
   private async loadWishList(): Promise<void> {
@@ -104,6 +107,20 @@ export class ProductDetailsComponent implements OnInit {
       error: (error) => {
         this._ToastrService.error('Error fetching Product Reviews by Id, Please try again.');
         this.reviewsLoading = false;
+      },
+    });
+  }
+  private loadProductReviewsForUser(): void {
+    this.myReviewsLoading = true;
+    this._ReviewService.getReviewByUserIdProductId().subscribe({
+      next: (response: any) => {
+        this.myReviews = response;
+        this.myReviewsLoading = false;
+        console.log(response);
+      },
+      error: (error) => {
+        this._ToastrService.error('Error fetching Product Reviews by Id, Please try again.');
+        this.myReviewsLoading = false;
       },
     });
   }
