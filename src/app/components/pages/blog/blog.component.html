@@ -1,6 +1,5 @@
-<!-------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------->
 <!-- Page Title -->
-
 <section class="about-section d-flex flex-column">
   <h2 class="about-heading">BLog</h2>
   <!-- Start of Breadcrumb -->
@@ -14,4 +13,231 @@
   </nav>
   <!-- End of Breadcrumb -->
 </section>
-<!-------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Title -->
+<section class="d-flex justify-content-center">
+  <h2 class="mt-6">Our Blogs</h2>
+</section>
+<!-- End of Title -->
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Search -->
+<div class="d-flex align-items-center justify-content-center py-5">
+  <div class="w-75">
+    <form>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Blog Title ..." [(ngModel)]="searchInput" name="blogName" (keyup)="searchBlogs()" />
+        <div class="btn btn-outline-secondary"><i class="fa fa-search"></i> Search</div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- End of Search -->
+<!----------------------------------------------------------------------------------------------->
+<section class="d-flex justify-content-center">
+  <p class="pb-4 fs-5 text-center" *ngIf="!blogsLoading && !noBlogs">From {{ startEntry }} to {{ endEntry }} of {{ totalCount }} Blog</p>
+  <p class="pb-4 fs-5 text-center" *ngIf="!blogsLoading && noBlogs">No Blogs Found</p>
+  <p class="pb-4 fs-5 text-center" *ngIf="blogsLoading">Loading Blogs ...</p>
+</section>
+<!----------------------------------------------------------------------------------------------->
+<div class="container-fluid px-5">
+  <div class="row px-3">
+    <!-- First Column -->
+    <div class="col-lg-9 col-md-9 col-sm-12">
+      <div class="row">
+        <!-- Loop over blogs array -->
+        <div class="col-12 mb-4" *ngFor="let blog of blogs">
+          <div class="card border-0">
+            <img [src]="blog.imageUrl" class="card-img-top" alt="Blog Image" />
+            <div class="card-body">
+              <h5 class="card-title">{{ blog.title }}</h5>
+              <p class="card-text">{{ blog.description }}</p>
+              <p class="card-text">By Admin | Fashion, mens, Women</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Second Column -->
+    <div class="col-lg-3 col-md-3 col-sm-12 p-b-80">
+      <div class="side-menu">
+        <div class="p-t-55">
+          <h4 class="mtext-112 cl2 p-b-33">Categories</h4>
+
+          <ul>
+            <li class="bor18">
+              <a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4"> Fashion </a>
+            </li>
+
+            <li class="bor18">
+              <a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4"> Beauty </a>
+            </li>
+
+            <li class="bor18">
+              <a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4"> Street Style </a>
+            </li>
+
+            <li class="bor18">
+              <a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4"> Life Style </a>
+            </li>
+
+            <li class="bor18">
+              <a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4"> DIY & Crafts </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="p-t-65">
+          <h4 class="mtext-112 cl2 p-b-33">Featured Products</h4>
+
+          <ul>
+            <li class="flex-w flex-t p-b-30">
+              <a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
+                <img src="images/product-min-01.jpg" alt="PRODUCT" />
+              </a>
+
+              <div class="size-215 flex-col-t p-t-8">
+                <a href="#" class="stext-116 cl8 hov-cl1 trans-04"> White Shirt With Pleat Detail Back </a>
+
+                <span class="stext-116 cl6 p-t-20"> $19.00 </span>
+              </div>
+            </li>
+
+            <li class="flex-w flex-t p-b-30">
+              <a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
+                <img src="images/product-min-02.jpg" alt="PRODUCT" />
+              </a>
+
+              <div class="size-215 flex-col-t p-t-8">
+                <a href="#" class="stext-116 cl8 hov-cl1 trans-04"> Converse All Star Hi Black Canvas </a>
+
+                <span class="stext-116 cl6 p-t-20"> $39.00 </span>
+              </div>
+            </li>
+
+            <li class="flex-w flex-t p-b-30">
+              <a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
+                <img src="images/product-min-03.jpg" alt="PRODUCT" />
+              </a>
+
+              <div class="size-215 flex-col-t p-t-8">
+                <a href="#" class="stext-116 cl8 hov-cl1 trans-04"> Nixon Porter Leather Watch In Tan </a>
+
+                <span class="stext-116 cl6 p-t-20"> $17.00 </span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="p-t-55">
+          <h4 class="mtext-112 cl2 p-b-20">Archive</h4>
+
+          <ul>
+            <li class="p-b-7">
+              <a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+                <span> July 2018 </span>
+
+                <span> (9) </span>
+              </a>
+            </li>
+
+            <li class="p-b-7">
+              <a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+                <span> June 2018 </span>
+
+                <span> (39) </span>
+              </a>
+            </li>
+
+            <li class="p-b-7">
+              <a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+                <span> May 2018 </span>
+
+                <span> (29) </span>
+              </a>
+            </li>
+
+            <li class="p-b-7">
+              <a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+                <span> April 2018 </span>
+
+                <span> (35) </span>
+              </a>
+            </li>
+
+            <li class="p-b-7">
+              <a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+                <span> March 2018 </span>
+
+                <span> (22) </span>
+              </a>
+            </li>
+
+            <li class="p-b-7">
+              <a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+                <span> February 2018 </span>
+
+                <span> (32) </span>
+              </a>
+            </li>
+
+            <li class="p-b-7">
+              <a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+                <span> January 2018 </span>
+
+                <span> (21) </span>
+              </a>
+            </li>
+
+            <li class="p-b-7">
+              <a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
+                <span> December 2017 </span>
+
+                <span> (26) </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="p-t-50">
+          <h4 class="mtext-112 cl2 p-b-27">Tags</h4>
+
+          <div class="flex-w m-r--5">
+            <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5"> Fashion </a>
+
+            <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5"> Lifestyle </a>
+
+            <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5"> Denim </a>
+
+            <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5"> Streetstyle </a>
+
+            <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5"> Crafts </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------------------------------------------------------------------------------------------->
+<!-- Start of Pagination -->
+<div *ngIf="!apiError && !noBlogs && totalPages > 1" class="container d-flex justify-content-center mt-5 pb-8">
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" aria-label="Previous" (click)="changePage(currentPage - 1)">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item" *ngFor="let page of pages" [class.active]="currentPage === page">
+        <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" aria-label="Next" (click)="changePage(currentPage + 1)">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<!-- End of Pagination -->
+<!----------------------------------------------------------------------------------------------->
