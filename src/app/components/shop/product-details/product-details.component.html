@@ -1,22 +1,18 @@
-<!-------------------------------------------------------------------------------------->
-<!-- Start of Product Details body -->
-<div class="container py-4 px-5 mt-5">
-  <!------------------------------------------------------------------------------------>
+<!-- Product Details Container -->
+<div class="container py-4 px-5 mt-5" *ngIf="product; else loading">
   <div class="row wrapper">
-    <!-- Start of Image -->
-    <div class="col-md-12 col-lg-6 px-0" *ngIf="product">
+    <!-- Product Image -->
+    <div class="col-md-12 col-lg-6 px-0">
       <img [src]="product.imageUrl" class="img-responsive" alt="product Image" />
     </div>
-    <!-- End of Image -->
-    <!------------------------------------------------------------------------------------>
-    <!-- Start of Details -->
-    <div class="col-md-12 col-lg-6" *ngIf="product">
+
+    <!-- Product Details -->
+    <div class="col-md-12 col-lg-6">
       <div class="container">
         <!-- Title -->
         <div class="row mt-3">
           <div class="col-12 text-center fs-4">{{ product.title }}</div>
         </div>
-        <br />
         <!-- Description -->
         <div class="row mt-3">
           <div class="col-12 text-center fs-5">{{ product.description }}</div>
@@ -35,12 +31,12 @@
         <div class="row mt-3">
           <div class="col-12 text-center fs-5">{{ product.price | currency }}</div>
         </div>
-        <!-- In Stock  -->
+        <!-- In Stock -->
         <div class="row mt-3">
           <div class="col-12 text-center">In Stock: {{ product.quantity }}</div>
         </div>
-        <br />
-        <!-- Quantity -->
+
+        <!-- Quantity Selector -->
         <div class="row mt-3 justify-content-center">
           <div class="col-12 col-md-6 text-center">
             <div class="input-group">
@@ -53,8 +49,8 @@
             <div *ngIf="quantity < 1" class="text-danger mt-2">Quantity must be at least 1</div>
           </div>
         </div>
-        <br />
-        <!-- Colors -->
+
+        <!-- Color Selector -->
         <div class="row mt-3">
           <div class="col-12 col-sm-4 text-start"><strong>Colors : </strong></div>
           <div class="col-12 col-sm-8 text-start">
@@ -63,8 +59,8 @@
             </select>
           </div>
         </div>
-        <br />
-        <!-- Sizes -->
+
+        <!-- Size Selector -->
         <div class="row mt-3">
           <div class="col-12 col-sm-4 text-start"><strong>Sizes : </strong></div>
           <div class="col-12 col-sm-8 text-start">
@@ -73,12 +69,12 @@
             </select>
           </div>
         </div>
-        <br />
-        <!-- Add To Cart -->
+
+        <!-- Add to Cart and Wishlist Buttons -->
         <div class="d-flex justify-content-center">
           <button class="custombtn my-3 py-2" [disabled]="quantity < 1" (click)="addToCart()">
             <i *ngIf="addToCartLoading" class="fas fa-spinner fa-spin py-1"></i>
-            <span *ngIf="!addToCartLoading"> Add To Cart</span>
+            <span *ngIf="!addToCartLoading">Add To Cart</span>
           </button>
           <button (click)="addToWishList(product)" class="btn btn-light my-3 py-2">
             <i *ngIf="!product.isWishListLoading && product.isInWishList" class="fa-solid fa-heart text-dark fa-xl"></i>
@@ -89,69 +85,46 @@
         </div>
       </div>
     </div>
-    <!-- End of Details -->
-    <!-------------------------------------------------------------------------------------->
   </div>
 </div>
-<!-- End of Product Details body -->
-<!-------------------------------------------------------------------------------------->
-<hr />
-<!-------------------------------------------------------------------------------------->
-<!-- Start of Tabs -->
+
+<!-- Tabs for Product Information -->
 <div class="container bg-white mt-9 p-2 rounded-4">
   <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
-    <!---------------------------------------------------------------------------------->
-    <!-- Start of Description -->
     <li class="nav-item" role="presentation">
       <a class="nav-link" [class.active]="selectedTab === 'description'" id="description-tab" role="tab"
         aria-controls="description" [attr.aria-selected]="selectedTab === 'description'"
         (click)="selectTab('description')">Description</a>
     </li>
-    <!-- End of Description -->
-    <!---------------------------------------------------------------------------------->
-    <!-- Start of Additional Information -->
     <li class="nav-item" role="presentation">
       <a class="nav-link" [class.active]="selectedTab === 'additional-info'" id="additional-info-tab" role="tab"
         aria-controls="additional-info" [attr.aria-selected]="selectedTab === 'additional-info'"
         (click)="selectTab('additional-info')">Additional Information</a>
     </li>
-    <!-- End of Additional Information -->
-    <!---------------------------------------------------------------------------------->
-    <!-- Start of Reviews -->
     <li class="nav-item" role="presentation">
       <a class="nav-link" [class.active]="selectedTab === 'reviews'" id="reviews-tab" role="tab" aria-controls="reviews"
         [attr.aria-selected]="selectedTab === 'reviews'" (click)="selectTab('reviews')">Reviews</a>
     </li>
-    <!-- End of Reviews -->
-    <!---------------------------------------------------------------------------------->
   </ul>
   <div class="tab-content py-5 px-2" id="myTabContent" style="min-height: 200px">
-    <!---------------------------------------------------------------------------------->
-    <!-- Start of Description -->
     <div class="tab-pane fade" [class.show]="selectedTab === 'description'"
       [class.active]="selectedTab === 'description'" id="description" role="tabpanel" aria-labelledby="description-tab"
       *ngIf="selectedTab === 'description'">
       <app-loader-spinner *ngIf="productLoading"></app-loader-spinner>
       <p *ngIf="!productLoading && !apiError">{{ product.description }}</p>
     </div>
-    <!-- End of Description -->
-    <!---------------------------------------------------------------------------------->
-    <!-- Start of Additional Information -->
     <div class="tab-pane fade" [class.show]="selectedTab === 'additional-info'"
       [class.active]="selectedTab === 'additional-info'" id="additional-info" role="tabpanel"
       aria-labelledby="additional-info-tab" *ngIf="selectedTab === 'additional-info'">
       <app-loader-spinner *ngIf="productLoading"></app-loader-spinner>
-      <!-- Category -->
       <div class="row mt-3" *ngIf="!productLoading && !apiError">
         <div class="col-6 text-end"><strong>Category : </strong></div>
         <div class="col-6 text-start">{{ product.category.name }}</div>
       </div>
-      <!-- Brand -->
       <div class="row mt-3" *ngIf="!productLoading && !apiError">
         <div class="col-6 text-end"><strong>Brand : </strong></div>
         <div class="col-6 text-start">{{ product.brand.name }}</div>
       </div>
-      <!-- Colors -->
       <div class="row mt-3" *ngIf="!productLoading && !apiError">
         <div class="col-6 text-end"><strong>Colors : </strong></div>
         <div class="col-6 text-start">
@@ -161,7 +134,6 @@
           </div>
         </div>
       </div>
-      <!-- Sizes -->
       <div class="row mt-3" *ngIf="!productLoading && !apiError">
         <div class="col-6 text-end"><strong>Sizes : </strong></div>
         <div class="col-6 text-start">
@@ -169,49 +141,35 @@
         </div>
       </div>
     </div>
-    <!-- End of Additional Information -->
-    <!---------------------------------------------------------------------------------->
-    <!-- Start of Reviews -->
     <div class="tab-pane fade" [class.show]="selectedTab === 'reviews'" [class.active]="selectedTab === 'reviews'"
       id="reviews" role="tabpanel" aria-labelledby="reviews-tab" *ngIf="selectedTab === 'reviews'">
       <app-loader-spinner *ngIf="reviewsLoading || productLoading"></app-loader-spinner>
-      <div *ngIf="!reviewsLoading && !productLoading && reviews && reviews.length === 0" class="text-center my-4 fs-5">
-        <p>No reviews found for this Product</p>
-      </div>
-      <div *ngIf="!reviewsLoading && reviews && reviews.length > 0" class="scrollable-reviews">
-        <div *ngFor="let review of reviews" class="card mb-3 bg-light">
-          <div class="card-body">
-            <div class="row align-items-center">
-              <div class="col-lg-6">
-                <h4 class="card-title">{{ review.firstName }} {{ review.lastName }}</h4>
-              </div>
-              <div class="col-lg-6 text-lg-end">
-                <div class="rating-stars">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h4>Customer Reviews</h4>
+            <ul class="list-group">
+              <li class="list-group-item" *ngFor="let review of reviews; let i = index">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">{{ review.userName }}</h5>
+                  <small>{{ review.date | date }}</small>
+                </div>
+                <p class="mb-1">{{ review.comment }}</p>
+                <small>
                   <span class="rating">
                     <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
-                      <span class="fa fa-star" [class.checked]="star <= review.rate"></span>
+                      <span class="fa fa-star" [class.checked]="star <= review.rating"></span>
                     </ng-container>
                   </span>
-                  <span class="rating-value">{{ review.rate }}/5</span>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-6">
-                <span>{{ review.createdAt | date : 'short' }} </span>
-              </div>
-            </div>
-            <p class="card-text mt-2">{{ review.description }}</p>
+                </small>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
-    <!-- End of Reviews -->
-    <!---------------------------------------------------------------------------------->
   </div>
 </div>
-<!-- End of Tabs -->
-<!-------------------------------------------------------------------------------------->
 
 <!-------------------------------------------------------------------------------------->
 <!-- Start of Slider -->
@@ -219,7 +177,7 @@
   <div class="row">
     <h3 class="text-center text-main p-2 fw-bold fs-4 p-3">Related Products</h3>
 
-    <!-- categories slider -->
+    <!-- Products slider -->
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item" *ngFor="let slide of productsInSlides; let i = index" [class.active]="i === 0">
@@ -253,3 +211,6 @@
 </div>
 <!-- End of Slider -->
 <!-------------------------------------------------------------------------------------->
+<ng-template #loading>
+  <app-loader-spinner></app-loader-spinner>
+</ng-template>
