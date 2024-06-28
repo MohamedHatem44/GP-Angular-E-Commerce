@@ -1,23 +1,22 @@
+/*-----------------------------------------------------------------------------------------------------------------*/
+// Angular
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+/*-----------------------------------------------------------------------------------------------------------------*/
+// Auth
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
-import { MainHomeComponent } from './components/home/main-home/main-home.component';
-import { UserCartComponent } from './components/user/user-cart/user-cart.component';
-import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
-import { UserWishlistComponent } from './components/user/user-wishlist/user-wishlist.component';
-import { MainShopComponent } from './components/shop/main-shop/main-shop.component';
-import { NotFoundComponent } from './components/pages/not-found/not-found.component';
-import { BrandsComponent } from './components/shop/brands/brands.component';
-import { CategoriesComponent } from './components/shop/categories/categories.component';
-import { AboutComponent } from './components/pages/about/about.component';
-import { ContactComponent } from './components/pages/contact/contact.component';
-import { BlogComponent } from './components/pages/blog/blog.component';
-import { ProductDetailsComponent } from './components/shop/product-details/product-details.component';
-import { UserOrdersComponent } from './components/user/user-orders/user-orders.component';
-import { AdminMessagesComponent } from './components/admin/admin-messages/admin-messages.component';
-import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+/*-----------------------------------------------------------------------------------------------------------------*/
+// Admin
 import { AdminMainComponent } from './components/admin/admin-main/admin-main.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { AdminColorsComponent } from './components/admin/admin-colors/admin-colors.component';
+import { AdminColorFormComponent } from './components/admin/admin-color-form/admin-color-form.component';
+import { AdminSizesComponent } from './components/admin/admin-sizes/admin-sizes.component';
+import { AdminSizeFormComponent } from './components/admin/admin-size-form/admin-size-form.component';
+import { AdminBlogsComponent } from './components/admin/admin-blogs/admin-blogs.component';
+import { AdminBlogFormComponent } from './components/admin/admin-blog-form/admin-blog-form.component';
+import { AdminMessagesComponent } from './components/admin/admin-messages/admin-messages.component';
 import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
 import { AdminBrandsComponent } from './components/admin/admin-brands/admin-brands.component';
 import { AdminBrandFormComponent } from './components/admin/admin-brand-form/admin-brand-form.component';
@@ -25,18 +24,37 @@ import { AdminCategoriesComponent } from './components/admin/admin-categories/ad
 import { AdminCategoryFormComponent } from './components/admin/admin-category-form/admin-category-form.component';
 import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
 import { AdminProductFormComponent } from './components/admin/admin-product-form/admin-product-form.component';
-import { UserProfileEditComponent } from './components/user/user-profile-edit/user-profile-edit.component';
-import { PaymentComponent } from './components/payment/payment.component';
-import { AdminColorsComponent } from './components/admin/admin-colors/admin-colors.component';
-import { AdminColorFormComponent } from './components/admin/admin-color-form/admin-color-form.component';
-import { AdminSizesComponent } from './components/admin/admin-sizes/admin-sizes.component';
-import { AdminSizeFormComponent } from './components/admin/admin-size-form/admin-size-form.component';
-import { AdminProductDetailsComponent } from './components/admin/admin-product-details/admin-product-details.component';
-import { AdminBlogsComponent } from './components/admin/admin-blogs/admin-blogs.component';
-import { AdminBlogFormComponent } from './components/admin/admin-blog-form/admin-blog-form.component';
 import { AdminProductReviewsComponent } from './components/admin/admin-product-reviews/admin-product-reviews.component';
-import { authGuard } from './guard/auth.guard';
+import { AdminProductDetailsComponent } from './components/admin/admin-product-details/admin-product-details.component';
+/*-----------------------------------------------------------------------------------------------------------------*/
+//Home
+import { MainHomeComponent } from './components/home/main-home/main-home.component';
+/*-----------------------------------------------------------------------------------------------------------------*/
+// Shop
+import { MainShopComponent } from './components/shop/main-shop/main-shop.component';
+import { BrandsComponent } from './components/shop/brands/brands.component';
+import { CategoriesComponent } from './components/shop/categories/categories.component';
+import { ProductDetailsComponent } from './components/shop/product-details/product-details.component';
+/*-----------------------------------------------------------------------------------------------------------------*/
+// User
+import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { UserProfileEditComponent } from './components/user/user-profile-edit/user-profile-edit.component';
 import { UserPassEditComponent } from './components/user/user-pass-edit/user-pass-edit.component';
+import { UserCartComponent } from './components/user/user-cart/user-cart.component';
+import { UserWishlistComponent } from './components/user/user-wishlist/user-wishlist.component';
+import { UserOrdersComponent } from './components/user/user-orders/user-orders.component';
+/*-----------------------------------------------------------------------------------------------------------------*/
+// Pages
+import { NotFoundComponent } from './components/pages/not-found/not-found.component';
+import { AboutComponent } from './components/pages/about/about.component';
+import { ContactComponent } from './components/pages/contact/contact.component';
+import { BlogComponent } from './components/pages/blog/blog.component';
+/*-----------------------------------------------------------------------------------------------------------------*/
+// Payment
+import { PaymentComponent } from './components/payment/payment.component';
+/*-----------------------------------------------------------------------------------------------------------------*/
+// Guard
+import { authGuard } from './guard/auth.guard';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
