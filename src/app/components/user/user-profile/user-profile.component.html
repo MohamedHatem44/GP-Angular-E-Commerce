@@ -4,7 +4,7 @@
       <img src="https://images.limely.co.uk/wp-content/uploads/fashion-shopify-header-image-e1701774356161.jpg" alt="bg-placeholder" />
     </div>
     <div *ngIf="isLoading">
-      <div class="card mx-md-auto mx-sm-3 mx-3 profile-card shadow bg-body rounded-none border-0" style="max-width: 900px">
+      <div class="card mx-md-auto mx-sm-3 mx-3 profile-card shadow bg-body rounded-none border-0" style="max-width: 1000px">
         <div class="profile-image__wrapper">
           <div class="image-uploader">
             <label>
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div *ngIf="currentUser" class="pt-5">
-      <div class="card mx-md-auto mx-sm-3 mx-3 profile-card shadow bg-body rounded-none border-0" style="max-width: 900px">
+      <div class="card mx-md-auto mx-sm-3 mx-3 profile-card shadow bg-body rounded-none border-0" style="max-width: 1000px">
         <app-user-profile-image [imageSrc]="currentUser?.imageUrl"></app-user-profile-image>
         <h4 class="px-3 py-1 section-heading">Basic Information</h4>
         <div class="row p-3 mx-auto">
