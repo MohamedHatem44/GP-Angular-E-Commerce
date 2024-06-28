@@ -158,4 +158,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.unsubscribeFromSubscriptions();
   }
   /*-----------------------------------------------------------------*/
+  isLoginOrRegisterRoute(): boolean {
+    const currentUrl = this._Router.url;
+    return currentUrl.includes('users/login') || currentUrl.includes('users/register');
+  }
+  /*-----------------------------------------------------------------*/
 }

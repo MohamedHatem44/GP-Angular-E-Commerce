@@ -83,10 +83,10 @@ const routes: Routes = [
   { path: 'wishlist', component: UserWishlistComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'editprofile', component: UserProfileEditComponent },
-  { path: 'orders', component: UserOrdersComponent },
+  { path: 'orders', component: UserOrdersComponent, canActivate: [authGuard] },
   { path: 'users/login', component: LoginComponent },
   { path: 'users/register', component: RegisterComponent },
-  { path: 'payment', component: PaymentComponent },
+  { path: 'payment', component: PaymentComponent, canActivate: [authGuard] },
   { path: '**', component: NotFoundComponent },
 ];
 /*-----------------------------------------------------------------------------------------------------------------*/
