@@ -108,8 +108,14 @@ export class ProductsComponent implements OnInit {
           resolve();
         },
         error: (err) => {
-          this.apiError = 'Failed to load WishList, Please try again.';
-          reject(err);
+          if (err.status === 404) {
+            this.wishList = null;
+            this.wishListItems = [];
+            resolve();
+          } else {
+            this.apiError = 'Failed to load WishList, Please try again.';
+            reject(err);
+          }
         },
       });
     });

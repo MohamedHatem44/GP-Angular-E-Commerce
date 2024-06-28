@@ -29,12 +29,16 @@ export class BlogComponent implements OnInit {
   blogs: Blog[] = [];
   categories: Category[] = [];
   brands: Brand[] = [];
+
   blogsLoading: boolean = false;
   categoriesLoading: boolean = false;
   brandsLoading: boolean = false;
+
   showAllCategories: boolean = false;
   showAllBrands: boolean = false;
+
   placeholders: any[] = Array.from({ length: 3 });
+
   currentPage: number = 1;
   totalPages: number;
   pageSize: number = 3;
@@ -42,6 +46,7 @@ export class BlogComponent implements OnInit {
   maxPagesToShow: number = 3;
   startEntry: number;
   endEntry: number;
+
   apiError: string | null = null;
   noBlogs: boolean = false;
   searchInput: string = '';

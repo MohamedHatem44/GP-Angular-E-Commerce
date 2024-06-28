@@ -5,6 +5,7 @@ import { environment } from '../../env';
 import { CartService } from '../../services/cart.service';
 import { ToastrService } from 'ngx-toastr';
 import { OrderService } from '../../services/order.service';
+import { Router } from '@angular/router';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-payment',
@@ -26,12 +27,15 @@ export class PaymentComponent implements OnInit {
   cartError: string | null = null;
   successMessage: string | null = null;
   isLoading: boolean = false;
+  createOrderLoading: boolean = false;
   orderLoading: boolean = false;
+  noItems: boolean = false;
   /*-----------------------------------------------------------------*/
   // Ctor
   constructor(
     private paymentService: PaymentService,
     private cartService: CartService,
+    private _Router: Router,
     private _OrderService: OrderService,
     private _ToastrService: ToastrService
   ) {}
@@ -44,10 +48,16 @@ export class PaymentComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   //get total price
   getTotalPrice() {
+    this.noItems = false;
     this.cartError = null;
     this.isLoading = true;
     this.cartService.getShoppingCartByUserFromClaims().subscribe(
       (response) => {
+        if (response.totalCartPrice === 0 && response.itemsCount === 0) {
+          this.noItems = true;
+          this._ToastrService.error('No items available to purchase, please add items to cart');
+          return;
+        }
         this.amount = response.totalCartPrice + 5;
         this.createPaymentIntent(this.amount);
         this.isLoading = false;
@@ -82,6 +92,7 @@ export class PaymentComponent implements OnInit {
   }
   /*-----------------------------------------------------------------*/
   async onSubmit() {
+    this.isLoading = true;
     this.errorMessage = null;
     this.successMessage = null;
     if (this.cardName == '') {
@@ -113,12 +124,11 @@ export class PaymentComponent implements OnInit {
 
     if (error) {
       this.errorMessage = error.message;
+      this.isLoading = false;
     } else {
       // Call order creation logic
       this.createOrder();
-      // this._ToastrService.success('Payment successful');
-      this.successMessage = 'Payment successful and you order placed successfully';
-      this.resetForm();
+      this.isLoading = false;
     }
   }
   /*-----------------------------------------------------------------*/
@@ -164,6 +174,11 @@ export class PaymentComponent implements OnInit {
       (response) => {
         console.log('Order created successfully', response);
         this._ToastrService.success('Order created successfully');
+        this.successMessage = 'Payment successful and you order placed successfully';
+        this.resetForm();
+        setTimeout(() => {
+          this._Router.navigate(['/orders']);
+        }, 2000);
         this.orderLoading = false;
       },
       (error) => {
