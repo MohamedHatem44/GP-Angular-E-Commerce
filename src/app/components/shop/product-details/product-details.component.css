@@ -189,7 +189,7 @@ h5 {
 /* add review form */
 /* add-review.component.css */
 .container {
-  max-width: 800px;
+  max-width: 85%;
   margin: auto;
   padding: 20px;
   border: 1px solid #ddd;
