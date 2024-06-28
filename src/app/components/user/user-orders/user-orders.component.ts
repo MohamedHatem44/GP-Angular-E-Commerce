@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../../services/order.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Order, OrdersResponse } from '../../../models/order';
+import { Order, OrderItem, OrdersResponse } from '../../../models/order';
 import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
+import { UserOrderItemModalComponent } from '../user-order-item-modal/user-order-item-modal.component';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-user-orders',
@@ -52,12 +53,16 @@ export class UserOrdersComponent implements OnInit {
       },
     });
   }
-
   /*-----------------------------------------------------------------*/
   // Open Img Modal
   openImgModal(item: any): void {
     const modalRef = this._ModalService.open(ImgModalComponent);
     modalRef.componentInstance.model = item;
+  }
+  /*-----------------------------------------------------------------*/
+  openOrderItemModal(item: OrderItem): void {
+    const modalRef = this._ModalService.open(UserOrderItemModalComponent, { size: 'lg' });
+    modalRef.componentInstance.item = item;
   }
   /*-----------------------------------------------------------------*/
 }
