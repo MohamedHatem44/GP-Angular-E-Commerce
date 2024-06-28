@@ -35,6 +35,7 @@ import { AdminProductDetailsComponent } from './components/admin/admin-product-d
 import { AdminBlogsComponent } from './components/admin/admin-blogs/admin-blogs.component';
 import { AdminBlogFormComponent } from './components/admin/admin-blog-form/admin-blog-form.component';
 import { AdminProductReviewsComponent } from './components/admin/admin-product-reviews/admin-product-reviews.component';
+import { authGuard } from './guard/auth.guard';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -42,6 +43,7 @@ const routes: Routes = [
   {
     path: 'admindashboard',
     component: AdminDashboardComponent,
+    canActivate: [authGuard],
     children: [
       { path: '', component: AdminMainComponent, pathMatch: 'full' },
       { path: 'products', component: AdminProductsComponent },
