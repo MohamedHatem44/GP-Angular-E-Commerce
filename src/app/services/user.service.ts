@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, delay } from 'rxjs';
 import { User } from '../models/user';
 import { PagedResponse } from '../models/pagedResponse';
+import { jwtDecode } from 'jwt-decode';
 /*--------------------------------------------------------------------*/
 @Injectable({
   providedIn: 'root',
@@ -36,4 +37,19 @@ export class UserService {
     return this._HttpClient.delete<Object>(`${this.baseUrl}/${userId}`).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
+  //Get User
+  //Get :api/Users
+  getCurrentUser(): Observable<User> {
+    return this._HttpClient.get<User>(this.baseUrl).pipe(delay(3000));
+  }
+
+  //
+  getUserInfoFromToken(token: string): any {
+    try {
+      return jwtDecode(token);
+    } catch (error) {
+      console.error('Invalid token', error);
+      return null;
+    }
+  }
 }

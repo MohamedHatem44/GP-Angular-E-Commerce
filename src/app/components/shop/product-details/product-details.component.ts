@@ -12,6 +12,7 @@ import { WishListService } from '../../../services/wishList.service';
 import { WishList } from '../../../models/wishList';
 import { switchMap } from 'rxjs/operators'; // Import switchMap operator
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-product-details',
@@ -48,7 +49,8 @@ export class ProductDetailsComponent implements OnInit {
 
   //review form
   reviewForm: FormGroup;
-
+  userInfo: any;
+  userId: string = '';
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
@@ -56,7 +58,8 @@ export class ProductDetailsComponent implements OnInit {
     private _CartService: CartService,
     private _WishListService: WishListService,
     private _ToastrService: ToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private _userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -89,7 +92,12 @@ export class ProductDetailsComponent implements OnInit {
     });
     this.loadWishList();
     this.onResize(null);
-    this.loadProductReviewsForUser();
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.userInfo = this._userService.getUserInfoFromToken(token);
+      this.userId = this.userInfo['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+      this.loadProductReviewsForUser();
+    }
   }
 
   private async loadWishList(): Promise<void> {
@@ -114,6 +122,7 @@ export class ProductDetailsComponent implements OnInit {
       next: (response: any) => {
         this.reviews = response;
         this.reviewsLoading = false;
+        console.log(response);
       },
       error: (error) => {
         this._ToastrService.error('Error fetching Product Reviews by Id, Please try again.');
@@ -277,13 +286,16 @@ export class ProductDetailsComponent implements OnInit {
   // review form
   onSubmit() {
     console.log(this.productId);
+    console.log(this.userId);
 
     if (this.reviewForm.valid) {
       const review: Review = {
         ...this.reviewForm.value,
         productId: this.productId,
+        userId: this.userId,
       };
       console.log(review);
+      console.log(review.userId);
       this._ReviewService.createReview(review);
       this._ToastrService.success('Review Added successfully');
       this.reviewForm = this.fb.group({
@@ -292,7 +304,7 @@ export class ProductDetailsComponent implements OnInit {
         description: '',
         email: '',
       });
-      // Perform the actual submission logic here
+      this.loadProductReviews(this.productId);
     }
   }
 }
