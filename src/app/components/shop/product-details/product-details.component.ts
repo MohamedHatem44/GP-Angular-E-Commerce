@@ -167,10 +167,16 @@ export class ProductDetailsComponent implements OnInit {
     this.selectedTab = tab;
   }
   /*------------------------------------------------------------------*/
-  // slider
+  // Start slider
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    this.iterationIncrement = window.innerWidth < 500 ? 1 : 3;
+    if (window.innerWidth < 801) {
+      this.iterationIncrement = 1;
+    } else if (window.innerWidth >= 801 && window.innerWidth < 1100) {
+      this.iterationIncrement = 2;
+    } else {
+      this.iterationIncrement = 3;
+    }
     this.processProductsForSlider();
   }
 
@@ -211,6 +217,8 @@ export class ProductDetailsComponent implements OnInit {
   getImageUrl(imagePath: string): string {
     return `path_to_images/${imagePath}`;
   }
+  // End slider
+  /*------------------------------------------------------------------*/
   /*------------------------------------------------------------------*/
   // Add / Remove from WishList
   addToWishList(extendedProduct: ExtendedProduct) {
