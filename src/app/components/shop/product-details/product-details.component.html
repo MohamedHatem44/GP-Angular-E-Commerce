@@ -87,7 +87,7 @@
     </div>
   </div>
 </div>
-
+<hr>
 <!-- Tabs for Product Information -->
 <!-- Start of Tabs -->
 <div class="container bg-white mt-9 p-2 rounded-4">
@@ -119,9 +119,18 @@
     <!---------------------------------------------------------------------------------->
     <!-- Start of My Reviews -->
     <li class="nav-item" role="presentation">
-      <a class="nav-link" [class.active]="selectedTab === 'myReviews'" id="reviews-tab" role="tab"
+      <a class="nav-link" [class.active]="selectedTab === 'myReviews'" id="myReviews-tab" role="tab"
         aria-controls="myReviews" [attr.aria-selected]="selectedTab === 'myReviews'" (click)="selectTab('myReviews')">My
         Reviews</a>
+    </li>
+    <!-- End of My Reviews -->
+    <!---------------------------------------------------------------------------------->
+    <!---------------------------------------------------------------------------------->
+    <!-- Start of My Reviews -->
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" [class.active]="selectedTab === 'addReview'" id="addReview-tab" role="tab"
+        aria-controls="addReview" [attr.aria-selected]="selectedTab === 'addReview'"
+        (click)="selectTab('addReview')">Add Review</a>
     </li>
     <!-- End of My Reviews -->
     <!---------------------------------------------------------------------------------->
@@ -213,7 +222,7 @@
     <!-- Start of My Reviews -->
     <div class="tab-pane fade" [class.show]="selectedTab === 'myReviews'" [class.active]="selectedTab === 'myReviews'"
       id="myReviews" role="tabpanel" aria-labelledby="myReviews-tab" *ngIf="selectedTab === 'myReviews'">
-      <app-loader-spinner *ngIf="reviewsLoading || productLoading"></app-loader-spinner>
+      <app-loader-spinner *ngIf="myReviewsLoading || productLoading"></app-loader-spinner>
       <div *ngIf="!myReviewsLoading && !productLoading && myReviews && myReviews.length === 0"
         class="text-center my-4 fs-5">
         <p>You don't add any reviews for this Product</p>
@@ -248,11 +257,79 @@
     </div>
     <!-- End of My Reviews -->
     <!---------------------------------------------------------------------------------->
+    <!---------------------------------------------------------------------------------->
+    <!-- Start of Add Review -->
+    <div class="tab-pane fade" [class.show]="selectedTab === 'addReview'" [class.active]="selectedTab === 'addReview'"
+      id="addReview" role="tabpanel" aria-labelledby="addReview-tab" *ngIf="selectedTab === 'addReview'">
+      <app-loader-spinner *ngIf="productLoading"></app-loader-spinner>
+      <div *ngIf="!productLoading" class="text-center my-4 fs-5">
+        <p>Add Review For {{product.title}}</p>
+      </div>
+      <div class="scrollable-addReview">
+        <!-- start add review form -->
+        <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()" class="container mt-5">
+          <div class="mb-3 row">
+            <label for="rate" class="col-sm-2 col-form-label">Rating</label>
+            <div class="col-sm-10">
+              <select id="rate" formControlName="rate" class="form-select" aria-label="Rating">
+                <option value="">Select Rating</option>
+                <option *ngFor="let star of [1, 2, 3, 4, 5]" [value]="star">{{ star }}</option>
+              </select>
+              <div *ngIf="reviewForm.get('rate').touched && reviewForm.get('rate').invalid" class="text-danger">
+                Rating is required and must be between 1 and 5.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 row">
+            <label for="title" class="col-sm-2 col-form-label">Title</label>
+            <div class="col-sm-10">
+              <input type="text" id="title" formControlName="title" class="form-control" placeholder="Review Title" />
+              <div *ngIf="reviewForm.get('title').touched && reviewForm.get('title').invalid" class="text-danger">
+                Title is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 row">
+            <label for="description" class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-10">
+              <textarea id="description" formControlName="description" class="form-control" rows="4"
+                placeholder="Review Description"></textarea>
+              <div *ngIf="reviewForm.get('description').touched && reviewForm.get('description').invalid"
+                class="text-danger">
+                Description is required and must be at least 10 characters long.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 row">
+            <label for="email" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+              <input type="email" id="email" formControlName="email" class="form-control" placeholder="Your Email" />
+              <div *ngIf="reviewForm.get('email').touched && reviewForm.get('email').invalid" class="text-danger">
+                Valid email is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-10 offset-sm-2">
+              <button type="submit" class="btn btn-primary" [disabled]="reviewForm.invalid">Submit Review</button>
+            </div>
+          </div>
+        </form>
+
+        <!-- end add review form -->
+      </div>
+    </div>
+    <!-- End of Add Review -->
+    <!---------------------------------------------------------------------------------->
   </div>
 </div>
 <!-- End of Tabs -->
 <!-------------------------------------------------------------------------------------->
-
+<hr>
 <!-------------------------------------------------------------------------------------->
 <!-- Start of Slider -->
 <div class="container-fluid mt-3 mb-5">

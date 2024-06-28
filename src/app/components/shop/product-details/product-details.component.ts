@@ -11,6 +11,7 @@ import { Category } from '../../../models/category';
 import { WishListService } from '../../../services/wishList.service';
 import { WishList } from '../../../models/wishList';
 import { switchMap } from 'rxjs/operators'; // Import switchMap operator
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-product-details',
@@ -45,13 +46,17 @@ export class ProductDetailsComponent implements OnInit {
   wishListItems: any[] = [];
   wishListApiError: string | null = null;
 
+  //review form
+  reviewForm: FormGroup;
+
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private _ReviewService: ReviewService,
     private _CartService: CartService,
     private _WishListService: WishListService,
-    private _ToastrService: ToastrService
+    private _ToastrService: ToastrService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -76,6 +81,12 @@ export class ProductDetailsComponent implements OnInit {
         }
       );
 
+    this.reviewForm = this.fb.group({
+      rate: ['', [Validators.required, Validators.min(1), Validators.max(5)]],
+      title: ['', Validators.required],
+      description: ['', [Validators.required, Validators.minLength(10)]],
+      email: ['', [Validators.required, Validators.email]],
+    });
     this.loadWishList();
     this.onResize(null);
     this.loadProductReviewsForUser();
@@ -261,5 +272,27 @@ export class ProductDetailsComponent implements OnInit {
 
   private isProductInWishList(productId: number): boolean {
     return this.wishListItems.some((item) => item.productId === productId);
+  }
+
+  // review form
+  onSubmit() {
+    console.log(this.productId);
+
+    if (this.reviewForm.valid) {
+      const review: Review = {
+        ...this.reviewForm.value,
+        productId: this.productId,
+      };
+      console.log(review);
+      this._ReviewService.createReview(review);
+      this._ToastrService.success('Review Added successfully');
+      this.reviewForm = this.fb.group({
+        rate: '',
+        title: '',
+        description: '',
+        email: '',
+      });
+      // Perform the actual submission logic here
+    }
   }
 }
