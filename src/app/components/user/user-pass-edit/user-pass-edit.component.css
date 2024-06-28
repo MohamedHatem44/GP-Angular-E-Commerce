@@ -24,7 +24,7 @@
 }
 
 .profile-card {
-  padding-top: calc(30px + var(--image-circle) / 2);
+  padding-top: 50;
   position: relative;
   top: calc(var(--image-circle) / 2);
 }
@@ -77,6 +77,71 @@
 .image-uploader label input[type='file'] {
   display: none;
 }
+
+.form-input {
+  border: none;
+  border-radius: 0;
+  padding: 5px;
+  outline: none;
+  border: 1px solid transparent;
+  transition: border-color 0.25s ease-out;
+}
+
+.form-input:focus {
+  border: 1px solid rgb(27, 106, 179);
+}
+
+.form-input:disabled {
+  background-color: rgb(221, 221, 221);
+  cursor: not-allowed;
+}
+
+.form-input::placeholder {
+  border: none;
+  border-radius: 0;
+  padding: 5px;
+}
+
+.form-input.error {
+  border-color: rgb(230, 124, 124);
+}
+
+.text-hint {
+  font-size: 0.8rem;
+}
+
+.form-input.with-icon {
+  padding-left: 30px;
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-group.r-icon .form-input {
+  padding-right: 30px;
+}
+
+.form-group.l-icon .form-input {
+  padding-left: 30px;
+}
+
+.form-group.r-icon i {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+}
+
+.icon-button {
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .section-heading {
   display: flex;
   align-items: center;

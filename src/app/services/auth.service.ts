@@ -113,4 +113,8 @@ export class AuthService {
     }
   }
   /*------------------------------------------------------------------*/
+  updatePassword(body: { oldPassword: string; password: string }) {
+    return this.http.patch<unknown>(`${this.baseUrl}/UpdateUserPass`, body);
+  }
+  /*------------------------------------------------------------------*/
 }

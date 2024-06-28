@@ -36,6 +36,7 @@ import { AdminBlogsComponent } from './components/admin/admin-blogs/admin-blogs.
 import { AdminBlogFormComponent } from './components/admin/admin-blog-form/admin-blog-form.component';
 import { AdminProductReviewsComponent } from './components/admin/admin-product-reviews/admin-product-reviews.component';
 import { authGuard } from './guard/auth.guard';
+import { UserPassEditComponent } from './components/user/user-pass-edit/user-pass-edit.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -84,6 +85,7 @@ const routes: Routes = [
   { path: 'profile', component: UserProfileComponent },
   { path: 'editprofile', component: UserProfileEditComponent },
   { path: 'orders', component: UserOrdersComponent, canActivate: [authGuard] },
+  { path: 'change-password', component: UserPassEditComponent },
   { path: 'users/login', component: LoginComponent },
   { path: 'users/register', component: RegisterComponent },
   { path: 'payment', component: PaymentComponent, canActivate: [authGuard] },
