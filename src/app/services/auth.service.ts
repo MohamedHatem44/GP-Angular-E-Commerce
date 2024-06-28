@@ -6,6 +6,7 @@ import { delay, tap } from 'rxjs/operators';
 import { User } from '../models/user';
 import { CartService } from './cart.service';
 import { WishListService } from './wishList.service';
+import { JwtService } from './jwt.service';
 /*--------------------------------------------------------------------*/
 @Injectable({
   providedIn: 'root',
@@ -13,11 +14,22 @@ import { WishListService } from './wishList.service';
 /*--------------------------------------------------------------------*/
 export class AuthService {
   private baseUrl = 'http://localhost:5185/api/Auth';
+
+  private isLoggedInSubject: BehaviorSubject<boolean>;
+  public isLoggedIn$: Observable<boolean>;
   public userToken: BehaviorSubject<string | null>;
   /*------------------------------------------------------------------*/
   // Ctor
-  constructor(private http: HttpClient, private _Router: Router, private _CartService: CartService, private _WishListService: WishListService) {
+  constructor(
+    private http: HttpClient,
+    private _Router: Router,
+    private _CartService: CartService,
+    private _WishListService: WishListService,
+    private _JwtService: JwtService
+  ) {
     this.userToken = new BehaviorSubject<string | null>(localStorage.getItem('token'));
+    this.isLoggedInSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
+    this.isLoggedIn$ = this.isLoggedInSubject.asObservable();
   }
   /*------------------------------------------------------------------*/
   // Getter for user data
@@ -42,10 +54,9 @@ export class AuthService {
       tap((response: any) => {
         localStorage.setItem('token', response.token);
         this.userToken.next(response.token);
-
+        this.isLoggedInSubject.next(true);
         // Update cart item and wishList count for the logged-in user
-        this._CartService.updateCartItemCount();
-        this._WishListService.updateWishListItemCount();
+        this.updateCartAndWishlistCounts();
       })
     );
   }
@@ -66,7 +77,10 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('cartItemCount');
     localStorage.removeItem('wishListItemCount');
+    this.isLoggedInSubject.next(false);
     this.userToken.next(null);
+    this._CartService.clearCartItemCount();
+    this._WishListService.clearWishListItemCount();
     this._Router.navigate(['users/login']);
   }
   /*------------------------------------------------------------------*/
@@ -85,6 +99,18 @@ export class AuthService {
     const formData = new FormData();
     formData.append('formFile', file);
     return this.http.post<{ url?: string }>(`${this.baseUrl}/Upload`, formData);
+  }
+  /*------------------------------------------------------------------*/
+  // Update cart item and wishList count for the logged-in user
+  private updateCartAndWishlistCounts() {
+    const token = this.getToken();
+    if (token) {
+      const role = this._JwtService.getRoleFromToken(token);
+      if (role !== 'Admin') {
+        this._CartService.updateCartItemCount();
+        this._WishListService.updateWishListItemCount();
+      }
+    }
   }
   /*------------------------------------------------------------------*/
 }

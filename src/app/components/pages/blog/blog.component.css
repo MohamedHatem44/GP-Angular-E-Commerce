@@ -1,3 +1,4 @@
+/*--------------------------------------------*/
 .about-section {
   background-image: url('../../../../assets/images/bg-02.jpg');
   background-size: cover;
@@ -8,7 +9,7 @@
   align-items: center;
   justify-content: center;
 }
-
+/*--------------------------------------------*/
 .about-heading {
   color: white;
   font-size: 3.5rem;
@@ -19,5 +20,9 @@
 .breadcrumb-item + .breadcrumb-item::before {
   content: '/';
   color: white;
+}
+/*--------------------------------------------*/
+.pagination .page-link {
+  cursor: pointer;
 }
 /*--------------------------------------------*/

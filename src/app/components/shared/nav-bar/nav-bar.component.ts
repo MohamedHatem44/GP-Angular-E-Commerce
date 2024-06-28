@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { JwtService } from '../../../services/jwt.service';
@@ -12,8 +12,11 @@ import { WishListService } from '../../../services/wishList.service';
   styleUrl: './nav-bar.component.css',
 })
 /*--------------------------------------------------------------------*/
-export class NavBarComponent implements OnInit {
+export class NavBarComponent implements OnInit, OnDestroy {
   /*--------------------------------------------------------------------*/
+  isLoggedIn: boolean = false;
+  private authSubscription: Subscription | undefined;
+
   cartItemCount: number = 0;
   wishlistItemCount: number = 0;
   private cartCountSubscription: Subscription;
@@ -39,27 +42,28 @@ export class NavBarComponent implements OnInit {
   ) {}
   /*--------------------------------------------------------------------*/
   ngOnInit(): void {
-    this.updateLoginStatus();
-    this.subscribeToCartItemCount();
-    this.subscribeToWishlistItemCount();
+    this.authSubscription = this._AuthService.isLoggedIn$.subscribe((loggedIn) => {
+      this.isLoggedIn = loggedIn;
+      if (loggedIn) {
+        this.updateLoginStatus();
+      } else {
+        this.resetLoginStatus();
+      }
+    });
   }
   /*--------------------------------------------------------------------*/
   ngOnDestroy(): void {
-    if (this.cartCountSubscription) {
-      this.cartCountSubscription.unsubscribe();
-    }
-    if (this.wishlistCountSubscription) {
-      this.wishlistCountSubscription.unsubscribe();
-    }
+    this.unsubscribeFromSubscriptions();
   }
   /*--------------------------------------------------------------------*/
+
   // Method to Update Login Status
   updateLoginStatus() {
     this._AuthService.userToken.subscribe({
       next: () => {
-        if (this._AuthService.userToken.getValue() !== null) {
+        const token = this._AuthService.userToken.getValue();
+        if (token !== null) {
           this.isLogin = true;
-          const token = this._AuthService.userToken.getValue();
           this.role = this._JwtService.getRoleFromToken(token);
           if (this.role === 'Admin') {
             this.isAdmin = true;
@@ -67,14 +71,22 @@ export class NavBarComponent implements OnInit {
           } else {
             this.isAdmin = false;
             this.isUser = true;
+            this.subscribeToCartItemCount();
+            this.subscribeToWishlistItemCount();
           }
         } else {
-          this.isLogin = false;
-          this.isAdmin = false;
-          this.isUser = false;
+          this.resetLoginStatus();
         }
       },
     });
+  }
+  /*--------------------------------------------------------------------*/
+  resetLoginStatus() {
+    this.isLogin = false;
+    this.isAdmin = false;
+    this.isUser = false;
+    this.unsubscribeFromSubscriptions();
+    this.clearCartAndWishlistCounts();
   }
   /*--------------------------------------------------------------------*/
   isActiveRoute(route: string) {
@@ -118,11 +130,37 @@ export class NavBarComponent implements OnInit {
     );
   }
   /*--------------------------------------------------------------------*/
+  private unsubscribeFromSubscriptions() {
+    if (this.cartCountSubscription) {
+      this.cartCountSubscription.unsubscribe();
+    }
+    if (this.wishlistCountSubscription) {
+      this.wishlistCountSubscription.unsubscribe();
+    }
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
+  }
+  /*--------------------------------------------------------------------*/
+  private clearCartAndWishlistCounts() {
+    this.cartItemCount = 0;
+    this.wishlistItemCount = 0;
+  }
+  /*--------------------------------------------------------------------*/
   // Method to log out
   logOut() {
     this._AuthService.logout();
     this._CartService.clearCartItemCount();
     this._WishListService.clearWishListItemCount();
+    this.isLogin = false;
+    this.isAdmin = false;
+    this.isUser = false;
+    this.unsubscribeFromSubscriptions();
+  }
+  /*-----------------------------------------------------------------*/
+  isLoginOrRegisterRoute(): boolean {
+    const currentUrl = this._Router.url;
+    return currentUrl.includes('users/login') || currentUrl.includes('users/register');
   }
   /*-----------------------------------------------------------------*/
 }

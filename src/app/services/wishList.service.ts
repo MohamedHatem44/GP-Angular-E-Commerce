@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, delay, tap } from 'rxjs';
 
 import { WishList } from '../models/wishList';
+import { JwtService } from './jwt.service';
 /*--------------------------------------------------------------------*/
 @Injectable({
   providedIn: 'root',
@@ -15,11 +16,10 @@ export class WishListService {
   private wishListItemCountSubject: BehaviorSubject<number>;
   /*------------------------------------------------------------------*/
   // Ctor
-  constructor(private _HttpClient: HttpClient) {
+  constructor(private _HttpClient: HttpClient, private _JwtService: JwtService) {
     const storedItemCount = localStorage.getItem('wishListItemCount');
     this.wishListItemCountSubject = new BehaviorSubject<number>(storedItemCount ? +storedItemCount : 0);
-
-    if (!storedItemCount) {
+    if (storedItemCount) {
       this.updateWishListItemCount();
     }
   }
