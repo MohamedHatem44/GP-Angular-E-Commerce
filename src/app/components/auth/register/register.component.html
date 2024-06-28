@@ -8,8 +8,9 @@
     </div>
     <!-------------------------------------------------------------------------------------------->
     <div class="w-75 mx-auto py-5">
-      <h4 class="my-4 d-flex justify-content-center">Join our beloved community!</h4>
-      <p class="my-4 d-flex justify-content-center">Very few steps are separating you away from a real excitement .. join us NOW!</p>
+      <h4 class="my-4 d-flex justify-content-center">Join our beloved community</h4>
+      <p class="my-4 d-flex justify-content-center">Very few steps are separating you away from a real excitement</p>
+      <p class="my-4 d-flex justify-content-center">Join us Now</p>
 
       <form (submit)="onRegister()" [formGroup]="registerForm">
         <!-------------------------------------------------------------------------------------------->
@@ -110,8 +111,8 @@
             <span *ngIf="!loading">Register</span>
           </button>
           <div class="d-flex justify-content-center pb-5">
-            <span> I have an account! </span>
-            <a routerLink="/users/login" class="ml-1 d-inline-block"> Login Now </a>
+            <span class="me-2">Already have an account?</span>
+            <a routerLink="/users/login" class="ml-1 d-inline-block">Login Now</a>
           </div>
         </div>
       </form>
