@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Cart } from '../../../models/cart';
 import { WishListService } from '../../../services/wishList.service';
 import { WishList } from '../../../models/wishList';
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-product-details-modal',
@@ -28,6 +30,8 @@ export class ProductDetailsModalComponent implements OnInit {
   constructor(
     private _CartService: CartService,
     private _WishListService: WishListService,
+    private _AuthService: AuthService,
+    private _Router: Router,
     public _ActiveModal: NgbActiveModal,
     private _ToastrService: ToastrService
   ) {}
@@ -40,6 +44,12 @@ export class ProductDetailsModalComponent implements OnInit {
   // Load WishList
   private async loadWishList(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
+      if (!this._AuthService.isAuthenticated()) {
+        this.wishList = null;
+        this.wishListItems = [];
+        resolve();
+        return;
+      }
       this._WishListService.getWishListByUserFromClaims().subscribe({
         next: (response: any) => {
           this.wishList = response;
@@ -75,6 +85,14 @@ export class ProductDetailsModalComponent implements OnInit {
   /*------------------------------------------------------------------*/
   addToCart() {
     this.addToCartLoading = true;
+    const isAuthenticated = this._AuthService.isAuthenticated();
+    if (!isAuthenticated) {
+      this._ToastrService.error('To Have Access, Please login');
+      this.addToCartLoading = false;
+      this._ActiveModal.close();
+      this._Router.navigate(['users/login']);
+      return;
+    }
     if (!this.selectedColorId || !this.selectedSizeId) {
       this._ToastrService.error('You must Select Color and Size');
       this.addToCartLoading = false;
@@ -116,6 +134,14 @@ export class ProductDetailsModalComponent implements OnInit {
   // Add / Remove from WishList
   addToWishList(product: ExtendedProduct) {
     product.isWishListLoading = true;
+    const isAuthenticated = this._AuthService.isAuthenticated();
+    if (!isAuthenticated) {
+      this._ToastrService.error('To Have Access, Please login');
+      product.isWishListLoading = false;
+      this._ActiveModal.close();
+      this._Router.navigate(['users/login']);
+      return;
+    }
     const itemIdToAdd: WishList = {
       productId: product.id,
     };

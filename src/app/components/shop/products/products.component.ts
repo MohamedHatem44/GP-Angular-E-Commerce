@@ -16,7 +16,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ProductDetailsModalComponent } from '../product-details-modal/product-details-modal.component';
 import { WishListService } from '../../../services/wishList.service';
 import { WishList } from '../../../models/wishList';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-products',
@@ -68,6 +69,8 @@ export class ProductsComponent implements OnInit {
     private _SizeService: SizeService,
     private _ColorService: ColorService,
     private _BrandService: BrandService,
+    private _AuthService: AuthService,
+    private _Router: Router,
     private _ModalService: NgbModal,
     private _ToastrService: ToastrService,
     private _WishListService: WishListService,
@@ -106,6 +109,12 @@ export class ProductsComponent implements OnInit {
   // Load WishList
   private async loadWishList(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
+      if (!this._AuthService.isAuthenticated()) {
+        this.wishList = null;
+        this.wishListItems = [];
+        resolve();
+        return;
+      }
       this._WishListService.getWishListByUserFromClaims().subscribe({
         next: (response: any) => {
           this.wishList = response;
@@ -279,6 +288,13 @@ export class ProductsComponent implements OnInit {
   // Add / Remove from WishList
   addToWishList(product: ExtendedProduct) {
     product.isWishListLoading = true;
+    const isAuthenticated = this._AuthService.isAuthenticated();
+    if (!isAuthenticated) {
+      this._ToastrService.error('To Have Access, Please login');
+      product.isWishListLoading = false;
+      this._Router.navigate(['users/login']);
+      return;
+    }
     const itemIdToAdd: WishList = {
       productId: product.id,
     };
@@ -328,12 +344,10 @@ export class ProductsComponent implements OnInit {
   ): void {
     this.productsLoading = true;
     this.apiError = null;
-    console.log(minPrice, maxPrice);
     this._ProductService
       .getAllProductsWithPaginationForUser(page, this.pageSize, searchParam, categoryId, brandId, colorId, sizeId, minPrice, maxPrice)
       .subscribe({
         next: (response: PagedResponse<ExtendedProduct>) => {
-          console.log(response.items);
           this.products = response.items.map((product) => ({
             ...product,
             isInWishList: this.isProductInWishList(product.id),

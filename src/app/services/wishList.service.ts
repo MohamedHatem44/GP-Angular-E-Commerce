@@ -27,14 +27,14 @@ export class WishListService {
   // Get a Specific User WishList By User Claims
   // Get: api/WishLists/UserWishList
   getWishListByUserFromClaims(): Observable<any> {
-    return this._HttpClient.get<any>(`${this.baseUrl}/UserWishList`).pipe(delay(3000));
+    return this._HttpClient.get<any>(`${this.baseUrl}/UserWishList`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Add Items To  WishList
   // Post: api/WishLists/AddAndRemoveFromWishList
   AddAndRemoveFromWishList(item: WishList): Observable<WishList> {
     return this._HttpClient.post<WishList>(`${this.baseUrl}/AddAndRemoveFromWishList`, item).pipe(
-      delay(3000),
+      delay(1000),
       tap(() => {
         this.updateWishListItemCount();
       })
@@ -45,7 +45,7 @@ export class WishListService {
   // Delete: api/WishLists/RemoveFromWishList/{id}
   deleteProItem(itemId: number): Observable<Object> {
     return this._HttpClient.delete<Object>(`${this.baseUrl}/RemoveFromWishList/${itemId}`).pipe(
-      delay(3000),
+      delay(1000),
       tap(() => {
         this.updateWishListItemCount();
       })
@@ -56,7 +56,7 @@ export class WishListService {
   // Delete: api/WishLists/RemoveAllItemsFromWishList
   deleteAllItem(): Observable<Object> {
     return this._HttpClient.delete<Object>(`${this.baseUrl}/RemoveAllItemsFromWishList`).pipe(
-      delay(3000),
+      delay(1000),
       tap(() => {
         this.updateWishListItemCount();
       })

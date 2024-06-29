@@ -30,10 +30,9 @@ export class ReviewService {
   /*------------------------------------------------------------------*/
   // Get Review By User Id and Product Id
   // Get: api/Reviews/UserReviews
-  getReviewByUserIdProductId(): Observable<Review[]> {
-    return this._HttpClient.get<Review[]>(`${this.baseUrl}/UserReviews`).pipe(delay(3000));
+  getReviewByUserIdProductId(productId: number): Observable<Review[]> {
+    return this._HttpClient.get<Review[]>(`${this.baseUrl}/UserReview/${productId}`).pipe(delay(3000));
   }
-
   /*------------------------------------------------------------------*/
   // Create a New Review
   // Post: api/Reviews

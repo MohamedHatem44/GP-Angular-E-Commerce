@@ -1,5 +1,13 @@
+<!-------------------------------------------------------------------------------------->
+<!-- Start of loader -->
+<div class="container py-4 px-5 mt-6" *ngIf="productLoading">
+  <app-admin-product-details-loader></app-admin-product-details-loader>
+</div>
+<!-- End of loader -->
+<!------------------------------------------------------------------------------------>
+
 <!-- Product Details Container -->
-<div class="container py-4 px-5 mt-5" *ngIf="product; else loading">
+<div class="container py-4 px-5 mt-5" *ngIf="!productLoading">
   <div class="row wrapper">
     <!-- Product Image -->
     <div class="col-md-12 col-lg-6 px-0">
@@ -40,11 +48,9 @@
         <div class="row mt-3 justify-content-center">
           <div class="col-12 col-md-6 text-center">
             <div class="input-group">
-              <button class="btn btn-outline-secondary" type="button" aria-label="Decrease quantity"
-                (click)="decreaseQuantity()">-</button>
+              <button class="btn btn-outline-secondary" type="button" aria-label="Decrease quantity" (click)="decreaseQuantity()">-</button>
               <input type="number" class="form-control text-center" [(ngModel)]="quantity" [min]="1" />
-              <button class="btn btn-outline-secondary" type="button" aria-label="Increase quantity"
-                (click)="increaseQuantity()">+</button>
+              <button class="btn btn-outline-secondary" type="button" aria-label="Increase quantity" (click)="increaseQuantity()">+</button>
             </div>
             <div *ngIf="quantity < 1" class="text-danger mt-2">Quantity must be at least 1</div>
           </div>
@@ -78,8 +84,7 @@
           </button>
           <button (click)="addToWishList(product)" class="btn btn-light my-3 py-2">
             <i *ngIf="!product.isWishListLoading && product.isInWishList" class="fa-solid fa-heart text-dark fa-xl"></i>
-            <i *ngIf="!product.isWishListLoading && !product.isInWishList"
-              class="fa-regular fa-heart text-dark fa-xl"></i>
+            <i *ngIf="!product.isWishListLoading && !product.isInWishList" class="fa-regular fa-heart text-dark fa-xl"></i>
             <i *ngIf="product.isWishListLoading" class="fas fa-spinner fa-spin fa-xl"></i>
           </button>
         </div>
@@ -87,7 +92,7 @@
     </div>
   </div>
 </div>
-<hr>
+<hr />
 <!-- Tabs for Product Information -->
 <!-- Start of Tabs -->
 <div class="container bg-white mt-9 p-2 rounded-4">
@@ -95,42 +100,78 @@
     <!---------------------------------------------------------------------------------->
     <!-- Start of Description -->
     <li class="nav-item" role="presentation">
-      <a class="nav-link" [class.active]="selectedTab === 'description'" id="description-tab" role="tab"
-        aria-controls="description" [attr.aria-selected]="selectedTab === 'description'"
-        (click)="selectTab('description')">Description</a>
+      <a
+        class="nav-link"
+        [class.active]="selectedTab === 'description'"
+        id="description-tab"
+        role="tab"
+        aria-controls="description"
+        [attr.aria-selected]="selectedTab === 'description'"
+        (click)="selectTab('description')"
+        >Description</a
+      >
     </li>
     <!-- End of Description -->
     <!---------------------------------------------------------------------------------->
     <!-- Start of Additional Information -->
     <li class="nav-item" role="presentation">
-      <a class="nav-link" [class.active]="selectedTab === 'additional-info'" id="additional-info-tab" role="tab"
-        aria-controls="additional-info" [attr.aria-selected]="selectedTab === 'additional-info'"
-        (click)="selectTab('additional-info')">Additional Information</a>
+      <a
+        class="nav-link"
+        [class.active]="selectedTab === 'additional-info'"
+        id="additional-info-tab"
+        role="tab"
+        aria-controls="additional-info"
+        [attr.aria-selected]="selectedTab === 'additional-info'"
+        (click)="selectTab('additional-info')"
+        >Additional Information</a
+      >
     </li>
     <!-- End of Additional Information -->
     <!---------------------------------------------------------------------------------->
     <!-- Start of Reviews -->
     <li class="nav-item" role="presentation">
-      <a class="nav-link" [class.active]="selectedTab === 'reviews'" id="reviews-tab" role="tab" aria-controls="reviews"
-        [attr.aria-selected]="selectedTab === 'reviews'" (click)="selectTab('reviews')">All Reviews</a>
+      <a
+        class="nav-link"
+        [class.active]="selectedTab === 'reviews'"
+        id="reviews-tab"
+        role="tab"
+        aria-controls="reviews"
+        [attr.aria-selected]="selectedTab === 'reviews'"
+        (click)="selectTab('reviews')"
+        >All Reviews</a
+      >
     </li>
     <!-- End of Reviews -->
     <!---------------------------------------------------------------------------------->
     <!---------------------------------------------------------------------------------->
     <!-- Start of My Reviews -->
-    <li class="nav-item" role="presentation">
-      <a class="nav-link" [class.active]="selectedTab === 'myReviews'" id="myReviews-tab" role="tab"
-        aria-controls="myReviews" [attr.aria-selected]="selectedTab === 'myReviews'" (click)="selectTab('myReviews')">My
-        Reviews</a>
+    <li class="nav-item" role="presentation" *ngIf="userAuth">
+      <a
+        class="nav-link"
+        [class.active]="selectedTab === 'myReviews'"
+        id="myReviews-tab"
+        role="tab"
+        aria-controls="myReviews"
+        [attr.aria-selected]="selectedTab === 'myReviews'"
+        (click)="selectTab('myReviews')"
+        >My Reviews</a
+      >
     </li>
     <!-- End of My Reviews -->
     <!---------------------------------------------------------------------------------->
     <!---------------------------------------------------------------------------------->
     <!-- Start of My Reviews -->
     <li class="nav-item" role="presentation">
-      <a class="nav-link" [class.active]="selectedTab === 'addReview'" id="addReview-tab" role="tab"
-        aria-controls="addReview" [attr.aria-selected]="selectedTab === 'addReview'"
-        (click)="selectTab('addReview')">Add Review</a>
+      <a
+        class="nav-link"
+        [class.active]="selectedTab === 'addReview'"
+        id="addReview-tab"
+        role="tab"
+        aria-controls="addReview"
+        [attr.aria-selected]="selectedTab === 'addReview'"
+        (click)="selectTab('addReview')"
+        >Add Review</a
+      >
     </li>
     <!-- End of My Reviews -->
     <!---------------------------------------------------------------------------------->
@@ -138,18 +179,30 @@
   <div class="tab-content py-5 px-2" id="myTabContent" style="min-height: 200px">
     <!---------------------------------------------------------------------------------->
     <!-- Start of Description -->
-    <div class="tab-pane fade" [class.show]="selectedTab === 'description'"
-      [class.active]="selectedTab === 'description'" id="description" role="tabpanel" aria-labelledby="description-tab"
-      *ngIf="selectedTab === 'description'">
+    <div
+      class="tab-pane fade"
+      [class.show]="selectedTab === 'description'"
+      [class.active]="selectedTab === 'description'"
+      id="description"
+      role="tabpanel"
+      aria-labelledby="description-tab"
+      *ngIf="selectedTab === 'description'"
+    >
       <app-loader-spinner *ngIf="productLoading"></app-loader-spinner>
       <p *ngIf="!productLoading && !apiError">{{ product.description }}</p>
     </div>
     <!-- End of Description -->
     <!---------------------------------------------------------------------------------->
     <!-- Start of Additional Information -->
-    <div class="tab-pane fade" [class.show]="selectedTab === 'additional-info'"
-      [class.active]="selectedTab === 'additional-info'" id="additional-info" role="tabpanel"
-      aria-labelledby="additional-info-tab" *ngIf="selectedTab === 'additional-info'">
+    <div
+      class="tab-pane fade"
+      [class.show]="selectedTab === 'additional-info'"
+      [class.active]="selectedTab === 'additional-info'"
+      id="additional-info"
+      role="tabpanel"
+      aria-labelledby="additional-info-tab"
+      *ngIf="selectedTab === 'additional-info'"
+    >
       <app-loader-spinner *ngIf="productLoading"></app-loader-spinner>
       <!-- Category -->
       <div class="row mt-3" *ngIf="!productLoading && !apiError">
@@ -166,8 +219,7 @@
         <div class="col-6 text-end"><strong>Colors : </strong></div>
         <div class="col-6 text-start">
           <div class="color-bullets">
-            <span *ngFor="let color of product.colors" class="color-bullet"
-              [ngStyle]="{ 'background-color': color.name.toLowerCase() }"></span>
+            <span *ngFor="let color of product.colors" class="color-bullet" [ngStyle]="{ 'background-color': color.name.toLowerCase() }"></span>
           </div>
         </div>
       </div>
@@ -182,8 +234,15 @@
     <!-- End of Additional Information -->
     <!---------------------------------------------------------------------------------->
     <!-- Start of Reviews -->
-    <div class="tab-pane fade" [class.show]="selectedTab === 'reviews'" [class.active]="selectedTab === 'reviews'"
-      id="reviews" role="tabpanel" aria-labelledby="reviews-tab" *ngIf="selectedTab === 'reviews'">
+    <div
+      class="tab-pane fade"
+      [class.show]="selectedTab === 'reviews'"
+      [class.active]="selectedTab === 'reviews'"
+      id="reviews"
+      role="tabpanel"
+      aria-labelledby="reviews-tab"
+      *ngIf="selectedTab === 'reviews'"
+    >
       <app-loader-spinner *ngIf="reviewsLoading || productLoading"></app-loader-spinner>
       <div *ngIf="!reviewsLoading && !productLoading && reviews && reviews.length === 0" class="text-center my-4 fs-5">
         <p>No reviews found for this Product</p>
@@ -220,37 +279,43 @@
     <!---------------------------------------------------------------------------------->
     <!---------------------------------------------------------------------------------->
     <!-- Start of My Reviews -->
-    <div class="tab-pane fade" [class.show]="selectedTab === 'myReviews'" [class.active]="selectedTab === 'myReviews'"
-      id="myReviews" role="tabpanel" aria-labelledby="myReviews-tab" *ngIf="selectedTab === 'myReviews'">
+    <div
+      class="tab-pane fade"
+      [class.show]="selectedTab === 'myReviews'"
+      [class.active]="selectedTab === 'myReviews'"
+      id="myReviews"
+      role="tabpanel"
+      aria-labelledby="myReviews-tab"
+      *ngIf="selectedTab === 'myReviews'"
+    >
       <app-loader-spinner *ngIf="myReviewsLoading || productLoading"></app-loader-spinner>
-      <div *ngIf="!myReviewsLoading && !productLoading && myReviews && myReviews.length === 0"
-        class="text-center my-4 fs-5">
+      <div *ngIf="!myReviewsLoading && !productLoading && !myReview" class="text-center my-4 fs-5">
         <p>You don't add any reviews for this Product</p>
       </div>
-      <div *ngIf="!myReviewsLoading && myReviews && myReviews.length > 0" class="scrollable-myReviews">
-        <div *ngFor="let review of myReviews" class="card mb-3 bg-light">
+      <div *ngIf="!myReviewsLoading && myReview" class="scrollable-myReviews">
+        <div class="card mb-3 bg-light">
           <div class="card-body">
             <div class="row align-items-center">
               <div class="col-lg-6">
-                <h4 class="card-title">{{ review.firstName }} {{ review.lastName }}</h4>
+                <h4 class="card-title">{{ myReview.firstName }} {{ myReview.lastName }}</h4>
               </div>
               <div class="col-lg-6 text-lg-end">
                 <div class="rating-stars">
                   <span class="rating">
                     <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
-                      <span class="fa fa-star" [class.checked]="star <= review.rate"></span>
+                      <span class="fa fa-star" [class.checked]="star <= myReview.rate"></span>
                     </ng-container>
                   </span>
-                  <span class="rating-value">{{ review.rate }}/5</span>
+                  <span class="rating-value">{{ myReview.rate }}/5</span>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-lg-6">
-                <span>{{ review.createdAt | date : 'short' }} </span>
+                <span>{{ myReview.createdAt | date : 'short' }} </span>
               </div>
             </div>
-            <p class="card-text mt-2">{{ review.description }}</p>
+            <p class="card-text mt-2">{{ myReview.description }}</p>
           </div>
         </div>
       </div>
@@ -259,15 +324,22 @@
     <!---------------------------------------------------------------------------------->
     <!---------------------------------------------------------------------------------->
     <!-- Start of Add Review -->
-    <div class="tab-pane fade" [class.show]="selectedTab === 'addReview'" [class.active]="selectedTab === 'addReview'"
-      id="addReview" role="tabpanel" aria-labelledby="addReview-tab" *ngIf="selectedTab === 'addReview'">
+    <div
+      class="tab-pane fade"
+      [class.show]="selectedTab === 'addReview'"
+      [class.active]="selectedTab === 'addReview'"
+      id="addReview"
+      role="tabpanel"
+      aria-labelledby="addReview-tab"
+      *ngIf="selectedTab === 'addReview'"
+    >
       <app-loader-spinner *ngIf="productLoading"></app-loader-spinner>
       <div *ngIf="!productLoading" class="text-center my-4 fs-5">
-        <p>Add Review For {{product.title}}</p>
+        <p>Add Review For {{ product.title }}</p>
       </div>
       <div class="scrollable-addReview">
         <!-- start add review form -->
-        <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()" class="container mt-5">
+        <form [formGroup]="reviewForm" class="container mt-5">
           <div class="mb-3 row">
             <label for="rate" class="col-sm-2 col-form-label">Rating</label>
             <div class="col-sm-10">
@@ -282,40 +354,23 @@
           </div>
 
           <div class="mb-3 row">
-            <label for="title" class="col-sm-2 col-form-label">Title</label>
-            <div class="col-sm-10">
-              <input type="text" id="title" formControlName="title" class="form-control" placeholder="Review Title" />
-              <div *ngIf="reviewForm.get('title').touched && reviewForm.get('title').invalid" class="text-danger">
-                Title is required.
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-3 row">
             <label for="description" class="col-sm-2 col-form-label">Description</label>
             <div class="col-sm-10">
-              <textarea id="description" formControlName="description" class="form-control" rows="4"
-                placeholder="Review Description"></textarea>
-              <div *ngIf="reviewForm.get('description').touched && reviewForm.get('description').invalid"
-                class="text-danger">
-                Description is required and must be at least 10 characters long.
-              </div>
-            </div>
-          </div>
+              <textarea id="description" formControlName="description" class="form-control" rows="4" placeholder="Review Description"></textarea>
 
-          <div class="mb-3 row">
-            <label for="email" class="col-sm-2 col-form-label">Email</label>
-            <div class="col-sm-10">
-              <input type="email" id="email" formControlName="email" class="form-control" placeholder="Your Email" />
-              <div *ngIf="reviewForm.get('email').touched && reviewForm.get('email').invalid" class="text-danger">
-                Valid email is required.
+              <div class="mb-2 mt-1 col-sm-12 errors" *ngIf="reviewForm.get('description')?.errors && reviewForm.get('description')?.touched">
+                <span *ngIf="reviewForm.get('description')?.errors?.['required']" class="text-danger">Review Description is required</span>
+                <span *ngIf="reviewForm.get('description')?.errors?.['minlength']" class="text-danger">Invalid Review Description, Min length is 20</span>
+                <span *ngIf="reviewForm.get('description')?.errors?.['maxlength']" class="text-danger">Invalid Review Description, Max length is 250</span>
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="col-sm-10 offset-sm-2">
-              <button type="submit" class="btn btn-success" [disabled]="reviewForm.invalid">Add Review</button>
+              <button type="submit" class="btn btn-success" [disabled]="reviewForm.invalid" (click)="saveReview()">
+                <i *ngIf="createReviewLoading" class="fas fa-spinner fa-spin px-5"></i> <span *ngIf="!createReviewLoading">Submit Review</span>
+              </button>
             </div>
           </div>
         </form>
@@ -329,7 +384,7 @@
 </div>
 <!-- End of Tabs -->
 <!-------------------------------------------------------------------------------------->
-<hr>
+<hr />
 <!-------------------------------------------------------------------------------------->
 <!-- Start of Slider -->
 <div class="container-fluid mt-3 mb-5">
@@ -341,10 +396,12 @@
       <div class="carousel-inner">
         <div class="carousel-item" *ngFor="let slide of productsInSlides; let i = index" [class.active]="i === 0">
           <div class="row">
-            <div class="col-12 col-md-4" style="width:25%" *ngFor="let product of slide">
+            <div class="col-12 col-md-4" style="width: 25%" *ngFor="let product of slide">
               <div class="card">
-                <div [routerLink]="['/productDetails', product.id]"
-                  class="card-body cardCategory text-center rounded-2 text-capitalize d-flex flex-column align-items-center  w-100">
+                <div
+                  [routerLink]="['/productDetails', product.id]"
+                  class="card-body cardCategory text-center rounded-2 text-capitalize d-flex flex-column align-items-center w-100"
+                >
                   <img [src]="product.imageUrl" class="rounded-2 catImg" />
                   <h5 class="card-title m-auto">{{ product.title }}</h5>
                 </div>
@@ -355,13 +412,11 @@
       </div>
 
       <!-- Navigation buttons -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="prev">
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
       </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="next">
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>

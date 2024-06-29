@@ -19,21 +19,21 @@ export class OrderService {
   // Get Orders By User Clamis
   // Get: api/Orders/UserOrders
   getUserOrdersFromClaims(): Observable<OrdersResponse> {
-    return this._HttpClient.get<OrdersResponse>(`${this.baseUrl}/UserOrders`).pipe(delay(3000));
+    return this._HttpClient.get<OrdersResponse>(`${this.baseUrl}/UserOrders`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get All Blogs With Pagination
   // Get: api/Orders/AllOrders
   getAllOrdersWithPagination(pageNumber: number, pageSize: number = 5): Observable<PagedResponse<Order>> {
     let params = new HttpParams().set('pageNumber', pageNumber).set('pageSize', pageSize);
-    return this._HttpClient.get<PagedResponse<Order>>(`${this.baseUrl}/AllOrders`, { params }).pipe(delay(3000));
+    return this._HttpClient.get<PagedResponse<Order>>(`${this.baseUrl}/AllOrders`, { params }).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Create Order From Cart
   // Post: api/orders/CreateOrderFromCart
   createOrder(): Observable<any> {
     return this._HttpClient.post<any>(`${this.baseUrl}/CreateOrderFromCart`, {}).pipe(
-      delay(3000),
+      delay(1000),
       tap(() => {
         this._CartService.updateCartItemCount();
       })

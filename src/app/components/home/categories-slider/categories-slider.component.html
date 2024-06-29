@@ -9,7 +9,7 @@
         <div class="carousel-item" *ngFor="let slide of categoriesInSlides; let i = index" [class.active]="i === 0">
           <div class="row">
             <div class="col-12 col-md-4" *ngFor="let category of slide">
-              <a [routerLink]="['/shop', category.id]" class="text-decoration-none">
+              <a [routerLink]="['/shop/shopbycategory', category.id]" class="text-decoration-none">
                 <div class="card">
                   <div class="card-body cardCategory text-center rounded-2 text-capitalize d-flex w-100">
                     <img [src]="category.imageUrl" class="w-50 h-100 rounded-2 catImg" />
@@ -23,13 +23,11 @@
       </div>
       <!----------------------------------------------------------------------------------------->
       <!-- Navigation buttons -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="prev">
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
       </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="next">
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>

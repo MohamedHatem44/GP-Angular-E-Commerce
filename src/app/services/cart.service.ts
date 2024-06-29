@@ -32,7 +32,7 @@ export class CartService {
   // Post: api/ShoppingCarts/AddToCart
   addToCart(item: Cart): Observable<Cart> {
     return this._HttpClient.post<Cart>(`${this.baseUrl}/AddToCart`, item).pipe(
-      delay(3000),
+      delay(1000),
       tap(() => {
         this.updateCartItemCount();
       })
@@ -43,7 +43,7 @@ export class CartService {
   // Delete: api/ShoppingCarts/RemoveItemFromCart/{id}
   deleteItem(itemId: number): Observable<Object> {
     return this._HttpClient.delete<Object>(`${this.baseUrl}/RemoveItemFromCart/${itemId}`).pipe(
-      delay(3000),
+      delay(1000),
       tap(() => {
         this.updateCartItemCount();
       })
@@ -54,7 +54,7 @@ export class CartService {
   // Delete: api/ShoppingCarts/RemoveAllItemsFromCart
   deleteAllItem(): Observable<Object> {
     return this._HttpClient.delete<Object>(`${this.baseUrl}/RemoveAllItemsFromCart`).pipe(
-      delay(3000),
+      delay(1000),
       tap(() => {
         this.updateCartItemCount();
       })
