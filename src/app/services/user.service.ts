@@ -25,6 +25,12 @@ export class UserService {
     return this._HttpClient.get<PagedResponse<User>>(`${this.baseUrl}/AllUsers`, { params }).pipe(delay(3000));
   }
   /*------------------------------------------------------------------*/
+  // Get All Users Without Details
+  // Get: api/Users
+  getAllUsers(): Observable<{ usersCount: number; users: User[] }> {
+    return this._HttpClient.get<{ usersCount: number; users: User[] }>(this.baseUrl).pipe(delay(3000));
+  }
+  /*------------------------------------------------------------------*/
   // Toggle Active Status
   // Put: api/Users/ToggleActiveStatus/{id}
   toggleActiveStatus(userId: string): Observable<any> {

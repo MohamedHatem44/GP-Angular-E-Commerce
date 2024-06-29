@@ -16,6 +16,12 @@ export class OrderService {
   // Ctor
   constructor(private _HttpClient: HttpClient, private _CartService: CartService) {}
   /*------------------------------------------------------------------*/
+  // Get All Orders
+  // Get: api/orders
+  getAllOrders(): Observable<{ OrdersCount: number; Orders: Order[] }> {
+    return this._HttpClient.get<{ OrdersCount: number; Orders: Order[] }>(this.baseUrl);
+  }
+  /*------------------------------------------------------------------*/
   // Get Orders By User Clamis
   // Get: api/Orders/UserOrders
   getUserOrdersFromClaims(): Observable<OrdersResponse> {
