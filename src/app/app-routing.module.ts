@@ -56,6 +56,8 @@ import { PaymentComponent } from './components/payment/payment.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 // Guard
 import { authGuard } from './guard/auth.guard';
+import { adminGuard } from './guard/admin.guard';
+import { userGuard } from './guard/user.guard';
 /*-----------------------------------------------------------------------------------------------------------------*/
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -63,7 +65,7 @@ const routes: Routes = [
   {
     path: 'admindashboard',
     component: AdminDashboardComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
     children: [
       { path: '', component: AdminMainComponent, pathMatch: 'full' },
       { path: 'products', component: AdminProductsComponent },
@@ -100,15 +102,15 @@ const routes: Routes = [
   { path: 'shop/shopbycategory/:categoryId', component: MainShopComponent },
   { path: 'shop/shopbybrand/:brandId', component: MainShopComponent },
   { path: 'productDetails/:id', component: ProductDetailsComponent },
-  { path: 'cart', component: UserCartComponent, canActivate: [authGuard] },
-  { path: 'wishlist', component: UserWishlistComponent, canActivate: [authGuard] },
-  { path: 'profile', component: UserProfileComponent, canActivate: [authGuard] },
-  { path: 'editprofile', component: UserProfileEditComponent, canActivate: [authGuard] },
-  { path: 'orders', component: UserOrdersComponent, canActivate: [authGuard] },
-  { path: 'change-password', component: UserPassEditComponent, canActivate: [authGuard] },
+  { path: 'cart', component: UserCartComponent, canActivate: [authGuard, userGuard] },
+  { path: 'wishlist', component: UserWishlistComponent, canActivate: [authGuard, userGuard] },
+  { path: 'profile', component: UserProfileComponent, canActivate: [authGuard, userGuard] },
+  { path: 'editprofile', component: UserProfileEditComponent, canActivate: [authGuard, userGuard] },
+  { path: 'orders', component: UserOrdersComponent, canActivate: [authGuard, userGuard] },
+  { path: 'change-password', component: UserPassEditComponent, canActivate: [authGuard, userGuard] },
   { path: 'users/login', component: LoginComponent },
   { path: 'users/register', component: RegisterComponent },
-  { path: 'payment', component: PaymentComponent, canActivate: [authGuard] },
+  { path: 'payment', component: PaymentComponent, canActivate: [authGuard, userGuard] },
   { path: '**', component: NotFoundComponent },
 ];
 /*-----------------------------------------------------------------------------------------------------------------*/
