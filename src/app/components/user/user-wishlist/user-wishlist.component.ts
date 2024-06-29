@@ -6,6 +6,7 @@ import { ImgModalComponent } from '../../modals/img-modal/img-modal.component';
 import { DeleteConfirmationModalComponent } from '../../modals/delete-confirmation-modal/delete-confirmation-modal.component';
 import { ProductDetailsModalComponent } from '../../shop/product-details-modal/product-details-modal.component';
 import { ProductService } from '../../../services/product.service';
+import { UserWishlistProductDetailsModalComponent } from '../user-wishlist-product-details-modal/user-wishlist-product-details-modal.component';
 /*--------------------------------------------------------------------*/
 @Component({
   selector: 'app-user-wishlist',
@@ -128,13 +129,13 @@ export class UserWishlistComponent implements OnInit {
   }
   /*-----------------------------------------------------------------*/
   // Open Product Details Modal
-  openProductDetailsModal(productId: number): void {
+  openUserWishListProductDetailsModal(productId: number): void {
     this.productLoading = true;
 
     this._productService.getSpecificProductWithDetails(productId).subscribe({
       next: (response: any) => {
         this.productLoading = false;
-        const modalRef = this._ModalService.open(ProductDetailsModalComponent, { size: 'xl' });
+        const modalRef = this._ModalService.open(UserWishlistProductDetailsModalComponent, { size: 'xl' });
         modalRef.componentInstance.product = response;
       },
       error: (err) => {

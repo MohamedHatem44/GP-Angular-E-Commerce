@@ -79,6 +79,7 @@ import { UserOrdersComponent } from './components/user/user-orders/user-orders.c
 import { UserCartSkeletonLoaderComponent } from './components/user/user-cart-skeleton-loader/user-cart-skeleton-loader.component';
 import { UserOrderItemModalComponent } from './components/user/user-order-item-modal/user-order-item-modal.component';
 import { UserProfileImageComponent } from './components/user/user-profile-image/user-profile-image.component';
+import { UserWishlistProductDetailsModalComponent } from './components/user/user-wishlist-product-details-modal/user-wishlist-product-details-modal.component';
 /*-----------------------------------------------------------------------------------------------------------------*/
 // Shop
 import { CategoriesComponent } from './components/shop/categories/categories.component';
@@ -101,7 +102,6 @@ import { ImgModalComponent } from './components/modals/img-modal/img-modal.compo
 // payment
 import { PaymentComponent } from './components/payment/payment.component';
 import { PaymentService } from './services/payment.service';
-
 /*-----------------------------------------------------------------------------------------------------------------*/
 @NgModule({
   declarations: [
@@ -174,6 +174,7 @@ import { PaymentService } from './services/payment.service';
     AdminOrdersComponent,
     AdminOrderDetailsModalComponent,
     AdminOrderitemDetailsModalComponent,
+    UserWishlistProductDetailsModalComponent,
   ],
   imports: [
     BrowserModule,
