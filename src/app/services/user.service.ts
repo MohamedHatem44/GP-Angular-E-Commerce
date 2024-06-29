@@ -22,40 +22,31 @@ export class UserService {
     if (name) {
       params = params.set('name', name);
     }
-    return this._HttpClient.get<PagedResponse<User>>(`${this.baseUrl}/AllUsers`, { params }).pipe(delay(3000));
+    return this._HttpClient.get<PagedResponse<User>>(`${this.baseUrl}/AllUsers`, { params }).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get All Users Without Details
   // Get: api/Users
   getAllUsers(): Observable<{ usersCount: number; users: User[] }> {
-    return this._HttpClient.get<{ usersCount: number; users: User[] }>(this.baseUrl).pipe(delay(3000));
+    return this._HttpClient.get<{ usersCount: number; users: User[] }>(this.baseUrl).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Toggle Active Status
   // Put: api/Users/ToggleActiveStatus/{id}
   toggleActiveStatus(userId: string): Observable<any> {
-    return this._HttpClient.put<any>(`${this.baseUrl}/ToggleActiveStatus/${userId}`, {}).pipe(delay(3000));
+    return this._HttpClient.put<any>(`${this.baseUrl}/ToggleActiveStatus/${userId}`, {}).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Delete a Specific User By Id
   // Delete: api/Users/{id}
   deleteUser(userId: string): Observable<Object> {
-    return this._HttpClient.delete<Object>(`${this.baseUrl}/${userId}`).pipe(delay(3000));
+    return this._HttpClient.delete<Object>(`${this.baseUrl}/${userId}`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   //Get User
   //Get :api/Users
   getCurrentUser(): Observable<User> {
-    return this._HttpClient.get<User>(this.baseUrl).pipe(delay(3000));
+    return this._HttpClient.get<User>(this.baseUrl).pipe(delay(1000));
   }
-
-  //
-  getUserInfoFromToken(token: string): any {
-    try {
-      return jwtDecode(token);
-    } catch (error) {
-      console.error('Invalid token', error);
-      return null;
-    }
-  }
+  /*------------------------------------------------------------------*/
 }

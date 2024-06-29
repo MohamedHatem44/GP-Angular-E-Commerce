@@ -21,37 +21,37 @@ export class ColorService {
     if (colorName) {
       params = params.set('colorName', colorName);
     }
-    return this._HttpClient.get<PagedResponse<Color>>(`${this.baseUrl}/AllColors`, { params }).pipe(delay(3000));
+    return this._HttpClient.get<PagedResponse<Color>>(`${this.baseUrl}/AllColors`, { params }).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get All Colors
   // Get: api/Colors
   getAllColors(): Observable<{ colorsCount: number; colors: Color[] }> {
-    return this._HttpClient.get<{ colorsCount: number; colors: Color[] }>(this.baseUrl).pipe(delay(3000));
+    return this._HttpClient.get<{ colorsCount: number; colors: Color[] }>(this.baseUrl).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get a Specific Color By Id
   // Get: api/Colors/{id}
   getColorById(colorId: number): Observable<Color> {
-    return this._HttpClient.get<Color>(`${this.baseUrl}/${colorId}`).pipe(delay(3000));
+    return this._HttpClient.get<Color>(`${this.baseUrl}/${colorId}`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Create a New Color
   // Post: api/Colors
   createColor(color: Color): Observable<Color> {
-    return this._HttpClient.post<Color>(this.baseUrl, color).pipe(delay(3000));
+    return this._HttpClient.post<Color>(this.baseUrl, color).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Update Color
   // Put: api/Colors/{id}
   updateColor(colorId: number, color: Color): Observable<Color> {
-    return this._HttpClient.put<Color>(`${this.baseUrl}/${colorId}`, color).pipe(delay(3000));
+    return this._HttpClient.put<Color>(`${this.baseUrl}/${colorId}`, color).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Delete a Specific Color By Id
   // Delete: api/Colors/{id}
   deleteColor(colorId: number): Observable<Object> {
-    return this._HttpClient.delete<Object>(`${this.baseUrl}/${colorId}`).pipe(delay(3000));
+    return this._HttpClient.delete<Object>(`${this.baseUrl}/${colorId}`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
 }

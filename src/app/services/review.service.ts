@@ -22,7 +22,7 @@ export class ReviewService {
   // Get All Reviews for one Product By Product Id
   // Get: api/Reviews/ProductReviews/{Id}
   getAllReviewsByProductId(productId: number): Observable<Review[]> {
-    return this._HttpClient.get<Review[]>(`${this.baseUrl}/ProductReviews/${productId}`).pipe(delay(3000));
+    return this._HttpClient.get<Review[]>(`${this.baseUrl}/ProductReviews/${productId}`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get All Reviews for one User By User Id
@@ -31,13 +31,13 @@ export class ReviewService {
   // Get Review By User Id and Product Id
   // Get: api/Reviews/UserReviews
   getReviewByUserIdProductId(productId: number): Observable<Review[]> {
-    return this._HttpClient.get<Review[]>(`${this.baseUrl}/UserReview/${productId}`).pipe(delay(3000));
+    return this._HttpClient.get<Review[]>(`${this.baseUrl}/UserReview/${productId}`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Create a New Review
   // Post: api/Reviews
   createReview(review: Review): Observable<Review> {
-    return this._HttpClient.post<Review>(this.baseUrl, review).pipe(delay(3000));
+    return this._HttpClient.post<Review>(this.baseUrl, review).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
 }

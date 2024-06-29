@@ -118,19 +118,19 @@ export class ProductService {
   // Create a New Product
   // Post: api/Products
   createProduct(product: Product): Observable<Product> {
-    return this._HttpClient.post<Product>(this.baseUrl, product).pipe(delay(3000));
+    return this._HttpClient.post<Product>(this.baseUrl, product).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Update a Specific Product With Id
   // Patch: api/Products/{id}/ProductsDetails
   updateProduct(productId: number, product: Product): Observable<Product> {
-    return this._HttpClient.put<Product>(`${this.baseUrl}/${productId}`, product).pipe(delay(3000));
+    return this._HttpClient.put<Product>(`${this.baseUrl}/${productId}`, product).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Delete a Specific Product With Id
   // Delete: api/Products/{id}
   deleteProduct(productId: number): Observable<Object> {
-    return this._HttpClient.delete<Object>(`${this.baseUrl}/${productId}`).pipe(delay(3000));
+    return this._HttpClient.delete<Object>(`${this.baseUrl}/${productId}`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
 }

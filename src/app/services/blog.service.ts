@@ -21,43 +21,43 @@ export class BlogService {
     if (blogTitle) {
       params = params.set('blogTitle', blogTitle);
     }
-    return this._HttpClient.get<PagedResponse<Blog>>(`${this.baseUrl}/AllBlogs`, { params }).pipe(delay(3000));
+    return this._HttpClient.get<PagedResponse<Blog>>(`${this.baseUrl}/AllBlogs`, { params }).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get All Blogs
   // Get: api/Blogs
   getAllBlogs(): Observable<{ blogsCount: number; blogs: Blog[] }> {
-    return this._HttpClient.get<{ blogsCount: number; blogs: Blog[] }>(this.baseUrl).pipe(delay(3000));
+    return this._HttpClient.get<{ blogsCount: number; blogs: Blog[] }>(this.baseUrl).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get a Specific Blog By Id
   // Get: api/Blogs/{id}
   getBlogById(id: number): Observable<Blog> {
-    return this._HttpClient.get<Blog>(`${this.baseUrl}/${id}`).pipe(delay(3000));
+    return this._HttpClient.get<Blog>(`${this.baseUrl}/${id}`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get a Specific Blog By Id With User
   // Get: api/Blogs/AllBlogs/{id}
   getBlogByIdWithUser(id: number): Observable<Blog> {
-    return this._HttpClient.get<Blog>(`${this.baseUrl}/AllBlogs/${id}`).pipe(delay(3000));
+    return this._HttpClient.get<Blog>(`${this.baseUrl}/AllBlogs/${id}`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Create a New Blog
   // Post: api/Blogs
   createBlog(blog: Blog): Observable<Blog> {
-    return this._HttpClient.post<Blog>(this.baseUrl, blog).pipe(delay(3000));
+    return this._HttpClient.post<Blog>(this.baseUrl, blog).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Update Blog
   // Put: api/Blogs/{id}
   updateBlog(id: number, blog: Blog): Observable<Blog> {
-    return this._HttpClient.put<Blog>(`${this.baseUrl}/${id}`, blog).pipe(delay(3000));
+    return this._HttpClient.put<Blog>(`${this.baseUrl}/${id}`, blog).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Delete a Specific Blog By Id
   // Delete: api/Blogs/{id}
   deleteBlog(id: number): Observable<Object> {
-    return this._HttpClient.delete<Object>(`${this.baseUrl}/${id}`).pipe(delay(3000));
+    return this._HttpClient.delete<Object>(`${this.baseUrl}/${id}`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
 }

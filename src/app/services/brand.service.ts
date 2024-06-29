@@ -21,7 +21,7 @@ export class BrandService {
     if (brandName) {
       params = params.set('brandName', brandName);
     }
-    return this._HttpClient.get<PagedResponse<Brand>>(`${this.baseUrl}/AllBrands`, { params }).pipe(delay(3000));
+    return this._HttpClient.get<PagedResponse<Brand>>(`${this.baseUrl}/AllBrands`, { params }).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get All Brands Without Products
@@ -33,37 +33,37 @@ export class BrandService {
   // Get All Brands With Products
   // Get: api/Brands/BrandsWithProducts
   getAllBrandsWithProducts(): Observable<{ brandsCount: number; brands: Brand[] }> {
-    return this._HttpClient.get<{ brandsCount: number; brands: Brand[] }>(this.baseUrl + '/BrandsWithProducts').pipe(delay(3000));
+    return this._HttpClient.get<{ brandsCount: number; brands: Brand[] }>(this.baseUrl + '/BrandsWithProducts').pipe(delay(1000));
   }
   /*-----------------------------------------------------------------*/
   // Get a Specific Brand By Id Without Products
   // Get: api/Brands/{id}
   getBrandById(brandId: number): Observable<Brand> {
-    return this._HttpClient.get<Brand>(`${this.baseUrl}/${brandId}`).pipe(delay(3000));
+    return this._HttpClient.get<Brand>(`${this.baseUrl}/${brandId}`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get a Specific Brand By Id With Products
   // Get: api/Brands/{id}/BrandsWithProducts
   getBrandByIdWithProducts(brandId: number): Observable<Brand> {
-    return this._HttpClient.get<Brand>(`${this.baseUrl}/${brandId}` + '/BrandsWithProducts').pipe(delay(3000));
+    return this._HttpClient.get<Brand>(`${this.baseUrl}/${brandId}` + '/BrandsWithProducts').pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Create a New Brand
   // Post: api/Brands
   createBrand(brand: Brand): Observable<Brand> {
-    return this._HttpClient.post<Brand>(this.baseUrl, brand).pipe(delay(3000));
+    return this._HttpClient.post<Brand>(this.baseUrl, brand).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Update a Specific Brand With Id
   // Put: api/Brands/{id}
   updateBrand(brandId: number, brand: Brand): Observable<Brand> {
-    return this._HttpClient.put<Brand>(`${this.baseUrl}/${brandId}`, brand).pipe(delay(3000));
+    return this._HttpClient.put<Brand>(`${this.baseUrl}/${brandId}`, brand).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Delete a Specific Brand By Id
   // Delete: api/Brands/{id}
   deleteBrand(brandId: number): Observable<Object> {
-    return this._HttpClient.delete<Object>(`${this.baseUrl}/${brandId}`).pipe(delay(3000));
+    return this._HttpClient.delete<Object>(`${this.baseUrl}/${brandId}`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
 }

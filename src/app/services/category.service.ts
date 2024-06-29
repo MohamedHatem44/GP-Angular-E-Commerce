@@ -21,7 +21,7 @@ export class CategoryService {
     if (categoryName) {
       params = params.set('categoryName', categoryName);
     }
-    return this._HttpClient.get<PagedResponse<Category>>(`${this.baseUrl}/AllCategories`, { params }).pipe(delay(3000));
+    return this._HttpClient.get<PagedResponse<Category>>(`${this.baseUrl}/AllCategories`, { params }).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get All Categories Without Products
@@ -33,37 +33,37 @@ export class CategoryService {
   // Get All Categories With Products
   // Get: api/Categories/CategoriesWithProducts
   getAllCategoriesWithProducts(): Observable<{ categoriesCount: number; categories: Category[] }> {
-    return this._HttpClient.get<{ categoriesCount: number; categories: Category[] }>(this.baseUrl + '/CategoriesWithProducts').pipe(delay(3000));
+    return this._HttpClient.get<{ categoriesCount: number; categories: Category[] }>(this.baseUrl + '/CategoriesWithProducts').pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get a Specific Category By Id Without Products
   // Get: api/Categories/{id}
   getCategoryById(categoryId: number): Observable<Category> {
-    return this._HttpClient.get<Category>(`${this.baseUrl}/${categoryId}`).pipe(delay(3000));
+    return this._HttpClient.get<Category>(`${this.baseUrl}/${categoryId}`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get a Specific Category By Id With Products
   // Get: api/Categories/{id}/CategoriesWithProducts
   getCategoryByIdWithProducts(categoryId: number): Observable<Category> {
-    return this._HttpClient.get<Category>(`${this.baseUrl}/${categoryId}` + '/CategoriesWithProducts').pipe(delay(3000));
+    return this._HttpClient.get<Category>(`${this.baseUrl}/${categoryId}` + '/CategoriesWithProducts').pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Create a New Category
   // Post: api/Categories
   createCategory(category: Category): Observable<Category> {
-    return this._HttpClient.post<Category>(this.baseUrl, category).pipe(delay(3000));
+    return this._HttpClient.post<Category>(this.baseUrl, category).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Update a Specific Category With Id
   // Put: api/Categories/{id}
   updateCategory(categoryId: number, category: Category): Observable<Category> {
-    return this._HttpClient.put<Category>(`${this.baseUrl}/${categoryId}`, category).pipe(delay(3000));
+    return this._HttpClient.put<Category>(`${this.baseUrl}/${categoryId}`, category).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Delete a Specific Category With Id
   // Delete: api/Categories/{id}
   deleteCategory(categoryId: number): Observable<Object> {
-    return this._HttpClient.delete<Object>(`${this.baseUrl}/${categoryId}`).pipe(delay(3000));
+    return this._HttpClient.delete<Object>(`${this.baseUrl}/${categoryId}`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
 }

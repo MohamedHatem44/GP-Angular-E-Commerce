@@ -21,37 +21,37 @@ export class SizeService {
     if (sizeName) {
       params = params.set('sizeName', sizeName);
     }
-    return this._HttpClient.get<PagedResponse<Size>>(`${this.baseUrl}/AllSizes`, { params }).pipe(delay(3000));
+    return this._HttpClient.get<PagedResponse<Size>>(`${this.baseUrl}/AllSizes`, { params }).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get All Sizes
   // Get: api/Sizes
   getAllSizes(): Observable<{ sizesCount: number; sizes: Size[] }> {
-    return this._HttpClient.get<{ sizesCount: number; sizes: Size[] }>(this.baseUrl).pipe(delay(3000));
+    return this._HttpClient.get<{ sizesCount: number; sizes: Size[] }>(this.baseUrl).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Get a Specific Size By Id
   // Get: api/Sizes/{id}
   getSizeById(sizeId: number): Observable<Size> {
-    return this._HttpClient.get<Size>(`${this.baseUrl}/${sizeId}`).pipe(delay(3000));
+    return this._HttpClient.get<Size>(`${this.baseUrl}/${sizeId}`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Create a New Size
   // Post: api/Sizes
   createSize(size: Size): Observable<Size> {
-    return this._HttpClient.post<Size>(this.baseUrl, size).pipe(delay(3000));
+    return this._HttpClient.post<Size>(this.baseUrl, size).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Update Size
   // Put: api/Sizes/{id}
   updateSize(sizeId: number, size: Size): Observable<Size> {
-    return this._HttpClient.put<Size>(`${this.baseUrl}/${sizeId}`, size).pipe(delay(3000));
+    return this._HttpClient.put<Size>(`${this.baseUrl}/${sizeId}`, size).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Delete a Specific Size By Id
   // Delete: api/Sizes/{id}
   deleteSize(sizeId: number): Observable<Object> {
-    return this._HttpClient.delete<Object>(`${this.baseUrl}/${sizeId}`).pipe(delay(3000));
+    return this._HttpClient.delete<Object>(`${this.baseUrl}/${sizeId}`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
 }
