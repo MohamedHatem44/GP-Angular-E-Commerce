@@ -22,9 +22,8 @@ import { AuthService } from '../../../services/auth.service';
 })
 /*-----------------------------------------------------------------*/
 export class ProductDetailsComponent implements OnInit {
-  product: Product;
+  product: ExtendedProduct;
   category: Category;
-  extendedProduct: ExtendedProduct;
   reviews: Review[] = [];
   myReview: Review;
   productId: number;
@@ -39,7 +38,6 @@ export class ProductDetailsComponent implements OnInit {
   apiError: string | null = null;
   selectedTab: string = 'description';
   allProductsParCategory: Product[] = [];
-  allProducts: ExtendedProduct[] = [];
   isLoading: boolean = false;
   productsInSlides: any[] = [];
   iterationIncrement: number = 0;
@@ -81,7 +79,6 @@ export class ProductDetailsComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.productId = Number(params.get('id'));
       this.reviewForm.patchValue({ productId: this.productId });
-      this.fetchProductDetails();
     });
 
     this.route.params
@@ -94,7 +91,13 @@ export class ProductDetailsComponent implements OnInit {
       )
       .subscribe(
         (product) => {
-          this.product = product;
+          const isInWishList = this.isProductInWishList(product.id);
+          this.product = {
+            ...product,
+            isInWishList: isInWishList,
+            isWishListLoading: false,
+          };
+
           this.productLoading = false;
           this.loadProductReviews(this.productId);
           this.getRelatedProducts(product.category.id);
@@ -111,25 +114,6 @@ export class ProductDetailsComponent implements OnInit {
     if (this.userAuth) {
       this.loadProductReviewsForUser(this.productId);
     }
-  }
-  /*------------------------------------------------------------------*/
-  // Method to fetch product details
-  private fetchProductDetails(): void {
-    this.productService.getSpecificProductWithDetails(this.productId).subscribe(
-      (product) => {
-        this.product = product;
-        this.productLoading = false;
-        this.loadProductReviews(this.productId);
-        this.getRelatedProducts(product.category.id);
-        if (this.userAuth) {
-          this.loadProductReviewsForUser(this.productId);
-        }
-      },
-      (error) => {
-        this.productLoading = false;
-        console.error('Error fetching product details', error);
-      }
-    );
   }
   /*------------------------------------------------------------------*/
   private async loadWishList(): Promise<void> {

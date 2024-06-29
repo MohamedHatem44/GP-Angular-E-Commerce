@@ -112,7 +112,7 @@ export class ProductService {
   // Get a Specific Product By Id With Details
   // Get: api/Products/{id}/ProductsDetails
   getSpecificProductWithDetails(productId: number): Observable<Product> {
-    return this._HttpClient.get<Product>(`${this.baseUrl}/ProductsDetails/${productId}`).pipe(delay(5000));
+    return this._HttpClient.get<Product>(`${this.baseUrl}/ProductsDetails/${productId}`).pipe(delay(1000));
   }
   /*------------------------------------------------------------------*/
   // Create a New Product
