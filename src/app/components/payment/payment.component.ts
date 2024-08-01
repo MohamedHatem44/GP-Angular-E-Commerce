@@ -92,6 +92,9 @@ export class PaymentComponent implements OnInit {
   }
   /*-----------------------------------------------------------------*/
   async onSubmit() {
+    if (!this.validateForm()) {
+      return;
+    }
     this.isLoading = true;
     this.errorMessage = null;
     this.successMessage = null;
@@ -104,9 +107,9 @@ export class PaymentComponent implements OnInit {
       this.errorMessage = 'Error Occurred While Payment Process, Please Try Again Later...';
       return;
     }
-    if (!this.validateForm()) {
-      return;
-    }
+    // if (!this.validateForm()) {
+    //   return;
+    // }
     const { error, paymentIntent } = await this.stripe.confirmCardPayment(this.clientSecret, {
       payment_method: {
         card: this.cardElement,
@@ -137,7 +140,7 @@ export class PaymentComponent implements OnInit {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
     if (!this.email) {
-      this.errorMessage = 'Email is required';
+      this.errorMessage = 'Please fill data';
       return false;
     }
     if (!emailPattern.test(this.email)) {

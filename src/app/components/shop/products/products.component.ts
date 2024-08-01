@@ -85,21 +85,31 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
     this.productsLoading = true;
     this.route.paramMap.subscribe((params) => {
-      this.selectedCategoryId = Number(params.get('categoryId'));
-    });
-    this.route.paramMap.subscribe((params) => {
-      this.selectedBrandId = Number(params.get('brandId'));
+      this.selectedCategoryId = Number(params.get('categoryId')) || null;
+      this.selectedBrandId = Number(params.get('brandId')) || null;
     });
 
     this.loadWishList().then(() => {
-      if (this.selectedCategoryId !== 0) {
-        this.loadProducts(this.currentPage, this.searchInput, this.selectedCategoryId);
-      } else if (this.selectedBrandId !== 0) {
-        this.loadProducts(this.currentPage, this.searchInput, null, this.selectedBrandId);
-      } else {
-        this.loadProducts(this.currentPage);
-      }
+      this.loadProducts(this.currentPage, this.searchInput, this.selectedCategoryId, this.selectedBrandId);
     });
+
+    // this.route.paramMap.subscribe((params) => {
+    //   this.selectedCategoryId = Number(params.get('categoryId')) ? Number(params.get('categoryId')) : null;
+    // });
+    // this.route.paramMap.subscribe((params) => {
+    //   this.selectedBrandId = Number(params.get('brandId')) ? Number(params.get('brandId')) : null;
+    // });
+
+    // this.loadWishList().then(() => {
+    //   this.loadProducts(this.currentPage);
+    //   if (this.selectedCategoryId !== 0) {
+    //     this.loadProducts(this.currentPage, this.searchInput, this.selectedCategoryId);
+    //   } else if (this.selectedBrandId !== 0) {
+    //     this.loadProducts(this.currentPage, this.searchInput, null, this.selectedBrandId);
+    //   } else {
+    //     this.loadProducts(this.currentPage);
+    //   }
+    // });
     this.loadCategories();
     this.loadBrands();
     this.loadSizes();
@@ -272,6 +282,16 @@ export class ProductsComponent implements OnInit {
   /*-----------------------------------------------------------------*/
   // Handle Filter Changes
   onFilterChange(): void {
+    // if (this.selectedBrandId === 0) {
+    //   this.selectedBrandId = null;
+    // }
+    // if (this.selectedCategoryId === 0) {
+    //   this.selectedCategoryId = null;
+    // }
+    console.log(this.selectedCategoryId);
+    console.log(this.selectedBrandId);
+    console.log(this.selectedColorId);
+    console.log(this.selectedSizeId);
     this.currentPage = 1;
     this.loadProducts(
       this.currentPage,

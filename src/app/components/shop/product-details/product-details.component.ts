@@ -48,9 +48,6 @@ export class ProductDetailsComponent implements OnInit {
   wishList: any;
   wishListItems: any[] = [];
   wishListApiError: string | null = null;
-
-  userInfo: any;
-  userId: string = '';
   /*-----------------------------------------------------------------*/
   // Review Form
   reviewForm = new FormGroup({
@@ -71,50 +68,94 @@ export class ProductDetailsComponent implements OnInit {
     private _ToastrService: ToastrService,
     private _userService: UserService
   ) {}
-  /*-----------------------------------------------------------------*/
+  // /*-----------------------------------------------------------------*/
   ngOnInit(): void {
-    // Check if user is authenticated
     this.userAuth = this._AuthService.isAuthenticated();
+    this.productLoading = true;
+    // Load wishlist first
+    this.loadWishList().then(() => {
+      this.route.paramMap.subscribe((params) => {
+        this.productId = Number(params.get('id'));
+        this.reviewForm.patchValue({ productId: this.productId });
+      });
 
-    this.route.paramMap.subscribe((params) => {
-      this.productId = Number(params.get('id'));
-      this.reviewForm.patchValue({ productId: this.productId });
+      this.route.params
+        .pipe(
+          switchMap((params) => {
+            this.productId = +params['id'];
+            this.productLoading = true;
+            return this.productService.getSpecificProductWithDetails(this.productId);
+          })
+        )
+        .subscribe(
+          (product) => {
+            // Update product wishlist state
+            const isInWishList = this.isProductInWishList(product.id);
+            this.product = {
+              ...product,
+              isInWishList,
+              isWishListLoading: false,
+            };
+            this.productLoading = false;
+            this.loadProductReviews(this.productId);
+            this.getRelatedProducts(product.category.id);
+          },
+          (error) => {
+            this.productLoading = false;
+            console.error('Error fetching product details', error);
+          }
+        );
+
+      this.onResize(null);
+
+      if (this.userAuth) {
+        this.loadProductReviewsForUser(this.productId);
+      }
     });
-
-    this.route.params
-      .pipe(
-        switchMap((params) => {
-          this.productId = +params['id'];
-          this.productLoading = true;
-          return this.productService.getSpecificProductWithDetails(this.productId);
-        })
-      )
-      .subscribe(
-        (product) => {
-          const isInWishList = this.isProductInWishList(product.id);
-          this.product = {
-            ...product,
-            isInWishList: isInWishList,
-            isWishListLoading: false,
-          };
-
-          this.productLoading = false;
-          this.loadProductReviews(this.productId);
-          this.getRelatedProducts(product.category.id);
-        },
-        (error) => {
-          this.productLoading = false;
-          console.error('Error fetching product details', error);
-        }
-      );
-
-    this.loadWishList();
-    this.onResize(null);
-
-    if (this.userAuth) {
-      this.loadProductReviewsForUser(this.productId);
-    }
   }
+
+  // ngOnInit(): void {
+  //   this.userAuth = this._AuthService.isAuthenticated();
+
+  //   // this.route.paramMap.subscribe((params) => {
+  //   //   this.productId = Number(params.get('id'));
+  //   //   this.reviewForm.patchValue({ productId: this.productId });
+  //   // });
+
+  //   this.route.params
+  //     .pipe(
+  //       switchMap((params) => {
+  //         this.productId = +params['id'];
+  //         this.productLoading = true;
+  //         return this.productService.getSpecificProductWithDetails(this.productId);
+  //       })
+  //     )
+  //     .subscribe(
+  //       (product) => {
+  //         const isInWishList = this.isProductInWishList(product.id);
+  //         this.product = {
+  //           ...product,
+  //           isInWishList,
+  //           isWishListLoading: false,
+  //         };
+
+  //         this.productLoading = false;
+  //         this.loadProductReviews(this.productId);
+  //         this.getRelatedProducts(product.category.id);
+  //       },
+  //       (error) => {
+  //         this.productLoading = false;
+  //         console.error('Error fetching product details', error);
+  //       }
+  //     );
+
+  //   this.loadWishList();
+  //   this.onResize(null);
+
+  //   if (this.userAuth) {
+  //     this.loadProductReviewsForUser(this.productId);
+  //   }
+  // }
   /*------------------------------------------------------------------*/
   private async loadWishList(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
